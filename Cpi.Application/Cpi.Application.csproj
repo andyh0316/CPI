@@ -61,6 +61,7 @@
     <Compile Include="DataModels\Base\BaseDm.cs" />
     <Compile Include="DataModels\CallDm.cs" />
     <Compile Include="DataModels\Interface\ISoftDeleteDm.cs" />
+    <Compile Include="DataTransferObjects\CallDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
