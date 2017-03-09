@@ -6,7 +6,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
     $stateProvider
         .state('List', {
             url: '/List',
-            templateUrl: '/Views/Call/List.cshtml',
+            templateUrl: '/Views/Call/List.html',
             controller: 'ListController',
             resolve: {
                 jsonResult: ['$stateParams', 'baseBo', function ($stateParams, baseBo) {
@@ -57,11 +57,11 @@ app.controller('ListController', ['$scope', '$controller', '$state', 'baseBo', '
               .then(function (result) { $scope.model = result.model; });
     };
 
-    $scope.getListData = function () {
-        baseBo.httpRequest('GET', '/Staff/StaffInfo/GetStaffListData')
-               .then(function (result) { $scope.data = result.model; });
-    };
+    //$scope.getListData = function () {
+    //    baseBo.httpRequest('GET', '/Staff/StaffInfo/GetStaffListData')
+    //           .then(function (result) { $scope.data = result.model; });
+    //};
 
-    // the select lists are taking a while to load so we will just get them in the background
-    $scope.getListData();
+    //// the select lists are taking a while to load so we will just get them in the background
+    //$scope.getListData();
 }]);

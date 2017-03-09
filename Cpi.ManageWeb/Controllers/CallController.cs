@@ -26,7 +26,7 @@ namespace Cpi.ManageWeb.Controllers
         {
             IQueryable<CallDm> query = CallBo.GetListQuery();
             Pagination pagination = new Pagination(page, query.Count());
-            List<CallDm> records = GetPagedSortedQuery(query, pagination.Skip, pagination.Take, "Name", false).ToList();
+            List<CallDm> records = GetPagedSortedQuery(query, pagination.Skip, pagination.Take, "CustomerName", false).ToList();
             return JsonModel(new { Records = records, Pagination = pagination });
         }
     }

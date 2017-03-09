@@ -339,7 +339,7 @@ baseModule.factory('baseBo', ['$http', '$window', '$q', function ($http, $window
 
                 // tell javascript how much time is remaining for session timeout so we can warn the user
                 // to extend his session
-                setSessionWarning(result.SessionTimeLeft);
+                //setSessionWarning(result.SessionTimeLeft);
 
                 // need to check for if its session timeout
                 //successFunc(result);
