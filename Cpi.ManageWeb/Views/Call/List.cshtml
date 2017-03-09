@@ -1,0 +1,72 @@
+﻿<div>
+    <div ui-view></div>
+
+    <div class="list-container">
+        @*<div class="header"> 
+            <div class="dropdown">
+                <button class="dropdown-toggle blue" type="button" data-toggle="dropdown">Select <span ng-show="selectedIds.length > 0">({{selectedIds.length}}) </button>
+                <ul class="dropdown-menu">
+                    <li><a ng-click="selectAllStaffIds()">+ Select All</a></li>
+                    <li><a ng-click="selectedIds = []">- Clear All</a></li>
+                </ul>
+            </div>
+            <button ng-show="checkPermission('StaffService', 'Create') && selectedIds.length > 0" ng-click="createStaffServices()" class="button blue button-S" title="Create services">+<i class="google-icon">event_note</i></button>
+            <form class="search">
+                <input type="text" class="search-box" ng-model="simpleSearchString" placeholder="Search" />
+                <button ng-mousedown="simpleSearchString = null" class="button">X</button>
+            </form>
+
+            <button ng-show="!showAdvancedSearch" ng-click="showAdvancedSearch = true" class="button">Advanced</button>
+            <button ng-show="showAdvancedSearch" ng-click="showAdvancedSearch = false;" class="button">Basic</button>
+            <button ng-show="showAdvancedSearch" ng-click="resetSearch()" class="button">Reset</button>
+
+            
+
+            <div class="right">
+                <span keyboard-list-navigation-indicator></span>
+                <button ng-show="checkPermission('StaffInfo', 'Create')" ng-click="create()" class="button blue">+ Create</button>
+            </div>
+        </div>*@
+
+        <div class="table">
+            <table>
+                <thead>
+                    <tr>
+                        @*<th class="checkbox-wrapper" ng-click="updateSelectAllOnPage(model.Staffs)" title="Select all results on this page">
+                            <span checkbox ng-checked="areSelectedAllOnPage(model.Staffs)"></span> 
+                        </th>*@
+                        <th>
+                            <a ng-class="getSortOrder('Name')" ng-click="sort('Name')" class="sortable searchable-column">Name</a>
+                        </th>
+                        <th>
+                            <a ng-class="getSortOrder('Identification')" ng-click="sort('Identification')" class="sortable">ID</a>
+                            <span class="search-column icon"></span>
+                        </th>
+                        <th><a ng-class="getSortOrder('Discipline')" ng-click="sort('Discipline')" class="sortable">Discipline</a></th>
+                        <th><a ng-class="getSortOrder('Position')" ng-click="sort('Position')" class="sortable">Position</a></th>
+                        <th><a ng-class="getSortOrder('CurrentSchool')" ng-click="sort('CurrentSchool')" class="sortable">Current School</a></th>
+                        <th class="action"></th>
+                    </tr>
+                </thead>
+                <tbody ng-mouseleave="clearHighlightedRowIndex()">
+                    <tr ng-repeat="record in model.Records" ng-click="view(item.Id)" selectable-text>
+                        @*<td ng-click="updateSelectedId(item.Id); $event.stopPropagation();" class="checkbox-wrapper"> 
+                            <span checkbox ng-checked="isIdSelected(item.Id)"></span>               
+                        </td>*@
+                        <td>{{record.Name}}</td>
+                        <td>{{record.Identification}}</td>
+                        <td>{{record.Discipline}}</td>
+                        <td>{{record.Position}}</td>
+                        <td>{{record.CurrentSchool}}</td>
+                        <td class="action">
+                            <span ng-show="checkPermission('StaffInfo', 'Edit')" class="edit action-icon" ng-click="edit(item.Id); $event.stopPropagation();"></span>
+                            <span ng-show="checkPermission('StaffInfo', 'Delete')" class="delete action-icon" ng-click="remove(item.Id); $event.stopPropagation();"></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <pagination pagination="model.Pagination"></pagination>
+    </div>
+</div>

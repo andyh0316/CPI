@@ -19,17 +19,24 @@ namespace Cpi.ManageWeb
                         "~/Scripts/jquery.validate*"));
 
             bundles.Add(new ScriptBundle("~/bundles/angular").Include(
-                        "~/Scripts/angular/angular.js"));
+                        "~/Scripts/angular/angular.js",
+                        "~/Scripts/angular/angular-ui-router.js",
+                        "~/Scripts/angular/angular-base.js",
+                        "~/Scripts/angular/pagination.js"));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
-            bundles.Add(new StyleBundle("~/Content/css")
-                   .Include("~/Content/site.css")
-                   .Include("~/Content/MaterialIcons/material-icons.css")
-                   .Include("~/Content/Fonts/fonts.css"));
+            bundles.Add(new StyleBundle("~/Content/css").Include(
+                    "~/Content/site.css",
+                    "~/Content/MaterialIcons/material-icons.css",
+                    "~/Content/Fonts/fonts.css"));
+
+            // angular apps
+            bundles.Add(new ScriptBundle("~/bundles/call").Include(
+                        "~/Views/Call/callApp.js"));
         }
     }
 }
