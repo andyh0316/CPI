@@ -20,7 +20,7 @@ namespace Cpi.Application.BusinessObjects.Base
             {
                 if (HttpContext.Current.Items["SharedDbContextForRequest"] != null)
                 {
-                    return ((CpiDbContext)HttpContext.Current.Items["UnitOfWorkContext"]).Set<T>();
+                    return ((CpiDbContext)HttpContext.Current.Items["SharedDbContextForRequest"]).Set<T>();
                 }
                 else
                 {

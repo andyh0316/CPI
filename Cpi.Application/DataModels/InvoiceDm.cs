@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Cpi.Application.DataModels
 {
-    public class CallDm : BaseDm
+    public class InvoiceDm : BaseDm
     {
         [MaxLength(200)]
         public string CustomerName { get; set; }
@@ -17,7 +17,7 @@ namespace Cpi.Application.DataModels
         public string PhoneNumber { get; set; }
     }
 
-    public class CallMap : BaseMap<CallDm>
+    public class CallMap : BaseMap<InvoiceDm>
     {
         public CallMap()
         {

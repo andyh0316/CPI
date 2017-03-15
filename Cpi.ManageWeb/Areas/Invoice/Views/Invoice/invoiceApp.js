@@ -1,4 +1,4 @@
-﻿var app = angular.module('CallApp', ['AngularBaseModule', 'ui.router']);
+﻿var app = angular.module('InvoiceApp', ['AngularBaseModule', 'ui.router', 'ngAnimate']);
 
 app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.when("", "/List");
@@ -6,13 +6,18 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
     $stateProvider
         .state('List', {
             url: '/List',
-            templateUrl: '/Views/Call/List.html',
+            templateUrl: '/Areas/Invoice/Views/Invoice/List.html',
             controller: 'ListController',
             resolve: {
                 jsonResult: ['$stateParams', 'baseBo', function ($stateParams, baseBo) {
-                    return baseBo.httpRequest('POST', '/Call/GetList', { page: 1 });
+                    return baseBo.httpRequest('POST', '/Invoice/Invoice/GetList', { page: 1 });
                 }]
             }
+        })
+        .state('List.Import', {
+            url: '/Import/',
+            templateUrl: '/Areas/Invoice/Views/Invoice/Import.html',
+            controller: 'ImportController'
         })
 }]);
 
@@ -25,6 +30,11 @@ app.controller('ListController', ['$scope', '$controller', '$state', 'baseBo', '
     //$scope.sortColumn = 'LastName';
     //$scope.sortDesc = false;
     $scope.page = 1;
+
+    $scope.import = function () {
+        $state.go('List.Import');
+    };
+
 
     //$scope.create = function () {
     //    $state.go('List.Staff', { 'mode': 'Create', 'id': 0 });
@@ -64,4 +74,10 @@ app.controller('ListController', ['$scope', '$controller', '$state', 'baseBo', '
 
     //// the select lists are taking a while to load so we will just get them in the background
     //$scope.getListData();
+}]);
+
+app.controller('ImportController', ['$scope', '$controller', '$state', 'baseBo', function ($scope, $controller, $state, baseBo) {
+    angular.extend(this, $controller('BaseController', { $scope: $scope }));
+
+
 }]);

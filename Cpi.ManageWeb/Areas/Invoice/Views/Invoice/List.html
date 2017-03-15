@@ -1,5 +1,14 @@
-﻿<div>
-    <div ui-view></div>
+﻿<div class="container">
+    
+    <div ng-show="state.current.name == 'List'" class="secondary-menu-buttons">
+        <button class="button main " ng-click="import()">Import</button>
+        <button class="button main " ng-click="import()">Import</button>
+        <button class="button main " ng-click="import()">Import</button>
+        <!--<button class="button main">
+            Import
+            <input class="file-uploader-input" name="file" type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"/>
+        </button>-->
+    </div>
 
     <div class="list-container">
         <!--<div class="header"> 
@@ -35,15 +44,15 @@
                         <!--<th class="checkbox-wrapper" ng-click="updateSelectAllOnPage(model.Staffs)" title="Select all results on this page">
                             <span checkbox ng-checked="areSelectedAllOnPage(model.Staffs)"></span> 
                         </th>-->
-                        <th><a ng-class="getSortOrder('Name')" ng-click="sort('Name')" class="sortable">Name</a></th>
-                        <th><a ng-class="getSortOrder('Identification')" ng-click="sort('Identification')" class="sortable">ID</a></th>
+                        <th><a ng-class="getSortOrder('CustomerName')" ng-click="sort('CustomerName')" class="sortable">Customer Name</a></th>
+                        <th><a ng-class="getSortOrder('Identification')" ng-click="sort('Identification')" class="sortable">{{state.current.name}}</a></th>
                         <th><a ng-class="getSortOrder('Discipline')" ng-click="sort('Discipline')" class="sortable">Discipline</a></th>
                         <th><a ng-class="getSortOrder('Position')" ng-click="sort('Position')" class="sortable">Position</a></th>
                         <th><a ng-class="getSortOrder('CurrentSchool')" ng-click="sort('CurrentSchool')" class="sortable">Current School</a></th>
                         <th class="action"></th>
                     </tr>
                 </thead>
-                <tbody ng-mouseleave="clearHighlightedRowIndex()">
+                <tbody>
                     <tr ng-repeat="record in model.Records" ng-click="view(item.Id)" selectable-text>
                         <!--<td ng-click="updateSelectedId(item.Id); $event.stopPropagation();" class="checkbox-wrapper"> 
                             <span checkbox ng-checked="isIdSelected(item.Id)"></span>               
@@ -63,5 +72,7 @@
         </div>
 
         <!--<pagination pagination="model.Pagination"></pagination>-->
+
+        <div ui-view></div>
     </div>
 </div>

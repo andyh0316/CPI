@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Cpi.Application.BusinessObjects
 {
-    public class CallBo : BaseBo<CallDm>
+    public class InvoiceBo : BaseBo<InvoiceDm>
     {
         
     }

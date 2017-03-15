@@ -20,6 +20,7 @@ namespace Cpi.ManageWeb
 
             bundles.Add(new ScriptBundle("~/bundles/angular").Include(
                         "~/Scripts/angular/angular.js",
+                        "~/Scripts/angular/angular-animate.js",
                         "~/Scripts/angular/angular-ui-router.js",
                         "~/Scripts/angular/angular-base.js",
                         "~/Scripts/angular/pagination.js"));
@@ -35,8 +36,8 @@ namespace Cpi.ManageWeb
                     "~/Content/Fonts/fonts.css"));
 
             // angular apps
-            bundles.Add(new ScriptBundle("~/bundles/call").Include(
-                        "~/Views/Call/callApp.js"));
+            bundles.Add(new ScriptBundle("~/bundles/invoice/invoice").Include(
+                        "~/Areas/Invoice/Views/Invoice/invoiceApp.js"));
         }
     }
 }

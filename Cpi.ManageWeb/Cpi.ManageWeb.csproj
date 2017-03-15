@@ -20,6 +20,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -39,6 +40,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=5.2.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.5.2.0\lib\net45\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
@@ -197,14 +201,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\AuthConfig.cs" />
+    <Compile Include="App_Start\AutoMapperConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Import\Controllers\ImportController.cs" />
+    <Compile Include="Areas\Import\ImportAreaRegistration.cs" />
+    <Compile Include="Areas\Invoice\Controllers\InvoiceController.cs" />
+    <Compile Include="Areas\Invoice\InvoiceAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Base\BaseController.cs" />
-    <Compile Include="Controllers\CallController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
@@ -215,6 +223,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Invoice\Views\Invoice\Import.html" />
     <Content Include="Content\Fonts\Fonts.css">
       <DependentUpon>Fonts.scss</DependentUpon>
     </Content>
@@ -247,7 +256,10 @@
     <Content Include="Content\Fonts\OpenSans-Semibold.ttf" />
     <Content Include="Content\Fonts\OpenSans-SemiboldItalic.ttf" />
     <Content Include="Content\Fonts\Fonts.scss" />
+    <Content Include="Areas\Invoice\Views\Web.config" />
+    <Content Include="Areas\Import\Views\Web.config" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
+    <Content Include="Scripts\angular\angular-animate.js" />
     <Content Include="Scripts\angular\angular-ui-router.js" />
     <Content Include="Scripts\angular\angular.js" />
     <Content Include="Scripts\angular\angular-base.js" />
@@ -266,8 +278,8 @@
     <Content Include="Scripts\knockout-2.2.0.debug.js" />
     <Content Include="Scripts\knockout-2.2.0.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
-    <Content Include="Views\Call\callApp.js" />
-    <Content Include="Views\Call\List.html" />
+    <Content Include="Areas\Invoice\Views\Invoice\invoiceApp.js" />
+    <Content Include="Areas\Invoice\Views\Invoice\List.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -304,10 +316,15 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
-    <Content Include="Views\Call\Index.cshtml" />
+    <Content Include="Areas\Invoice\Views\Invoice\Index.cshtml" />
+    <Content Include="Views\Shared\_SubLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Import\Models\" />
+    <Folder Include="Areas\Import\Views\Shared\" />
+    <Folder Include="Areas\Invoice\Models\" />
+    <Folder Include="Areas\Invoice\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

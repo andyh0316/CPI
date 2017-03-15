@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var currentArea = (ViewContext.RouteData.DataTokens["area"] != null) ? ViewContext.RouteData.DataTokens["area"].ToString() : null;
+    var currentController = (ViewContext.RouteData.Values["controller"] != null) ? ViewContext.RouteData.Values["controller"].ToString() : null;
+}
+
+<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8" />
@@ -13,25 +18,25 @@
     <body>
         <div id="main-menu">
             <div class="menu-body">
-                <a href="" class="menu-item">
-                    <i class="material-icons">face</i>
-                    <span class="text">Calls</span>
+                <a href="/Invoice/Invoice/" class="menu-item @(currentArea == "Invoice" ? "selected" : "")">
+                    <i class="material-icons">storage</i>
+                    <span class="text">Invoices</span>
                 </a>
-                <a href="" class="menu-item">
+                <a href="/Import/Import/" class="menu-item @(currentArea == "Import" ? "selected" : "")">
                     <i class="material-icons">face</i>
-                    <span class="text">Calls</span>
+                    <span class="text">Invoices</span>
                 </a>
             </div>
         </div>
 
-        <div id="container">
-            <div class="container-header">
-                <div class="title">Calls</div>
-            </div>
-
-            <div class="container-body">
-                @RenderBody()
-            </div>
+        <div id="secondary-menu">
+            @if (currentArea == "Invoice")
+            {
+                <a href="/Invoice/Invoice/" class="menu-item @(currentController == "Invoice" ? "selected" : "")">Invoices</a>
+                <a href="/Invoice/InvoiceImport/" class="menu-item @(currentController == "InvoiceImport" ? "selected" : "")">Import</a>
+            }
         </div>
+
+        @RenderBody()
     </body>
 </html>

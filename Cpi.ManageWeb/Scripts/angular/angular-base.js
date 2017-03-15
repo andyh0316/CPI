@@ -7,8 +7,24 @@ baseModule.config(['$httpProvider', function ($httpProvider) {
     $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
 }]);
 
-baseModule.controller('BaseController', ['$scope', '$state', function ($scope, $state) {
 
+baseModule.controller('BaseController', ['$scope', '$state', function ($scope, $state) {
+    // show only the most nested buttons
+    //var levels = 0;
+    //var deepest;
+
+    //$('.secondary-menu-buttons').hide();
+    //$('body').find('.secondary-menu-buttons').each(function () {
+    //    if (!this.firstChild || this.firstChild.nodeType !== 1) {
+    //        var levelsFromThis = $(this).parentsUntil('body').length;
+    //        if (levelsFromThis > levels) {
+    //            levels = levelsFromThis;
+    //            deepest = this;
+    //        }
+    //    }
+    //});
+
+    //$(deepest).show();
 }]);
 
 /* provides server/backend sorting, paging and searching. For client side sorting and paging */
@@ -228,6 +244,8 @@ baseModule.controller('ListBaseController', ['$scope', '$controller', function (
 }]);
 
 baseModule.run(['$rootScope', '$state', function ($rootScope, $state) {
+    $rootScope.state = $state;
+
     $rootScope.back = function () {
         $state.go('^');
     };
@@ -293,6 +311,34 @@ baseModule.run(['$rootScope', '$state', function ($rootScope, $state) {
 
         notificationSelector.stop().hide().fadeIn(75);
     }
+
+    $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+
+    });
+
+    $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
+
+    });
+
+    $rootScope.$on('$viewContentLoaded', function (event, view) {
+        // show only the most nested buttons
+        //debugger;
+        //var levels = 0;
+        //var deepest;
+
+        //$('.secondary-menu-buttons').hide();
+        //$('body').find('.secondary-menu-buttons').each(function () {
+        //    if (!this.firstChild || this.firstChild.nodeType !== 1) {
+        //        var levelsFromThis = $(this).parentsUntil('body').length;
+        //        if (levelsFromThis > levels) {
+        //            levels = levelsFromThis;
+        //            deepest = this;
+        //        }
+        //    }
+        //});
+
+        //$(deepest).show();
+    });
 }]);
 
 baseModule.factory('baseBo', ['$http', '$window', '$q', function ($http, $window, $q) {
@@ -986,7 +1032,7 @@ baseModule.directive('fileUploader', function () {
                   'Drop file<span ng-show="mutliple">(s)</span> here or click to browse' +
               '</div>' +
               '<div ng-show="filesCount > 0" class="uploading-files">' +
-                   '<div class="google-icon">description</div>' +
+                   '<div class="material-icons">description</div>' +
                    '<div ng-show="filesCount == 1" class="ellipsis">{{fileName}}</div>' +
                    '<div ng-show="filesCount > 1">{{filesCount}} files selected</div>' +
               '</div>' +

@@ -18,6 +18,9 @@ namespace Cpi.Application.DataModels.Base
         public int? ModifiedById { get; set; }
         public DateTime? ModifiedDate { get; set; }
 
+        //public int? ImportId { get; set; }
+        //public virtual ImportDm Import { get; set; }
+
         public bool Deleted { get; set; }
     }
 
@@ -27,6 +30,7 @@ namespace Cpi.Application.DataModels.Base
         {
             HasKey(m => m.Id);
             Map(m => m.Requires("Deleted").HasValue(false)).Ignore(m => m.Deleted);
+            //HasRequired(m => m.Import).WithMany().HasForeignKey(m => m.ImportId).WillCascadeOnDelete(false);
         }
     }
 }
