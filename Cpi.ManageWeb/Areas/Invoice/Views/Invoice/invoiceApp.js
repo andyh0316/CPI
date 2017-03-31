@@ -14,7 +14,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
                 }]
             }
         })
-        .state('List.Import', {
+        .state('List.View', {
             url: '/Import/',
             templateUrl: '/Areas/Invoice/Views/Invoice/Import.html',
             controller: 'ImportController'
@@ -24,7 +24,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
 app.controller('ListController', ['$scope', '$controller', '$state', 'baseBo', 'jsonResult', function ($scope, $controller, $state, baseBo, jsonResult) {
     angular.extend(this, $controller('ListBaseController', { $scope: $scope }));
 
-    $scope.model = jsonResult.model;
+    $scope.model = jsonResult.Object;
 
     // match resolve dependency params
     //$scope.sortColumn = 'LastName';

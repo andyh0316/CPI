@@ -1,11 +1,12 @@
-@font-face {
+﻿@font-face {
   font-family: 'Material Icons';
   font-style: normal;
   font-weight: 400;
   src: url(MaterialIcons-Regular.eot);
   /* For IE6-8 */
   src: local("Material Icons"), local("MaterialIcons-Regular"), url(MaterialIcons-Regular.woff2) format("woff2"), url(MaterialIcons-Regular.woff) format("woff"), url(MaterialIcons-Regular.ttf) format("truetype"); }
-.material-icons, .list-container .table table thead th a.sortable:before {
+
+.material-icons {
   font-family: 'Material Icons';
   font-weight: normal;
   font-style: normal;
@@ -27,11 +28,7 @@
   /* Support for IE. */
   font-feature-settings: 'liga'; }
 
-.list-container .table {
-  box-shadow: 0px 0px 5px #E2E2E2; }
-
-.list-container .header, .list-container .table table th.checkbox-wrapper,
-.list-container .table table td.checkbox-wrapper, .list-container .table table thead th {
+.list-container .header {
   -webkit-user-select: none;
   /* Chrome all / Safari all */
   -moz-user-select: none;
@@ -41,8 +38,7 @@
   user-select: none;
   /* Likely future */ }
 
-#main-menu .menu-body .menu-item, #secondary-menu, .container, .list-container .table table th.checkbox-wrapper,
-.list-container .table table td.checkbox-wrapper, .button,
+#main-menu .menu-body .menu-item, #secondary-menu, .container, .list-container, .list-container .header, .list-container .body, .list-container .row .col, .button,
 .dropdown button, dl dd, .file-uploader .file-uploader-container {
   -webkit-box-sizing: border-box;
   /* Chrome all / Safari all */
@@ -53,7 +49,7 @@
   box-sizing: border-box;
   /* Likely future */ }
 
-#secondary-menu:after, .list-container .header:after, section:after {
+#secondary-menu:after, .list-container .header:after, .list-container .row:after, section:after {
   content: "";
   display: table;
   clear: both; }
@@ -184,122 +180,26 @@ body {
 
 /**** LIST AND TABLE ****/
 .list-container {
-  margin-bottom: 20px;
-  /* For both table and list-panels */ }
+  display: flex;
+  flex-flow: column;
+  height: calc(100% - 40px);
+  margin-bottom: 20px; }
   .list-container .header {
     position: relative;
-    height: 32px;
-    margin-bottom: 7px; }
-    .list-container .header dl {
-      margin: 0;
+    margin: 8px 0px;
+    padding-right: 16px;
+    font-weight: bold; }
+  .list-container .body {
+    display: flex;
+    flex-flow: column;
+    padding-bottom: 10px;
+    overflow-y: scroll; }
+  .list-container .row {
+    padding: 2px 0px; }
+    .list-container .row .col {
+      min-height: 1px;
+      padding: 0px 5px;
       float: left; }
-    .list-container .header .title {
-      position: relative;
-      float: left;
-      margin-bottom: 0px; }
-    .list-container .header .search {
-      display: inline-block;
-      vertical-align: top; }
-    .list-container .header .error.icon {
-      top: 4px; }
-    .list-container .header .link {
-      top: 3px;
-      margin-right: 5px; }
-  .list-container .table {
-    padding: 5px 15px 15px 15px;
-    background-color: white;
-    overflow: auto; }
-    .list-container .table table {
-      position: relative;
-      width: 100%;
-      border-collapse: collapse;
-      background-color: white; }
-      .list-container .table table tr {
-        position: relative;
-        text-align: left; }
-      .list-container .table table th:first-child,
-      .list-container .table table td:first-child {
-        padding-left: 20px; }
-      .list-container .table table th:last-child,
-      .list-container .table table td:last-child {
-        padding-right: 20px; }
-      .list-container .table table th.checkbox-wrapper,
-      .list-container .table table td.checkbox-wrapper {
-        width: 50px;
-        text-align: center; }
-        .list-container .table table th.checkbox-wrapper:hover,
-        .list-container .table table td.checkbox-wrapper:hover {
-          cursor: pointer; }
-      .list-container .table table th.fit-content,
-      .list-container .table table td.fit-content {
-        width: 1%; }
-      .list-container .table table thead tr {
-        color: #50788C;
-        font-size: 100%;
-        text-transform: uppercase; }
-      .list-container .table table thead th {
-        padding: 10px 0px 10px 10px;
-        text-align: left; }
-        .list-container .table table thead th a:not(:first-of-type) {
-          margin-left: 5px; }
-        .list-container .table table thead th a.sortable:before {
-          position: relative;
-          display: inline;
-          font-size: 22px;
-          content: "arrow_drop_down";
-          opacity: 0.3;
-          line-height: 80%;
-          margin-left: -7px;
-          margin-right: -3px;
-          top: 6px; }
-        .list-container .table table thead th a.sortable.sorted-asc:before {
-          content: "arrow_drop_up";
-          opacity: 1; }
-        .list-container .table table thead th a.sortable.sorted-desc:before {
-          content: "arrow_drop_down";
-          opacity: 1; }
-        .list-container .table table thead th a.sortable:hover {
-          cursor: pointer; }
-        .list-container .table table thead th .help:after {
-          top: -2px; }
-      .list-container .table table tbody {
-        width: 100%; }
-        .list-container .table table tbody tr {
-          height: 34px; }
-          .list-container .table table tbody tr[ng-click]:not(.notClickable):hover {
-            background-color: whitesmoke;
-            cursor: pointer; }
-        .list-container .table table tbody td {
-          padding: 5px 10px 5px 10px;
-          font-size: 100%; }
-          .list-container .table table tbody td dl {
-            margin: 0px;
-            display: inline-block;
-            vertical-align: middle; }
-            .list-container .table table tbody td dl dd {
-              min-height: auto;
-              padding: 0px; }
-          .list-container .table table tbody td .icon {
-            font-size: 16px; }
-            .list-container .table table tbody td .icon.lock:before {
-              content: "lock"; }
-            .list-container .table table tbody td .icon.check:before {
-              font-size: 22px;
-              content: "check"; }
-  .list-container tbody.empty,
-  .list-container .list-panels-container.empty {
-    display: block;
-    height: 100px; }
-    .list-container tbody.empty:after,
-    .list-container .list-panels-container.empty:after {
-      display: block;
-      position: absolute;
-      width: 100%;
-      top: 50%;
-      content: "NO RESULTS";
-      text-align: center;
-      color: #BFBFBF;
-      font-size: 24px; }
 
 .button,
 .dropdown button {
@@ -485,4 +385,3 @@ section dl {
     .file-uploader .file-uploader-container.active {
       background-color: #f6fcff; }
 
-/*# sourceMappingURL=Site.css.map */

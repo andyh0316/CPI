@@ -1,4 +1,5 @@
 ﻿using Cpi.Application.DataModels.Base;
+using Cpi.Application.DataModels.LookUp;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -13,15 +14,28 @@ namespace Cpi.Application.DataModels
         [MaxLength(200)]
         public string CustomerName { get; set; }
 
-        [MaxLength(30)]
-        public string PhoneNumber { get; set; }
+        [MaxLength(100)]
+        public string CustomerPhone { get; set; }
+
+        public DateTime? Date { get; set; }
+
+        public DateTime? DeliveryDate { get; set; }
+
+        public virtual List<LookUpCommodityDm> Commodities { get; set; }
     }
 
-    public class CallMap : BaseMap<InvoiceDm>
+    public class InvoiceMap : BaseMap<InvoiceDm>
     {
-        public CallMap()
+        public InvoiceMap()
         {
-            ToTable("Call");
+            ToTable("Invoice");
+            HasMany<LookUpCommodityDm>(m => m.Commodities).WithMany()
+                .Map(m =>
+                {
+                    m.MapLeftKey("InvoiceId");
+                    m.MapRightKey("CommodityId");
+                    m.ToTable("InvoiceCommodity");
+                });
         }
     }
 }

@@ -8,6 +8,7 @@ using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Data.Entity.Migrations;
 using Cpi.Application.DataModels;
+using Cpi.Application.DataModels.LookUp;
 
 namespace Cpi.Application.DatabaseContext
 {
@@ -29,7 +30,11 @@ namespace Cpi.Application.DatabaseContext
             // no cascade deleting: all entries should be soft deleted or many to many references should be manually removed
             modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
 
-            modelBuilder.Configurations.Add(new CallMap());
+            modelBuilder.Configurations.Add(new InvoiceMap());
+            modelBuilder.Configurations.Add(new UserMap());
+
+            modelBuilder.Configurations.Add(new LookUpCommodityMap());
+            modelBuilder.Configurations.Add(new LookUpUserRoleMap());
         }
 
         internal sealed class MigrationConfiguration : DbMigrationsConfiguration<CpiDbContext>

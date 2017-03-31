@@ -1,0 +1,26 @@
+﻿@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    var currentArea = (ViewContext.RouteData.DataTokens["area"] != null) ? ViewContext.RouteData.DataTokens["area"].ToString() : null;
+    var currentController = (ViewContext.RouteData.Values["controller"] != null) ? ViewContext.RouteData.Values["controller"].ToString() : null;
+}
+
+<div id="main-menu">
+    <div class="menu-body">
+        <a href="/Invoice/Invoice/" class="menu-item @(currentArea == "Invoice" ? "selected" : "")">
+            <i class="material-icons">storage</i>
+            <span class="text">Invoices</span>
+        </a>
+    </div>
+</div>
+
+<div id="secondary-menu">
+    @if (currentArea == "Invoice")
+    {
+        <a href="/Invoice/Invoice/" class="menu-item @(currentController == "Invoice" ? "selected" : "")">Invoices</a>
+    }
+</div>
+
+@RenderBody()

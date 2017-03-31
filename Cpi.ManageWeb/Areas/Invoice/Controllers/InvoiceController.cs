@@ -24,7 +24,7 @@ namespace Cpi.ManageWeb.Areas.Invoice.Controllers
         [HttpPost]
         public ContentResult GetList(int page = 1)
         {
-            IQueryable<InvoiceDm> query = InvoiceBo.GetListQuery();
+            IQueryable<InvoiceDm> query = InvoiceBo.GetListBaseQuery();
             Pagination pagination = new Pagination(page, query.Count());
             List<InvoiceDm> records = GetPagedSortedQuery(query, pagination.Skip, pagination.Take, "CustomerName", false).ToList();
             return JsonModel(new { Records = records, Pagination = pagination });

@@ -1,4 +1,4 @@
-@import "MaterialIcons/material-icons";
+@import "MaterialIcons/material-icons.scss";
 
 $main-font: 'Open Sans', sans-serif;
 $main-font-color: black;
@@ -19,693 +19,518 @@ $error-border-color: #B30F0F;
 //$menu-font: 'Open Sans Condensed', sans-serif;
 
 %main-box-shadow {
-	box-shadow: 0px 0px 5px #E2E2E2;
+    box-shadow: 0px 0px 5px #E2E2E2;
 }
 
 %prevent-user-select {
-	-webkit-user-select: none;  /* Chrome all / Safari all */
-	-moz-user-select: none;     /* Firefox all */
-	-ms-user-select: none;      /* IE 10+ */
-	user-select: none;          /* Likely future */    
+    -webkit-user-select: none; /* Chrome all / Safari all */
+    -moz-user-select: none; /* Firefox all */
+    -ms-user-select: none; /* IE 10+ */
+    user-select: none; /* Likely future */
 }
 
 %border-box {
-	-webkit-box-sizing: border-box;  /* Chrome all / Safari all */
-	-moz-box-sizing: border-box;     /* Firefox all */
-	-ms-box-sizing: border-box;      /* IE 10+ */
-	box-sizing: border-box;			 /* Likely future */    
+    -webkit-box-sizing: border-box; /* Chrome all / Safari all */
+    -moz-box-sizing: border-box; /* Firefox all */
+    -ms-box-sizing: border-box; /* IE 10+ */
+    box-sizing: border-box; /* Likely future */
 }
 
 %clearfix {
-	&:after {
-		content:"";
-		display:table;
-		clear:both;
-	}
+    &:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
 }
 
 %ellipsis {
-	text-overflow: ellipsis;
-	white-space: nowrap;
-	overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .ellipsis {
-	@extend %ellipsis;
+    @extend %ellipsis;
 }
 
 @mixin transition($param) {
-	-webkit-transition: $param;
-	-moz-transition: $param;
-	-o-transition: $param;
-	transition: $param;
+    -webkit-transition: $param;
+    -moz-transition: $param;
+    -o-transition: $param;
+    transition: $param;
 }
 
 @mixin opacity($param) {
-	opacity: $param;
+    opacity: $param;
 }
 
-html, body
-{
-	position: relative;
-	padding: 0px !important;
-	margin: 0px !important;
-	height: 100%;
-	overflow: hidden;
+html, body {
+    position: relative;
+    padding: 0px !important;
+    margin: 0px !important;
+    height: 100%;
+    overflow: hidden;
 }
 
 body {
-	overflow-y: auto;
-	font-family: $main-font;
-	font-weight: 400;
-	font-size: 12px;
+    overflow-y: auto;
+    font-family: $main-font;
+    font-weight: 400;
+    font-size: 12px;
 }
 
 #main-menu {
-	position: fixed;
-	background-color: #2d4756;
-	width: $main-menu-width;
-	height: 100%;
-	font-weight: 300;
-	letter-spacing: -0px;
-	z-index: $main-menu-z-index;
+    position: fixed;
+    background-color: #2d4756;
+    width: $main-menu-width;
+    height: 100%;
+    font-weight: 300;
+    letter-spacing: -0px;
+    z-index: $main-menu-z-index;
 
-	.menu-body {
-		position: relative;
-		width: 100%;
-		margin-top: 50px;
-		border-bottom: 1px solid #385a6d;
-		border-top: 1px solid #263a46;
+    .menu-body {
+        position: relative;
+        width: 100%;
+        margin-top: 50px;
+        border-bottom: 1px solid #385a6d;
+        border-top: 1px solid #263a46;
 
-		.menu-item {
-			display: block;
-			width: 100%;
-			color: whitesmoke;
-			text-decoration: none;
-			padding: 10px 15px;
-			@include opacity(0.7);
-			font-weight: 700;
-			@extend %border-box;
+        .menu-item {
+            display: block;
+            width: 100%;
+            color: whitesmoke;
+            text-decoration: none;
+            padding: 10px 15px;
+            @include opacity(0.7);
+            font-weight: 700;
+            @extend %border-box;
+            border-top: 1px solid #385a6d;
+            border-bottom: 1px solid #263a46;
 
-			border-top: 1px solid #385a6d;
-			border-bottom: 1px solid #263a46;
+            .material-icons {
+                position: relative;
+                top: 5px;
+                font-size: 20px;
+            }
 
-			.material-icons {
-				position: relative;
-				top: 5px;
-				font-size: 20px;
-			}
+            .text {
+                font-size: 12px;
+                text-transform: uppercase;
+            }
 
-			.text {
-				font-size: 12px;
-				text-transform: uppercase;
-			}
+            &:hover {
+                @include opacity(1);
+                @include transition(opacity 500ms);
+            }
 
-			&:hover {
-				@include opacity(1);
-				@include transition(opacity 500ms);
-			}
-
-			&.selected {
-				@include opacity(1);
-			}
-		}
-	}
+            &.selected {
+                @include opacity(1);
+            }
+        }
+    }
 }
 
 #secondary-menu {
-	position: fixed;
-	top: 0px;
-	width: 100%;
-	background-color: whitesmoke;
-	padding: 10px 20px;
-	margin-left: $main-menu-width;
-	height: $secondary-menu-height;
-	//z-index: $secondary-menu-z-index;
-	@extend %border-box;
-	@extend %clearfix;
+    position: fixed;
+    top: 0px;
+    width: 100%;
+    background-color: whitesmoke;
+    padding: 10px 20px;
+    margin-left: $main-menu-width;
+    height: $secondary-menu-height;
+    //z-index: $secondary-menu-z-index;
+    @extend %border-box;
+    @extend %clearfix;
 
-	.menu-item {
-		float: left;
-		font-size: 14px;
-		text-transform: uppercase;
-		text-decoration: none;
-		margin-right: 15px;
-		font-weight: 600;
-		@include opacity(0.8);
-		color: $main-font-color;
+    .menu-item {
+        float: left;
+        font-size: 14px;
+        text-transform: uppercase;
+        text-decoration: none;
+        margin-right: 15px;
+        font-weight: 600;
+        @include opacity(0.8);
+        color: $main-font-color;
 
-		&.selected {
-			font-weight: 800;
-			@include opacity(1);
-		}
+        &.selected {
+            font-weight: 800;
+            @include opacity(1);
+        }
 
-		&:hover {
-			@include opacity(1);
-			@include transition(opacity 500ms);
-		}
-	}
+        &:hover {
+            @include opacity(1);
+            @include transition(opacity 500ms);
+        }
+    }
 }
 
 .secondary-menu-buttons {
-	position: fixed;
-	//display: none;
-	right: 10px;
-	top: 6px;
-	//z-index: $secondary-menu-buttons-z-index;
+    position: fixed;
+    //display: none;
+    right: 10px;
+    top: 6px;
+    //z-index: $secondary-menu-buttons-z-index;
 }
 
 .container {
-	position: fixed;
-	top: 0;
-	width: 100%;
-	margin-top: $secondary-menu-height;
-	height: 100%;
-	padding-left: $main-menu-width;
-	background-color: white;
-	@extend %border-box;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    margin-top: $secondary-menu-height;
+    height: 100%;
+    padding-left: $main-menu-width;
+    background-color: white;
+    @extend %border-box;
 
-	.container-body {
-		&.padded {
-			padding: 20px 30px;
-		}
-	}
+    .container-body {
+        &.padded {
+            padding: 20px 30px;
+        }
+    }
 }
 
 [ui-view] {
-	position: absolute;
-	left: 0;
-	top: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
 }
 
 [ui-view].ng-enter, [ui-view].ng-leave {
-	
 }
 
 [ui-view].ng-enter {
-	@include transition(all 300ms ease-in-out);
-	@include opacity(0.85);
-	left: 25%;
+    @include transition(all 300ms ease-in-out);
+    @include opacity(0.85);
+    left: 25%;
 }
 
 [ui-view].ng-enter-active {
-	@include opacity(1);
-	left: 0px;
+    @include opacity(1);
+    left: 0px;
 }
 
 [ui-view].ng-leave {
-	//@include opacity(0);
-  /*padding-left: 0px;*/  
-
+    //@include opacity(0);
+    /*padding-left: 0px;*/
 }
 
 [ui-view].ng-leave-active {
-  //@include opacity(1);
-  /*padding-left: 100px;*/
-
+    //@include opacity(1);
+    /*padding-left: 100px;*/
 }
 
 /**** LIST AND TABLE ****/
 .list-container {
-	margin-bottom: 20px;
+    display: flex;
+    flex-flow: column;
+    height: calc(100% - #{$secondary-menu-height});
+    margin-bottom: 20px;
 
-	.header {
-		position: relative;
-		height: 32px;
-		@extend %clearfix;
-		@extend %prevent-user-select;
-		margin-bottom: 7px;
+    @extend %border-box;
 
-		dl {
-			margin: 0;
-			float: left;
-		}
+    .header {
+        position: relative;
+        margin: 8px 0px;
+        padding-right: 16px; // to offset scroll bar
+        font-weight: bold;
+        @extend %clearfix;
+        @extend %prevent-user-select;
+        @extend %border-box;
+    }
 
-		.title {
-			position: relative;
-			float: left;
-			margin-bottom: 0px;
-		}
+    .body {
+        display: flex;
+        flex-flow: column;
+        padding-bottom: 10px;
+        overflow-y: scroll;
 
-		.search {
-			display: inline-block;
-			vertical-align: top;
-		}
+        @extend %border-box;
+    }
 
-		.error.icon {
-			top: 4px;
-		}
+    .row {
+        @extend %clearfix;
+        padding: 2px 0px;
 
-		.link {
-			top: 3px;
-			margin-right: 5px;
-		}
-	}
+        .col {
+            min-height: 1px; // so that columns with no content takes up space
+            padding: 0px 5px;
+            float: left;
 
-	.table {
-		padding: 5px 15px 15px 15px;
-		background-color: white;
-		overflow: auto;
-
-		@extend %main-box-shadow;
-
-		table {
-			position: relative;
-			width: 100%;
-			border-collapse: collapse;
-			background-color: white;
-
-			tr {
-				position: relative;
-				text-align: left;
-			}
-
-			th,
-			td {
-				&:first-child {
-					padding-left: 20px;
-				}
-
-				&:last-child {
-					padding-right: 20px;
-				}
-
-				&.checkbox-wrapper {
-					width: 50px;
-					text-align: center;
-					@extend %border-box;
-					@extend %prevent-user-select;
-					&:hover {
-						cursor: pointer;
-					}
-				}
-
-				&.fit-content {
-					width: 1%;
-				}
-			}
-
-			thead {
-				tr {
-					//background-color: #D2E0E6;
-					color: #50788C;
-					font-size: 100%;
-					text-transform: uppercase;
-					//border-bottom: 1px solid $border-color;
-				}
-
-				th {
-					padding: 10px 0px 10px 10px;
-					text-align: left;
-					@extend %prevent-user-select;
-
-					a {
-						&:not(:first-of-type) {
-							margin-left: 5px;
-						}
-
-						&.sortable {
-							&:before {
-								@extend %material-icons;
-								position: relative;
-								display: inline;
-								font-size: 22px;
-								content: "arrow_drop_down";
-								opacity: 0.3;
-								line-height: 80%;
-								margin-left: -7px;
-								margin-right: -3px;
-								top: 6px;
-							}
-
-							&.sorted-asc:before {
-								content: "arrow_drop_up";
-								opacity: 1;
-							}
-
-							&.sorted-desc:before {
-								content: "arrow_drop_down";
-								opacity: 1;
-							}
-
-							&:hover {
-								cursor: pointer;
-							}
-						}
-					}
-
-					.help:after {
-						top: -2px;
-					}
-				}
-			}
-
-			tbody {
-				width: 100%;
-
-				tr {
-					//border-bottom: 1px solid #EFEFEF;
-					height: 34px;
-
-					&:last-child {
-						//border-bottom: none;
-					}
-
-					&[ng-click]:not(.notClickable):hover {
-						background-color: whitesmoke;
-						cursor: pointer;
-					}
-
-					&.selected {
-						//background-color: $selection-light-color !important;
-					}
-				}
-
-				td {
-					padding: 5px 10px 5px 10px;
-					font-size: 100%;
-
-					dl {
-						margin: 0px;
-						display: inline-block;
-						vertical-align: middle;
-						
-						dd {
-							min-height: auto;
-							padding: 0px;
-							input:not([type=checkbox]) {
-								
-							}
-						}
-					}
-
-					.icon {
-						font-size: 16px;
-
-						&.lock:before {
-							content: "lock";
-						}
-
-						&.check:before {
-							font-size: 22px;
-							content: "check";
-						}
-					}
-				}
-			}
-		}
-	}
-
-	/* For both table and list-panels */
-	tbody,
-	.list-panels-container {
-		&.empty {
-			display: block;
-			height: 100px;
-
-			&:after {
-				display: block;
-				position: absolute;
-				width: 100%;
-				top: 50%;
-				content: "NO RESULTS";
-				text-align: center;
-				color: #BFBFBF;
-				font-size: 24px;
-			}
-		}
-	}
+            @extend %border-box;
+        }
+    }
 }
 
 .button,
 .dropdown button {
-	position: relative;
-	display: inline-block;
-	font-family: $main-font;
-	font-weight: bold;
-	text-transform: uppercase;
+    position: relative;
+    display: inline-block;
+    font-family: $main-font;
+    font-weight: bold;
+    text-transform: uppercase;
     min-width: 60px;
-	height: 28px;
+    height: 28px;
     background-color: white;
     outline: none;
     border: 1px solid #C5C5C5;
-	padding: 0px 5px;
-	text-align: center;
-	color: #828282;
-	vertical-align: middle;
-	text-decoration: none;
-	font-size: 11px;
+    padding: 0px 5px;
+    text-align: center;
+    color: #828282;
+    vertical-align: middle;
+    text-decoration: none;
+    font-size: 11px;
 
-	@include transition(background-color 200ms linear);
-	@extend %border-box;
+    @include transition(background-color 200ms linear);
+    @extend %border-box;
 
 
-	&.main {
-		border: 1px solid black;
-		background-color: #2d4756;
-		color: whitesmoke;
+    &.main {
+        border: 1px solid black;
+        background-color: #2d4756;
+        color: whitesmoke;
 
-		&:hover {
-			background-color: black;
-		}
-	}
+        &:hover {
+            background-color: black;
+        }
+    }
 
-	&.disabled,
-	&:disabled {
-		@include opacity(0.5);
-		pointer-events: none;
-	}
+    &.disabled,
+    &:disabled {
+        @include opacity(0.5);
+        pointer-events: none;
+    }
 
-	&:hover {
-		background-color: whitesmoke;
-		cursor: pointer;
-	}
+    &:hover {
+        background-color: whitesmoke;
+        cursor: pointer;
+    }
 }
 
 .open > .dropdown-menu {
-  display: block;
+    display: block;
 }
 
 .file-uploader-input {
-	position: absolute;
-	width: 100%;
-	height: 100% !important;
-	top: 0px;
-	left: 0px;
-	bottom: 0px;
-	right: 0px;
-	font-size: 20px;
-	cursor: pointer;
-	opacity: 0;
+    position: absolute;
+    width: 100%;
+    height: 100% !important;
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
 }
 
 /**** DL DT DD ****/
 dl {
-	position: relative;
+    position: relative;
     width: 240px;
-	padding: 0px;
-	margin: 0px 0px 8px 0px;
+    padding: 0px;
+    margin: 0px 0px 8px 0px;
 
-	dt {
-		position: relative;
-		width: 100%;
+    dt {
+        position: relative;
+        width: 100%;
         padding: 0px 0px 0px 0px;
         margin: 0px;
-		text-align: left;
-		font-size: 12px;
-		text-transform: uppercase;
-		height: 18px;
-		color: #717171;
+        text-align: left;
+        font-size: 12px;
+        text-transform: uppercase;
+        height: 18px;
+        color: #717171;
 
-		.help {
-			position: relative;
-			left: 1px;
-			top: -2px;
-		}
+        .help {
+            position: relative;
+            left: 1px;
+            top: -2px;
+        }
 
-		.required:after {
-			content: " *";
-			color: $error-color;
-		}
+        .required:after {
+            content: " *";
+            color: $error-color;
+        }
 
-		@extend %ellipsis;
-	}
+        @extend %ellipsis;
+    }
 
-	dd {
-		position: relative;
-		width: 100%;
-		min-height: 30px;
+    dd {
+        position: relative;
+        width: 100%;
+        min-height: 30px;
         padding: 0px 10px 0px 0px;
         margin: 0px;
-		font-size: 16px;
-		font-weight: 400;
-		line-height: 20px;
-		word-break: break-all;
-		color: black;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 20px;
+        word-break: break-all;
+        color: black;
 
-		@extend %ellipsis;
-		@extend %border-box;
+        @extend %ellipsis;
+        @extend %border-box;
 
-		input,
-		select,
-		textarea {
-			width: 100%;
-		}
+        input,
+        select,
+        textarea {
+            width: 100%;
+        }
 
-		.input-container {
-			width: 100%;
-			white-space: normal;
-		}
+        .input-container {
+            width: 100%;
+            white-space: normal;
+        }
 
-		&:empty:after {
-			content: "--";
-		}
+        &:empty:after {
+            content: "--";
+        }
 
-		&.thin {
-			font-weight: 400;
-		}
+        &.thin {
+            font-weight: 400;
+        }
 
-		&.expandable {
-		text-overflow: none;
-		white-space: normal;
-	}
+        &.expandable {
+            text-overflow: none;
+            white-space: normal;
+        }
 
-		input[type=radio] + label {
-			font-weight: 100;
-			font-size: 15px;
-		}
-	}
+        input[type=radio] + label {
+            font-weight: 100;
+            font-size: 15px;
+        }
+    }
 
-	&.flat {
-		margin: 0px;
+    &.flat {
+        margin: 0px;
 
-		dd {
-			min-height: auto;
-			margin: 0px;
-		}
-	}
+        dd {
+            min-height: auto;
+            margin: 0px;
+        }
+    }
 
-	&.dl-full {
-		width: 100%;
-	}
+    &.dl-full {
+        width: 100%;
+    }
 
-	&.dl-half {
-		width: 50%;
-	}
+    &.dl-half {
+        width: 50%;
+    }
 
-	&.dl-auto {
-		width: auto;
-	}
+    &.dl-auto {
+        width: auto;
+    }
 
-	&.dl-XXXXS {
-		width: 30px;	
-	}
+    &.dl-XXXXS {
+        width: 30px;
+    }
 
 
-	&.dl-XXXS {
-		width: 60px;
-	}
+    &.dl-XXXS {
+        width: 60px;
+    }
 
-	&.dl-XXS {
-		width: 90px;
-	}
+    &.dl-XXS {
+        width: 90px;
+    }
 
-	&.dl-XS {
-		width: 120px;
-	}
+    &.dl-XS {
+        width: 120px;
+    }
 
-	&.dl-S {
-		width: 180px;
-	}
+    &.dl-S {
+        width: 180px;
+    }
 
-	&.dl-M {
-		width: 240px;
-	}
+    &.dl-M {
+        width: 240px;
+    }
 
-	&.dl-L {
-		width: 300px;
-	}
+    &.dl-L {
+        width: 300px;
+    }
 
-	&.dl-XL {
-		width: 360px;
-	}
+    &.dl-XL {
+        width: 360px;
+    }
 
-	&.dl-XXL {
-		width: 420px;
-	}
+    &.dl-XXL {
+        width: 420px;
+    }
 
-	&.dl-XXXL {
-		width: 480px;
-	}
+    &.dl-XXXL {
+        width: 480px;
+    }
 
-	&.dl-XXXXL {
-		width: 540px;
-	}
+    &.dl-XXXXL {
+        width: 540px;
+    }
 }
 
 section {
-	@extend %clearfix;
+    @extend %clearfix;
 
-	dl {
-		float: left;
-	}
+    dl {
+        float: left;
+    }
 }
 
 .file-uploader {
-	position: relative;
-	width: 100%;
-	min-height: 150px;
+    position: relative;
+    width: 100%;
+    min-height: 150px;
 
-	.file-uploader-container {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		border: 1px solid $main-border-color;
-		text-align: center;
-		padding: 0px 20px 0px 20px;
-		@extend %border-box;
+    .file-uploader-container {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border: 1px solid $main-border-color;
+        text-align: center;
+        padding: 0px 20px 0px 20px;
+        @extend %border-box;
 
-		.file-uploader-input {
-			position: absolute;
-			width: 100%;
-			height: 100% !important;
-			top: 0px;
-			left: 0px;
-			bottom: 0px;
-			right: 0px;
-			font-size: 20px;
-			cursor: pointer;
-			opacity: 0;
-		}
+        .file-uploader-input {
+            position: absolute;
+            width: 100%;
+            height: 100% !important;
+            top: 0px;
+            left: 0px;
+            bottom: 0px;
+            right: 0px;
+            font-size: 20px;
+            cursor: pointer;
+            opacity: 0;
+        }
 
-		.default-text {
-			position: relative;
-			width: 100%;
-			font-size: 17px;
-			font-weight: 100;
-			color: #989898;
-			top: 45%;
-		}
+        .default-text {
+            position: relative;
+            width: 100%;
+            font-size: 17px;
+            font-weight: 100;
+            color: #989898;
+            top: 45%;
+        }
 
-		.uploading-files {
-			position: relative;
-			top: 35%;
-			//color: $selection-color;
-			font-size: 14px;
+        .uploading-files {
+            position: relative;
+            top: 35%;
+            //color: $selection-color;
+            font-size: 14px;
 
-			.material-icons {
-				font-size: 60px;
-			}
-		}
+            .material-icons {
+                font-size: 60px;
+            }
+        }
 
-		&:hover {
-			border: 1px solid $main-border-hover-color !important;
-			cursor: pointer;
-		}
+        &:hover {
+            border: 1px solid $main-border-hover-color !important;
+            cursor: pointer;
+        }
 
-		&.active {
-			//border: 1px solid $selection-border-color;
-			background-color: #f6fcff;
-		}
-	}
+        &.active {
+            //border: 1px solid $selection-border-color;
+            background-color: #f6fcff;
+        }
+    }
 }

@@ -10,6 +10,9 @@ namespace Cpi.Application.BusinessObjects
 {
     public class InvoiceBo : BaseBo<InvoiceDm>
     {
-        
+        public IQueryable<InvoiceDm> GetListBaseQuery()
+        {
+            return GetListQuery();
+        }
     }
 }

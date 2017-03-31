@@ -7,7 +7,7 @@ namespace Cpi.ManageWeb.Models
 {
     public class Pagination
     {
-        public Pagination(int page, int total, int? take = 20)
+        public Pagination(int page, int total, int? take = 200)
         {
             Pages = Convert.ToInt32(Math.Ceiling((decimal)total / (decimal)take));
             Page = page;
