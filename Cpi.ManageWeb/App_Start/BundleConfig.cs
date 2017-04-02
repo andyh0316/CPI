@@ -1,5 +1,4 @@
-﻿using System.Web;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
 
 namespace Cpi.ManageWeb
 {
@@ -22,8 +21,10 @@ namespace Cpi.ManageWeb
                         "~/Scripts/angular/angular.js",
                         "~/Scripts/angular/angular-animate.js",
                         "~/Scripts/angular/angular-ui-router.js",
-                        "~/Scripts/angular/angular-base.js",
-                        "~/Scripts/angular/pagination.js"));
+                        "~/Scripts/angular/angular-base.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/javascript").Include(
+                        "~/Scripts/javascript/javascript.js"));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.

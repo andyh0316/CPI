@@ -2,9 +2,7 @@
 
 $main-font: 'Open Sans', sans-serif;
 $main-font-color: black;
-
-$main-menu-width: 150px;
-$secondary-menu-height: 40px;
+$light-font-color: #b9b9b9;
 
 $main-menu-z-index: 1000;
 $secondary-menu-z-index: 1000;
@@ -80,6 +78,7 @@ body {
     font-size: 12px;
 }
 
+$main-menu-width: 150px;
 #main-menu {
     position: fixed;
     background-color: #2d4756;
@@ -131,6 +130,7 @@ body {
     }
 }
 
+$secondary-menu-height: 40px;
 #secondary-menu {
     position: fixed;
     top: 0px;
@@ -142,35 +142,54 @@ body {
     //z-index: $secondary-menu-z-index;
     @extend %border-box;
     @extend %clearfix;
-
-    .menu-item {
-        float: left;
-        font-size: 14px;
-        text-transform: uppercase;
-        text-decoration: none;
-        margin-right: 15px;
-        font-weight: 600;
-        @include opacity(0.8);
-        color: $main-font-color;
-
-        &.selected {
-            font-weight: 800;
-            @include opacity(1);
-        }
-
-        &:hover {
-            @include opacity(1);
-            @include transition(opacity 500ms);
-        }
-    }
 }
 
-.secondary-menu-buttons {
+.secondary-menu {
     position: fixed;
-    //display: none;
-    right: 10px;
-    top: 6px;
-    //z-index: $secondary-menu-buttons-z-index;
+    width: calc(100% - #{$main-menu-width});
+    height: $secondary-menu-height;
+    background-color: whitesmoke;
+    //margin-left: $main-menu-width;
+    top: 0px;
+    left: $main-menu-width;
+    right: 0px;
+    @extend %border-box;
+
+    $padding: 5px 10px 0px 10px;
+    $title-container-width: 150px;
+
+    .title-container {
+        background-color: #efefef;
+        float: left;
+        width: $title-container-width;
+        height: 100%;
+        @extend %border-box;
+        padding: $padding;
+
+        .title {
+            display: inline-block;
+            font-size: 20px;
+        }
+
+        .list-total {
+            display: inline-block;
+            font-size: 11px;
+            color: $light-font-color;
+        }
+    }
+
+    .others-container {
+        margin-left: $title-container-width;
+        padding: $padding;
+
+        .search {
+            display: inline-block;
+        }
+
+        .buttons {
+            float: right;
+        }
+    }
 }
 
 .container {
@@ -533,4 +552,94 @@ section {
             background-color: #f6fcff;
         }
     }
+}
+
+.search {
+    position: relative;
+    height: 30px;
+
+    input.search-box {
+        float: left;
+        width: 200px;
+        height: 100%;
+        padding-left: 30px !important;
+        padding-right: 0;
+        background-image: url('/Images/Icons/search-box-icon.png');
+        background-size: 16px 16px;
+        background-repeat: no-repeat;
+        background-position: 8px center;
+        transition: width 300ms ease-in-out;
+
+        &:focus {
+            //width: 300px;
+        }
+    }
+
+    button {
+        min-width: 0px !important;
+        float: left;
+        height: 100%;
+        border-left: none;
+    }
+
+    a {
+        top: 5px;
+        font-size: 12px;
+        margin-left: 8px;
+    }
+}
+
+/**** INPUTS ****/
+input:not([type=checkbox]):not([type="radio"]),
+select,
+textarea,
+.input-container {
+    font-family: $main-font;
+    height: 28px;
+    padding: 0px 5px 0px 5px;
+    margin: 0px;
+    box-sizing: border-box;
+    outline: 0;
+    border: 1px solid #BDBDBD;
+    font-size: 12px;
+
+    &:focus {
+        outline: none;
+        //border: 1px solid $selection-color;
+        transition: all 150ms ease-in-out;
+    }
+
+    &[date-input] {
+        background-image: url('/Images/date-input.png');
+        background-size: 16px 16px;
+        background-repeat: no-repeat;
+        background-position: right 5px center;
+        padding-right: 24px;
+    }
+
+    &:disabled {
+        background-color: whitesmoke;
+    }
+}
+
+.input-container {
+    min-height: 28px;
+    height: auto;
+    padding: 1px 2px 1px 2px;
+
+    input {
+        width: 200px;
+        height: 28px;
+        border: none;
+    }
+
+    &:hover {
+        cursor: text;
+    }
+}
+
+textarea {
+    height: 100px;
+    max-height: 500px;
+    resize: vertical;
 }

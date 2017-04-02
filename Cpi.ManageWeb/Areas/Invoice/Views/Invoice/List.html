@@ -1,33 +1,38 @@
 ﻿<div class="container">
-    
-    <div ng-show="state.current.name == 'List'" class="secondary-menu-buttons">
-        <button class="button main " ng-click="import()">Import</button>
-        <button class="button main " ng-click="import()">Import</button>
-        <button class="button main " ng-click="import()">Import</button>
-        <!--<button class="button main">
-            Import
-            <input class="file-uploader-input" name="file" type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"/>
-        </button>-->
+    <div ng-show="state.current.name == 'List'" class="secondary-menu">
+        <div class="title-container">
+            <div class="title">Invoices</div>
+            <div class="list-total">{{model.ListLoadCalculator.Total}}</div>
+        </div>
+        <div class="others-container">
+            <form class="search">
+                <input type="text" class="search-box" ng-model="simpleSearchString" placeholder="Search" />
+            </form>
+            <div class="buttons">
+                <button class="button main" ng-click="import()">Import</button>
+            </div>
+        </div>
     </div>
 
     <div class="list-container">
         <div class="header">
             <div class="row">
-                <div style="width: 30%" class="col">Date</div>
+                <div style="width: 30%" class="col">Id</div>
                 <div style="width: 30%" class="col">Customer Name</div>
                 <div style="width: 40%" class="col">Customer Phone</div>
             </div>
         </div>
 
-        <div class="body">
+        <div list-container-body class="body">
             <div ng-repeat="record in model.Records" class="row">
-                <div style="width: 30%" class="col">{{record.Date}}</div>
+                <div style="width: 30%" class="col">{{record.Id}}</div>
                 <div style="width: 30%" class="col">{{record.CustomerName}}</div>
                 <div style="width: 40%" class="col">{{record.CustomerPhone}}</div>
             </div>
+
+            <div ng-show="false" ng-click="getList(true)"></div>
         </div>
-
-
+        
         <!--<div class="table">
             <table>
                 <thead>

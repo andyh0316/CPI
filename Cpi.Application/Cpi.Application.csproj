@@ -64,6 +64,7 @@
     <Compile Include="DataModels\Interface\ISoftDeleteDm.cs" />
     <Compile Include="DataModels\LookUp\LookUpCommodityDm.cs" />
     <Compile Include="DataTransferObjects\InvoiceDto.cs" />
+    <Compile Include="Filters\ListFilter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

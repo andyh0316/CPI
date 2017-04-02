@@ -22,7 +22,7 @@ namespace Cpi.ManageWeb.Controllers.Base
         }
 
         // takes a query and applies sorting and pagination depending on the parameters passed
-        public IQueryable<T> GetPagedSortedQuery<T>(IQueryable<T> query, int skip, int take, string sortColumn, bool sortDesc)
+        public IQueryable<T> GetLoadedSortedQuery<T>(IQueryable<T> query, int skip, int take, string sortColumn, bool sortDesc)
         {
             string sortDescString = (sortDesc) ? " descending" : "";
             query = query.OrderBy(sortColumn + sortDescString + ", Id");

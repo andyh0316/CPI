@@ -10,7 +10,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
             controller: 'ListController',
             resolve: {
                 jsonResult: ['$stateParams', 'baseBo', function ($stateParams, baseBo) {
-                    return baseBo.httpRequest('POST', '/Invoice/Invoice/GetList', { page: 1 });
+                    return baseBo.httpRequest('POST', '/Invoice/Invoice/GetList', { });
                 }]
             }
         })
@@ -62,9 +62,14 @@ app.controller('ListController', ['$scope', '$controller', '$state', 'baseBo', '
     //    $state.go('List.CreateStaffServices');
     //};
 
-    $scope.getList = function () {
-        baseBo.httpRequest('POST', '/Staff/StaffInfo/GetStaffList', { page: $scope.page })
-              .then(function (result) { $scope.model = result.model; });
+    $scope.getList = function (loadMore) {
+        $scope.filter.Loads = (loadMore) ? $scope.filter.Loads + 1 : 0;
+
+        baseBo.httpRequest('POST', '/Invoice/Invoice/GetList', $scope.filter)
+            .then(function (result) {
+                $scope.model.Records = (loadMore) ? $scope.model.Records.concat(result.Object.Records) : result.Object.Records;
+                $scope.model.ListLoadCalculator = result.Object.ListLoadCalculator;
+            });
     };
 
     //$scope.getListData = function () {

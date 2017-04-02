@@ -38,7 +38,7 @@
   user-select: none;
   /* Likely future */ }
 
-#main-menu .menu-body .menu-item, #secondary-menu, .container, .list-container, .list-container .header, .list-container .body, .list-container .row .col, .button,
+#main-menu .menu-body .menu-item, #secondary-menu, .secondary-menu, .secondary-menu .title-container, .container, .list-container, .list-container .header, .list-container .body, .list-container .row .col, .button,
 .dropdown button, dl dd, .file-uploader .file-uploader-container {
   -webkit-box-sizing: border-box;
   /* Chrome all / Safari all */
@@ -120,29 +120,35 @@ body {
   padding: 10px 20px;
   margin-left: 150px;
   height: 40px; }
-  #secondary-menu .menu-item {
-    float: left;
-    font-size: 14px;
-    text-transform: uppercase;
-    text-decoration: none;
-    margin-right: 15px;
-    font-weight: 600;
-    opacity: 0.8;
-    color: black; }
-    #secondary-menu .menu-item.selected {
-      font-weight: 800;
-      opacity: 1; }
-    #secondary-menu .menu-item:hover {
-      opacity: 1;
-      -webkit-transition: opacity 500ms;
-      -moz-transition: opacity 500ms;
-      -o-transition: opacity 500ms;
-      transition: opacity 500ms; }
 
-.secondary-menu-buttons {
+.secondary-menu {
   position: fixed;
-  right: 10px;
-  top: 6px; }
+  width: calc(100% - 150px);
+  height: 40px;
+  background-color: whitesmoke;
+  top: 0px;
+  left: 150px;
+  right: 0px; }
+  .secondary-menu .title-container {
+    background-color: #efefef;
+    float: left;
+    width: 150px;
+    height: 100%;
+    padding: 5px 10px 0px 10px; }
+    .secondary-menu .title-container .title {
+      display: inline-block;
+      font-size: 20px; }
+    .secondary-menu .title-container .list-total {
+      display: inline-block;
+      font-size: 11px;
+      color: #b9b9b9; }
+  .secondary-menu .others-container {
+    margin-left: 150px;
+    padding: 5px 10px 0px 10px; }
+    .secondary-menu .others-container .search {
+      display: inline-block; }
+    .secondary-menu .others-container .buttons {
+      float: right; }
 
 .container {
   position: fixed;
@@ -384,4 +390,78 @@ section dl {
       cursor: pointer; }
     .file-uploader .file-uploader-container.active {
       background-color: #f6fcff; }
+
+.search {
+  position: relative;
+  height: 30px; }
+  .search input.search-box {
+    float: left;
+    width: 200px;
+    height: 100%;
+    padding-left: 30px !important;
+    padding-right: 0;
+    background-image: url("/Images/Icons/search-box-icon.png");
+    background-size: 16px 16px;
+    background-repeat: no-repeat;
+    background-position: 8px center;
+    transition: width 300ms ease-in-out; }
+  .search button {
+    min-width: 0px !important;
+    float: left;
+    height: 100%;
+    border-left: none; }
+  .search a {
+    top: 5px;
+    font-size: 12px;
+    margin-left: 8px; }
+
+/**** INPUTS ****/
+input:not([type=checkbox]):not([type="radio"]),
+select,
+textarea,
+.input-container {
+  font-family: "Open Sans", sans-serif;
+  height: 28px;
+  padding: 0px 5px 0px 5px;
+  margin: 0px;
+  box-sizing: border-box;
+  outline: 0;
+  border: 1px solid #BDBDBD;
+  font-size: 12px; }
+  input:not([type=checkbox]):not([type="radio"]):focus,
+  select:focus,
+  textarea:focus,
+  .input-container:focus {
+    outline: none;
+    transition: all 150ms ease-in-out; }
+  input:not([type=checkbox]):not([type="radio"])[date-input],
+  select[date-input],
+  textarea[date-input],
+  .input-container[date-input] {
+    background-image: url("/Images/date-input.png");
+    background-size: 16px 16px;
+    background-repeat: no-repeat;
+    background-position: right 5px center;
+    padding-right: 24px; }
+  input:not([type=checkbox]):not([type="radio"]):disabled,
+  select:disabled,
+  textarea:disabled,
+  .input-container:disabled {
+    background-color: whitesmoke; }
+
+.input-container {
+  min-height: 28px;
+  height: auto;
+  padding: 1px 2px 1px 2px; }
+  .input-container input {
+    width: 200px;
+    height: 28px;
+    border: none; }
+  .input-container:hover {
+    cursor: text; }
+
+textarea {
+  height: 100px;
+  max-height: 500px;
+  resize: vertical; }
 

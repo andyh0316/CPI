@@ -1,4 +1,4 @@
-﻿var baseModule = angular.module('AngularBaseModule', ['PaginationModule']);
+﻿var baseModule = angular.module('AngularBaseModule', []);
 
 baseModule.config(['$httpProvider', function ($httpProvider) {
     $httpProvider.defaults.headers.common['Cache-Control'] = 'no-cache, no-store, must-revalidate';
@@ -32,6 +32,13 @@ baseModule.controller('ListBaseController', ['$scope', '$controller', function (
     angular.extend(this, $controller('BaseController', { $scope: $scope }));
 
     $scope.getList = null; // this is expected to be defined in the child list controllers IF they dont set return funtions for sort and search and etc
+    $scope.filter = {
+        Loads: 0,
+        SortColumn: null, // needs to be defined in every child list controller
+        SortDesc: false,
+        SearchString: null,
+        AdvancedSearch: {}
+    };
 
     // this is called when the child wants to reload the parent list.. for example, when done saving a student, the list will get the updated
     // entries
@@ -183,9 +190,8 @@ baseModule.controller('ListBaseController', ['$scope', '$controller', function (
     };
 
     /**** SIMPLE SEARCH ****/
-    $scope.simpleSearchTimeout = null;
-    $scope.simpleSearchString = null;
-    $scope.$watch('simpleSearchString', function (newVal, oldVal) {
+    $scope.searchStringTimeout = null;
+    $scope.$watch('filter.SearchString', function (newVal, oldVal) {
         if (!newVal && !oldVal) {
             return;
         }
@@ -193,10 +199,10 @@ baseModule.controller('ListBaseController', ['$scope', '$controller', function (
         //$scope.advancedSearch = null;
         //$scope.showAdvancedSearch = false;
 
-        clearTimeout($scope.simpleSearchTimeout);
-        $scope.simpleSearchTimeout = setTimeout(function () {
-            if ($scope.doNotSimpleSearch) {
-                $scope.doNotSimpleSearch = false;
+        clearTimeout($scope.searchStringTimeout);
+        $scope.searchStringTimeout = setTimeout(function () {
+            if ($scope.doNotTriggerSearchString) {
+                $scope.doNotTriggerSearchString = false;
                 return;
             }
 
@@ -205,8 +211,8 @@ baseModule.controller('ListBaseController', ['$scope', '$controller', function (
         }, 500); // wait for user to finish typing input: how many ms to wait
     });
 
-    $scope.simpleSearchGo = function () {
-        $scope.doNotSimpleSearch = true;
+    $scope.searchStringGo = function () {
+        $scope.doNotTriggerSearchString = true;
         $scope.getList();
     };
 
@@ -215,12 +221,11 @@ baseModule.controller('ListBaseController', ['$scope', '$controller', function (
         $scope.showAdvancedSearch = gShowAdvancedSearch;
     }
 
-    $scope.advancedSearch = null;
-    $scope.doNotAdvancedSearch = false;
+    $scope.doNotTriggerAdvancedSearch = false;
     $scope.advancedSearchTimeout = null;
-    $scope.$watch('advancedSearch', function (newVal, oldVal) {
-        if ($scope.doNotAdvancedSearch) {
-            $scope.doNotAdvancedSearch = false;
+    $scope.$watch('filter.AdvancedSearch', function (newVal, oldVal) {
+        if ($scope.doNotTriggerAdvancedSearch) {
+            $scope.doNotTriggerAdvancedSearch = false;
             return;
         }
 
@@ -1038,5 +1043,20 @@ baseModule.directive('fileUploader', function () {
               '</div>' +
               '<input class="file-uploader-input" name="file" type="file" accept="{{accept}}" ng-multiple="multiple" />' +
           '</div>',
+    };
+});
+
+baseModule.directive('listContainerBody', function () {
+    return {
+        restrict: 'A',
+        link: function ($scope, $element, $attrs) {
+            var raw = $element[0];
+            $element.bind('scroll', function () {
+                console.log(raw.scrollTop + raw.offsetHeight + ' ' + raw.scrollHeight);
+                if (raw.scrollTop + raw.offsetHeight >= raw.scrollHeight) { //at the bottom
+                    $scope.getList(true);
+                }
+            })
+        }
     };
 });

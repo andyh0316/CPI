@@ -1,20 +1,21 @@
 ﻿using Cpi.Application.BusinessObjects;
 using Cpi.Application.DataModels;
+using Cpi.Application.Filters;
 using Cpi.ManageWeb.Controllers.Base;
 using Cpi.ManageWeb.Models;
-using Ninject;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Cpi.ManageWeb.Areas.Invoice.Controllers
 {
     public class InvoiceController : BaseController
     {
-        [Inject]
-        public InvoiceBo InvoiceBo { get; set; }
+        private InvoiceBo InvoiceBo;
+        public InvoiceController(InvoiceBo invoiceBo)
+        {
+            InvoiceBo = invoiceBo;
+        }
 
         public ActionResult Index()
         {
@@ -22,13 +23,13 @@ namespace Cpi.ManageWeb.Areas.Invoice.Controllers
         }
 
         [HttpPost]
-        public ContentResult GetList(int page = 1)
+        public ContentResult GetList(ListFilter.Invoice filter)
         {
             IQueryable<InvoiceDm> query = InvoiceBo.GetListBaseQuery();
-            Pagination pagination = new Pagination(page, query.Count());
-            List<InvoiceDm> records = GetPagedSortedQuery(query, pagination.Skip, pagination.Take, "CustomerName", false).ToList();
-            return JsonModel(new { Records = records, Pagination = pagination });
-        }
+            ListLoadCalculator listLoadCalculator = new ListLoadCalculator(filter.Loads, query.Count());
+            List<InvoiceDm> records = GetLoadedSortedQuery(query, listLoadCalculator.Skip, listLoadCalculator.Take, "CustomerName", false).ToList();
+            return JsonModel(new { Records = records, ListLoadCalculator = listLoadCalculator });
+        } 
 
         //[HttpGet]
         //public ContentResult GetImport()
