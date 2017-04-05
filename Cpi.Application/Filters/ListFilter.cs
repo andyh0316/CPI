@@ -16,7 +16,7 @@ namespace Cpi.Application.Filters
             public string SearchString { get; set; }
         }
 
-        public class Invoice : BaseListFilter
+        public class Call : BaseListFilter
         {
             //public AdvancedSearch AdvancedSearch { get; set; }
             public class AdvancedSearch

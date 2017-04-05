@@ -209,8 +209,8 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Areas\Invoice\Controllers\InvoiceController.cs" />
-    <Compile Include="Areas\Invoice\InvoiceAreaRegistration.cs" />
+    <Compile Include="Areas\Call\Controllers\CallController.cs" />
+    <Compile Include="Areas\Call\CallAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Base\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -258,7 +258,7 @@
     <Content Include="Content\Fonts\OpenSans-Semibold.ttf" />
     <Content Include="Content\Fonts\OpenSans-SemiboldItalic.ttf" />
     <Content Include="Content\Fonts\Fonts.scss" />
-    <Content Include="Areas\Invoice\Views\Web.config" />
+    <Content Include="Areas\Call\Views\Web.config" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -284,8 +284,8 @@
     <Content Include="Scripts\knockout-2.2.0.debug.js" />
     <Content Include="Scripts\knockout-2.2.0.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
-    <Content Include="Areas\Invoice\Views\Invoice\invoiceApp.js" />
-    <Content Include="Areas\Invoice\Views\Invoice\List.html" />
+    <Content Include="Areas\Call\Views\Call\CallApp.js" />
+    <Content Include="Areas\Call\Views\Call\List.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -309,14 +309,14 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
-    <Content Include="Areas\Invoice\Views\Invoice\Index.cshtml" />
+    <Content Include="Areas\Call\Views\Call\Index.cshtml" />
     <Content Include="Views\Shared\_PublicLayout.cshtml" />
     <Content Include="Views\Shared\_AppLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Invoice\Models\" />
-    <Folder Include="Areas\Invoice\Views\Shared\" />
+    <Folder Include="Areas\Call\Models\" />
+    <Folder Include="Areas\Call\Views\Shared\" />
     <Folder Include="Images\Icons\" />
   </ItemGroup>
   <ItemGroup>

@@ -1,0 +1,95 @@
+﻿<div class="container">
+    <div ng-show="state.current.name == 'List'" class="secondary-menu">
+        <div class="title-container">
+            <div class="title">Calls</div>
+            <div class="list-total">{{model.ListLoadCalculator.Total}}</div>
+        </div>
+        <div class="others-container">
+            <form class="search">
+                <input type="text" class="search-box" ng-model="simpleSearchString" placeholder="Search" />
+            </form>
+            <div class="buttons">
+                <button class="button main" ng-click="create()">+ Create</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="list-container">
+        <div class="header">
+            <div class="row">
+                <div style="width: 10%" class="col">No.</div>
+                <div style="width: 10%" ng-class="getSortOrder('Date')" ng-click="sort('Date')" class="col">Date</div>
+                <div style="width: 10%" ng-class="getSortOrder('CustomerName')" ng-click="sort('CustomerName')" class="col">Customer Name</div>
+                <div style="width: 10%" class="col">Customer Phone</div>
+                <div style="width: 10%" ng-class="getSortOrder('Operator.Name')" ng-click="sort('Operator.Name')" class="col">Operator</div>
+                <div style="width: 10%" ng-class="getSortOrder('DeliveryStaff.Name')" ng-click="sort('DeliveryStaff.Name')" class="col">Delivery Staff</div>
+                <div style="width: 10%" ng-class="getSortOrder('DeliveryDate')" ng-click="sort('DeliveryDate')" class="col">Delivery Date</div>
+                <div style="width: 10%" class="col">Action</div>
+            </div>
+        </div>
+
+        <div list-container-body class="body">
+            <div ng-repeat="record in model.Records" class="row">
+                <div style="width: 10%" class="col">{{$index + 1}}</div>
+                <div style="width: 10%" class="col">
+                    <div ng-show="record.isEditing"><input ng-model="record.Date"/></div>
+                    <div ng-show="!record.isEditing">{{record.Date | shortDate}}</div>
+                </div>
+                <div style="width: 10%" class="col">
+                    <div ng-show="record.isEditing"><input ng-model="record.CustomerName" /></div>
+                    <div ng-show="!record.isEditing">{{record.CustomerName}}</div>
+                </div>
+                <div style="width: 10%" class="col">
+                    <div ng-show="record.isEditing"><input ng-model="record.CustomerPhone" /></div>
+                    <div ng-show="!record.isEditing">{{record.CustomerPhone}}</div>
+                </div>
+                <div style="width: 10%" class="col">
+                    <div ng-show="!record.isEditing">{{record.Operator.Name}}</div>
+                </div>
+                <div style="width: 10%" class="col">
+                    <div ng-show="!record.isEditing">{{record.DeliveryStaff.Name}}</div>
+                </div>
+                <div style="width: 10%" class="col">
+                    <div ng-show="record.isEditing"><input ng-model="record.DeliveryDate" /></div>
+                    <div ng-show="!record.isEditing">{{record.DeliveryDate | shortDate}}</div>
+                </div>
+                <div style="width: 10%" class="col">
+                    <span class="edit icon" ng-click="record.isEditing = true; $event.stopPropagation();"></span>
+                    <span class="delete icon" ng-click="remove(item.Id); $event.stopPropagation();"></span>
+                </div>
+            </div>
+        </div>
+        
+        <!--<div class="table">
+            <table>
+                <thead>
+                    <tr>
+                        <th><a ng-class="getSortOrder('CustomerName')" ng-click="sort('CustomerName')" class="sortable">Customer Name</a></th>
+                        <th><a ng-class="getSortOrder('Identification')" ng-click="sort('Identification')" class="sortable">{{state.current.name}}</a></th>
+                        <th><a ng-class="getSortOrder('Discipline')" ng-click="sort('Discipline')" class="sortable">Discipline</a></th>
+                        <th><a ng-class="getSortOrder('Position')" ng-click="sort('Position')" class="sortable">Position</a></th>
+                        <th><a ng-class="getSortOrder('CurrentSchool')" ng-click="sort('CurrentSchool')" class="sortable">Current School</a></th>
+                        <th class="action"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="record in model.Records" ng-click="view(item.Id)" selectable-text>
+                        <td>{{record.CustomerName}}</td>
+                        <td>{{record.CustomerPhone}}</td>
+                        <td>{{record.Discipline}}</td>
+                        <td>{{record.Position}}</td>
+                        <td>{{record.CurrentSchool}}</td>
+                        <td class="action">
+                            <span ng-show="checkPermission('StaffInfo', 'Edit')" class="edit action-icon" ng-click="edit(item.Id); $event.stopPropagation();"></span>
+                            <span ng-show="checkPermission('StaffInfo', 'Delete')" class="delete action-icon" ng-click="remove(item.Id); $event.stopPropagation();"></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>-->
+
+        <!--<pagination pagination="model.Pagination"></pagination>-->
+
+        <div ui-view></div>
+    </div>
+</div>

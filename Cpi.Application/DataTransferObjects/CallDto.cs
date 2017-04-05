@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Cpi.Application.DataTransferObjects
 {
-    public class InvoiceDto
+    public class CallDto
     {
 
     }

@@ -53,17 +53,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessObjects\Base\BaseBo.cs" />
-    <Compile Include="BusinessObjects\InvoiceBo.cs" />
+    <Compile Include="BusinessObjects\CallBo.cs" />
     <Compile Include="DatabaseContext\CpiDbContext.cs" />
+    <Compile Include="DataModels\AddressDm.cs" />
     <Compile Include="DataModels\Base\BaseDm.cs" />
     <Compile Include="DataModels\Base\LookUpBaseDm.cs" />
+    <Compile Include="DataModels\LookUp\LookUpCallStatusDm.cs" />
+    <Compile Include="DataModels\LookUp\LookUpUserOccupationDm.cs" />
     <Compile Include="DataModels\LookUp\LookUpUserRoleDm.cs" />
     <Compile Include="DataModels\UserDm.cs" />
     <Compile Include="DataModels\ImportDm.cs" />
-    <Compile Include="DataModels\InvoiceDm.cs" />
+    <Compile Include="DataModels\CallDm.cs" />
     <Compile Include="DataModels\Interface\ISoftDeleteDm.cs" />
     <Compile Include="DataModels\LookUp\LookUpCommodityDm.cs" />
-    <Compile Include="DataTransferObjects\InvoiceDto.cs" />
+    <Compile Include="DataTransferObjects\CallDto.cs" />
     <Compile Include="Filters\ListFilter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

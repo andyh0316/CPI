@@ -15,7 +15,7 @@ namespace Cpi.ManageWeb.App_Start
             Mapper.Initialize(
                 cfg =>
                 {
-                    cfg.CreateMap<InvoiceDm, InvoiceDm>();
+                    cfg.CreateMap<CallDm, CallDm>();
                 }
             );
             Mapper.AssertConfigurationIsValid();
@@ -24,7 +24,7 @@ namespace Cpi.ManageWeb.App_Start
         private static void RegisterInMappers()
         {
             // entities to entities
-            CreateMap<InvoiceDm, InvoiceDm>();
+            CreateMap<CallDm, CallDm>();
             
         }
 

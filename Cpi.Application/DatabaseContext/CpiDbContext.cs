@@ -30,11 +30,14 @@ namespace Cpi.Application.DatabaseContext
             // no cascade deleting: all entries should be soft deleted or many to many references should be manually removed
             modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
 
-            modelBuilder.Configurations.Add(new InvoiceMap());
+            modelBuilder.Configurations.Add(new CallMap());
             modelBuilder.Configurations.Add(new UserMap());
+            modelBuilder.Configurations.Add(new AddressMap());
 
             modelBuilder.Configurations.Add(new LookUpCommodityMap());
             modelBuilder.Configurations.Add(new LookUpUserRoleMap());
+            modelBuilder.Configurations.Add(new LookUpUserOccupationMap());
+            modelBuilder.Configurations.Add(new LookUpCallStatusMap());
         }
 
         internal sealed class MigrationConfiguration : DbMigrationsConfiguration<CpiDbContext>

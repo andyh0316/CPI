@@ -7,6 +7,7 @@ $light-font-color: #b9b9b9;
 $main-menu-z-index: 1000;
 $secondary-menu-z-index: 1000;
 $secondary-menu-buttons-z-index: 1000;
+$tooltip-box-z-index: 2000;
 
 $main-border-color: #eaeaea;
 $main-border-hover-color: #b5b5b5;
@@ -256,6 +257,40 @@ $secondary-menu-height: 40px;
         @extend %clearfix;
         @extend %prevent-user-select;
         @extend %border-box;
+
+        .row {
+            .col {
+                //a {
+                &[ng-click] {
+                    &:after {
+                        @extend %material-icons;
+                        position: absolute;
+                        display: inline;
+                        font-size: 22px;
+                        content: "arrow_drop_down";
+                        opacity: 0.3;
+                        line-height: 80%;
+                        margin-left: -3px;
+                        margin-right: -3px;
+                    }
+
+                    &.sorted-asc:after {
+                        content: "arrow_drop_up";
+                        opacity: 1;
+                    }
+
+                    &.sorted-desc:after {
+                        content: "arrow_drop_down";
+                        opacity: 1;
+                    }
+
+                    &:hover {
+                        cursor: pointer;
+                    }
+                }
+                //}
+            }
+        }
     }
 
     .body {
@@ -265,16 +300,35 @@ $secondary-menu-height: 40px;
         overflow-y: scroll;
 
         @extend %border-box;
+
+        .row {
+            .col {
+                @extend %ellipsis;
+
+                * {
+                    height: 100%;
+                }
+                input {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+        }
     }
 
     .row {
+        // display: flex;
+        //flex-flow: column;
+        //align-items: stretch;
         @extend %clearfix;
         padding: 2px 0px;
 
         .col {
-            min-height: 1px; // so that columns with no content takes up space
             padding: 0px 5px;
             float: left;
+            display: inline;
+            vertical-align: middle;
+            min-height: 26px;
 
             @extend %border-box;
         }
@@ -642,4 +696,46 @@ textarea {
     height: 100px;
     max-height: 500px;
     resize: vertical;
+}
+
+#help-tooltip {
+    position: absolute;
+    background-color: white;
+    z-index: $tooltip-box-z-index;
+    padding: 7px 9px 7px 9px;
+    border: 1px solid #D5D5D5;
+    display: none;
+    max-width: 400px;
+    box-shadow: 0px 0px 5px #D2D2D2;
+    word-wrap: break-word;
+}
+
+/**** Action Icon ****/
+.icon {
+    margin-left: -3px;
+    opacity: 0.5;
+
+    &:before {
+        @extend %material-icons;
+        color: #07618C;
+        font-size: 22px;
+    }
+
+    &.disabled {
+        opacity: 0.2;
+    }
+
+    &:hover {
+        opacity: 1;
+        cursor: pointer !important;
+    }
+
+    &.edit:before {
+        content: "create";
+    }
+
+    &.delete:before {
+        content: "delete";
+        color: $error-color;
+    }
 }

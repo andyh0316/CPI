@@ -1,44 +1,50 @@
-﻿var app = angular.module('InvoiceApp', ['AngularBaseModule', 'ui.router', 'ngAnimate']);
+﻿var app = angular.module('CallApp', ['AngularBaseModule', 'ui.router', 'ngAnimate']);
 
 app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.when("", "/List");
 
+    var listScopeData = {
+        filter: { Loads: 0, SortColumn: "Date", SortDesc: true },
+        httpRequest: { method: 'POST', url: '/Call/Call/GetList' }
+    };
+
     $stateProvider
         .state('List', {
             url: '/List',
-            templateUrl: '/Areas/Invoice/Views/Invoice/List.html',
+            templateUrl: '/Areas/Call/Views/Call/List.html',
             controller: 'ListController',
             resolve: {
-                jsonResult: ['$stateParams', 'baseBo', function ($stateParams, baseBo) {
-                    return baseBo.httpRequest('POST', '/Invoice/Invoice/GetList', { });
-                }]
+                model: ['$stateParams', 'baseBo', function ($stateParams, baseBo) {
+                    return baseBo.httpRequest(listScopeData.httpRequest.method, listScopeData.httpRequest.url, listScopeData.filter);
+                }],
+                modelData: ['$stateParams', 'baseBo', function ($stateParams, baseBo) {
+                    return null;
+                }],
+                scopeData: function () {
+                    return listScopeData;
+                }
             }
         })
         .state('List.View', {
             url: '/Import/',
-            templateUrl: '/Areas/Invoice/Views/Invoice/Import.html',
+            templateUrl: '/Areas/Call/Views/Call/Import.html',
             controller: 'ImportController'
         })
 }]);
 
-app.controller('ListController', ['$scope', '$controller', '$state', 'baseBo', 'jsonResult', function ($scope, $controller, $state, baseBo, jsonResult) {
+app.controller('ListController', ['$scope', '$controller', '$state', 'baseBo', 'model', 'scopeData', function ($scope, $controller, $state, baseBo, model, scopeData) {
     angular.extend(this, $controller('ListBaseController', { $scope: $scope }));
 
-    $scope.model = jsonResult.Object;
-
-    // match resolve dependency params
-    //$scope.sortColumn = 'LastName';
-    //$scope.sortDesc = false;
-    $scope.page = 1;
+    $scope.scopeData = scopeData;
+    $scope.model = model.Object;
 
     $scope.import = function () {
         $state.go('List.Import');
     };
 
-
-    //$scope.create = function () {
-    //    $state.go('List.Staff', { 'mode': 'Create', 'id': 0 });
-    //};
+    $scope.create = function () {
+        $scope.model.Records.unshift({isEditing: true});
+    };
 
     //$scope.view = function (id) {
     //    $state.go('List.Staff', { 'mode': 'View', 'id': id });
@@ -62,15 +68,6 @@ app.controller('ListController', ['$scope', '$controller', '$state', 'baseBo', '
     //    $state.go('List.CreateStaffServices');
     //};
 
-    $scope.getList = function (loadMore) {
-        $scope.filter.Loads = (loadMore) ? $scope.filter.Loads + 1 : 0;
-
-        baseBo.httpRequest('POST', '/Invoice/Invoice/GetList', $scope.filter)
-            .then(function (result) {
-                $scope.model.Records = (loadMore) ? $scope.model.Records.concat(result.Object.Records) : result.Object.Records;
-                $scope.model.ListLoadCalculator = result.Object.ListLoadCalculator;
-            });
-    };
 
     //$scope.getListData = function () {
     //    baseBo.httpRequest('GET', '/Staff/StaffInfo/GetStaffListData')

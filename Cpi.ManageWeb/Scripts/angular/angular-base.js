@@ -28,17 +28,27 @@ baseModule.controller('BaseController', ['$scope', '$state', function ($scope, $
 }]);
 
 /* provides server/backend sorting, paging and searching. For client side sorting and paging */
-baseModule.controller('ListBaseController', ['$scope', '$controller', function ($scope, $controller) {
+baseModule.controller('ListBaseController', ['$scope', '$controller', 'baseBo', function ($scope, $controller, baseBo) {
     angular.extend(this, $controller('BaseController', { $scope: $scope }));
 
-    $scope.getList = null; // this is expected to be defined in the child list controllers IF they dont set return funtions for sort and search and etc
-    $scope.filter = {
-        Loads: 0,
-        SortColumn: null, // needs to be defined in every child list controller
-        SortDesc: false,
-        SearchString: null,
-        AdvancedSearch: {}
+    // this is expected to be inherited in the child list controllers
+    $scope.getList = function (loadMore) {
+        $scope.scopeData.filter.Loads = (loadMore) ? $scope.scopeData.filter.Loads + 1 : 0;
+
+        baseBo.httpRequest($scope.scopeData.httpRequest.method, $scope.scopeData.httpRequest.url, $scope.scopeData.filter)
+            .then(function (result) {
+                $scope.model.Records = (loadMore) ? $scope.model.Records.concat(result.Object.Records) : result.Object.Records;
+                $scope.model.ListLoadCalculator = result.Object.ListLoadCalculator;
+            });
     };
+
+    //$scope.filter = {
+    //    Loads: 0,
+    //    SortColumn: null, // needs to be defined in every child list controller
+    //    SortDesc: false,
+    //    SearchString: null,
+    //    AdvancedSearch: {}
+    //};
 
     // this is called when the child wants to reload the parent list.. for example, when done saving a student, the list will get the updated
     // entries
@@ -55,29 +65,20 @@ baseModule.controller('ListBaseController', ['$scope', '$controller', function (
 
     /**** SORT ****/
     $scope.sort = function (sortColumn) {
-        if ($scope.sortColumn == sortColumn) {
-            $scope.sortDesc = !$scope.sortDesc;
+        if ($scope.scopeData.filter.SortColumn == sortColumn) {
+            $scope.scopeData.filter.SortDesc = !$scope.scopeData.filter.SortDesc;
         } else {
-            $scope.sortDesc = false;
+            $scope.scopeData.filter.SortDesc = false;
         }
 
-        $scope.sortColumn = sortColumn;
-        $scope.page = 1;
+        $scope.scopeData.filter.SortColumn = sortColumn;
 
-        if ($scope.sortReturn) {
-            $scope.sortReturn();
-        } else {
-            $scope.getList();
-        }
-    };
-
-    $scope.setSortReturn = function (returnFunction) {
-        $scope.sortReturn = returnFunction;
+        $scope.getList();
     };
 
     $scope.getSortOrder = function (sortColumn) {
-        if ($scope.sortColumn == sortColumn) {
-            return ($scope.sortDesc) ? 'sorted-desc' : 'sorted-asc';
+        if ($scope.scopeData.filter.SortColumn == sortColumn) {
+            return ($scope.scopeData.filter.SortDesc) ? 'sorted-desc' : 'sorted-asc';
         }
 
         return null;
@@ -422,7 +423,7 @@ baseModule.filter('shortDate', ['$filter', function ($filter) {
     var angularDateFilter = $filter('date');
     return function (date) {
 
-        return angularDateFilter(date, 'MM/dd/yyyy');
+        return angularDateFilter(date, 'dd/MM/yyyy');
     }
 }]);
 

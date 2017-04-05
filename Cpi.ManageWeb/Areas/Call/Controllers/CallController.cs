@@ -7,14 +7,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 
-namespace Cpi.ManageWeb.Areas.Invoice.Controllers
+namespace Cpi.ManageWeb.Areas.Call.Controllers
 {
-    public class InvoiceController : BaseController
+    public class CallController : BaseController
     {
-        private InvoiceBo InvoiceBo;
-        public InvoiceController(InvoiceBo invoiceBo)
+        private CallBo CallBo;
+        public CallController(CallBo callBo)
         {
-            InvoiceBo = invoiceBo;
+            CallBo = callBo;
         }
 
         public ActionResult Index()
@@ -23,11 +23,11 @@ namespace Cpi.ManageWeb.Areas.Invoice.Controllers
         }
 
         [HttpPost]
-        public ContentResult GetList(ListFilter.Invoice filter)
+        public ContentResult GetList(ListFilter.Call filter)
         {
-            IQueryable<InvoiceDm> query = InvoiceBo.GetListBaseQuery();
+            IQueryable<CallDm> query = CallBo.GetListBaseQuery();
             ListLoadCalculator listLoadCalculator = new ListLoadCalculator(filter.Loads, query.Count());
-            List<InvoiceDm> records = GetLoadedSortedQuery(query, listLoadCalculator.Skip, listLoadCalculator.Take, "CustomerName", false).ToList();
+            List<CallDm> records = GetLoadedSortedQuery(query, listLoadCalculator.Skip, listLoadCalculator.Take, filter.SortColumn, filter.SortDesc).ToList();
             return JsonModel(new { Records = records, ListLoadCalculator = listLoadCalculator });
         } 
 

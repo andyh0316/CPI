@@ -1,11 +1,7 @@
 ﻿using Cpi.Application.DataModels.Base;
 using Cpi.Application.DataModels.LookUp;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Cpi.Application.DataModels
 {
@@ -22,7 +18,8 @@ namespace Cpi.Application.DataModels
         public int? UserRoleId { get; set; }
         public virtual LookUpUserRoleDm UserRole { get; set; }
 
-
+        public int? UserOccupationId { get; set; }
+        public virtual LookUpUserOccupationDm UserOccupation { get; set; }
     }
 
     public class UserMap : BaseMap<UserDm>
@@ -31,6 +28,7 @@ namespace Cpi.Application.DataModels
         {
             ToTable("User");
             HasRequired(a => a.UserRole).WithMany().HasForeignKey(a => a.UserRoleId).WillCascadeOnDelete(false);
+            HasRequired(a => a.UserOccupation).WithMany().HasForeignKey(a => a.UserOccupationId).WillCascadeOnDelete(false);
         }
     }
 }
