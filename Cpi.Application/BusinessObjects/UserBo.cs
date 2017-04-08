@@ -1,0 +1,22 @@
+﻿using Cpi.Application.BusinessObjects.Base;
+using Cpi.Application.DataModels;
+using Cpi.Application.Helpers;
+using System.Linq;
+
+namespace Cpi.Application.BusinessObjects
+{
+    public class UserBo : BaseBo<UserDm>
+    {
+        public IQueryable<UserDm> SearchDropDownQuery(string searchString)
+        {
+            IQueryable<UserDm> query = GetListQuery();
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                query = query.Where(a => a.Name.StartsWith(searchString));
+            }
+
+            return query.OrderBy(a => (a.Name == searchString) ? 0 : 1).ThenBy(a => (a.Name.StartsWith(searchString)) ? 0 : 1).Take(ConstHelper.SEARCH_DROP_DOWN_ITEMS);
+        }
+    }
+}

@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="BusinessObjects\Base\BaseBo.cs" />
     <Compile Include="BusinessObjects\CallBo.cs" />
+    <Compile Include="BusinessObjects\UserBo.cs" />
     <Compile Include="DatabaseContext\CpiDbContext.cs" />
     <Compile Include="DataModels\AddressDm.cs" />
     <Compile Include="DataModels\Base\BaseDm.cs" />
@@ -66,12 +67,13 @@
     <Compile Include="DataModels\CallDm.cs" />
     <Compile Include="DataModels\Interface\ISoftDeleteDm.cs" />
     <Compile Include="DataModels\LookUp\LookUpCommodityDm.cs" />
-    <Compile Include="DataTransferObjects\CallDto.cs" />
     <Compile Include="Filters\ListFilter.cs" />
+    <Compile Include="Helpers\ConstHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Attributes\" />
+    <Folder Include="DataTransferObjects\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

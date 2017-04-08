@@ -21,7 +21,8 @@ namespace Cpi.ManageWeb
                         "~/Scripts/angular/angular.js",
                         "~/Scripts/angular/angular-animate.js",
                         "~/Scripts/angular/angular-ui-router.js",
-                        "~/Scripts/angular/angular-base.js"));
+                        "~/Scripts/angular/angular-base.js",
+                        "~/Scripts/angular/ng-infinite-scroll.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/javascript").Include(
                         "~/Scripts/javascript/javascript-base.js"));

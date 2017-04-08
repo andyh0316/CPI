@@ -6,16 +6,91 @@
         </div>
         <div class="others-container">
             <form class="search">
-                <input type="text" class="search-box" ng-model="simpleSearchString" placeholder="Search" />
+                <input type="text" class="search-box" ng-model="scopeData.filter.SearchString" placeholder="Search" />
             </form>
             <div class="buttons">
+                <button ng-show="isEditingAny()" class="button" ng-click="cancelAll()">Cancel</button>
+                <button ng-show="isEditingAny()" class="button main" ng-click="save()">Save</button>
                 <button class="button main" ng-click="create()">+ Create</button>
             </div>
         </div>
     </div>
 
     <div class="list-container">
-        <div class="header">
+        <table>
+            <thead>
+                <tr>
+                    <th class="number">No.</th>
+                    <th ng-class="getSortOrder('Date')" ng-click="sort('Date')">Date</th>
+                    <th ng-class="getSortOrder('CustomerName')" ng-click="sort('CustomerName')">Customer Name</th>
+                    <th>Customer Phone</th>
+                    <th ng-class="getSortOrder('Operator.Name')" ng-click="sort('Operator.Name')">Operator</th>
+                    <th ng-class="getSortOrder('DeliveryStaff.Name')" ng-click="sort('DeliveryStaff.Name')">Delivery Staff</th>
+                    <th ng-class="getSortOrder('DeliveryDate')" ng-click="sort('DeliveryDate')">Delivery Date</th>
+                    <th class="action">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="record in model.Records" ng-class="{deleting: record.Deleted}">
+                    <td class="number">{{$index + 1}}</td>
+                    <td>
+                        <dl>
+                            <dd ng-show="!record.isEditing">{{record.Date | shortDate}}</dd>
+                            <dd ng-show="record.isEditing"><input ng-model="record.Date" date-input /></dd>
+                        </dl>
+                    </td>
+                    <td>
+                        <dl>
+                            <dd ng-show="!record.isEditing">{{record.CustomerName}}</dd>
+                            <dd ng-show="record.isEditing"><input ng-model="record.CustomerName" /></dd>
+                        </dl>
+                    </td>
+                    <td>
+                        <dl>
+                            <dd ng-show="!record.isEditing">{{record.CustomerPhone}}</dd>
+                            <dd ng-show="record.isEditing"><input ng-model="record.CustomerPhone" /></dd>                           
+                        </dl>
+                    </td>
+                    <td>
+                        <dl>
+                            <dd ng-show="!record.isEditing">{{record.OperatorName}}</dd>
+                            <dd ng-show="record.isEditing">
+                                <div search-drop-down class="search-drop-down"
+                                     search-url="/SearchDropDown/Users/"
+                                     input-string="{{record.OperatorName}}"
+                                     input-key="record.OperatorId">
+                                </div>
+                            </dd>
+                        </dl>
+                    </td>
+                    <td>
+                        <dl>
+                            <dd ng-show="!record.isEditing">{{record.DeliveryStaffName}}</dd>
+                            <dd ng-show="record.isEditing">
+                                <div search-drop-down class="search-drop-down"
+                                     search-url="/SearchDropDown/Users/"
+                                     input-string="{{record.DeliveryStaffName}}"
+                                     input-key="record.DeliveryStaffId">
+                                </div>
+                            </dd>
+                        </dl>
+                    </td>
+                    <td>
+                        <dl>
+                            <dd ng-show="!record.isEditing">{{record.DeliveryDate | shortDate}}</dd>
+                            <dd ng-show="record.isEditing"><input ng-model="record.DeliveryDate" date-input /></dd>
+                        </dl>
+                    </td>
+                    <td class="action">
+                        <div ng-show="!record.isEditing" class="edit icon" ng-click="edit(record); $event.stopPropagation();"></div>
+                        <!--<div ng-show="record.Id" class="delete icon" ng-click="record.Deleted = true; record.isEditing = true; $event.stopPropagation();"></div>-->
+                        <div ng-show="record.isEditing" class="cancel icon" ng-click="cancel(record)"; $event.stopPropagation();"></div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!--<div class="header">
             <div class="row">
                 <div style="width: 10%" class="col">No.</div>
                 <div style="width: 10%" ng-class="getSortOrder('Date')" ng-click="sort('Date')" class="col">Date</div>
@@ -54,11 +129,11 @@
                     <div ng-show="!record.isEditing">{{record.DeliveryDate | shortDate}}</div>
                 </div>
                 <div style="width: 10%" class="col">
-                    <span class="edit icon" ng-click="record.isEditing = true; $event.stopPropagation();"></span>
-                    <span class="delete icon" ng-click="remove(item.Id); $event.stopPropagation();"></span>
+                    <div class="edit icon" ng-click="record.isEditing = true; $event.stopPropagation();"></div>
+                    <div class="delete icon" ng-click="remove(item.Id); $event.stopPropagation();"></div>
                 </div>
             </div>
-        </div>
+        </div>-->
         
         <!--<div class="table">
             <table>

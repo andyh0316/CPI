@@ -25,11 +25,29 @@ namespace Cpi.ManageWeb.Areas.Call.Controllers
         [HttpPost]
         public ContentResult GetList(ListFilter.Call filter)
         {
-            IQueryable<CallDm> query = CallBo.GetListBaseQuery();
+            IQueryable<CallDm> query = CallBo.GetListBaseQuery(filter);
             ListLoadCalculator listLoadCalculator = new ListLoadCalculator(filter.Loads, query.Count());
-            List<CallDm> records = GetLoadedSortedQuery(query, listLoadCalculator.Skip, listLoadCalculator.Take, filter.SortColumn, filter.SortDesc).ToList();
+            var records = GetLoadedSortedQuery(query, listLoadCalculator.Skip, listLoadCalculator.Take, filter.SortColumn, filter.SortDesc).Select(a => new
+            {
+                Id = a.Id,
+                CustomerName = a.CustomerName,
+                CustomerPhone = a.CustomerPhone,
+                Date = a.Date,
+                DeliveryDate = a.DeliveryDate,
+                OperatorId = a.OperatorId,
+                OperatorName = a.Operator.Name,
+                DeliveryStaffId = a.DeliveryStaffId,
+                DeliveryStaffName = a.DeliveryStaff.Name
+            }).ToList();
+
             return JsonModel(new { Records = records, ListLoadCalculator = listLoadCalculator });
-        } 
+        }
+
+        [HttpPost]
+        public ContentResult SaveList(List<CallDm> calls)
+        {
+            return null;
+        }
 
         //[HttpGet]
         //public ContentResult GetImport()
@@ -37,6 +55,6 @@ namespace Cpi.ManageWeb.Areas.Call.Controllers
 
         //}
 
-        
+
     }
 }

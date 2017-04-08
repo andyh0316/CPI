@@ -46,6 +46,23 @@ app.controller('ListController', ['$scope', '$controller', '$state', 'baseBo', '
         $scope.model.Records.unshift({isEditing: true});
     };
 
+    $scope.save = function () {
+        var savingRecords = $scope.model.Records.filter(function (item) { return item.isEditing === true });
+        baseBo.httpRequest('POST', '/Call/Call/SaveList', savingRecords)
+            .then(function (result) {
+                //if (result.Success) {
+                //    if (result.IsInvalid) {
+                //        $scope.ModelState = result.ModelState;
+                //    }
+
+                //    if (result.Success) {
+                //        $scope.$emit('reloadListEvent', {});
+                //        $scope.setNotification();
+                //    }
+                //}
+            });
+    };
+
     //$scope.view = function (id) {
     //    $state.go('List.Staff', { 'mode': 'View', 'id': id });
     //};

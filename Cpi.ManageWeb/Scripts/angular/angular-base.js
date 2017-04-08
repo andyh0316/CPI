@@ -1,4 +1,4 @@
-﻿var baseModule = angular.module('AngularBaseModule', []);
+﻿var baseModule = angular.module('AngularBaseModule', ['infinite-scroll']);
 
 baseModule.config(['$httpProvider', function ($httpProvider) {
     $httpProvider.defaults.headers.common['Cache-Control'] = 'no-cache, no-store, must-revalidate';
@@ -35,11 +35,91 @@ baseModule.controller('ListBaseController', ['$scope', '$controller', 'baseBo', 
     $scope.getList = function (loadMore) {
         $scope.scopeData.filter.Loads = (loadMore) ? $scope.scopeData.filter.Loads + 1 : 0;
 
+        console.time('listLoadTimer');
         baseBo.httpRequest($scope.scopeData.httpRequest.method, $scope.scopeData.httpRequest.url, $scope.scopeData.filter)
             .then(function (result) {
-                $scope.model.Records = (loadMore) ? $scope.model.Records.concat(result.Object.Records) : result.Object.Records;
+                console.timeEnd('listLoadTimer');
+                if (loadMore)
+                {
+                    $scope.model.Records = $scope.model.Records.concat(result.Object.Records);
+                }
+                else // if we are not loading more but getting a new list instead (etc. sort), then we need to maintain the records from the old list that are being edited and put those on top
+                {
+                    // remove records from not being edited
+                    for (var i = $scope.model.Records.length - 1; i >= 0; i--) 
+                    {
+                        if (!$scope.model.Records[i].isEditing)
+                        {
+                            $scope.model.Records.splice(i, 1);
+                        }
+                    }
+
+                    // append new list: excluding the ones who are already being edited
+                    for (var i in result.Object.Records)
+                    {
+                        var recordExists = false;
+                        for (var j in $scope.model.Records)
+                        {
+                            if (result.Object.Records[i].Id === $scope.model.Records[j].Id)
+                            {
+                                recordExists = true;
+                                break;
+                            }
+                        }
+
+                        if (!recordExists)
+                        {
+                            $scope.model.Records.push(result.Object.Records[i]);
+                        }
+                    }
+                }
+
                 $scope.model.ListLoadCalculator = result.Object.ListLoadCalculator;
             });
+    };
+
+    $scope.edit = function (record) {
+        record.isEditing = true;
+        record.originalObject = angular.copy(record);
+    };
+
+    $scope.isEditingAny = function () {
+        for (var i in $scope.model.Records)
+        {
+            if ($scope.model.Records[i].isEditing) {
+                return true;
+            }
+        }
+
+        return false;
+    };
+
+    $scope.cancel = function (record) {
+        if (record.Id > 0) { // if existing record
+            var originalObject = angular.copy(record.originalObject);
+            record.originalObject = null;
+            for (var i in originalObject) {
+                record[i] = originalObject[i];
+            }
+            record.isEditing = false;
+        }
+        else { // if new record
+            for (var i in $scope.model.Records) {
+                if (record === $scope.model.Records[i]) {
+                    $scope.model.Records.splice(i, 1);
+                }
+            }
+        }
+    };
+
+    $scope.cancelAll = function () {
+        for (var i = $scope.model.Records.length - 1; i >= 0; i--) {
+            var record = $scope.model.Records[i];
+
+            if (record.isEditing) {
+                $scope.cancel(record);
+            }
+        }
     };
 
     //$scope.filter = {
@@ -54,13 +134,6 @@ baseModule.controller('ListBaseController', ['$scope', '$controller', 'baseBo', 
     // entries
     $scope.$on('reloadListEvent', function () {
         $scope.getList();
-    });
-
-    /**** PAGE ****/
-    $scope.$on('paginationPageChangeEvent', function (event, args) {
-        $scope.page = args.page;
-        $scope.getList();
-        event.stopPropagation(); // prevent the $emit from propagating: only let the pagination send to its immediate parent
     });
 
     /**** SORT ****/
@@ -184,7 +257,7 @@ baseModule.controller('ListBaseController', ['$scope', '$controller', 'baseBo', 
 
         if (finalSelectedIdsLength > $scope.maxSelectedIds) {
             $scope.setNotification('warning', 'You cannot select more than ' + $scope.maxSelectedIds + ' results.');
-            return true;
+            return true; 
         }
 
         return false;
@@ -192,13 +265,10 @@ baseModule.controller('ListBaseController', ['$scope', '$controller', 'baseBo', 
 
     /**** SIMPLE SEARCH ****/
     $scope.searchStringTimeout = null;
-    $scope.$watch('filter.SearchString', function (newVal, oldVal) {
+    $scope.$watch('scopeData.filter.SearchString', function (newVal, oldVal) {
         if (!newVal && !oldVal) {
             return;
         }
-
-        //$scope.advancedSearch = null;
-        //$scope.showAdvancedSearch = false;
 
         clearTimeout($scope.searchStringTimeout);
         $scope.searchStringTimeout = setTimeout(function () {
@@ -207,7 +277,6 @@ baseModule.controller('ListBaseController', ['$scope', '$controller', 'baseBo', 
                 return;
             }
 
-            $scope.page = 1;
             $scope.getList();
         }, 500); // wait for user to finish typing input: how many ms to wait
     });
@@ -510,7 +579,7 @@ baseModule.directive('dateInput', ['$filter', function ($filter) {
         require: 'ngModel',
         link: function (scope, element, attrs, ngModelController) {
 
-            var dateFormat = 'MM/dd/yyyy';
+            var dateFormat = 'dd/MM/yyyy';
 
             ngModelController.$formatters.push(function (modelValue) {
                 return $filter('date')(modelValue, dateFormat);
@@ -524,26 +593,26 @@ baseModule.directive('dateInput', ['$filter', function ($filter) {
                 //return undefined;
             });
 
-            element.datepicker({
-                dateFormat: 'mm/dd/yy',
-                yearRange: '1950:2020',
-                changeMonth: true,
-                changeYear: true,
-                onSelect: function (dateText) {
-                    scope.$apply(function (scope) {
-                        // call $parsers pipeline then update $modelValue
-                        ngModelController.$setViewValue(dateText);
-                        // update the local view
-                        ngModelController.$render();
-                    });
-                    element.blur();
-                }
-            });
+            //element.datepicker({
+            //    dateFormat: 'mm/dd/yy',
+            //    yearRange: '1950:2020',
+            //    changeMonth: true,
+            //    changeYear: true,
+            //    onSelect: function (dateText) {
+            //        scope.$apply(function (scope) {
+            //            // call $parsers pipeline then update $modelValue
+            //            ngModelController.$setViewValue(dateText);
+            //            // update the local view
+            //            ngModelController.$render();
+            //        });
+            //        element.blur();
+            //    }
+            //});
 
-            //Check the attributes for a 'yearRange'                
-            if (attrs && attrs.yearrange) {
-                element.datepicker("option", "yearRange", attrs.yearrange);
-            }
+            ////Check the attributes for a 'yearRange'                
+            //if (attrs && attrs.yearrange) {
+            //    element.datepicker("option", "yearRange", attrs.yearrange);
+            //}
         }
     };
 }]);
@@ -717,8 +786,6 @@ baseModule.directive('searchDropDown', ['baseBo', '$rootScope', function (baseBo
             inputKey: '=',
             searchUrl: '@',
             searchObject: '=',
-            resultString: '@',
-            resultDescription: '@',
             noResultText: '@',
             noResultFunction: '&',
             assignMethod: '@',
@@ -784,21 +851,7 @@ baseModule.directive('searchDropDown', ['baseBo', '$rootScope', function (baseBo
                     clearTimeout($scope.timeOut);
                     $scope.timeOut = setTimeout(function () {
                         baseBo.httpRequest('GET', $scope.searchUrl, { searchString: $scope.searchString }).then(function (result) {
-                            $scope.results = [];
-                            for (var i in result.model) {
-                                var newResult = {
-                                    Id: result.model[i].Id,
-                                    String: result.model[i][$scope.resultString],
-                                    Object: result.model[i],
-                                };
-
-                                if ($scope.resultDescription) {
-                                    newResult.Description = result.model[i][$scope.resultDescription];
-                                }
-
-                                $scope.results.push(newResult);
-                            }
-
+                            $scope.results = result.Object;
                             $scope.showContainer = true;
                         });
                     }, 500);
@@ -822,7 +875,7 @@ baseModule.directive('searchDropDown', ['baseBo', '$rootScope', function (baseBo
                         newResult.Description = $scope.searchObject[i][$scope.resultDescription];
                     };
 
-                    if (!$scope.searchString || newResult.String.startsWith($scope.searchString)) {
+                    if (!$scope.searchString || newResult.Name.startsWith($scope.searchString)) {
                         results.push(newResult);
                     }
                 }
@@ -833,7 +886,7 @@ baseModule.directive('searchDropDown', ['baseBo', '$rootScope', function (baseBo
             $scope.assign = function (result) {
                 if (!$scope.multiSelect) {
                     if ($scope.assignMethod === "string") {
-                        $scope.inputKey = result.String;
+                        $scope.inputKey = result.Name;
                     } else if ($scope.assignMethod === "object") {
                         $scope.inputKey = angular.copy(result.Object);
                     } else {
@@ -846,7 +899,7 @@ baseModule.directive('searchDropDown', ['baseBo', '$rootScope', function (baseBo
                         $scope.doNotSearch = true;
                         $scope.searchString = null;
                     } else {
-                        $scope.searchString = result.String;
+                        $scope.searchString = result.Name;
                     }
                 } else {
                     $scope.inputKeys = (!$scope.inputKeys) ? [] : $scope.inputKeys;
@@ -880,7 +933,7 @@ baseModule.directive('searchDropDown', ['baseBo', '$rootScope', function (baseBo
             $scope.getStringById = function (id) {
                 for (var i in $scope.results) {
                     if ($scope.results[i].Id == id) {
-                        return $scope.results[i].String;
+                        return $scope.results[i].Name;
                     }
                 }
             };
@@ -899,7 +952,7 @@ baseModule.directive('searchDropDown', ['baseBo', '$rootScope', function (baseBo
                 // check if there's an exact match and use it
                 if ($scope.results.length > 0) {
                     for (var i in $scope.results) {
-                        if ($scope.results[i].String === $scope.searchString) {
+                        if ($scope.results[i].Name === $scope.searchString) {
                             $scope.assign($scope.results[i]);
                             matched = true;
                             break;
@@ -993,7 +1046,7 @@ baseModule.directive('searchDropDown', ['baseBo', '$rootScope', function (baseBo
                 '<div ng-show="results.length > 0" class="result-row" ng-repeat="result in results" ng-click="assign(result)" ng-mouseover="hover($index)" ng-class="{hovered: isHovered($index)}">' +
                     '<div>' +
                         '<span checkbox ng-show="multiSelect" ng-checked="getIndexOfKeyInInputKeys(result.Id)" style="position: relative; top: -1px;"></span>' +
-                        '<span>{{formatString(result.String)}}</span>' +
+                        '<span>{{result.Name}}</span>' +
                     '</div>' +
                     '<div class="description">{{result.Description}}</div>' +
                 '</div>' +
@@ -1047,13 +1100,13 @@ baseModule.directive('fileUploader', function () {
     };
 });
 
-baseModule.directive('listContainerBody', function () {
+baseModule.directive('tbody', function () {
     return {
-        restrict: 'A',
+        restrict: 'E',
         link: function ($scope, $element, $attrs) {
             var raw = $element[0];
             $element.bind('scroll', function () {
-                console.log(raw.scrollTop + raw.offsetHeight + ' ' + raw.scrollHeight);
+                //console.log(raw.scrollTop + raw.offsetHeight + ' ' + raw.scrollHeight);
                 if (raw.scrollTop + raw.offsetHeight >= raw.scrollHeight) { //at the bottom
                     $scope.getList(true);
                 }

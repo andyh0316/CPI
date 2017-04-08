@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cpi.Application.DataTransferObjects
+namespace Cpi.Application.Helpers
 {
-    public class CallDto
+    public static class ConstHelper
     {
-
+        public const int SEARCH_DROP_DOWN_ITEMS = 20;
     }
 }

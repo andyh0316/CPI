@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Cpi.ManageWeb.Models
+﻿namespace Cpi.ManageWeb.Models
 {
     public class ListLoadCalculator
     {

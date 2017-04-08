@@ -23,6 +23,26 @@ namespace Cpi.ManageWeb
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterAuth();
+
+            ModelBinders.Binders.DefaultBinder = new TrimModelBinder(); // Trim all strings from user inputs
+        }
+    }
+
+    // anything the user enters will trim the beginning and ending space when posted back
+    public class TrimModelBinder : DefaultModelBinder
+    {
+        protected override void SetProperty(ControllerContext controllerContext, ModelBindingContext bindingContext, System.ComponentModel.PropertyDescriptor propertyDescriptor, object value)
+        {
+            if (propertyDescriptor.PropertyType == typeof(string))
+            {
+                var stringValue = (string)value;
+                if (!string.IsNullOrWhiteSpace(stringValue))
+                    stringValue = stringValue.Trim();
+
+                value = stringValue;
+            }
+
+            base.SetProperty(controllerContext, bindingContext, propertyDescriptor, value);
         }
     }
 }
