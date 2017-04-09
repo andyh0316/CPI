@@ -6,7 +6,7 @@
   /* For IE6-8 */
   src: local("Material Icons"), local("MaterialIcons-Regular"), url(MaterialIcons-Regular.woff2) format("woff2"), url(MaterialIcons-Regular.woff) format("woff"), url(MaterialIcons-Regular.ttf) format("truetype"); }
 
-.material-icons, .list-container table thead th[ng-click]:after, .icon:before, .search-drop-down .input-container:after {
+.material-icons, .list-container table thead th a:after, .icon:before, .search-drop-down .input-container:after {
   font-family: 'Material Icons';
   font-weight: normal;
   font-style: normal;
@@ -191,23 +191,25 @@ body {
       width: calc(100% - 18px) !important; }
       .list-container table thead th {
         text-align: left; }
-        .list-container table thead th[ng-click]:after {
-          position: absolute;
-          display: inline;
-          font-size: 22px;
-          content: "arrow_drop_down";
-          opacity: 0.3;
-          line-height: 80%;
-          margin-left: -3px;
-          margin-right: -3px; }
-        .list-container table thead th[ng-click].sorted-asc:after {
-          content: "arrow_drop_up";
-          opacity: 1; }
-        .list-container table thead th[ng-click].sorted-desc:after {
-          content: "arrow_drop_down";
-          opacity: 1; }
-        .list-container table thead th[ng-click]:hover {
-          cursor: pointer; }
+        .list-container table thead th a {
+          margin-right: 15px; }
+          .list-container table thead th a:after {
+            position: absolute;
+            display: inline;
+            font-size: 22px;
+            content: "arrow_drop_down";
+            opacity: 0.3;
+            line-height: 80%;
+            margin-left: -3px;
+            margin-right: -3px; }
+          .list-container table thead th a.sorted-asc:after {
+            content: "arrow_drop_up";
+            opacity: 1; }
+          .list-container table thead th a.sorted-desc:after {
+            content: "arrow_drop_down";
+            opacity: 1; }
+          .list-container table thead th a:hover {
+            cursor: pointer; }
     .list-container table tbody {
       display: block;
       overflow-y: scroll; }
@@ -229,6 +231,8 @@ body {
       width: 50px; }
     .list-container table td.action, .list-container table th.action {
       width: 50px; }
+    .list-container table td.address, .list-container table th.address {
+      width: 20%; }
     .list-container table .icon {
       display: inline-block; }
 
@@ -246,7 +250,7 @@ body {
   border: 1px solid #C5C5C5;
   padding: 0px 5px;
   text-align: center;
-  color: #828282;
+  color: #2d4756;
   vertical-align: middle;
   text-decoration: none;
   font-size: 11px;
@@ -607,19 +611,115 @@ textarea {
   height: 100%;
   width: 100%;
   display: none; }
-  #wait-mask:after {
-    position: relative;
-    display: block;
-    content: "";
-    width: 90px;
-    height: 55px;
-    background-image: url("/Images/Icons/master-loader.gif");
-    background-size: 50px 30px;
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-color: white;
-    margin: 0 auto;
+  #wait-mask .loading {
+    position: absolute;
     top: 45%;
-    box-shadow: 0 0 15px #E8E7E7;
-    border: 1px solid #D8D8D8; }
+    left: 50%;
+    /*box-shadow: 0 0 15px #E8E7E7;
+        border: 1px solid #D8D8D8;*/ }
+    #wait-mask .loading .loading-bar {
+      display: inline-block;
+      width: 5px;
+      margin-right: 2px;
+      height: 24px;
+      border-radius: 4px;
+      animation: loading 1s ease-in-out infinite; }
+    #wait-mask .loading .loading-bar:nth-child(1) {
+      background-color: #3498db;
+      animation-delay: 0; }
+    #wait-mask .loading .loading-bar:nth-child(2) {
+      background-color: #c0392b;
+      animation-delay: 0.09s; }
+    #wait-mask .loading .loading-bar:nth-child(3) {
+      background-color: #f1c40f;
+      animation-delay: .18s; }
+    #wait-mask .loading .loading-bar:nth-child(4) {
+      background-color: #27ae60;
+      animation-delay: .27s; }
+
+@keyframes loading {
+  0% {
+    transform: scale(1); }
+  20% {
+    transform: scale(1, 2.2); }
+  40% {
+    transform: scale(1); } }
+
+#login {
+  height: 100%;
+  background-color: #2d4756;
+  /* fallback for old browsers */ }
+  #login .login-page {
+    width: 360px;
+    padding: 8% 0 0;
+    margin: auto; }
+  #login .form {
+    position: relative;
+    z-index: 1;
+    background: #FFFFFF;
+    max-width: 360px;
+    margin: 0 auto 100px;
+    padding: 45px;
+    text-align: center;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24); }
+  #login .form input {
+    font-family: "Roboto", sans-serif;
+    outline: 0;
+    background: #f2f2f2;
+    width: 100%;
+    border: 0;
+    margin: 0 0 15px;
+    padding: 15px;
+    box-sizing: border-box;
+    font-size: 14px; }
+  #login .form button {
+    font-family: "Roboto", sans-serif;
+    text-transform: uppercase;
+    outline: 0;
+    background-color: #2d4756;
+    width: 100%;
+    border: 0;
+    padding: 15px;
+    color: #FFFFFF;
+    font-size: 14px;
+    -webkit-transition: all 0.3 ease;
+    transition: all 0.3 ease;
+    cursor: pointer; }
+  #login .form button:hover, #login .form button:active, #login .form button:focus {
+    background: black; }
+  #login .form .message {
+    margin: 15px 0 0;
+    color: #b3b3b3;
+    font-size: 12px; }
+  #login .form .message a {
+    color: #4CAF50;
+    text-decoration: none; }
+  #login .form .register-form {
+    display: none; }
+  #login .container {
+    position: relative;
+    z-index: 1;
+    max-width: 300px;
+    margin: 0 auto; }
+  #login .container:before, #login .container:after {
+    content: "";
+    display: block;
+    clear: both; }
+  #login .container .info {
+    margin: 50px auto;
+    text-align: center; }
+  #login .container .info h1 {
+    margin: 0 0 15px;
+    padding: 0;
+    font-size: 36px;
+    font-weight: 300;
+    color: #1a1a1a; }
+  #login .container .info span {
+    color: #4d4d4d;
+    font-size: 12px; }
+  #login .container .info span a {
+    color: #000000;
+    text-decoration: none; }
+  #login .container .info span .fa {
+    color: #EF3B3A; }
 

@@ -4,7 +4,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
     $urlRouterProvider.when("", "/List");
 
     var listScopeData = {
-        filter: { Loads: 0, SortColumn: "Date", SortDesc: true },
+        filter: { Loads: 0, SortColumn: "CreatedDate", SortDesc: true },
         httpRequest: { method: 'POST', url: '/Call/Call/GetList' }
     };
 
@@ -43,7 +43,13 @@ app.controller('ListController', ['$scope', '$controller', '$state', 'baseBo', '
     };
 
     $scope.create = function () {
-        $scope.model.Records.unshift({isEditing: true});
+        var newItem = {
+            isEditing: true,
+            DeliveryDate: new Date(),
+            AddressId: 0,
+            Address: {}
+        };
+        $scope.model.Records.unshift(newItem);
     };
 
     $scope.save = function () {
@@ -60,6 +66,9 @@ app.controller('ListController', ['$scope', '$controller', '$state', 'baseBo', '
                 //        $scope.setNotification();
                 //    }
                 //}
+
+                $scope.cancelAll();
+                $scope.getList();
             });
     };
 

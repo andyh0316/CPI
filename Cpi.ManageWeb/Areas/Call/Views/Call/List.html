@@ -21,12 +21,15 @@
             <thead>
                 <tr>
                     <th class="number">No.</th>
-                    <th ng-class="getSortOrder('Date')" ng-click="sort('Date')">Date</th>
-                    <th ng-class="getSortOrder('CustomerName')" ng-click="sort('CustomerName')">Customer Name</th>
+                    <th><a ng-class="getSortOrder('CreatedDate')" ng-click="sort('CreatedDate')">Date</a></th>
+                    <th><a ng-class="getSortOrder('CustomerName')" ng-click="sort('CustomerName')">Customer Name</a></th>
                     <th>Customer Phone</th>
-                    <th ng-class="getSortOrder('Operator.Name')" ng-click="sort('Operator.Name')">Operator</th>
-                    <th ng-class="getSortOrder('DeliveryStaff.Name')" ng-click="sort('DeliveryStaff.Name')">Delivery Staff</th>
-                    <th ng-class="getSortOrder('DeliveryDate')" ng-click="sort('DeliveryDate')">Delivery Date</th>
+                    <th><a ng-class="getSortOrder('Operator.Name')" ng-click="sort('Operator.Name')">Operator</a></th>
+                    <th><a ng-class="getSortOrder('DeliveryStaff.Name')" ng-click="sort('DeliveryStaff.Name')">Delivery Staff</a></th>
+                    <th><a ng-class="getSortOrder('DeliveryDate')" ng-click="sort('DeliveryDate')">Delivery Date</a></th>
+                    <th class="address">
+                        Address
+                    </th>
                     <th class="action">Action</th>
                 </tr>
             </thead>
@@ -35,8 +38,8 @@
                     <td class="number">{{$index + 1}}</td>
                     <td>
                         <dl>
-                            <dd ng-show="!record.isEditing">{{record.Date | shortDate}}</dd>
-                            <dd ng-show="record.isEditing"><input ng-model="record.Date" date-input /></dd>
+                            <dd ng-show="!record.isEditing">{{record.CreatedDate | shortDateWithTime}}</dd>
+                            <dd ng-show="record.isEditing"></dd>
                         </dl>
                     </td>
                     <td>
@@ -81,6 +84,9 @@
                             <dd ng-show="record.isEditing"><input ng-model="record.DeliveryDate" date-input /></dd>
                         </dl>
                     </td>
+                    <td class="address">
+
+                    </td>
                     <td class="action">
                         <div ng-show="!record.isEditing" class="edit icon" ng-click="edit(record); $event.stopPropagation();"></div>
                         <!--<div ng-show="record.Id" class="delete icon" ng-click="record.Deleted = true; record.isEditing = true; $event.stopPropagation();"></div>-->
@@ -89,81 +95,6 @@
                 </tr>
             </tbody>
         </table>
-
-        <!--<div class="header">
-            <div class="row">
-                <div style="width: 10%" class="col">No.</div>
-                <div style="width: 10%" ng-class="getSortOrder('Date')" ng-click="sort('Date')" class="col">Date</div>
-                <div style="width: 10%" ng-class="getSortOrder('CustomerName')" ng-click="sort('CustomerName')" class="col">Customer Name</div>
-                <div style="width: 10%" class="col">Customer Phone</div>
-                <div style="width: 10%" ng-class="getSortOrder('Operator.Name')" ng-click="sort('Operator.Name')" class="col">Operator</div>
-                <div style="width: 10%" ng-class="getSortOrder('DeliveryStaff.Name')" ng-click="sort('DeliveryStaff.Name')" class="col">Delivery Staff</div>
-                <div style="width: 10%" ng-class="getSortOrder('DeliveryDate')" ng-click="sort('DeliveryDate')" class="col">Delivery Date</div>
-                <div style="width: 10%" class="col">Action</div>
-            </div>
-        </div>
-
-        <div list-container-body class="body">
-            <div ng-repeat="record in model.Records" class="row">
-                <div style="width: 10%" class="col">{{$index + 1}}</div>
-                <div style="width: 10%" class="col">
-                    <div ng-show="record.isEditing"><input ng-model="record.Date"/></div>
-                    <div ng-show="!record.isEditing">{{record.Date | shortDate}}</div>
-                </div>
-                <div style="width: 10%" class="col">
-                    <div ng-show="record.isEditing"><input ng-model="record.CustomerName" /></div>
-                    <div ng-show="!record.isEditing">{{record.CustomerName}}</div>
-                </div>
-                <div style="width: 10%" class="col">
-                    <div ng-show="record.isEditing"><input ng-model="record.CustomerPhone" /></div>
-                    <div ng-show="!record.isEditing">{{record.CustomerPhone}}</div>
-                </div>
-                <div style="width: 10%" class="col">
-                    <div ng-show="!record.isEditing">{{record.Operator.Name}}</div>
-                </div>
-                <div style="width: 10%" class="col">
-                    <div ng-show="!record.isEditing">{{record.DeliveryStaff.Name}}</div>
-                </div>
-                <div style="width: 10%" class="col">
-                    <div ng-show="record.isEditing"><input ng-model="record.DeliveryDate" /></div>
-                    <div ng-show="!record.isEditing">{{record.DeliveryDate | shortDate}}</div>
-                </div>
-                <div style="width: 10%" class="col">
-                    <div class="edit icon" ng-click="record.isEditing = true; $event.stopPropagation();"></div>
-                    <div class="delete icon" ng-click="remove(item.Id); $event.stopPropagation();"></div>
-                </div>
-            </div>
-        </div>-->
-        
-        <!--<div class="table">
-            <table>
-                <thead>
-                    <tr>
-                        <th><a ng-class="getSortOrder('CustomerName')" ng-click="sort('CustomerName')" class="sortable">Customer Name</a></th>
-                        <th><a ng-class="getSortOrder('Identification')" ng-click="sort('Identification')" class="sortable">{{state.current.name}}</a></th>
-                        <th><a ng-class="getSortOrder('Discipline')" ng-click="sort('Discipline')" class="sortable">Discipline</a></th>
-                        <th><a ng-class="getSortOrder('Position')" ng-click="sort('Position')" class="sortable">Position</a></th>
-                        <th><a ng-class="getSortOrder('CurrentSchool')" ng-click="sort('CurrentSchool')" class="sortable">Current School</a></th>
-                        <th class="action"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="record in model.Records" ng-click="view(item.Id)" selectable-text>
-                        <td>{{record.CustomerName}}</td>
-                        <td>{{record.CustomerPhone}}</td>
-                        <td>{{record.Discipline}}</td>
-                        <td>{{record.Position}}</td>
-                        <td>{{record.CurrentSchool}}</td>
-                        <td class="action">
-                            <span ng-show="checkPermission('StaffInfo', 'Edit')" class="edit action-icon" ng-click="edit(item.Id); $event.stopPropagation();"></span>
-                            <span ng-show="checkPermission('StaffInfo', 'Delete')" class="delete action-icon" ng-click="remove(item.Id); $event.stopPropagation();"></span>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>-->
-
-        <!--<pagination pagination="model.Pagination"></pagination>-->
 
         <div ui-view></div>
     </div>

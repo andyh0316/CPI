@@ -25,7 +25,8 @@ namespace Cpi.ManageWeb
                         "~/Scripts/angular/ng-infinite-scroll.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/javascript").Include(
-                        "~/Scripts/javascript/javascript-base.js"));
+                        "~/Scripts/javascript/javascript-base.js",
+                        "~/Scripts/javascript/moment.js"));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
@@ -38,8 +39,11 @@ namespace Cpi.ManageWeb
                     "~/Content/Fonts/fonts.css"));
 
             // angular apps
+            bundles.Add(new ScriptBundle("~/bundles/public").Include(
+                        "~/Views/Public/PublicApp.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/call/call").Include(
-                        "~/Areas/Call/Views/Call/callApp.js"));
+                        "~/Areas/Call/Views/Call/CallApp.js"));
         }
     }
 }

@@ -18,5 +18,10 @@ namespace Cpi.Application.BusinessObjects
 
             return query.OrderBy(a => (a.Name == searchString) ? 0 : 1).ThenBy(a => (a.Name.StartsWith(searchString)) ? 0 : 1).Take(ConstHelper.SEARCH_DROP_DOWN_ITEMS);
         }
+
+        public UserDm GetByUsername(string username)
+        {
+            return GetListQuery().Where(a => a.Username == username).SingleOrDefault();
+        }
     }
 }

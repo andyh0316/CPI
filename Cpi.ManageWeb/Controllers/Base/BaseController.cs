@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Linq.Dynamic;
+using Cpi.Application.DataModels.Base;
 
 namespace Cpi.ManageWeb.Controllers.Base
 {
@@ -16,6 +17,26 @@ namespace Cpi.ManageWeb.Controllers.Base
             {
                 Object = _object,
                 //SessionTimeLeft = UserHelper.GetSessionTimeLeft()
+            };
+
+            return Content(JsonConvert.SerializeObject(model, Formatting.None, new JsonSerializerSettings { }));
+        }
+
+        public ContentResult JsonModelState(ModelStateDictionary _ModelState)
+        {
+            Dictionary<string, string> ModelState = new Dictionary<string, string>();
+            foreach (var key in _ModelState.Keys)
+            {
+                if (_ModelState[key].Errors.Count >= 1)
+                {
+                    // only add the first error: we expect the application to have one error per field at a time
+                    ModelState.Add(key, _ModelState[key].Errors[0].ErrorMessage);
+                }
+            }
+
+            var model = new
+            {
+                ModelState = ModelState
             };
 
             return Content(JsonConvert.SerializeObject(model, Formatting.None, new JsonSerializerSettings { }));

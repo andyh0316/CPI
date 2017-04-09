@@ -1,5 +1,7 @@
-﻿using Cpi.Application.DataModels.Base;
+﻿using Cobro.Compass.Application.BusinessRules;
+using Cpi.Application.DataModels.Base;
 using Cpi.Application.DataModels.LookUp;
+using Cpi.Compass.Application.BusinessRules;
 using System;
 using System.ComponentModel.DataAnnotations;
 
@@ -7,19 +9,28 @@ namespace Cpi.Application.DataModels
 {
     public class UserDm : BaseDm
     {
-        [MaxLength(20)]
+        [CpiStringLength(25, MinimumLength = 5, ErrorMessage = "Username must be between {2} and {1} characters long.")]
         public string Username { get; set; }
 
-        [Required]
-        [MaxLength(100)]
+        [CpiRequired]
+        [CpiMaxLength(30)]
         public string Name { get; set; }
 
-        [Required]
+        [CpiMaxLength(500)]
+        public string Password { get; set; }
+        [CpiMaxLength(500)]
+        public string PasswordSalt { get; set; }
+        [CpiMaxLength(20)]
+        public string TempPassword { get; set; }
+
+        [CpiRequired]
         public int? UserRoleId { get; set; }
         public virtual LookUpUserRoleDm UserRole { get; set; }
 
         public int? UserOccupationId { get; set; }
         public virtual LookUpUserOccupationDm UserOccupation { get; set; }
+
+        public DateTime? LastLoginDate { get; set; }
     }
 
     public class UserMap : BaseMap<UserDm>
@@ -28,7 +39,7 @@ namespace Cpi.Application.DataModels
         {
             ToTable("User");
             HasRequired(a => a.UserRole).WithMany().HasForeignKey(a => a.UserRoleId).WillCascadeOnDelete(false);
-            HasRequired(a => a.UserOccupation).WithMany().HasForeignKey(a => a.UserOccupationId).WillCascadeOnDelete(false);
+            HasOptional(a => a.UserOccupation).WithMany().HasForeignKey(a => a.UserOccupationId).WillCascadeOnDelete(false);
         }
     }
 }

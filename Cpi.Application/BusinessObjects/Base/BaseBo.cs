@@ -1,33 +1,36 @@
 ﻿using Cpi.Application.DatabaseContext;
 using Cpi.Application.DataModels.Base;
-using System;
 using System.Web;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Linq.Dynamic;
 
 namespace Cpi.Application.BusinessObjects.Base
 {
     public class BaseBo<T> where T : BaseDm
     {
-        //private CpiDbContext context;
-        public DbSet<T> dbSet
+        public CpiDbContext CpiDbContext
         {
             get
             {
                 if (HttpContext.Current.Items["SharedDbContextForRequest"] != null)
                 {
-                    return ((CpiDbContext)HttpContext.Current.Items["SharedDbContextForRequest"]).Set<T>();
+                    return ((CpiDbContext)HttpContext.Current.Items["SharedDbContextForRequest"]);
                 }
                 else
                 {
                     CpiDbContext newCpiDbContext = new CpiDbContext();
                     HttpContext.Current.Items["SharedDbContextForRequest"] = newCpiDbContext;
-                    return newCpiDbContext.Set<T>();
-                } 
+                    return newCpiDbContext;
+                }
+            }
+        }
+
+        public DbSet<T> DbSet
+        {
+            get
+            {
+                return CpiDbContext.Set<T>(); 
             }
         }
 
@@ -37,12 +40,12 @@ namespace Cpi.Application.BusinessObjects.Base
         // from those records, instead of filtering the query, then querying the database for the subsets. (BIG performance difference)
         public IQueryable<T> GetListQuery()
         {
-            return dbSet;
+            return DbSet;
         }
 
         public T GetById(int id)
         {
-            return dbSet.Find(id);
+            return DbSet.Find(id);
         }
 
         public List<T> GetList()
@@ -52,12 +55,17 @@ namespace Cpi.Application.BusinessObjects.Base
 
         public void Add(T t)
         {
-            dbSet.Add(t);
+            DbSet.Add(t);
         }
 
         public void Remove(T t)
         {
-            dbSet.Remove(t);
+            DbSet.Remove(t);
+        }
+
+        public void Commit()
+        {
+            CpiDbContext.SaveChanges();
         }
     }
 }

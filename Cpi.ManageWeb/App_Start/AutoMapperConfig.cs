@@ -1,14 +1,11 @@
 ﻿using AutoMapper;
 using Cpi.Application.DataModels;
 using Cpi.Application.DataModels.Base;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace Cpi.ManageWeb.App_Start
 {
-	public static class AutoMapperConfig
+    public static class AutoMapperConfig
     {
         public static void RegisterMappings()
         {
@@ -25,7 +22,7 @@ namespace Cpi.ManageWeb.App_Start
         {
             // entities to entities
             CreateMap<CallDm, CallDm>();
-            
+
         }
 
         // all inmappers to entities should ignore the following base fields that are assigned by system only
@@ -37,10 +34,24 @@ namespace Cpi.ManageWeb.App_Start
                 .ForMember(m => m.CreatedDate, opt => opt.Ignore())
                 .ForMember(m => m.ModifiedById, opt => opt.Ignore())
                 .ForMember(m => m.ModifiedDate, opt => opt.Ignore())
-                .ForMember(m => m.Deleted, opt => opt.Ignore());
-                //.IgnoreNavigationProperties();
+                .ForMember(m => m.Deleted, opt => opt.Ignore())
+                .IgnoreAllVirtual();
+            //.IgnoreNavigationProperties();
         }
 
+        public static IMappingExpression<TSource, TDestination>
+                   IgnoreAllVirtual<TSource, TDestination>(
+                       this IMappingExpression<TSource, TDestination> expression)
+        {
+            var desType = typeof(TDestination);
+            foreach (var property in desType.GetProperties().Where(p =>
+                                     p.GetGetMethod().IsVirtual))
+            {
+                expression.ForMember(property.Name, opt => opt.Ignore());
+            }
+
+            return expression;
+        }
         //public static IMappingExpression<TSource, TDestination> IgnoreNavigationProperties<TSource, TDestination>(this IMappingExpression<TSource, TDestination> expression)
         //{
         //    var sourceType = typeof(TSource);

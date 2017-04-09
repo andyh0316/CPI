@@ -491,7 +491,6 @@ baseModule.factory('baseBo', ['$http', '$window', '$q', function ($http, $window
 baseModule.filter('shortDate', ['$filter', function ($filter) {
     var angularDateFilter = $filter('date');
     return function (date) {
-
         return angularDateFilter(date, 'dd/MM/yyyy');
     }
 }]);
@@ -500,7 +499,7 @@ baseModule.filter('shortDateWithTime', ['$filter', function ($filter) {
     var angularDateFilter = $filter('date');
     return function (date) {
 
-        return angularDateFilter(date, 'MM/dd/yyyy hh:mm a');
+        return angularDateFilter(date, 'dd/MM/yyyy hh:mm a');
     }
 }]);
 
@@ -579,18 +578,43 @@ baseModule.directive('dateInput', ['$filter', function ($filter) {
         require: 'ngModel',
         link: function (scope, element, attrs, ngModelController) {
 
-            var dateFormat = 'dd/MM/yyyy';
+            //var dateFormat = 'dd/MM/yyyy';
+
+            //ngModelController.$formatters.push(function (modelValue) {
+            //    return 'yomama';
+            //    return $filter('date')(modelValue, dateFormat);
+
+            //    //var currentDate = new Date(modelValue + "+00:00");
+            //    //currentDate = new Date((currentDate.getTime() + (currentDate.getTimezoneOffset() * 60 * 1000)));
+
+            //    //if (isNaN(currentDate) === false) {
+            //    //    return $filter('date')(currentDate, dateFormat);
+            //    //}
+            //    //return undefined;
+            //});
+
+            ngModelController.$parsers.push(function (modelValue) {
+                dateArray = modelValue.split("/");
+                //var date = new Date(dateArray[1] + "/" + dateArray[0] + "/" + dateArray[2]);
+                var date = new Date(dateArray[2], dateArray[1] - 1, dateArray[0]);
+
+                if (Object.prototype.toString.call(date) === "[object Date]") {
+                    if (isNaN(date.getTime())) {  // d.valueOf() could also work
+                        // date is not valid
+                        return modelValue;
+                    }
+                    else {
+                        // date is valid
+                        console.log(date);
+                        return date;
+                    }
+                }
+
+                return modelValue;
+            });
 
             ngModelController.$formatters.push(function (modelValue) {
-                return $filter('date')(modelValue, dateFormat);
-
-                //var currentDate = new Date(modelValue + "+00:00");
-                //currentDate = new Date((currentDate.getTime() + (currentDate.getTimezoneOffset() * 60 * 1000)));
-
-                //if (isNaN(currentDate) === false) {
-                //    return $filter('date')(currentDate, dateFormat);
-                //}
-                //return undefined;
+                return $filter('date')(modelValue, 'dd/MM/yyyy');
             });
 
             //element.datepicker({

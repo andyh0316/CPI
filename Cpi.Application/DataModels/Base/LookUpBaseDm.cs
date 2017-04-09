@@ -1,14 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Cpi.Compass.Application.BusinessRules;
+using System.ComponentModel.DataAnnotations;
 
 namespace Cpi.Application.DataModels.Base
 {
     public class LookUpBaseDm : BaseDm
     {
-        [Required]
-        [MaxLength(500)]
+        [CpiRequired]
+        [CpiMaxLength(500)]
         public string Name { get; set; }
 
-        [Required]
+        [CpiRequired]
         public int? DisplayOrder { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Cpi.Application.DataModels.Interface;
+using Cpi.Compass.Application.BusinessRules;
 using System;
 using System.Data.Entity.ModelConfiguration;
 namespace Cpi.Application.DataModels.Base
@@ -8,9 +9,11 @@ namespace Cpi.Application.DataModels.Base
         public int Id { get; set; }
 
         public int? CreatedById { get; set; }
+        public virtual UserDm CreatedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
 
         public int? ModifiedById { get; set; }
+        public virtual UserDm ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
 
         //public int? ImportId { get; set; }
@@ -25,7 +28,8 @@ namespace Cpi.Application.DataModels.Base
         {
             HasKey(m => m.Id);
             Map(m => m.Requires("Deleted").HasValue(false)).Ignore(m => m.Deleted);
-            //HasRequired(m => m.Import).WithMany().HasForeignKey(m => m.ImportId).WillCascadeOnDelete(false);
+            HasOptional(m => m.CreatedBy).WithMany().HasForeignKey(m => m.CreatedById).WillCascadeOnDelete(false);
+            HasOptional(m => m.ModifiedBy).WithMany().HasForeignKey(m => m.ModifiedById).WillCascadeOnDelete(false);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Cpi.Application.DataModels.Base;
 using Cpi.Application.DataModels.LookUp;
+using Cpi.Compass.Application.BusinessRules;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -7,13 +8,12 @@ namespace Cpi.Application.DataModels
 {
     public class CallDm : BaseDm
     {
-        [MaxLength(200)]
+        [CpiMaxLength(200)]
         public string CustomerName { get; set; }
 
-        [MaxLength(100)]
+        [CpiRequired]
+        [CpiMaxLength(100)]
         public string CustomerPhone { get; set; }
-
-        public DateTime? Date { get; set; }
 
         public DateTime? DeliveryDate { get; set; }
 

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using Cpi.ManageWeb.App_Start;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
@@ -23,6 +20,7 @@ namespace Cpi.ManageWeb
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterAuth();
+            AutoMapperConfig.RegisterMappings();
 
             ModelBinders.Binders.DefaultBinder = new TrimModelBinder(); // Trim all strings from user inputs
         }
