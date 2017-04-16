@@ -1153,3 +1153,56 @@ textarea {
 .center-content {
     text-align: center !important;
 }
+
+/**** VALIDATIONS ****/
+.field-validation-error {
+    display: none;
+    font-weight: bold;
+    color: $error-color;
+    font-size: 13px;
+
+    &:not(.ng-hide) {
+        ~ input:not([type=checkbox]):not([type=radio]),
+        ~ select,
+        ~ textarea,
+        {
+            border: 1px solid #B30F0F !important;
+            background-color: #FFF2F2;
+        }
+        // for drop down search
+        ~ .search-drop-down input,
+        ~ .search-drop-down .input-container {
+            &:not(:disabled) {
+                border: 1px solid #B30F0F;
+                background-color: #FFF2F2;
+            }
+        }
+    }
+}
+
+#validation-tooltip {
+    position: absolute;
+    background-color: $error-color;
+    padding: 5px 10px 5px 10px;
+    color: white;
+    font-size: 13px;
+    font-weight: 400;
+    text-align: left;
+    max-width: 200px;
+    z-index: $tooltip-box-z-index;
+    word-wrap: break-word;
+    display: none;
+
+    &:before {
+        position: absolute;
+        display: block;
+        content: "";
+        left: 0px;
+        bottom: -15px;
+        width: 0;
+        height: 10px;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-top: 10px solid #A50202;
+    }
+}

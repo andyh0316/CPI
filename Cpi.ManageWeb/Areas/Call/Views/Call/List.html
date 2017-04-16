@@ -50,7 +50,10 @@
                     <td>
                         <dl>
                             <dd ng-show="!record.isEditing">{{record.CustomerPhone}}</dd>
-                            <dd ng-show="record.isEditing"><input ng-model="record.CustomerPhone" /></dd>                           
+                            <dd ng-show="record.isEditing">
+                                <span ng-if="modelState['[' + getEditingRecordIndex(record) + '].CustomerPhone']" class="field-validation-error">{{modelState['[' + getEditingRecordIndex(record) + '].CustomerPhone']}}</span>
+                                <input ng-model="record.CustomerPhone" />
+                            </dd>                           
                         </dl>
                     </td>
                     <td ng-class="{commodities: isEditingAny()}">

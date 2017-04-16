@@ -136,6 +136,13 @@ baseModule.controller('ListBaseController', ['$scope', '$controller', 'baseBo', 
         }
     }
 
+    $scope.$watch('model.Records', function (oldVal, newVal) {
+        if (oldVal.filter(function (record) { return record.isEditing === true; }).length !== newVal.filter(function (record) { return record.isEditing === true; }).length)
+        {
+            $scope.modelState = null;
+        }
+    }, true);
+
     //$scope.filter = {
     //    Loads: 0,
     //    SortColumn: null, // needs to be defined in every child list controller

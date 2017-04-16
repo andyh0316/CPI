@@ -21,3 +21,16 @@ function showToolTip(toolTipSelector, hoveringElementSelector, message) {
         toolTipSelector.css({ bottom: bodyHeight - offset.top - toolTipSelector.outerHeight() - hoveringElementSelector.outerHeight() - 10 });
     }
 };
+
+// show field validation error on hover for dd
+$(document).on('mouseenter', 'dd', function () {
+    var fieldValidationError = $(this).find('.field-validation-error:not(.ng-hide)');
+    if (fieldValidationError.length == 0) {
+        return;
+    }
+
+    var message = fieldValidationError.html();
+    showToolTip($('#validation-tooltip'), $(this), message);
+}).on('mouseleave', 'dl', function () {
+    $('#validation-tooltip').hide();
+});

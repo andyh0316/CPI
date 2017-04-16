@@ -808,3 +808,43 @@ textarea {
 .center-content {
   text-align: center !important; }
 
+/**** VALIDATIONS ****/
+.field-validation-error {
+  display: none;
+  font-weight: bold;
+  color: #AD0606;
+  font-size: 13px; }
+  .field-validation-error:not(.ng-hide) ~ input:not([type=checkbox]):not([type=radio]),
+  .field-validation-error:not(.ng-hide) ~ select,
+  .field-validation-error:not(.ng-hide) ~ textarea {
+    border: 1px solid #B30F0F !important;
+    background-color: #FFF2F2; }
+  .field-validation-error:not(.ng-hide) ~ .search-drop-down input:not(:disabled),
+  .field-validation-error:not(.ng-hide) ~ .search-drop-down .input-container:not(:disabled) {
+    border: 1px solid #B30F0F;
+    background-color: #FFF2F2; }
+
+#validation-tooltip {
+  position: absolute;
+  background-color: #AD0606;
+  padding: 5px 10px 5px 10px;
+  color: white;
+  font-size: 13px;
+  font-weight: 400;
+  text-align: left;
+  max-width: 200px;
+  z-index: 2000;
+  word-wrap: break-word;
+  display: none; }
+  #validation-tooltip:before {
+    position: absolute;
+    display: block;
+    content: "";
+    left: 0px;
+    bottom: -15px;
+    width: 0;
+    height: 10px;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #A50202; }
+

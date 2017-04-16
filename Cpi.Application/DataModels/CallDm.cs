@@ -3,6 +3,7 @@ using Cpi.Application.DataModels.LookUp;
 using Cpi.Compass.Application.BusinessRules;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 namespace Cpi.Application.DataModels
 {
@@ -13,6 +14,7 @@ namespace Cpi.Application.DataModels
 
         [CpiRequired]
         [CpiMaxLength(100)]
+        [DisplayName("Customer Phone")]
         public string CustomerPhone { get; set; }
 
         public DateTime? DeliveryDate { get; set; }
