@@ -57,19 +57,15 @@ app.controller('ListController', ['$scope', '$controller', '$state', 'baseBo', '
         var savingRecords = $scope.model.Records.filter(function (item) { return item.isEditing === true });
         baseBo.httpRequest('POST', '/Call/Call/SaveList', savingRecords)
             .then(function (result) {
-                //if (result.Success) {
-                //    if (result.IsInvalid) {
-                //        $scope.ModelState = result.ModelState;
-                //    }
-
-                //    if (result.Success) {
-                //        $scope.$emit('reloadListEvent', {});
-                //        $scope.setNotification();
-                //    }
-                //}
-
-                $scope.cancelAll();
-                $scope.getList();
+                if (result.ModelState)
+                {
+                    $scope.modelState = result.ModelState;
+                }
+                else
+                {
+                    $scope.cancelAll();
+                    $scope.getList();
+                }
             });
     };
 

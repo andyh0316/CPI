@@ -122,6 +122,20 @@ baseModule.controller('ListBaseController', ['$scope', '$controller', 'baseBo', 
         }
     };
 
+    $scope.getEditingRecordIndex = function (record) {
+        var index = 0;
+        for (var i in $scope.model.Records)
+        {
+            if ($scope.model.Records[i].isEditing)
+            {
+                if ($scope.model.Records[i] === record) {
+                    return index;
+                }
+                index++;
+            }
+        }
+    }
+
     //$scope.filter = {
     //    Loads: 0,
     //    SortColumn: null, // needs to be defined in every child list controller
