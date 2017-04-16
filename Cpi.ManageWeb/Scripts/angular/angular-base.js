@@ -1055,6 +1055,12 @@ baseModule.directive('searchDropDown', ['baseBo', '$rootScope', function (baseBo
                 }
             });
 
+            $element.find('input').focusout(function () {
+                setTimeout(function () {
+                    $scope.unfocus();
+                }, 100);
+            });
+
             $(document).on('keydown', function (e) {
                 if (e.keyCode == '27') {
                     $scope.unfocus();

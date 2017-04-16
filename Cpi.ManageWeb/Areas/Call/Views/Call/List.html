@@ -70,7 +70,6 @@
                         <dl>
                             <dd ng-show="!record.isEditing">{{record.Operator.Name}}</dd>
                             <dd ng-if="record.isEditing" class="overflow-visible">
-                                {{record.OperatorId}}
                                 <div search-drop-down class="search-drop-down"
                                      search-url="/SearchDropDown/Users/"
                                      input-string="{{record.Operator.Name}}"
