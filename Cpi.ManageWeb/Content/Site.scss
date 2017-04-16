@@ -81,7 +81,7 @@ body {
     font-size: 12px;
 }
 
-$main-menu-width: 150px;
+$main-menu-width: 120px;
 #main-menu {
     position: fixed;
     background-color: $main-color;
@@ -263,6 +263,7 @@ $secondary-menu-height: 40px;
 
                 a {
                     margin-right: 15px;
+
                     &:after {
                         @extend %material-icons;
                         position: absolute;
@@ -335,12 +336,22 @@ $secondary-menu-height: 40px;
             }
 
             &.address {
-                width: 20%;
+                width: 200px;
+            }
+
+            &.commodities {
+                width: 200px;
+            }
+
+            &.date-time {
+                width: 130px;
             }
         }
 
         .icon {
+            position: relative;
             display: inline-block;
+            top: 2px;
         }
     }
 }
@@ -666,6 +677,7 @@ textarea,
     outline: 0;
     border: 1px solid #BDBDBD;
     font-size: 12px;
+    background-color: white;
 
     &:focus {
         outline: none;
@@ -687,7 +699,7 @@ textarea,
 }
 
 .input-container {
-    min-height: 28px;
+    min-height: 24px;
     height: auto;
     padding: 1px 2px 1px 2px;
 
@@ -720,14 +732,20 @@ textarea {
     word-wrap: break-word;
 }
 
-/**** Action Icon ****/
+/**** Icon ****/
 .icon {
-    margin-left: -3px;
-    opacity: 0.5;
+    &[ng-click] {
+        opacity: 0.5;
+
+        &:hover {
+            opacity: 1;
+            cursor: pointer !important;
+        }
+    }
 
     &:before {
         @extend %material-icons;
-        color: #07618C;
+        color: #757575;
         font-size: 22px;
     }
 
@@ -735,13 +753,9 @@ textarea {
         opacity: 0.2;
     }
 
-    &:hover {
-        opacity: 1;
-        cursor: pointer !important;
-    }
-
     &.edit:before {
         content: "create";
+        color: #07618C;
     }
 
     &.delete:before {
@@ -751,7 +765,16 @@ textarea {
 
     &.cancel:before {
         content: "cancel";
-        color: #757575;
+    }
+
+    &.call-completed:before {
+        content: "check";
+        color: #4ab515;
+    }
+
+    &.call-cancelled:before {
+        content: "close";
+        opacity: 0.5;
     }
 }
 
@@ -938,9 +961,17 @@ textarea {
 #login {
     height: 100%;
     background-color: $main-color; /* fallback for old browsers */
+    [ui-view] {
+        position: relative;
+    }
 
+    .error-message {
+        color: $error-color;
+        margin-bottom: 10px;
+    } 
+    
     .login-page {
-        width: 360px;
+        width: 400px;
         padding: 8% 0 0;
         margin: auto;
     }
@@ -1041,4 +1072,84 @@ textarea {
     .container .info span .fa {
         color: #EF3B3A;
     }
+}
+
+.overflow-visible {
+    overflow: visible !important;
+}
+
+.commodities-view-edit {
+    .view-container {
+    }
+
+    .edit-container {
+        position: absolute;
+        min-width: 100%;
+        max-width: 500px;
+        max-height: 240px;
+        overflow-y: auto;
+        left: 0px;
+        top: 25px;
+        background-color: white;
+        z-index: $search-drop-down-z-index;
+        @extend %main-box-shadow;
+        @extend %border-box;
+        @extend %prevent-user-select;
+
+        .edit-row {
+            padding: 4px 10px;
+
+            .item-name {
+                font-weight: bold;
+                font-size: 14px;
+                padding-right: 5px;
+            }
+
+            .minus,
+            .plus {
+                position: relative;
+                top: 5px;
+                @include opacity(0.3);
+
+                &:after {
+                    @extend %material-icons;
+                    font-size: 22px;
+                }
+
+                &:hover {
+                    cursor: pointer;
+                    @include opacity(1);
+                }
+
+                &.minus {
+                    &:after {
+                        @extend %material-icons;
+                        content: "do_not_disturb_on";
+                    }
+                }
+
+                &.plus {
+                    &:after {
+                        @extend %material-icons;
+                        content: "add_circle";
+                    }
+                }
+            }
+
+            .quantity {
+                padding-left: 5px;
+                padding-right: 5px;
+                font-size: 16px;
+            }
+        }
+    }
+
+    input {
+        position: absolute;
+        @include opacity(0);
+    }
+}
+
+.center-content {
+    text-align: center !important;
 }

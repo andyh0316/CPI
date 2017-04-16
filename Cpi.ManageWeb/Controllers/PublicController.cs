@@ -24,13 +24,12 @@ namespace Cpi.ManageWeb.Controllers
         [HttpPost]
         public ContentResult Login(Login login)
         {
-            UserDm trackedUser = UserBo.GetByUsername(login.Username);
-            bool isLoggingIn = false;
+            UserDm trackedUser = (!string.IsNullOrEmpty(login.Username)) ? UserBo.GetByUsername(login.Username) : null;
 
             // no such username
             if (trackedUser == null)
             {
-                ModelState.AddModelError("LoginError", "The specified username or password is incorrect.");
+                ModelState.AddModelError("ErrorMessage", "The specified username or password is incorrect.");
                 return JsonModelState(ModelState);
             }
 
@@ -39,43 +38,42 @@ namespace Cpi.ManageWeb.Controllers
             {
                 if (login.Password == trackedUser.TempPassword)
                 {
-                    if (login.NewPassword.Length >= 8)
-                    {
-                        if (login.NewPassword == login.ConfirmNewPassword)
+                    if (login.IsUpdatingPassword)
+                    { 
+                        if (!string.IsNullOrEmpty(login.NewPassword) && login.NewPassword.Length >= 8)
                         {
-                            isLoggingIn = true;
-                            trackedUser.TempPassword = null;
-                            trackedUser.PasswordSalt = Guid.NewGuid().ToString();
-                            trackedUser.Password = PasswordHelper.EncodePassword(login.NewPassword, trackedUser.PasswordSalt);
+                            if (login.NewPassword == login.ConfirmNewPassword)
+                            {
+                                trackedUser.TempPassword = null;
+                                trackedUser.PasswordSalt = Guid.NewGuid().ToString();
+                                trackedUser.Password = PasswordHelper.EncodePassword(login.NewPassword, trackedUser.PasswordSalt);
+                            }
+                            else
+                            {
+                                ModelState.AddModelError("ErrorMessage", "Your passwords do not match.");
+                                return JsonModelState(ModelState);
+                            }
                         }
                         else
                         {
-                            ModelState.AddModelError("ErrorMessage", "Your passwords do not match.");
-                            return JsonModelState(ModelState);
+                            ModelState.AddModelError("ErrorMessage", "Your password must have at least 8 characters.");
+                            return JsonModel(ModelState);
                         }
-                    }
+                    } 
                     else
-                    {
-                        ModelState.AddModelError("ErrorMessage", "Your password must have at least 8 characters.");
-                        return JsonModel(ModelState);
-                    }
-
-                    if (!isLoggingIn)
                     {
                         return JsonModel(new { IsUpdatingPassword = true });
                     }
                 }
                 else
                 {
-                    ModelState.AddModelError("LoginError", "The specified username or password is incorrect.");
+                    ModelState.AddModelError("ErrorMessage", "The specified username or password is incorrect.");
                     return JsonModelState(ModelState);
                 }
             }
-            
-            // wrong password
-            if (PasswordHelper.EncodePassword(login.Password, trackedUser.PasswordSalt) != trackedUser.Password)
+            else if (PasswordHelper.EncodePassword(login.Password, trackedUser.PasswordSalt) != trackedUser.Password)
             {
-                ModelState.AddModelError("LoginError", "The specified username or password is incorrect.");
+                ModelState.AddModelError("ErrorMessage", "The specified username or password is incorrect.");
                 return JsonModelState(ModelState);
             }
 

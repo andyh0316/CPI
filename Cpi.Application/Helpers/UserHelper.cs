@@ -29,5 +29,10 @@ namespace Cpi.Application.Helpers
             //StorePermissions(user);
 
         }
+
+        public static int GetUserId()
+        {
+            return Convert.ToInt32(HttpContext.Current.User.Identity.Name);
+        }
     }
 }

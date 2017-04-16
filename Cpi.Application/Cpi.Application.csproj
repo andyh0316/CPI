@@ -36,6 +36,9 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -52,9 +55,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attributes\CpiAuthenticateAttribute.cs" />
     <Compile Include="BusinessObjects\Base\BaseBo.cs" />
     <Compile Include="BusinessObjects\CallBo.cs" />
+    <Compile Include="BusinessObjects\CallCommodityBo.cs" />
+    <Compile Include="BusinessObjects\CommodityBo.cs" />
+    <Compile Include="BusinessObjects\LookUp\LookUpBo.cs" />
     <Compile Include="BusinessObjects\UserBo.cs" />
     <Compile Include="BusinessRules\CpiMaxLengthAttribute.cs" />
     <Compile Include="BusinessRules\CpiMinLengthAttribute.cs" />
@@ -64,13 +69,14 @@
     <Compile Include="DataModels\AddressDm.cs" />
     <Compile Include="DataModels\Base\BaseDm.cs" />
     <Compile Include="DataModels\Base\LookUpBaseDm.cs" />
+    <Compile Include="DataModels\CallCommodityDm.cs" />
     <Compile Include="DataModels\LookUp\LookUpCallStatusDm.cs" />
     <Compile Include="DataModels\LookUp\LookUpUserOccupationDm.cs" />
     <Compile Include="DataModels\LookUp\LookUpUserRoleDm.cs" />
     <Compile Include="DataModels\UserDm.cs" />
     <Compile Include="DataModels\CallDm.cs" />
     <Compile Include="DataModels\Interface\ISoftDeleteDm.cs" />
-    <Compile Include="DataModels\LookUp\LookUpCommodityDm.cs" />
+    <Compile Include="DataModels\CommodityDm.cs" />
     <Compile Include="Filters\ListFilter.cs" />
     <Compile Include="Helpers\ConstHelper.cs" />
     <Compile Include="Helpers\PasswordHelper.cs" />
@@ -78,6 +84,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Attributes\" />
     <Folder Include="DataTransferObjects\" />
   </ItemGroup>
   <ItemGroup>

@@ -6,7 +6,9 @@
   /* For IE6-8 */
   src: local("Material Icons"), local("MaterialIcons-Regular"), url(MaterialIcons-Regular.woff2) format("woff2"), url(MaterialIcons-Regular.woff) format("woff"), url(MaterialIcons-Regular.ttf) format("truetype"); }
 
-.material-icons, .list-container table thead th a:after, .icon:before, .search-drop-down .input-container:after {
+.material-icons, .list-container table thead th a:after, .icon:before, .search-drop-down .input-container:after, .commodities-view-edit .edit-container .edit-row .minus:after,
+.commodities-view-edit .edit-container .edit-row .plus:after,
+.commodities-view-edit .edit-container .edit-row .plus.minus:after {
   font-family: 'Material Icons';
   font-weight: normal;
   font-style: normal;
@@ -28,11 +30,21 @@
   /* Support for IE. */
   font-feature-settings: 'liga'; }
 
-.search-drop-down .results-container {
+.search-drop-down .results-container, .commodities-view-edit .edit-container {
   box-shadow: 0px 0px 5px #E2E2E2; }
 
+.commodities-view-edit .edit-container {
+  -webkit-user-select: none;
+  /* Chrome all / Safari all */
+  -moz-user-select: none;
+  /* Firefox all */
+  -ms-user-select: none;
+  /* IE 10+ */
+  user-select: none;
+  /* Likely future */ }
+
 #main-menu .menu-body .menu-item, #secondary-menu, .secondary-menu, .secondary-menu .title-container, .container, .list-container, .button,
-.dropdown button, dl dd, .file-uploader .file-uploader-container, .search-drop-down .input-container, .search-drop-down .results-container, .search-drop-down .results-container .result-row {
+.dropdown button, dl dd, .file-uploader .file-uploader-container, .search-drop-down .input-container, .search-drop-down .results-container, .search-drop-down .results-container .result-row, .commodities-view-edit .edit-container {
   -webkit-box-sizing: border-box;
   /* Chrome all / Safari all */
   -moz-box-sizing: border-box;
@@ -68,7 +80,7 @@ body {
 #main-menu {
   position: fixed;
   background-color: #2d4756;
-  width: 150px;
+  width: 120px;
   height: 100%;
   font-weight: 300;
   letter-spacing: -0px;
@@ -111,16 +123,16 @@ body {
   width: 100%;
   background-color: whitesmoke;
   padding: 10px 20px;
-  margin-left: 150px;
+  margin-left: 120px;
   height: 40px; }
 
 .secondary-menu {
   position: fixed;
-  width: calc(100% - 150px);
+  width: calc(100% - 120px);
   height: 40px;
   background-color: whitesmoke;
   top: 0px;
-  left: 150px;
+  left: 120px;
   right: 0px; }
   .secondary-menu .title-container {
     background-color: #efefef;
@@ -149,7 +161,7 @@ body {
   width: 100%;
   margin-top: 40px;
   height: 100%;
-  padding-left: 150px;
+  padding-left: 120px;
   background-color: white; }
   .container .container-body.padded {
     padding: 20px 30px; }
@@ -232,9 +244,15 @@ body {
     .list-container table td.action, .list-container table th.action {
       width: 50px; }
     .list-container table td.address, .list-container table th.address {
-      width: 20%; }
+      width: 200px; }
+    .list-container table td.commodities, .list-container table th.commodities {
+      width: 200px; }
+    .list-container table td.date-time, .list-container table th.date-time {
+      width: 130px; }
     .list-container table .icon {
-      display: inline-block; }
+      position: relative;
+      display: inline-block;
+      top: 2px; }
 
 .button,
 .dropdown button {
@@ -456,7 +474,8 @@ textarea,
   box-sizing: border-box;
   outline: 0;
   border: 1px solid #BDBDBD;
-  font-size: 12px; }
+  font-size: 12px;
+  background-color: white; }
   input:not([type=checkbox]):not([type="radio"]):focus,
   select:focus,
   textarea:focus,
@@ -479,7 +498,7 @@ textarea,
     background-color: whitesmoke; }
 
 .input-container {
-  min-height: 28px;
+  min-height: 24px;
   height: auto;
   padding: 1px 2px 1px 2px; }
   .input-container input {
@@ -505,26 +524,38 @@ textarea {
   box-shadow: 0px 0px 5px #D2D2D2;
   word-wrap: break-word; }
 
-/**** Action Icon ****/
-.icon {
-  margin-left: -3px;
+/**** Icon ****/
+.icon[ng-click] {
   opacity: 0.5; }
-  .icon:before {
-    color: #07618C;
-    font-size: 22px; }
-  .icon.disabled {
-    opacity: 0.2; }
-  .icon:hover {
+  .icon[ng-click]:hover {
     opacity: 1;
     cursor: pointer !important; }
-  .icon.edit:before {
-    content: "create"; }
-  .icon.delete:before {
-    content: "delete";
-    color: #AD0606; }
-  .icon.cancel:before {
-    content: "cancel";
-    color: #757575; }
+
+.icon:before {
+  color: #757575;
+  font-size: 22px; }
+
+.icon.disabled {
+  opacity: 0.2; }
+
+.icon.edit:before {
+  content: "create";
+  color: #07618C; }
+
+.icon.delete:before {
+  content: "delete";
+  color: #AD0606; }
+
+.icon.cancel:before {
+  content: "cancel"; }
+
+.icon.call-completed:before {
+  content: "check";
+  color: #4ab515; }
+
+.icon.call-cancelled:before {
+  content: "close";
+  opacity: 0.5; }
 
 .search-drop-down {
   position: relative;
@@ -649,8 +680,13 @@ textarea {
   height: 100%;
   background-color: #2d4756;
   /* fallback for old browsers */ }
+  #login [ui-view] {
+    position: relative; }
+  #login .error-message {
+    color: #AD0606;
+    margin-bottom: 10px; }
   #login .login-page {
-    width: 360px;
+    width: 400px;
     padding: 8% 0 0;
     margin: auto; }
   #login .form {
@@ -722,4 +758,53 @@ textarea {
     text-decoration: none; }
   #login .container .info span .fa {
     color: #EF3B3A; }
+
+.overflow-visible {
+  overflow: visible !important; }
+
+.commodities-view-edit .edit-container {
+  position: absolute;
+  min-width: 100%;
+  max-width: 500px;
+  max-height: 240px;
+  overflow-y: auto;
+  left: 0px;
+  top: 25px;
+  background-color: white;
+  z-index: 350; }
+  .commodities-view-edit .edit-container .edit-row {
+    padding: 4px 10px; }
+    .commodities-view-edit .edit-container .edit-row .item-name {
+      font-weight: bold;
+      font-size: 14px;
+      padding-right: 5px; }
+    .commodities-view-edit .edit-container .edit-row .minus,
+    .commodities-view-edit .edit-container .edit-row .plus {
+      position: relative;
+      top: 5px;
+      opacity: 0.3; }
+      .commodities-view-edit .edit-container .edit-row .minus:after,
+      .commodities-view-edit .edit-container .edit-row .plus:after {
+        font-size: 22px; }
+      .commodities-view-edit .edit-container .edit-row .minus:hover,
+      .commodities-view-edit .edit-container .edit-row .plus:hover {
+        cursor: pointer;
+        opacity: 1; }
+      .commodities-view-edit .edit-container .edit-row .minus.minus:after,
+      .commodities-view-edit .edit-container .edit-row .plus.minus:after {
+        content: "do_not_disturb_on"; }
+      .commodities-view-edit .edit-container .edit-row .minus.plus:after,
+      .commodities-view-edit .edit-container .edit-row .plus.plus:after {
+        content: "add_circle"; }
+    .commodities-view-edit .edit-container .edit-row .quantity {
+      padding-left: 5px;
+      padding-right: 5px;
+      font-size: 16px; }
+
+.commodities-view-edit input {
+  position: absolute;
+  opacity: 0; }
+
+.center-content {
+  text-align: center !important; }
 

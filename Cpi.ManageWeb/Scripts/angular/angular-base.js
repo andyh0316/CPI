@@ -891,12 +891,8 @@ baseModule.directive('searchDropDown', ['baseBo', '$rootScope', function (baseBo
                 for (var i in $scope.searchObject) {
                     var newResult = {
                         Id: $scope.searchObject[i].Id,
-                        String: $scope.searchObject[i][$scope.resultString],
-                        Object: $scope.searchObject[i]
-                    };
-
-                    if ($scope.resultDescription) {
-                        newResult.Description = $scope.searchObject[i][$scope.resultDescription];
+                        Name: $scope.searchObject[i].Name,
+                        Description: $scope.searchObject[i].Description,
                     };
 
                     if (!$scope.searchString || newResult.Name.startsWith($scope.searchString)) {
@@ -953,7 +949,7 @@ baseModule.directive('searchDropDown', ['baseBo', '$rootScope', function (baseBo
 
                 return null;
             };
-
+             
             $scope.getStringById = function (id) {
                 for (var i in $scope.results) {
                     if ($scope.results[i].Id == id) {
@@ -1080,6 +1076,141 @@ baseModule.directive('searchDropDown', ['baseBo', '$rootScope', function (baseBo
             '</div>'
     };
 }]);
+
+baseModule.directive('commoditiesViewEdit', function () {
+    return {
+        restrict: 'A',
+        scope: {
+            ngModel: '=',
+            commodities: '=',
+            isEditing: '='
+        },
+        link: function ($scope, $element, $attrs) {
+            $scope.ngModel = ($scope.ngModel) ? $scope.ngModel : [];
+
+            $(document).mousedown(function (e) {
+                if ($scope.showEditContainer && !$element.is(e.target) && $element.has(e.target).length === 0) {
+                    $scope.justClickedInsideContainer = true;
+                    $scope.showEditContainer = false;
+                    $scope.$apply();
+                }
+            });
+
+            $element.find('input').focus(function () {
+                if ($scope.isEditing)
+                {
+                    $scope.showEditContainer = true;
+                    $scope.$apply();
+                }
+            });
+
+            $element.find('input').focusout(function () {
+                if (!$scope.justClickedInsideContainer)
+                {
+                    $scope.showEditContainer = false;
+                    $scope.$apply();
+                }
+
+                $scope.justClickedInsideContainer = false;
+            });
+
+            $scope.getCommodityQuantityFor = function (item) {
+                for (var i in $scope.ngModel)
+                {
+                    if ($scope.ngModel[i].CommodityId === item.Id)
+                    {
+                        return $scope.ngModel[i].Quantity;
+                    }
+                }
+
+                return 0;
+            };
+
+            $scope.addQuantity = function (item) {
+                // first try to find the item in the ngModel
+                for (var i in $scope.ngModel)
+                {
+                    if ($scope.ngModel[i].CommodityId === item.Id) // if found .. add to the quantity
+                    {
+                        $scope.ngModel[i].Quantity++;
+                        return;
+                    }
+                }
+
+                // else create the object in ngModel
+                var newCallCommodity = {
+                    CommodityId: item.Id,
+                    Commodity: {
+                        Name: item.Name
+                    },
+                    Quantity: 1
+                }
+                $scope.ngModel.push(newCallCommodity);
+            };
+
+            $scope.subtractQuantity = function (item) {
+                // find the item in the ngModel
+                for (var i in $scope.ngModel) {
+                    if ($scope.ngModel[i].CommodityId === item.Id) // if found .. subtract quantity
+                    {
+                        $scope.ngModel[i].Quantity--;
+                        if ($scope.ngModel[i].Quantity === 0) // is quantity is 0: take it out of the array
+                        {
+                            $scope.ngModel.splice(i, 1);
+                        }
+                        return;
+                    }
+                }
+            };
+        },
+        template:
+        '' +
+        '<div class="commodities-view-edit">' +
+            '<div class="view-container" ng-click="showEditContainer = (isEditing) ? true : false" ng-class="{\'input-container\': isEditing}">' +
+                '<span ng-repeat="item in ngModel">' +
+                    '{{item.Commodity.Name}}' + 
+                    '<span ng-show="item.Quantity > 1"> ({{item.Quantity}})</span>' +
+                    '<span ng-show="ngModel.length > 1 && $index != ngModel.length - 1">, </span>' +
+                '</span>' +
+            '</div>' +
+            '<input ng-show="isEditing"/>' + // this input is always invisible: it helps to include this editor in tab order and when focused through tab it will show edit container 
+            '<div ng-show="showEditContainer" class="edit-container">' +
+                '<div ng-repeat="item in commodities" class="edit-row">' +
+                    '<span class="item-name">{{item.Name}}</span>' +
+                    '<span class="minus" ng-click="subtractQuantity(item)"></span>' +
+                    '<span class="quantity">{{getCommodityQuantityFor(item)}}</span>' +
+                    '<span class="plus" ng-click="addQuantity(item)"></span>' +
+                '</div>' +
+            '</div>' +
+        '</div>'
+    };
+});
+
+//baseModule.directive('addressViewEdit', function () {
+//    return {
+//        restrict: 'A',
+//        scope: {
+//            ngModel: '=',
+//            isEditing: '='
+//        },
+//        link: function ($scope, $element, $attrs) {
+//            $scope.ngModel = ($scope.ngModel) ? $scope.ngModel : [];
+//        },
+//        template:
+//        '' +
+//        '<div class="address-view-edit">' +
+//            '<div class="view-container" ng-click="showEditContainer = (isEditing) ? true : false" ng-class="{\'input-container\': isEditing}">' +
+//            '</div>' +
+//            '<div ng-show="showEditContainer" class="edit-container">' +
+//                '<input ng-model="ngModel.Street" placeholder="Street" />' +
+//                '<input ng-model="ngModel.Vilas" placeholder="Vilas" />' +
+//                '<input ng-model="ngModel.Sonka" placeholder="Sonka" />' +
+//                '<input ng-model="ngModel.District" placeholder="District" />' +
+//                '<input ng-model="ngModel.City" placeholder="City" />' +
+//            '</div>' +
+//        '</div>'
+//    };
+//});
 
 baseModule.directive('fileUploader', function () {
     return {

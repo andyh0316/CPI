@@ -1,6 +1,8 @@
 ﻿using Cpi.Application.DataModels.Interface;
 using Cpi.Compass.Application.BusinessRules;
+using Newtonsoft.Json;
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
 namespace Cpi.Application.DataModels.Base
 {
@@ -9,10 +11,19 @@ namespace Cpi.Application.DataModels.Base
         public int Id { get; set; }
 
         public int? CreatedById { get; set; }
+        [JsonIgnore]
         public virtual UserDm CreatedBy { get; set; }
         public DateTime? CreatedDate { get; set; }
 
+        [NotMapped]
+        public string CreatedByUsername {
+            get {
+                return (CreatedBy != null) ? CreatedBy.Name : null;
+            }
+        }
+
         public int? ModifiedById { get; set; }
+        [JsonIgnore]
         public virtual UserDm ModifiedBy { get; set; }
         public DateTime? ModifiedDate { get; set; }
 

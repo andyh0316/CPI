@@ -63,6 +63,41 @@ namespace Cpi.Application.BusinessObjects.Base
             DbSet.Remove(t);
         }
 
+        public void RemoveRange(List<T> ts)
+        {
+            DbSet.RemoveRange(ts);
+        }
+
+        public IQueryable<T> GetListByIdsQuery(List<int> ids, bool ordered = false)
+        {
+            if (ids == null)
+            {
+                return Enumerable.Empty<T>().AsQueryable();
+            }
+
+            IQueryable<T> query = GetListQuery().Where(m => ids.Contains(m.Id));
+
+            if (ordered) // order by the order of the ids
+            {
+                query = (from a in ids
+                         join b in query
+                         on a equals b.Id
+                         select b).AsQueryable<T>();
+            }
+
+            return query;
+        }
+
+        public List<T> GetListByIds(List<int> ids, bool ordered = false)
+        {
+            if (ids == null)
+            {
+                return new List<T>();
+            }
+
+            return GetListByIdsQuery(ids, ordered).ToList();
+        }
+
         public void Commit()
         {
             CpiDbContext.SaveChanges();

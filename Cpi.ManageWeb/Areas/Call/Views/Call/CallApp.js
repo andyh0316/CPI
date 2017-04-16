@@ -18,7 +18,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
                     return baseBo.httpRequest(listScopeData.httpRequest.method, listScopeData.httpRequest.url, listScopeData.filter);
                 }],
                 modelData: ['$stateParams', 'baseBo', function ($stateParams, baseBo) {
-                    return null;
+                    return baseBo.httpRequest('GET', '/Call/Call/GetListData');
                 }],
                 scopeData: function () {
                     return listScopeData;
@@ -32,10 +32,11 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
         })
 }]);
 
-app.controller('ListController', ['$scope', '$controller', '$state', 'baseBo', 'model', 'scopeData', function ($scope, $controller, $state, baseBo, model, scopeData) {
+app.controller('ListController', ['$scope', '$controller', '$state', 'baseBo', 'model', 'scopeData', 'modelData', function ($scope, $controller, $state, baseBo, model, scopeData, modelData) {
     angular.extend(this, $controller('ListBaseController', { $scope: $scope }));
 
     $scope.scopeData = scopeData;
+    $scope.modelData = modelData.Object;
     $scope.model = model.Object;
 
     $scope.import = function () {

@@ -17,7 +17,7 @@ namespace Cpi.Application.DataModels
 
         public DateTime? DeliveryDate { get; set; }
 
-        public virtual List<LookUpCommodityDm> Commodities { get; set; }
+        public virtual List<CallCommodityDm> CallCommodities { get; set; }
 
         public int? OperatorId { get; set; }
         public virtual UserDm Operator { get; set; }
@@ -25,6 +25,10 @@ namespace Cpi.Application.DataModels
         public int? DeliveryStaffId { get; set; }
         public virtual UserDm DeliveryStaff { get; set; }
 
+        [CpiMaxLength(300)]
+        public string AddressString { get; set; }
+
+        // we wont use this yet: maybe later
         [Required]
         public int? AddressId { get; set; }
         public virtual AddressDm Address { get; set; }
@@ -38,14 +42,8 @@ namespace Cpi.Application.DataModels
         public CallMap()
         {
             ToTable("Call");
-            HasMany<LookUpCommodityDm>(m => m.Commodities).WithMany()
-                .Map(m =>
-                {
-                    m.MapLeftKey("CallId");
-                    m.MapRightKey("CommodityId");
-                    m.ToTable("CallCommodity");
-                });
 
+            HasMany(a => a.CallCommodities).WithRequired(a => a.Call).HasForeignKey(a => a.CallId).WillCascadeOnDelete(false);
             HasOptional(a => a.Operator).WithMany().HasForeignKey(a => a.OperatorId).WillCascadeOnDelete(false);
             HasOptional(a => a.DeliveryStaff).WithMany().HasForeignKey(a => a.DeliveryStaffId).WillCascadeOnDelete(false);
             HasRequired(a => a.Address).WithMany().HasForeignKey(a => a.AddressId).WillCascadeOnDelete(false);

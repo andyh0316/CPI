@@ -27,16 +27,21 @@ app.controller('LoginController', ['$scope', '$controller', '$state', 'baseBo', 
     $scope.login = function () {
         baseBo.httpRequest('POST', '/Public/Login', $scope.model)
             .then(function (result) {
-                //if (result.Success) {
-                //    if (result.IsInvalid) {
-                //        $scope.ModelState = result.ModelState;
-                //    }
+                if (result.ModelState)
+                {
+                    $scope.modelState = result.ModelState;
+                }
+                else {
+                    if (result.Object.IsUpdatingPassword)
+                    {
+                        $scope.model.IsUpdatingPassword = result.Object.IsUpdatingPassword;
+                    }
 
-                //    if (result.Success) {
-                //        $scope.$emit('reloadListEvent', {});
-                //        $scope.setNotification();
-                //    }
-                //}
+                    if (result.Object.LoginSuccess)
+                    {
+                        location.href = '/Call/Call';
+                    }
+                }
             });
     };
 }]);
