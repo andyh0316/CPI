@@ -1,4 +1,4 @@
-﻿var app = angular.module('CallApp', ['AngularBaseModule', 'ui.router', 'ngAnimate']);
+﻿var app = angular.module('CallApp', ['AngularBaseModule', 'ui.router']);
 
 app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.when("", "/List");

@@ -1,9 +1,9 @@
 // show string on ellipsis
-$(document).on('mouseenter', '*', function (e) {
+$(document).on('mouseenter', 'dd', function (e) {
     if (e.currentTarget.offsetWidth < e.currentTarget.scrollWidth) {
         showToolTip($('#help-tooltip'), $(this), $(this).text());
     }
-}).on('mouseleave', '*', function () {
+}).on('mouseleave', 'dl', function () {
     if ($('#help-tooltip:hover').length === 0) {
         $('#help-tooltip').hide();
     }

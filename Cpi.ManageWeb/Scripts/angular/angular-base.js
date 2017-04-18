@@ -1239,45 +1239,27 @@ baseModule.directive('commoditiesViewEdit', function () {
 //    };
 //});
 
-baseModule.directive('fileUploader', function () {
+baseModule.directive('fileInput', function () {
     return {
         restrict: 'A',
         scope: {
             accept: '@',
-            multiple: '@',
-            onChange: '&'
+            label: '@',
+            name: '@'
         },
         link: function ($scope, $element, $attrs) {
             $scope.filesCount = 0;
             $scope.multiple = ($scope.multiple == 'true') ? true : false;
 
-            $element.find('.file-uploader-input').change(function () {
-                if (this.files && this.files.length > 0) {
-                    $scope.fileName = this.files[0].name;
-                    $scope.filesCount = this.files.length;
-                } else {
-                    $scope.filesCount = 0;
-                }
-
-                if ($scope.onChange) {
-                    $scope.onChange();
-                }
-
-                $scope.$apply();
-            });
+            $scope.click = function () {
+                $element.find('input').click();
+            };
         },
 
         template: '' +
-          '<div class="file-uploader-container" ng-class="{active: filesCount > 0}">' +
-              '<div ng-show="filesCount == 0" class="default-text" ng-show="true">' +
-                  'Drop file<span ng-show="mutliple">(s)</span> here or click to browse' +
-              '</div>' +
-              '<div ng-show="filesCount > 0" class="uploading-files">' +
-                   '<div class="material-icons">description</div>' +
-                   '<div ng-show="filesCount == 1" class="ellipsis">{{fileName}}</div>' +
-                   '<div ng-show="filesCount > 1">{{filesCount}} files selected</div>' +
-              '</div>' +
-              '<input class="file-uploader-input" name="file" type="file" accept="{{accept}}" ng-multiple="multiple" />' +
+          '<span>' +
+              '<input ng-show="false" name="{{name}}" type="file" accept="{{accept}}" />' +
+              '<button class="main button" ng-click="click()">{{label}}</label>' +
           '</div>',
     };
 });

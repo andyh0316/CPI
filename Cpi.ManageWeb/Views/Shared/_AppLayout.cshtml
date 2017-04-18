@@ -2,22 +2,6 @@
     Layout = "/Views/Shared/_Layout.cshtml";
 }
 
-@{
-    var currentArea = (ViewContext.RouteData.DataTokens["area"] != null) ? ViewContext.RouteData.DataTokens["area"].ToString() : null;
-    var currentController = (ViewContext.RouteData.Values["controller"] != null) ? ViewContext.RouteData.Values["controller"].ToString() : null;
-}
-
-<div id="main-menu">
-    <div class="menu-body">
-        <a href="/Call/Call/" class="menu-item @(currentArea == "Call" ? "selected" : "")">
-            <i class="material-icons">storage</i>
-            <span class="text">Calls</span>
-        </a>
-    </div>
-</div>
-
-@*<div id="secondary-menu">
-
-</div>*@
+@Html.Partial("/Views/Shared/_MainMenu.cshtml")
 
 @RenderBody()
