@@ -1,4 +1,4 @@
-//@media print {
+@media print {
     html, body {
         background-color: white;
         //width: 1000px;
@@ -8,12 +8,18 @@
         overflow: visible !important;
 
         * {
-            //visibility: hidden;
+            visibility: hidden;
         }
 
         .container {
-            //position: absolute !important;
+            position: absolute;
+            width: 100% !important;
+            margin: 0 !important;
         }
+    }
+
+    [ui-view] {
+        position: static !important;
     }
 
     #print-section {
@@ -23,6 +29,7 @@
         width: 100% !important;
         visibility: visible;
         overflow: visible !important;
+        border: 0px !important;
 
         * {
             visibility: visible;
@@ -32,4 +39,4 @@
             display: none;
         }
     }
-//}
+}

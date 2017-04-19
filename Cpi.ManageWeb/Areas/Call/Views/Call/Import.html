@@ -6,8 +6,8 @@
         <div class="others-container">
             <div class="buttons">
                 <button class="button" ng-click="back()">Cancel</button>
-                <button class="button main" ng-click="createPhoneNumbers()">Create Calls</button>
-                <button class="button main" ng-click="organizePhoneNumbers()">Organize</button>
+                <button class="button main" ng-click="createPhoneNumbers()" ng-class="{'disabled': !phoneNumbers}">Create Calls</button>
+                <button class="button main" ng-click="organizePhoneNumbers()" ng-class="{'disabled': !phoneNumbers}">Organize</button>
             </div>
         </div>
     </div>
@@ -20,38 +20,36 @@
         </dl>
     </form>
 
-    <div class="results-container">
-        <div id="print-section">
-            <div ng-show="parsedPhoneNumbersModel.SmartPhoneNumbers.length > 0" class="company-container">
-                <div class="title">Smart</div>
-                <div ng-repeat="phoneNumber in parsedPhoneNumbersModel.SmartPhoneNumbers track by $index" class="phone-number-container">
-                    <span class="phone-number">{{phoneNumber}}</span>
-                    <span class="phone-company">Smart</span>
-                </div>
+    <div id="print-section" class="results-container">
+        <div ng-show="parsedPhoneNumbersModel.SmartPhoneNumbers.length > 0" class="company-container">
+            <div class="title">Smart</div>
+            <div ng-repeat="phoneNumber in parsedPhoneNumbersModel.SmartPhoneNumbers track by $index" class="phone-number-container">
+                <span class="phone-number">{{phoneNumber}}</span>
+                <span class="phone-company">Smart</span>
             </div>
+        </div>
 
-            <div ng-show="parsedPhoneNumbersModel.MetPhonePhoneNumbers.length  > 0" class="company-container">
-                <div class="title">MetPhone</div>
-                <div ng-repeat="phoneNumber in parsedPhoneNumbersModel.MetPhonePhoneNumbers track by $index" class="phone-number-container">
-                    <span class="phone-number">{{phoneNumber}}</span>
-                    <span class="phone-company">MetPhone</span>
-                </div>
+        <div ng-show="parsedPhoneNumbersModel.MetPhonePhoneNumbers.length  > 0" class="company-container">
+            <div class="title">MetPhone</div>
+            <div ng-repeat="phoneNumber in parsedPhoneNumbersModel.MetPhonePhoneNumbers track by $index" class="phone-number-container">
+                <span class="phone-number">{{phoneNumber}}</span>
+                <span class="phone-company">MetPhone</span>
             </div>
+        </div>
 
-            <div ng-show="parsedPhoneNumbersModel.CellCardPhoneNumbers.length  > 0" class="company-container">
-                <div class="title">CellCard</div>
-                <div ng-repeat="phoneNumber in parsedPhoneNumbersModel.CellCardPhoneNumbers track by $index" class="phone-number-container">
-                    <span class="phone-number">{{phoneNumber}}</span>
-                    <span class="phone-company">CellCard</span>
-                </div>
+        <div ng-show="parsedPhoneNumbersModel.CellCardPhoneNumbers.length  > 0" class="company-container">
+            <div class="title">CellCard</div>
+            <div ng-repeat="phoneNumber in parsedPhoneNumbersModel.CellCardPhoneNumbers track by $index" class="phone-number-container">
+                <span class="phone-number">{{phoneNumber}}</span>
+                <span class="phone-company">CellCard</span>
             </div>
+        </div>
 
-            <div ng-show="parsedPhoneNumbersModel.OtherPhoneNumbers.length  > 0" class="company-container">
-                <div class="title">Other</div>
-                <div ng-repeat="phoneNumber in parsedPhoneNumbersModel.OtherPhoneNumbers track by $index" class="phone-number-container">
-                    <span class="phone-number">{{phoneNumber}}</span>
-                    <span class="phone-company">Other</span>
-                </div>
+        <div ng-show="parsedPhoneNumbersModel.OtherPhoneNumbers.length  > 0" class="company-container">
+            <div class="title">Other</div>
+            <div ng-repeat="phoneNumber in parsedPhoneNumbersModel.OtherPhoneNumbers track by $index" class="phone-number-container">
+                <span class="phone-number">{{phoneNumber}}</span>
+                <span class="phone-company">Other</span>
             </div>
         </div>
     </div>
