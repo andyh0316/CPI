@@ -25,7 +25,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
                 }
             }
         })
-        .state('List.View', {
+        .state('List.Import', {
             url: '/Import/',
             templateUrl: '/Areas/Call/Views/Call/Import.html',
             controller: 'ImportController'
@@ -43,10 +43,10 @@ app.controller('ListController', ['$scope', '$controller', '$state', 'baseBo', '
         $state.go('List.Import');
     };
 
-    $scope.create = function () {
+    $scope.create = function (phoneNumber) {
         var newItem = {
             isEditing: true,
-            DeliveryDate: new Date(),
+            CustomerPhone: phoneNumber,
             AddressId: 0,
             Address: {}
         };
@@ -104,5 +104,22 @@ app.controller('ListController', ['$scope', '$controller', '$state', 'baseBo', '
 app.controller('ImportController', ['$scope', '$controller', '$state', 'baseBo', function ($scope, $controller, $state, baseBo) {
     angular.extend(this, $controller('BaseController', { $scope: $scope }));
 
+    $scope.organizePhoneNumbers = function () {
+        baseBo.httpRequest('POST', '/Call/Call/OrganizePhoneNumbers', { phoneNumbers: $scope.phoneNumbers })
+            .then(function (result) {
+                $scope.parsedPhoneNumbersModel = result.Object;
+            });
+    };
 
+    $scope.createPhoneNumbers = function () {
+        baseBo.httpRequest('POST', '/Call/Call/ParsePhoneNumbers', { phoneNumbers: $scope.phoneNumbers })
+            .then(function (result) {
+                for (var i in result.Object.PhoneNumbers)
+                {
+                    $scope.$parent.create(result.Object.PhoneNumbers[i]);
+                }
+
+                $scope.back();
+            });
+    };
 }]);

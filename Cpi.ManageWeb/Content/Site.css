@@ -44,7 +44,7 @@
   /* Likely future */ }
 
 #main-menu .menu-body .menu-item, #secondary-menu, .secondary-menu, .secondary-menu .title-container, .container, .list-container, .button,
-.dropdown button, dl dd, .search-drop-down .input-container, .search-drop-down .results-container, .search-drop-down .results-container .result-row, .commodities-view-edit .edit-container {
+.dropdown button, dl dd, .search-drop-down .input-container, .search-drop-down .results-container, .search-drop-down .results-container .result-row, .commodities-view-edit .edit-container, #import .form, #import .results-container {
   -webkit-box-sizing: border-box;
   /* Chrome all / Safari all */
   -moz-box-sizing: border-box;
@@ -54,7 +54,7 @@
   box-sizing: border-box;
   /* Likely future */ }
 
-#secondary-menu:after, section:after {
+#secondary-menu:after, section:after, #import .results-container .company-container:after {
   content: "";
   display: table;
   clear: both; }
@@ -158,12 +158,13 @@ body {
 .container {
   position: fixed;
   top: 0;
-  width: 100%;
+  left: 0;
+  width: calc(100% - 120px);
   margin-top: 40px;
-  height: 100%;
-  padding-left: 120px;
+  height: calc(100% - 40px);
+  margin-left: 120px;
   background-color: white; }
-  .container .container-body.padded {
+  .container.padded {
     padding: 20px 30px; }
 
 [ui-view] {
@@ -181,7 +182,7 @@ body {
 .list-container {
   display: flex;
   flex-flow: column;
-  height: calc(100% - 40px);
+  height: 100%;
   margin-bottom: 20px; }
   .list-container table {
     display: flex;
@@ -506,7 +507,6 @@ textarea,
 
 textarea {
   height: 100px;
-  max-height: 500px;
   resize: vertical; }
 
 #help-tooltip {
@@ -847,4 +847,47 @@ textarea {
 
 .invisible {
   visibility: hidden; }
+
+.left {
+  float: left; }
+
+.right {
+  float: right; }
+
+.fit-height {
+  height: 100%; }
+
+#import .form {
+  float: left;
+  width: 30%;
+  padding-right: 20px;
+  height: 100%; }
+  #import .form dl {
+    height: 100%; }
+    #import .form dl dd {
+      height: 100%; }
+      #import .form dl dd textarea {
+        height: 100%; }
+
+#import .results-container {
+  float: right;
+  width: 70%;
+  padding: 20px;
+  border: 1px solid #eaeaea;
+  height: 100%;
+  overflow: auto; }
+  #import .results-container .company-container {
+    margin-bottom: 20px; }
+    #import .results-container .company-container .title {
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 10px; }
+    #import .results-container .company-container .phone-number-container {
+      width: 33%;
+      float: left;
+      margin-bottom: 5px; }
+      #import .results-container .company-container .phone-number-container .phone-number {
+        font-size: 18px; }
+      #import .results-container .company-container .phone-number-container .phone-company {
+        font-size: 12px; }
 

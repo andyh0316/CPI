@@ -11,7 +11,8 @@
             <div class="buttons">
                 <button ng-show="isEditingAny()" class="button" ng-click="cancelAll()">Cancel</button>
                 <button ng-show="isEditingAny()" class="button main" ng-click="save()">Save</button>
-                <span file-input accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" name="file" label="Import"></span>
+                <!--<span id="import-file-input" file-input label="Import" on-change="importFile()"></span>-->
+                <button class="button main" ng-click="import()">Import</button>
                 <button class="button main" ng-click="create()">+ Create</button>
             </div>
         </div>

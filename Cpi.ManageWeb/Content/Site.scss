@@ -198,17 +198,16 @@ $secondary-menu-height: 40px;
 .container {
     position: fixed;
     top: 0;
-    width: 100%;
+    left: 0;
+    width: calc(100% - #{$main-menu-width});
     margin-top: $secondary-menu-height;
-    height: 100%;
-    padding-left: $main-menu-width;
+    height: calc(100% - #{$secondary-menu-height});
+    margin-left: $main-menu-width;
     background-color: white;
     @extend %border-box;
 
-    .container-body {
-        &.padded {
-            padding: 20px 30px;
-        }
+    &.padded {
+        padding: 20px 30px;
     }
 }
 
@@ -246,7 +245,7 @@ $secondary-menu-height: 40px;
 .list-container {
     display: flex;
     flex-flow: column;
-    height: calc(100% - #{$secondary-menu-height});
+    height: 100%;
     margin-bottom: 20px;
 
     @extend %border-box;
@@ -707,7 +706,7 @@ textarea,
 
 textarea {
     height: 100px;
-    max-height: 500px;
+    //max-height: 500px;
     resize: vertical;
 }
 
@@ -1201,4 +1200,73 @@ textarea {
 
 .invisible {
     visibility: hidden;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+
+.fit-height {
+    height: 100%;
+}
+
+#import {
+    .form {
+        float: left;
+        width: 30%;
+        padding-right: 20px;
+        @extend %border-box;
+        height: 100%;
+
+        dl {
+            height: 100%;
+
+            dd {
+                height: 100%;
+
+                textarea {
+                    height: 100%;
+                }
+            }
+        }
+    }
+
+    .results-container {
+        float: right;
+        width: 70%;
+        @extend %border-box;
+        padding: 20px;
+        border: 1px solid $main-border-color;
+        height: 100%;
+        overflow: auto;
+
+        .company-container {
+            @extend %clearfix;
+            margin-bottom: 20px;
+
+            .title {
+                font-size: 22px;
+                font-weight: bold;
+                margin-bottom: 10px;
+            }
+
+            .phone-number-container {
+                width: 33%;
+                float: left;
+                margin-bottom: 5px;
+
+                .phone-number {
+                    font-size: 18px;
+                }
+
+                .phone-company {
+                    font-size: 12px;
+                }
+            }
+        }
+    }
 }

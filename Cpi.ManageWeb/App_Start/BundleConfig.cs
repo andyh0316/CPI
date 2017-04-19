@@ -35,6 +35,7 @@ namespace Cpi.ManageWeb
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                     "~/Content/site.css",
+                    "~/Content/print.css",
                     "~/Content/MaterialIcons/material-icons.css",
                     "~/Content/Fonts/fonts.css"));
 

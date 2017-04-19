@@ -1245,7 +1245,8 @@ baseModule.directive('fileInput', function () {
         scope: {
             accept: '@',
             label: '@',
-            name: '@'
+            name: '@',
+            onChange: '&',
         },
         link: function ($scope, $element, $attrs) {
             $scope.filesCount = 0;
@@ -1254,6 +1255,14 @@ baseModule.directive('fileInput', function () {
             $scope.click = function () {
                 $element.find('input').click();
             };
+
+            $element.find('input').change(function () {
+                if ($scope.onChange) {
+                    $scope.onChange();
+                }
+
+                $scope.$apply();
+            });
         },
 
         template: '' +

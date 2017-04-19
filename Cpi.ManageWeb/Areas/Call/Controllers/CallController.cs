@@ -12,6 +12,10 @@ using System.Web.Mvc;
 using System.Data.Entity;
 using Cpi.Application.BusinessObjects.LookUp;
 using Cpi.Application.DataModels.LookUp;
+using System.Web;
+using System.IO;
+using Excel;
+using System.Data;
 
 namespace Cpi.ManageWeb.Areas.Call.Controllers
 {
@@ -109,12 +113,73 @@ namespace Cpi.ManageWeb.Areas.Call.Controllers
             return JsonModel(null);
         }
 
-        //[HttpGet]
-        //public ContentResult GetImport()
-        //{
+        [HttpPost]
+        public ContentResult OrganizePhoneNumbers(string phoneNumbers)
+        {
+            List<string> phoneNumbersList = ParsePhoneNumbersMethod(phoneNumbers);
 
-        //}
+            List<string> smartPrefixes = new List<string> { "10", "15", "16", "69", "70", "81", "86", "87", "93", "98", "96" };
+            List<string> metFonePrefixes = new List<string> { "88", "97", "71", "60", "66", "67", "68", "90", "31", "91" };
+            List<string> cellCardPrefixes = new List<string> { "11", "12", "14", "17", "61", "76", "77", "78", "85", "89", "92", "95", "99" };
 
+            List<string> smartPhoneNumbers = new List<string>();
+            List<string> metFoneNumbers = new List<string>();
+            List<string> cellCardPhoneNumbers = new List<string>();
+            List<string> otherPhoneNumbers = new List<string>();
 
+            foreach (string phoneNumber in phoneNumbersList)
+            {
+                if (smartPrefixes.Any(a => phoneNumber.StartsWith(a)))
+                {
+                    smartPhoneNumbers.Add(phoneNumber);
+                }
+                else if (metFonePrefixes.Any(a => phoneNumber.StartsWith(a)))
+                {
+                    metFoneNumbers.Add(phoneNumber);
+                }
+                else if (cellCardPrefixes.Any(a => phoneNumber.StartsWith(a)))
+                {
+                    cellCardPhoneNumbers.Add(phoneNumber);
+                }
+                else
+                {
+                    otherPhoneNumbers.Add(phoneNumber);
+                }
+            }
+
+            var model = new
+            {
+                SmartPhoneNumbers = smartPhoneNumbers,
+                MetFoneNumbers = metFoneNumbers,
+                CellCardPhoneNumbers = cellCardPhoneNumbers,
+                OtherPhoneNumbers = otherPhoneNumbers
+            };
+
+            return JsonModel(model);
+        }
+
+        [HttpPost]
+        public ContentResult ParsePhoneNumbers(string phoneNumbers)
+        {
+            var model = new
+            {
+                PhoneNumbers = ParsePhoneNumbersMethod(phoneNumbers)
+            };
+
+            return JsonModel(model);
+        }
+
+        private List<string> ParsePhoneNumbersMethod(string phoneNumbers)
+        {
+            List<string> phoneNumbersList = new List<string>();
+            var reader = new StringReader(phoneNumbers);
+            string line;
+            while (null != (line = reader.ReadLine()))
+            {
+                phoneNumbersList.Add(line);
+            }
+
+            return phoneNumbersList;
+        }
     }
 }

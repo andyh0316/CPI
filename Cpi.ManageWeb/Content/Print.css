@@ -1,0 +1,18 @@
+﻿html, body {
+  background-color: white; }
+
+body {
+  overflow: visible !important; }
+
+#print-section {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100% !important;
+  visibility: visible;
+  overflow: visible !important; }
+  #print-section * {
+    visibility: visible; }
+  #print-section .button {
+    display: none; }
+
