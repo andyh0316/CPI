@@ -218,6 +218,7 @@
     <Compile Include="Areas\Call\Controllers\CallController.cs" />
     <Compile Include="Areas\Call\CallAreaRegistration.cs" />
     <Compile Include="Attributes\CpiAuthenticateAttribute.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Base\BaseController.cs" />
     <Compile Include="Controllers\PublicController.cs" />
     <Compile Include="Controllers\SearchDropDownController.cs" />

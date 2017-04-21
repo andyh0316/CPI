@@ -33,4 +33,16 @@ $(document).on('mouseenter', 'dd', function () {
     showToolTip($('#validation-tooltip'), $(this), message);
 }).on('mouseleave', 'dl', function () {
     $('#validation-tooltip').hide();
-});
+    });
+
+// auto extend session every 5 minutes (the session timeout is set to be 20 minutes but javascript setInterval is inaccurate so to be REALLY safe we do 5 minutes)
+$(document).ready(function () { 
+    gAutoExtendSession = setInterval(function () {
+        extendSession();
+    }, 300000);
+})
+
+function extendSession() {
+    $.getJSON('/Account/ExtendSession/', function (data, status) {
+    });
+};
