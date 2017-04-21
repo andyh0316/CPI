@@ -1,2 +1,120 @@
-﻿body {
+﻿@import "MaterialIcons/material-icons.scss";
+
+$main-font: 'Open Sans', sans-serif;
+
+%prevent-user-select {
+    -webkit-user-select: none; /* Chrome all / Safari all */
+    -moz-user-select: none; /* Firefox all */
+    -ms-user-select: none; /* IE 10+ */
+    user-select: none; /* Likely future */
+}
+
+%border-box {
+    -webkit-box-sizing: border-box; /* Chrome all / Safari all */
+    -moz-box-sizing: border-box; /* Firefox all */
+    -ms-box-sizing: border-box; /* IE 10+ */
+    box-sizing: border-box; /* Likely future */
+}
+
+%clearfix {
+    &:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+}
+
+@mixin transition($param) {
+    -webkit-transition: $param;
+    -moz-transition: $param;
+    -o-transition: $param;
+    transition: $param;
+}
+
+@mixin opacity($param) {
+    opacity: $param;
+}
+
+html, body {
+    padding: 0px !important;
+    margin: 0px !important;
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    font-family: $main-font;
+}
+
+#top-menu {
+    background-color: #983a3a;
+    //padding: 0px 15px;
+    height: 50px;
+    @extend %border-box;
+    @extend %clearfix;
+    /*.company-title {
+        color: #ffe6e6;
+        font-size: 28px;
+        font-weight: bolder;
+        letter-spacing: 1px;
+    }*/
+    .material-icons {
+        position: relative;
+        font-size: 28px;
+        color: #ffe6e6;
+        color: white;
+        height: 100%;
+
+        &.shopping-cart {
+        }
+
+        &.finish-order {
+            float: right;
+            width: 50px;
+            background-color: gray;
+        }
+    }
+}
+
+.button {
+    position: relative;
+    display: inline-block;
+    font-family: $main-font;
+    font-weight: bold;
+    text-transform: uppercase;
+    min-width: 60px;
+    height: 32px;
+    background-color: white;
+    outline: none;
+    border: 1px solid #C5C5C5;
+    padding: 0px 5px;
+    text-align: center;
+    vertical-align: middle;
+    text-decoration: none;
+    font-size: 11px;
+
+    @include transition(background-color 200ms linear);
+    @extend %border-box;
+
+
+    &.main {
+        border: 1px solid black;
+        background-color: #2d4756;
+        color: whitesmoke;
+
+        &:hover {
+            background-color: black;
+        }
+    }
+
+    &.disabled,
+    &:disabled {
+        @include opacity(0.5);
+        pointer-events: none;
+    }
+
+    &:hover {
+        background-color: whitesmoke;
+        cursor: pointer;
+    }
 }

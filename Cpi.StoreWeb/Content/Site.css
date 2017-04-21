@@ -1,1 +1,107 @@
-﻿
+﻿@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(MaterialIcons-Regular.eot);
+  /* For IE6-8 */
+  src: local("Material Icons"), local("MaterialIcons-Regular"), url(MaterialIcons-Regular.woff2) format("woff2"), url(MaterialIcons-Regular.woff) format("woff"), url(MaterialIcons-Regular.ttf) format("truetype"); }
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+  /* Support for IE. */
+  font-feature-settings: 'liga'; }
+
+#top-menu, .button {
+  -webkit-box-sizing: border-box;
+  /* Chrome all / Safari all */
+  -moz-box-sizing: border-box;
+  /* Firefox all */
+  -ms-box-sizing: border-box;
+  /* IE 10+ */
+  box-sizing: border-box;
+  /* Likely future */ }
+
+#top-menu:after {
+  content: "";
+  display: table;
+  clear: both; }
+
+html, body {
+  padding: 0px !important;
+  margin: 0px !important;
+  height: 100%;
+  overflow: hidden; }
+
+body {
+  font-family: "Open Sans", sans-serif; }
+
+#top-menu {
+  background-color: #983a3a;
+  height: 50px;
+  /*.company-title {
+        color: #ffe6e6;
+        font-size: 28px;
+        font-weight: bolder;
+        letter-spacing: 1px;
+    }*/ }
+  #top-menu .material-icons {
+    position: relative;
+    font-size: 28px;
+    color: #ffe6e6;
+    color: white;
+    height: 100%; }
+    #top-menu .material-icons.finish-order {
+      float: right;
+      width: 50px;
+      background-color: gray; }
+
+.button {
+  position: relative;
+  display: inline-block;
+  font-family: "Open Sans", sans-serif;
+  font-weight: bold;
+  text-transform: uppercase;
+  min-width: 60px;
+  height: 32px;
+  background-color: white;
+  outline: none;
+  border: 1px solid #C5C5C5;
+  padding: 0px 5px;
+  text-align: center;
+  vertical-align: middle;
+  text-decoration: none;
+  font-size: 11px;
+  -webkit-transition: background-color 200ms linear;
+  -moz-transition: background-color 200ms linear;
+  -o-transition: background-color 200ms linear;
+  transition: background-color 200ms linear; }
+  .button.main {
+    border: 1px solid black;
+    background-color: #2d4756;
+    color: whitesmoke; }
+    .button.main:hover {
+      background-color: black; }
+  .button.disabled, .button:disabled {
+    opacity: 0.5;
+    pointer-events: none; }
+  .button:hover {
+    background-color: whitesmoke;
+    cursor: pointer; }
+
