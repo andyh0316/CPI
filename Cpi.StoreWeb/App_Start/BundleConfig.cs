@@ -26,6 +26,19 @@ namespace Cpi.StoreWeb
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/angular").Include(
+                        "~/Scripts/angular/angular.js",
+                        "~/Scripts/angular/angular-animate.js",
+                        "~/Scripts/angular/angular-ui-router.js",
+                        "~/Scripts/angular/angular-base.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/javascript").Include(
+                        "~/Scripts/javascript/javascript-base.js"));
+
+            // angular apps
+            bundles.Add(new ScriptBundle("~/bundles/home").Include(
+                        "~/Views/Home/HomeApp.js"));
         }
     }
 }
