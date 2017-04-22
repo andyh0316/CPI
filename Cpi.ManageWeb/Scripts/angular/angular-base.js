@@ -1,4 +1,4 @@
-﻿var baseModule = angular.module('AngularBaseModule', []);
+﻿var baseModule = angular.module('AngularBaseModule', ['ngAnimate']);
 
 baseModule.config(['$httpProvider', function ($httpProvider) {
     $httpProvider.defaults.headers.common['Cache-Control'] = 'no-cache, no-store, must-revalidate';
@@ -519,13 +519,17 @@ baseModule.filter('shortDate', ['$filter', function ($filter) {
 baseModule.filter('shortDateWithTime', ['$filter', function ($filter) {
     var angularDateFilter = $filter('date');
     return function (date) {
-
         return angularDateFilter(date, 'dd/MM/yyyy hh:mm a');
     }
 }]);
 
 baseModule.filter('localDateTime', ['$filter', function ($filter) {
     return function (date) {
+        if (!date)
+        {
+            return;
+        }
+
         var date = new Date(date); // just by doing this javascript will automatically convert the time to local
         //date.setHours(date.getHours() + 7);
         return date;

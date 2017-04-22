@@ -1,4 +1,4 @@
-﻿<div class="container">
+﻿<div>
     <div ng-show="state.current.name == 'List'" class="secondary-menu">
         <div class="title-container">
             <div class="title">Calls</div>
@@ -39,7 +39,7 @@
                 <tr ng-repeat="record in model.Records" ng-class="{deleting: record.Deleted}">
                     <td class="date-time">
                         <dl>
-                            <dd ng-show="!record.isEditing">{{record.CreatedDate | localDateTime | shortDateWithTime}}</dd>
+                            <dd>{{record.CreatedDate | localDateTime | shortDateWithTime}}</dd>
                         </dl>
                     </td>
                     <td>
@@ -135,6 +135,6 @@
             </tbody>
         </table>
 
-        <div ui-view></div>
+        <div ui-view class="container padded"></div>
     </div>
 </div>

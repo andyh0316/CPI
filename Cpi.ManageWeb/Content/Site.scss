@@ -11,7 +11,7 @@ $secondary-menu-buttons-z-index: 1000;
 $tooltip-box-z-index: 2000;
 $search-drop-down-z-index: 350;
 
-$main-border-color: #eaeaea;
+$main-border-color: #BDBDBD;
 $main-border-hover-color: #b5b5b5;
 
 $error-color: #AD0606;
@@ -66,6 +66,12 @@ $app-min-width: 1280px;
 
 @mixin opacity($param) {
     opacity: $param;
+}
+
+@mixin box-shadow($param) {
+    -webkit-box-shadow: $param;
+    -moz-box-shadow: $param;
+    box-shadow: $param;
 }
 
 html, body {
@@ -216,33 +222,33 @@ $secondary-menu-height: 40px;
 }
 
 [ui-view] {
-    position: absolute;
     left: 0;
     top: 0;
-}
 
-[ui-view].ng-enter, [ui-view].ng-leave {
-}
+    [ui-view] { // only children ui-view will get animated
+        @include box-shadow(-10px 0px 150px 5px #aab7bf);
+        @include transition(all 400ms linear);
 
-[ui-view].ng-enter {
-    @include transition(all 300ms ease-in-out);
-    @include opacity(0.85);
-    left: 25%;
-}
+        &.ng-enter {
+            left: 100%;
+        }
 
-[ui-view].ng-enter-active {
-    @include opacity(1);
-    left: 0px;
-}
+        &.ng-enter-active {
+            left: 0px;
+        }
 
-[ui-view].ng-leave {
-    @include opacity(0);
-    /*padding-left: 0px;*/
-}
+        &.ng-leave {
+            left: 0%;
+        }
 
-[ui-view].ng-leave-active {
-    @include opacity(1);
-    /*padding-left: 100px;*/
+        &.ng-leave-active {
+            left: 100%;
+        }
+
+        &:empty {
+            display: none;
+        }
+    }
 }
 
 /**** LIST AND TABLE ****/
@@ -308,6 +314,8 @@ $secondary-menu-height: 40px;
             overflow-y: scroll;
 
             tr {
+                @include transition(all 300ms ease-in-out);
+
                 &:hover {
                     background-color: whitesmoke;
                 }
@@ -1238,6 +1246,8 @@ textarea {
 }
 
 #import {
+    height: 100%;
+
     .form {
         float: left;
         width: 30%;
