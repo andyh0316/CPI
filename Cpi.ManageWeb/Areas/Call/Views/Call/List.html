@@ -5,9 +5,7 @@
             <div class="list-total">{{model.ListLoadCalculator.Total}}</div>
         </div>
         <div class="others-container">
-            <form class="search">
-                <input type="text" class="search-box" ng-model="scopeData.filter.SearchString" placeholder="Search" />
-            </form>
+            <input search-box type="text" class="search-box" ng-model="scopeData.filter.SearchString" placeholder="Search" />
             <div class="buttons">
                 <button ng-show="isEditingAny()" class="button" ng-click="cancelAll()">Cancel</button>
                 <button ng-show="isEditingAny()" class="button main" ng-click="save()">Save</button>

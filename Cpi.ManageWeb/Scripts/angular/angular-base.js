@@ -299,7 +299,7 @@ baseModule.controller('ListBaseController', ['$scope', '$controller', 'baseBo', 
             }
 
             $scope.getList();
-        }, 500); // wait for user to finish typing input: how many ms to wait
+        }, gSearchInputDelay); // wait for user to finish typing input: how many ms to wait
     });
 
     $scope.searchStringGo = function () {
@@ -557,6 +557,11 @@ baseModule.filter('range', function () {
 
 baseModule.filter('callCommodities', function () {
     return function (callCommodities) {
+        if (!callCommodities)
+        {
+            return null;
+        }
+
         var returnString = '';
 
         for (var i = 0; i < callCommodities.length; i++)
@@ -930,7 +935,7 @@ baseModule.directive('searchDropDown', ['baseBo', '$rootScope', function (baseBo
                             $scope.results = result.Object;
                             $scope.showContainer = true;
                         });
-                    }, 500);
+                    }, gSearchInputDelay);
                 } else {
                     $scope.results = $scope.getResultsFromSearchObject();
                     $scope.showContainer = true;
@@ -1318,6 +1323,20 @@ baseModule.directive('tbody', function () {
                     $scope.getList(true);
                 }
             })
+        }
+    };
+});
+
+baseModule.directive('searchBox', function () {
+    return {
+        restrict: 'A',
+        link: function ($scope, $element, $attrs) {
+            $element.on('keydown', function (e) {
+                if (e.keyCode == '13') // enter
+                {
+                    $scope.getList();
+                }
+            });
         }
     };
 });

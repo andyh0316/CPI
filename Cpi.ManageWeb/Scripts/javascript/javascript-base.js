@@ -1,3 +1,5 @@
+var gSearchInputDelay = 1000;
+
 // show string on ellipsis
 $(document).on('mouseenter', 'dd', function (e) {
     if (e.currentTarget.offsetWidth < e.currentTarget.scrollWidth) {

@@ -128,7 +128,8 @@ body {
 
 .secondary-menu {
   position: fixed;
-  width: calc(100% - (120px));
+  width: calc((100%) - (120px));
+  min-width: calc((1280px) - (120px));
   height: 40px;
   background-color: whitesmoke;
   top: 0px;
@@ -157,6 +158,7 @@ body {
 
 .container {
   position: fixed;
+  min-width: calc((1280px) - (120px));
   top: 0;
   left: 0;
   width: calc((100%) - (120px));
@@ -438,29 +440,17 @@ section dl {
         }
     }
 }*/
-.search {
-  position: relative;
-  height: 30px; }
-  .search input.search-box {
-    float: left;
-    width: 200px;
-    height: 100%;
-    padding-left: 30px !important;
-    padding-right: 0;
-    background-image: url("/Images/Icons/search-box-icon.png");
-    background-size: 16px 16px;
-    background-repeat: no-repeat;
-    background-position: 8px center;
-    transition: width 300ms ease-in-out; }
-  .search button {
-    min-width: 0px !important;
-    float: left;
-    height: 100%;
-    border-left: none; }
-  .search a {
-    top: 5px;
-    font-size: 12px;
-    margin-left: 8px; }
+input.search-box {
+  float: left;
+  width: 200px;
+  height: 30px !important;
+  padding-left: 30px !important;
+  padding-right: 0;
+  background-image: url("/Images/Icons/search-box-icon.png");
+  background-size: 16px 16px;
+  background-repeat: no-repeat;
+  background-position: 8px center;
+  transition: width 300ms ease-in-out; }
 
 /**** INPUTS ****/
 input:not([type=checkbox]):not([type="radio"]),

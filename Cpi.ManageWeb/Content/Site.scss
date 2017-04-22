@@ -17,6 +17,8 @@ $main-border-hover-color: #b5b5b5;
 $error-color: #AD0606;
 $error-border-color: #B30F0F;
 
+$app-min-width: 1280px;
+
 //$menu-font: 'Open Sans Condensed', sans-serif;
 
 %main-box-shadow {
@@ -149,7 +151,8 @@ $secondary-menu-height: 40px;
 
 .secondary-menu {
     position: fixed;
-    width: calc(100% - (#{$main-menu-width}));
+    width: calc((100%) - (#{$main-menu-width}));
+    min-width: calc((#{$app-min-width}) - (#{$main-menu-width}));
     height: $secondary-menu-height;
     background-color: whitesmoke;
     //margin-left: $main-menu-width;
@@ -197,6 +200,7 @@ $secondary-menu-height: 40px;
 
 .container {
     position: fixed;
+    min-width: calc((#{$app-min-width}) - (#{$main-menu-width}));
     top: 0;
     left: 0;
     width: calc((100%) - (#{$main-menu-width}));
@@ -621,40 +625,23 @@ section {
     }
 }*/
 
-.search {
-    position: relative;
-    height: 30px;
+input.search-box {
+    float: left;
+    width: 200px;
+    height: 30px !important;
+    padding-left: 30px !important;
+    padding-right: 0;
+    background-image: url('/Images/Icons/search-box-icon.png');
+    background-size: 16px 16px;
+    background-repeat: no-repeat;
+    background-position: 8px center;
+    transition: width 300ms ease-in-out;
 
-    input.search-box {
-        float: left;
-        width: 200px;
-        height: 100%;
-        padding-left: 30px !important;
-        padding-right: 0;
-        background-image: url('/Images/Icons/search-box-icon.png');
-        background-size: 16px 16px;
-        background-repeat: no-repeat;
-        background-position: 8px center;
-        transition: width 300ms ease-in-out;
-
-        &:focus {
-            //width: 300px;
-        }
-    }
-
-    button {
-        min-width: 0px !important;
-        float: left;
-        height: 100%;
-        border-left: none;
-    }
-
-    a {
-        top: 5px;
-        font-size: 12px;
-        margin-left: 8px;
+    &:focus {
+        //width: 300px;
     }
 }
+
 
 /**** INPUTS ****/
 input:not([type=checkbox]):not([type="radio"]),
