@@ -1167,9 +1167,6 @@ baseModule.directive('commoditiesViewEdit', function () {
                 // else create the object in ngModel
                 var newCallCommodity = {
                     CommodityId: item.Id,
-                    Commodity: {
-                        Name: item.Name
-                    },
                     Quantity: 1
                 }
                 $scope.ngModel.push(newCallCommodity);
@@ -1189,13 +1186,30 @@ baseModule.directive('commoditiesViewEdit', function () {
                     }
                 }
             };
+
+            $scope.getCommodityName = function (item) {
+                if ($scope.isEditing) // If editing: We wanna get the names from the select list, because we are only using the Commodity ID, and the Commodity object might be null
+                {
+                    for (var i in $scope.commodities)
+                    {
+                        if ($scope.commodities[i].Id === item.CommodityId)
+                        {
+                            return $scope.commodities[i].Name;
+                        }
+                    }
+                }
+                else // else if its viewing: just get the name
+                {
+                    return item.Commodity.Name;
+                }
+            };
         },
         template:
         '' +
         '<div class="commodities-view-edit">' +
             '<div class="view-container" ng-click="showEditContainer = (isEditing) ? true : false" ng-class="{\'input-container\': isEditing}">' +
                 '<span ng-repeat="item in ngModel">' +
-                    '{{item.Commodity.Name}}' + 
+                    '{{getCommodityName(item)}}' + 
                     '<span ng-show="item.Quantity > 1"> ({{item.Quantity}})</span>' +
                     '<span ng-show="ngModel.length > 1 && $index != ngModel.length - 1">, </span>' +
                 '</span>' +

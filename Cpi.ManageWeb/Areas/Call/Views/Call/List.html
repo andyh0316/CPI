@@ -32,6 +32,7 @@
                     <th class="address">
                         Address
                     </th>
+                    <th class="right-content">Total Price</th>
                     <th class="center-content">Status</th>
                     <th class="action">Action</th>
                 </tr>
@@ -40,7 +41,7 @@
                 <tr ng-repeat="record in model.Records" ng-class="{deleting: record.Deleted}">
                     <td class="date-time">
                         <dl>
-                            <dd>{{record.CreatedDate | shortDateWithTime}}</dd>
+                            <dd ng-show="!record.isEditing">{{record.CreatedDate | shortDateWithTime}}</dd>
                         </dl>
                     </td>
                     <td>
@@ -62,12 +63,6 @@
                         <dl>
                             <dd class="overflow-visible">
                                 <div commodities-view-edit is-editing="record.isEditing" ng-model="record.CallCommodities" commodities="modelData.Commodities"></div>
-                                <!--<div search-drop-down class="search-drop-down"
-                                     input-string="{{record.Operator.Name}}"
-                                     input-keys="record.OperatorId"
-                                     search-object="modelData.Commodities"
-                                     multi-select="true">
-                                </div>-->
                             </dd>
                         </dl>
                     </td>
@@ -107,6 +102,11 @@
                             <dd ng-show="record.isEditing">
                                 <input ng-model="record.AddressString" />
                             </dd>
+                        </dl>
+                    </td>
+                    <td class="right-content">
+                        <dl>
+                            <dd ng-show="!record.isEditing">${{record.TotalPrice | number: 2}}</dd>
                         </dl>
                     </td>
                     <td class="center-content">

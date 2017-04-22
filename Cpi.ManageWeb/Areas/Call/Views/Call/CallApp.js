@@ -48,7 +48,8 @@ app.controller('ListController', ['$scope', '$controller', '$state', 'baseBo', '
             isEditing: true,
             CustomerPhone: phoneNumber,
             AddressId: 0,
-            Address: {}
+            Address: {},
+            TotalPrice: 0
         };
         $scope.model.Records.unshift(newItem);
     };

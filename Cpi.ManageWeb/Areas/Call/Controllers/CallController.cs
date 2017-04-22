@@ -69,6 +69,8 @@ namespace Cpi.ManageWeb.Areas.Call.Controllers
             }
 
             List<CallDm> trackedCalls = CallBo.GetListByIds(calls.Where(a => a.Id > 0).Select(a => a.Id).ToList(), true).ToList();
+            List<CommodityDm> allCommodities = CommodityBo.GetList();
+
             foreach (CallDm call in calls)
             {
                 CallDm trackedCall = (call.Id > 0) ? trackedCalls.Find(a => a.Id == call.Id) : new CallDm();
@@ -79,10 +81,12 @@ namespace Cpi.ManageWeb.Areas.Call.Controllers
 
                 call.CallCommodities = (call.CallCommodities) ?? new List<CallCommodityDm>();
                 trackedCall.CallCommodities = (trackedCall.CallCommodities) ?? new List<CallCommodityDm>();
+
+                trackedCall.CallCommodities.RemoveAll(a => a.Call.CallCommodities.Select(b => b.Id).Contains(a.Id)); // we usually don't need this but we need to keep track of what's currently in the trackedCall so we can calculate the total price
                 CallCommodityBo.RemoveRange(trackedCall.CallCommodities.Where(a => !call.CallCommodities.Select(b => b.Id).Contains(a.Id)).ToList()); // first delete all the call commodities that are not in the view model
                 foreach (CallCommodityDm callCommodity in call.CallCommodities)
                 {
-                    CallCommodityDm trackedCallCommodity = (callCommodity.Id > 0 ) ? trackedCall.CallCommodities.Find(a => a.Id == callCommodity.Id) : new CallCommodityDm();
+                    CallCommodityDm trackedCallCommodity = (callCommodity.Id > 0) ? trackedCall.CallCommodities.Find(a => a.Id == callCommodity.Id) : new CallCommodityDm();
 
                     Mapper.Map(callCommodity, trackedCallCommodity);
 
@@ -96,6 +100,12 @@ namespace Cpi.ManageWeb.Areas.Call.Controllers
                         trackedCallCommodity.CreatedDate = DateTime.Now;
                     }
                 }
+
+                // calculate the total price
+                trackedCall.TotalPrice = (from a in trackedCall.CallCommodities.Select(a => a.CommodityId)
+                                          join b in allCommodities
+                                          on a equals b.Id
+                                          select b.Price).DefaultIfEmpty(0).Sum();
 
                 if (trackedCall.Id > 0)
                 {

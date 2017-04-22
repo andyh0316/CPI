@@ -31,12 +31,15 @@ namespace Cpi.Application.DataModels
         public string AddressString { get; set; }
 
         // we wont use this yet: maybe later
-        [Required]
+        [CpiRequired]
         public int? AddressId { get; set; }
         public virtual AddressDm Address { get; set; }
 
         public int? StatusId { get; set; }
         public virtual LookUpCallStatusDm Status { get; set; }
+
+        [CpiRequired]
+        public decimal? TotalPrice { get; set; }
     }
 
     public class CallMap : BaseMap<CallDm>
