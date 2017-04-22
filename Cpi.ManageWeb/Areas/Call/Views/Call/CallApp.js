@@ -68,37 +68,6 @@ app.controller('ListController', ['$scope', '$controller', '$state', 'baseBo', '
                 }
             });
     };
-
-    //$scope.view = function (id) {
-    //    $state.go('List.Staff', { 'mode': 'View', 'id': id });
-    //};
-
-    //$scope.edit = function (id) {
-    //    $state.go('List.Staff', { 'mode': 'Edit', 'id': id });
-    //};
-
-    //$scope.selectAllStaffIds = function () {
-
-    //    baseBo.httpRequest('POST', '/Staff/StaffInfo/SelectAllStaffIds/', { searchString: $scope.simpleSearchString, advancedSearch: $scope.advancedSearch })
-    //        .then(function (result) {
-    //            $scope.tryAddToSelected(result.model.StaffIds);
-
-
-    //        });
-    //};
-
-    //$scope.createStaffServices = function () {
-    //    $state.go('List.CreateStaffServices');
-    //};
-
-
-    //$scope.getListData = function () {
-    //    baseBo.httpRequest('GET', '/Staff/StaffInfo/GetStaffListData')
-    //           .then(function (result) { $scope.data = result.model; });
-    //};
-
-    //// the select lists are taking a while to load so we will just get them in the background
-    //$scope.getListData();
 }]);
 
 app.controller('ImportController', ['$scope', '$controller', '$state', 'baseBo', function ($scope, $controller, $state, baseBo) {

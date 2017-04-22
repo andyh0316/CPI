@@ -179,6 +179,8 @@ namespace Cpi.ManageWeb.Areas.Call.Controllers
                 phoneNumbersList.Add(line);
             }
 
+            phoneNumbersList = phoneNumbersList.Distinct().ToList();
+
             return phoneNumbersList;
         }
     }
