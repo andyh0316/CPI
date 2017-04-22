@@ -228,10 +228,10 @@ body {
       height: 100%;
       overflow-y: scroll; }
       .list-container table tbody tr {
-        -webkit-transition: all 300ms ease-in-out;
-        -moz-transition: all 300ms ease-in-out;
-        -o-transition: all 300ms ease-in-out;
-        transition: all 300ms ease-in-out; }
+        -webkit-transition: background-color 300ms ease-in-out;
+        -moz-transition: background-color 300ms ease-in-out;
+        -o-transition: background-color 300ms ease-in-out;
+        transition: background-color 300ms ease-in-out; }
         .list-container table tbody tr:hover {
           background-color: whitesmoke; }
         .list-container table tbody tr td {
@@ -908,15 +908,15 @@ textarea {
     #import .results-container .company-container {
       margin-bottom: 20px; }
       #import .results-container .company-container .title {
-        font-size: 22px;
+        font-size: 34px;
         font-weight: bold;
         margin-bottom: 10px; }
       #import .results-container .company-container .phone-number-container {
         width: 33%;
         float: left;
-        margin-bottom: 5px; }
+        margin: 10px 0px; }
         #import .results-container .company-container .phone-number-container .phone-number {
-          font-size: 18px; }
+          font-size: 28px; }
         #import .results-container .company-container .phone-number-container .phone-company {
-          font-size: 12px; }
+          font-size: 16px; }
 

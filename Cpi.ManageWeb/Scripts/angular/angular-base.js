@@ -1315,7 +1315,7 @@ baseModule.directive('tbody', function () {
                 if (raw.scrollTop + raw.offsetHeight >= raw.scrollHeight) { //at the bottom
                     $scope.getList(true);
                 }
-            })
+            });
         }
     };
 });
@@ -1333,3 +1333,16 @@ baseModule.directive('searchBox', function () {
         }
     };
 });
+
+//baseModule.directive('tr', ['$timeout', function ($timeout) {
+//    return {
+//        restrict: 'E',
+//        link: function ($scope, $element, $attrs) {
+//            if ($scope.$index < 50)
+//            {
+//                $element.css('opacity', 0);
+//                $element.delay(15 * $scope.$index).fadeTo(200, 1);
+//            }
+//        }
+//    };
+//}]);

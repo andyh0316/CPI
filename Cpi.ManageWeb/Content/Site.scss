@@ -307,7 +307,7 @@ $secondary-menu-height: 40px;
             overflow-y: scroll;
 
             tr {
-                @include transition(all 300ms ease-in-out);
+                @include transition(background-color 300ms ease-in-out);
 
                 &:hover {
                     background-color: whitesmoke;
@@ -1275,7 +1275,7 @@ textarea {
             margin-bottom: 20px;
 
             .title {
-                font-size: 22px;
+                font-size: 34px;
                 font-weight: bold;
                 margin-bottom: 10px;
             }
@@ -1283,14 +1283,14 @@ textarea {
             .phone-number-container {
                 width: 33%;
                 float: left;
-                margin-bottom: 5px;
+                margin: 10px 0px;
 
                 .phone-number {
-                    font-size: 18px;
+                    font-size: 28px;
                 }
 
                 .phone-company {
-                    font-size: 12px;
+                    font-size: 16px;
                 }
             }
         }
