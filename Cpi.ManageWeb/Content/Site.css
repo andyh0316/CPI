@@ -6,7 +6,7 @@
   /* For IE6-8 */
   src: local("Material Icons"), local("MaterialIcons-Regular"), url(/Content/MaterialIcons/MaterialIcons-Regular.woff2) format("woff2"), url(/Content/MaterialIcons/MaterialIcons-Regular.woff) format("woff"), url(/Content/MaterialIcons/MaterialIcons-Regular.ttf) format("truetype"); }
 
-.material-icons, .list-container table thead th a:after, .icon:before, .search-drop-down .input-container:after, .commodities-edit .edit-container .edit-row .minus:after,
+.material-icons, .list-container table thead tr th a:after, .icon:before, .search-drop-down .input-container:after, .commodities-edit .edit-container .edit-row .minus:after,
 .commodities-edit .edit-container .edit-row .plus:after,
 .commodities-edit .edit-container .edit-row .plus.minus:after {
   font-family: 'Material Icons';
@@ -190,14 +190,16 @@ body {
     display: flex;
     flex-flow: column;
     align-items: stretch;
-    height: 100%; }
+    height: 100%;
+    border-collapse: collapse; }
     .list-container table thead {
       width: calc((100%) - (18px)) !important; }
-      .list-container table thead th {
-        text-align: left; }
-        .list-container table thead th a {
+      .list-container table thead tr th {
+        text-align: left;
+        padding: 10px 5px; }
+        .list-container table thead tr th a {
           margin-right: 15px; }
-          .list-container table thead th a:after {
+          .list-container table thead tr th a:after {
             position: absolute;
             display: inline;
             font-size: 22px;
@@ -206,13 +208,13 @@ body {
             line-height: 80%;
             margin-left: -3px;
             margin-right: -3px; }
-          .list-container table thead th a.sorted-asc:after {
+          .list-container table thead tr th a.sorted-asc:after {
             content: "arrow_drop_up";
             opacity: 1; }
-          .list-container table thead th a.sorted-desc:after {
+          .list-container table thead tr th a.sorted-desc:after {
             content: "arrow_drop_down";
             opacity: 1; }
-          .list-container table thead th a:hover {
+          .list-container table thead tr th a:hover {
             cursor: pointer; }
     .list-container table tbody {
       display: block;
@@ -220,14 +222,25 @@ body {
       overflow-y: scroll; }
       .list-container table tbody tr:hover {
         background-color: whitesmoke; }
-      .list-container table tbody tr td dl {
+      .list-container table tbody tr td {
+        padding: 3px 5px; }
+        .list-container table tbody tr td dl {
+          width: 100%;
+          margin: 0px; }
+          .list-container table tbody tr td dl dd {
+            font-size: inherit;
+            min-height: 0px; }
+            .list-container table tbody tr td dl dd input[date-input] {
+              width: 100px !important; }
+      .list-container table tbody.empty:after {
+        display: block;
+        position: absolute;
         width: 100%;
-        margin: 0px; }
-        .list-container table tbody tr td dl dd {
-          font-size: inherit;
-          min-height: 0px; }
-          .list-container table tbody tr td dl dd input[date-input] {
-            width: 100px !important; }
+        top: 10%;
+        content: "NO RESULTS";
+        text-align: center;
+        color: #BFBFBF;
+        font-size: 24px; }
     .list-container table thead, .list-container table tbody tr {
       display: table;
       width: 100%;

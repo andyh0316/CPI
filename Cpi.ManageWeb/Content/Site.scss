@@ -259,39 +259,44 @@ $secondary-menu-height: 40px;
         flex-flow: column;
         align-items: stretch;
         height: 100%;
+        border-collapse: collapse;
 
         thead {
             width: calc((100%) - (18px)) !important; //offset scrollbar
-            th {
-                text-align: left;
+            tr {
+                //border-bottom: 1px solid #CECECE;
+                th {
+                    text-align: left;
+                    padding: 10px 5px;
 
-                a {
-                    margin-right: 15px;
+                    a {
+                        margin-right: 15px;
 
-                    &:after {
-                        @extend %material-icons;
-                        position: absolute;
-                        display: inline;
-                        font-size: 22px;
-                        content: "arrow_drop_down";
-                        opacity: 0.3;
-                        line-height: 80%;
-                        margin-left: -3px;
-                        margin-right: -3px;
-                    }
+                        &:after {
+                            @extend %material-icons;
+                            position: absolute;
+                            display: inline;
+                            font-size: 22px;
+                            content: "arrow_drop_down";
+                            opacity: 0.3;
+                            line-height: 80%;
+                            margin-left: -3px;
+                            margin-right: -3px;
+                        }
 
-                    &.sorted-asc:after {
-                        content: "arrow_drop_up";
-                        opacity: 1;
-                    }
+                        &.sorted-asc:after {
+                            content: "arrow_drop_up";
+                            opacity: 1;
+                        }
 
-                    &.sorted-desc:after {
-                        content: "arrow_drop_down";
-                        opacity: 1;
-                    }
+                        &.sorted-desc:after {
+                            content: "arrow_drop_down";
+                            opacity: 1;
+                        }
 
-                    &:hover {
-                        cursor: pointer;
+                        &:hover {
+                            cursor: pointer;
+                        }
                     }
                 }
             }
@@ -308,6 +313,8 @@ $secondary-menu-height: 40px;
                 }
 
                 td {
+                    padding: 3px 5px;
+
                     dl {
                         width: 100%;
                         margin: 0px;
@@ -321,6 +328,19 @@ $secondary-menu-height: 40px;
                             }
                         }
                     }
+                }
+            }
+
+            &.empty {
+                &:after {
+                    display: block;
+                    position: absolute;
+                    width: 100%;
+                    top: 10%;
+                    content: "NO RESULTS";
+                    text-align: center;
+                    color: #BFBFBF;
+                    font-size: 24px;
                 }
             }
         }
