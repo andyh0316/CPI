@@ -1,4 +1,4 @@
-﻿var baseModule = angular.module('AngularBaseModule', ['infinite-scroll']);
+﻿var baseModule = angular.module('AngularBaseModule', []);
 
 baseModule.config(['$httpProvider', function ($httpProvider) {
     $httpProvider.defaults.headers.common['Cache-Control'] = 'no-cache, no-store, must-revalidate';
