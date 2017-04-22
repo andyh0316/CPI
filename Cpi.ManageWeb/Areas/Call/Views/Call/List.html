@@ -41,7 +41,7 @@
                 <tr ng-repeat="record in model.Records" ng-class="{deleting: record.Deleted}">
                     <td class="date-time">
                         <dl>
-                            <dd ng-show="!record.isEditing">{{record.CreatedDate | shortDateWithTime}}</dd>
+                            <dd ng-show="!record.isEditing">{{record.CreatedDate | localDateTime | shortDateWithTime}}</dd>
                         </dl>
                     </td>
                     <td>

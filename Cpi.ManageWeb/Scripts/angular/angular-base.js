@@ -524,6 +524,14 @@ baseModule.filter('shortDateWithTime', ['$filter', function ($filter) {
     }
 }]);
 
+baseModule.filter('localDateTime', ['$filter', function ($filter) {
+    return function (date) {
+        var date = new Date(date); // just by doing this javascript will automatically convert the time to local
+        //date.setHours(date.getHours() + 7);
+        return date;
+    }
+}]);
+
 baseModule.filter('bool', function () {
     return function (value) {
 
