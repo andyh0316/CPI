@@ -91,12 +91,12 @@ namespace Cpi.ManageWeb.Areas.Call.Controllers
 
                     if (trackedCallCommodity.Id > 0)
                     {
-                        trackedCallCommodity.ModifiedDate = DateTime.UtcNow;
+                        SetModified(trackedCallCommodity);
                     }
                     else
                     {
+                        SetCreated(trackedCallCommodity);
                         trackedCall.CallCommodities.Add(trackedCallCommodity);
-                        trackedCallCommodity.CreatedDate = DateTime.UtcNow;
                     }
                 }
 
@@ -110,11 +110,11 @@ namespace Cpi.ManageWeb.Areas.Call.Controllers
 
                 if (trackedCall.Id > 0)
                 {
-                    trackedCall.ModifiedDate = DateTime.UtcNow;
+                    SetModified(trackedCall);
                 }
                 else
                 {
-                    trackedCall.CreatedDate = DateTime.UtcNow;
+                    SetCreated(trackedCall);
                     CallBo.Add(trackedCall);
                 }
             }

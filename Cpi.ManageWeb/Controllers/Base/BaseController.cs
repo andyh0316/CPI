@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Linq.Dynamic;
 using Cpi.Application.DataModels.Base;
+using Cpi.Application.Helpers;
 
 namespace Cpi.ManageWeb.Controllers.Base
 {
@@ -49,6 +50,18 @@ namespace Cpi.ManageWeb.Controllers.Base
             query = query.OrderBy(sortColumn + sortDescString + ", Id");
             query = query.Skip(skip).Take(take);
             return query;
+        }
+
+        public void SetCreated(BaseDm baseDm)
+        {
+            baseDm.CreatedById = UserHelper.GetUserId();
+            baseDm.CreatedDate = DateTime.Now;
+        }
+
+        public void SetModified(BaseDm baseDm)
+        {
+            baseDm.ModifiedById = UserHelper.GetUserId();
+            baseDm.ModifiedDate = DateTime.Now;
         }
     }
 }
