@@ -1,30 +1,19 @@
 ﻿var baseModule = angular.module('AngularBaseModule', ['ngAnimate']);
 
-baseModule.config(['$httpProvider', function ($httpProvider) {
+baseModule.config(['$httpProvider', '$animateProvider', function ($httpProvider, $animateProvider) {
     $httpProvider.defaults.headers.common['Cache-Control'] = 'no-cache, no-store, must-revalidate';
     $httpProvider.defaults.headers.common['Pragma'] = 'no-cache';
     $httpProvider.defaults.headers.common['Expires'] = '0';
     $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
+
+    // when ngAnimate is referenced: it will cause slow down on all elements. 
+    // To prevent this, we use this so that only the elements with certain class will be checked by angular for animation
+    $animateProvider.classNameFilter(/ng-animate-enabled/);
 }]);
 
 
 baseModule.controller('BaseController', ['$scope', '$state', function ($scope, $state) {
-    // show only the most nested buttons
-    //var levels = 0;
-    //var deepest;
 
-    //$('.secondary-menu-buttons').hide();
-    //$('body').find('.secondary-menu-buttons').each(function () {
-    //    if (!this.firstChild || this.firstChild.nodeType !== 1) {
-    //        var levelsFromThis = $(this).parentsUntil('body').length;
-    //        if (levelsFromThis > levels) {
-    //            levels = levelsFromThis;
-    //            deepest = this;
-    //        }
-    //    }
-    //});
-
-    //$(deepest).show();
 }]);
 
 /* provides server/backend sorting, paging and searching. For client side sorting and paging */

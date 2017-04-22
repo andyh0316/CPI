@@ -19,11 +19,6 @@ $error-border-color: #B30F0F;
 
 $app-min-width: 1280px;
 
-// if using ngAnimate, this will help all ng-if ng-show not become slow 
-.ng-hide.ng-hide-animate {
-    display: none !important;
-}
-
 %main-box-shadow {
     box-shadow: 0px 0px 5px #E2E2E2;
 }
@@ -207,7 +202,7 @@ $secondary-menu-height: 40px;
     }
 }
 
-.container {
+[ui-view] {
     position: fixed;
     min-width: calc((#{$app-min-width}) - (#{$main-menu-width}));
     top: 0;
@@ -222,15 +217,10 @@ $secondary-menu-height: 40px;
     &.padded {
         padding: 20px 30px;
     }
-}
-
-[ui-view] {
-    left: 0;
-    top: 0;
 
     [ui-view] { // only children ui-view will get animated
-        @include box-shadow(-10px 0px 150px 5px #aab7bf);
         @include transition(all 400ms linear);
+        @include box-shadow(-10px 0px 150px 5px #aab7bf);
 
         &.ng-enter {
             left: 100%;
