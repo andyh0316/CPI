@@ -254,6 +254,7 @@ $secondary-menu-height: 40px;
         display: flex;
         flex-flow: column;
         align-items: stretch;
+        height: 100%;
 
         thead {
             width: calc((100%) - (18px)) !important; //offset scrollbar
@@ -294,6 +295,7 @@ $secondary-menu-height: 40px;
 
         tbody {
             display: block;
+            height: 100%;
             overflow-y: scroll;
 
             tr {
@@ -462,9 +464,9 @@ dl {
             white-space: normal;
         }
 
-        &:empty:after {
+        /*&:empty:after {
             content: "--";
-        }
+        }*/
 
         &.thin {
             font-weight: 400;
@@ -1069,7 +1071,7 @@ textarea {
     overflow: visible !important;
 }
 
-.commodities-view-edit {
+.commodities-edit {
     .view-container {
     }
 

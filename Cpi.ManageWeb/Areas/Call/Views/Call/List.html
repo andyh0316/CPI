@@ -32,7 +32,7 @@
                     <th class="address">
                         Address
                     </th>
-                    <th class="right-content">Total Price</th>
+                    <th class="right-content"><a ng-class="getSortOrder('TotalPrice')" ng-click="sort('TotalPrice')">Total Price</a></th>
                     <th class="center-content">Status</th>
                     <th class="action">Action</th>
                 </tr>
@@ -61,8 +61,11 @@
                     </td>
                     <td ng-class="{commodities: isEditingAny()}">
                         <dl>
-                            <dd class="overflow-visible">
-                                <div commodities-view-edit is-editing="record.isEditing" ng-model="record.CallCommodities" commodities="modelData.Commodities"></div>
+                            <dd ng-show="!record.isEditing">
+                                {{record.CallCommodities | callCommodities}}
+                            </dd>
+                            <dd ng-show="record.isEditing" class="overflow-visible">
+                                <div commodities-edit ng-model="record.CallCommodities" commodities="modelData.Commodities"></div>
                             </dd>
                         </dl>
                     </td>
@@ -106,7 +109,9 @@
                     </td>
                     <td class="right-content">
                         <dl>
-                            <dd ng-show="!record.isEditing">${{record.TotalPrice | number: 2}}</dd>
+                            <dd ng-show="!record.isEditing">
+                                <span ng-show="record.TotalPrice">${{record.TotalPrice | number: 2}}</span>
+                            </dd>
                         </dl>
                     </td>
                     <td class="center-content">

@@ -82,7 +82,6 @@ namespace Cpi.ManageWeb.Areas.Call.Controllers
                 call.CallCommodities = (call.CallCommodities) ?? new List<CallCommodityDm>();
                 trackedCall.CallCommodities = (trackedCall.CallCommodities) ?? new List<CallCommodityDm>();
 
-                trackedCall.CallCommodities.RemoveAll(a => a.Call.CallCommodities.Select(b => b.Id).Contains(a.Id)); // we usually don't need this but we need to keep track of what's currently in the trackedCall so we can calculate the total price
                 CallCommodityBo.RemoveRange(trackedCall.CallCommodities.Where(a => !call.CallCommodities.Select(b => b.Id).Contains(a.Id)).ToList()); // first delete all the call commodities that are not in the view model
                 foreach (CallCommodityDm callCommodity in call.CallCommodities)
                 {
@@ -102,10 +101,12 @@ namespace Cpi.ManageWeb.Areas.Call.Controllers
                 }
 
                 // calculate the total price
-                trackedCall.TotalPrice = (from a in trackedCall.CallCommodities.Select(a => a.CommodityId)
-                                          join b in allCommodities
-                                          on a equals b.Id
-                                          select b.Price).DefaultIfEmpty(0).Sum();
+                trackedCall.TotalPrice = 0;
+                foreach (CallCommodityDm callCommodity in trackedCall.CallCommodities)
+                {
+                    decimal? commodityPrice = allCommodities.Find(a => a.Id == callCommodity.CommodityId).Price;
+                    trackedCall.TotalPrice = trackedCall.TotalPrice + (commodityPrice * callCommodity.Quantity);
+                }
 
                 if (trackedCall.Id > 0)
                 {

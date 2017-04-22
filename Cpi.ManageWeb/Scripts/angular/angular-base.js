@@ -547,6 +547,29 @@ baseModule.filter('range', function () {
     };
 });
 
+baseModule.filter('callCommodities', function () {
+    return function (callCommodities) {
+        var returnString = '';
+
+        for (var i = 0; i < callCommodities.length; i++)
+        {
+            returnString = returnString + callCommodities[i].Commodity.Name;
+            if (callCommodities[i].Quantity > 1)
+            {
+                returnString = returnString + ' ' + '(' + callCommodities[i].Quantity + ')'
+            }
+
+            if (callCommodities.length > 1 && i !== callCommodities.length - 1)
+            {
+                returnString = returnString + ', ';
+            }
+        }
+
+        return returnString;
+    }
+});
+
+
 baseModule.directive('selectableText', ['$window', '$timeout', function ($window, $timeout) {
     var i = 0;
     return {
@@ -1104,13 +1127,12 @@ baseModule.directive('searchDropDown', ['baseBo', '$rootScope', function (baseBo
     };
 }]);
 
-baseModule.directive('commoditiesViewEdit', function () {
+baseModule.directive('commoditiesEdit', function () {
     return {
         restrict: 'A',
         scope: {
             ngModel: '=',
-            commodities: '=',
-            isEditing: '='
+            commodities: '='
         },
         link: function ($scope, $element, $attrs) {
             $scope.ngModel = ($scope.ngModel) ? $scope.ngModel : [];
@@ -1124,11 +1146,8 @@ baseModule.directive('commoditiesViewEdit', function () {
             });
 
             $element.find('input').focus(function () {
-                if ($scope.isEditing)
-                {
                     $scope.showEditContainer = true;
                     $scope.$apply();
-                }
             });
 
             $element.find('input').focusout(function () {
@@ -1188,33 +1207,26 @@ baseModule.directive('commoditiesViewEdit', function () {
             };
 
             $scope.getCommodityName = function (item) {
-                if ($scope.isEditing) // If editing: We wanna get the names from the select list, because we are only using the Commodity ID, and the Commodity object might be null
+                for (var i in $scope.commodities)
                 {
-                    for (var i in $scope.commodities)
+                    if ($scope.commodities[i].Id === item.CommodityId)
                     {
-                        if ($scope.commodities[i].Id === item.CommodityId)
-                        {
-                            return $scope.commodities[i].Name;
-                        }
+                        return $scope.commodities[i].Name;
                     }
-                }
-                else // else if its viewing: just get the name
-                {
-                    return item.Commodity.Name;
                 }
             };
         },
         template:
         '' +
-        '<div class="commodities-view-edit">' +
-            '<div class="view-container" ng-click="showEditContainer = (isEditing) ? true : false" ng-class="{\'input-container\': isEditing}">' +
+        '<div class="commodities-edit">' +
+            '<div class="view-container input-container" ng-click="showEditContainer = true">' +
                 '<span ng-repeat="item in ngModel">' +
                     '{{getCommodityName(item)}}' + 
                     '<span ng-show="item.Quantity > 1"> ({{item.Quantity}})</span>' +
                     '<span ng-show="ngModel.length > 1 && $index != ngModel.length - 1">, </span>' +
                 '</span>' +
             '</div>' +
-            '<input ng-show="isEditing"/>' + // this input is always invisible: it helps to include this editor in tab order and when focused through tab it will show edit container 
+            '<input/>' + // this input is always invisible: it helps to include this editor in tab order and when focused through tab it will show edit container 
             '<div ng-show="showEditContainer" class="edit-container">' +
                 '<div ng-repeat="item in commodities" class="edit-row">' +
                     '<span class="item-name">{{item.Name}}</span>' +
