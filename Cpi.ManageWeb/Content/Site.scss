@@ -765,6 +765,12 @@ textarea {
         font-weight: bolder;
     }
 
+    &.call-delivering:before {
+        content: "send";
+        color: #eabc63;
+        //font-size: 20px;
+    }
+
     &.call-cancelled:before {
         content: "close";
         opacity: 0.5;

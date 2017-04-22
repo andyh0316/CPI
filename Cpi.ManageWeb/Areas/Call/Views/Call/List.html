@@ -118,6 +118,7 @@
                         <dl>
                             <dd ng-show="!record.isEditing">
                                 <span ng-show="record.Status.Name == 'Completed'" class="call-completed icon" title="Completed: Item delivered to and paid by customer."></span>
+                                <span ng-show="record.Status.Name == 'Delivering'" class="call-delivering icon" title="On route to deliver or to be delivered."></span>
                                 <span ng-show="record.Status.Name == 'Cancelled'" class="call-cancelled icon" title="Cancelled"></span>
                             </dd>
                             <dd ng-show="record.isEditing">

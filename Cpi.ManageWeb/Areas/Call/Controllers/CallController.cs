@@ -54,7 +54,7 @@ namespace Cpi.ManageWeb.Areas.Call.Controllers
             var model = new
             {
                 Commodities = CommodityBo.GetList(),
-                CallStatuses = LookUpBo.GetList<LookUpCallStatusDm>().ToList()
+                CallStatuses = LookUpBo.GetList<LookUpCallStatusDm>().ToList(),
             };
 
             return JsonModel(model);

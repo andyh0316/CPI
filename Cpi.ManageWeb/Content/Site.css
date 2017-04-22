@@ -553,6 +553,10 @@ textarea {
   color: #4ab515;
   font-weight: bolder; }
 
+.icon.call-delivering:before {
+  content: "send";
+  color: #eabc63; }
+
 .icon.call-cancelled:before {
   content: "close";
   opacity: 0.5; }
