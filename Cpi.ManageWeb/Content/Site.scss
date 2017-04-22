@@ -84,7 +84,7 @@ body {
     overflow-y: auto;
     font-family: $main-font;
     font-weight: 400;
-    font-size: 12px;
+    font-size: 13px;
 }
 
 $main-menu-width: 120px;
@@ -179,6 +179,7 @@ $secondary-menu-height: 40px;
         .title {
             display: inline-block;
             font-size: 20px;
+            text-transform: uppercase;
         }
 
         .list-total {
@@ -264,6 +265,9 @@ $secondary-menu-height: 40px;
             width: calc((100%) - (18px)) !important; //offset scrollbar
             tr {
                 //border-bottom: 1px solid #CECECE;
+                text-transform: uppercase;
+                font-size: 12px;
+
                 th {
                     text-align: left;
                     padding: 10px 5px;
@@ -370,7 +374,7 @@ $secondary-menu-height: 40px;
             }
 
             &.date-time {
-                width: 130px;
+                width: 140px;
             }
         }
 

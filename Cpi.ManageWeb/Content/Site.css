@@ -75,7 +75,7 @@ body {
   overflow-y: auto;
   font-family: "Open Sans", sans-serif;
   font-weight: 400;
-  font-size: 12px; }
+  font-size: 13px; }
 
 #main-menu {
   position: fixed;
@@ -143,7 +143,8 @@ body {
     padding: 5px 10px 0px 10px; }
     .secondary-menu .title-container .title {
       display: inline-block;
-      font-size: 20px; }
+      font-size: 20px;
+      text-transform: uppercase; }
     .secondary-menu .title-container .list-total {
       display: inline-block;
       font-size: 11px;
@@ -201,28 +202,31 @@ body {
     border-collapse: collapse; }
     .list-container table thead {
       width: calc((100%) - (18px)) !important; }
-      .list-container table thead tr th {
-        text-align: left;
-        padding: 10px 5px; }
-        .list-container table thead tr th a {
-          margin-right: 15px; }
-          .list-container table thead tr th a:after {
-            position: absolute;
-            display: inline;
-            font-size: 22px;
-            content: "arrow_drop_down";
-            opacity: 0.3;
-            line-height: 80%;
-            margin-left: -3px;
-            margin-right: -3px; }
-          .list-container table thead tr th a.sorted-asc:after {
-            content: "arrow_drop_up";
-            opacity: 1; }
-          .list-container table thead tr th a.sorted-desc:after {
-            content: "arrow_drop_down";
-            opacity: 1; }
-          .list-container table thead tr th a:hover {
-            cursor: pointer; }
+      .list-container table thead tr {
+        text-transform: uppercase;
+        font-size: 12px; }
+        .list-container table thead tr th {
+          text-align: left;
+          padding: 10px 5px; }
+          .list-container table thead tr th a {
+            margin-right: 15px; }
+            .list-container table thead tr th a:after {
+              position: absolute;
+              display: inline;
+              font-size: 22px;
+              content: "arrow_drop_down";
+              opacity: 0.3;
+              line-height: 80%;
+              margin-left: -3px;
+              margin-right: -3px; }
+            .list-container table thead tr th a.sorted-asc:after {
+              content: "arrow_drop_up";
+              opacity: 1; }
+            .list-container table thead tr th a.sorted-desc:after {
+              content: "arrow_drop_down";
+              opacity: 1; }
+            .list-container table thead tr th a:hover {
+              cursor: pointer; }
     .list-container table tbody {
       display: block;
       height: 100%;
@@ -266,7 +270,7 @@ body {
     .list-container table td.commodities, .list-container table th.commodities {
       width: 200px; }
     .list-container table td.date-time, .list-container table th.date-time {
-      width: 130px; }
+      width: 140px; }
     .list-container table .icon {
       position: relative;
       display: inline-block;
