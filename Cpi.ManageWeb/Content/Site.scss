@@ -19,7 +19,10 @@ $error-border-color: #B30F0F;
 
 $app-min-width: 1280px;
 
-//$menu-font: 'Open Sans Condensed', sans-serif;
+// if using ngAnimate, this will help all ng-if ng-show not become slow 
+.ng-hide.ng-hide-animate {
+    display: none !important;
+}
 
 %main-box-shadow {
     box-shadow: 0px 0px 5px #E2E2E2;
