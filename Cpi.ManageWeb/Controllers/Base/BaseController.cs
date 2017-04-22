@@ -55,13 +55,13 @@ namespace Cpi.ManageWeb.Controllers.Base
         public void SetCreated(BaseDm baseDm)
         {
             baseDm.CreatedById = UserHelper.GetUserId();
-            baseDm.CreatedDate = DateTime.Now;
+            baseDm.CreatedDate = DateTime.UtcNow;
         }
 
         public void SetModified(BaseDm baseDm)
         {
             baseDm.ModifiedById = UserHelper.GetUserId();
-            baseDm.ModifiedDate = DateTime.Now;
+            baseDm.ModifiedDate = DateTime.UtcNow;
         }
     }
 }
