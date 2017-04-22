@@ -233,8 +233,14 @@
     <Content Include="Content\Fonts\Fonts.css">
       <DependentUpon>Fonts.scss</DependentUpon>
     </Content>
+    <Content Include="Content\Fonts\Fonts.min.css">
+      <DependentUpon>Fonts.css</DependentUpon>
+    </Content>
     <Content Include="Content\MaterialIcons\material-icons.css">
       <DependentUpon>material-icons.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\MaterialIcons\material-icons.min.css">
+      <DependentUpon>material-icons.css</DependentUpon>
     </Content>
     <Content Include="Content\MaterialIcons\MaterialIcons-Regular.svg" />
     <Content Include="Content\Print.css">

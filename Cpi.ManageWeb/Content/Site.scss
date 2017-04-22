@@ -149,7 +149,7 @@ $secondary-menu-height: 40px;
 
 .secondary-menu {
     position: fixed;
-    width: calc(100% - #{$main-menu-width});
+    width: calc(100% - (#{$main-menu-width}));
     height: $secondary-menu-height;
     background-color: whitesmoke;
     //margin-left: $main-menu-width;
@@ -199,9 +199,9 @@ $secondary-menu-height: 40px;
     position: fixed;
     top: 0;
     left: 0;
-    width: calc(100% - #{$main-menu-width});
+    width: calc((100%) - (#{$main-menu-width}));
     margin-top: $secondary-menu-height;
-    height: calc(100% - #{$secondary-menu-height});
+    height: calc((100%) - (#{$secondary-menu-height}));
     margin-left: $main-menu-width;
     background-color: white;
     @extend %border-box;
@@ -256,7 +256,7 @@ $secondary-menu-height: 40px;
         align-items: stretch;
 
         thead {
-            width: calc(100% - 18px) !important; //offset scrollbar
+            width: calc((100%) - (18px)) !important; //offset scrollbar
             th {
                 text-align: left;
 

@@ -6,5 +6,13 @@
   {
     "outputFile": "Content/Print.css",
     "inputFile": "Content/Print.scss"
+  },
+  {
+    "outputFile": "Content/Fonts/Fonts.css",
+    "inputFile": "Content/Fonts/Fonts.scss"
+  },
+  {
+    "outputFile": "Content/MaterialIcons/material-icons.css",
+    "inputFile": "Content/MaterialIcons/material-icons.scss"
   }
 ]

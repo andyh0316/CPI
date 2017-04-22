@@ -128,7 +128,7 @@ body {
 
 .secondary-menu {
   position: fixed;
-  width: calc(100% - 120px);
+  width: calc(100% - (120px));
   height: 40px;
   background-color: whitesmoke;
   top: 0px;
@@ -159,9 +159,9 @@ body {
   position: fixed;
   top: 0;
   left: 0;
-  width: calc(100% - 120px);
+  width: calc((100%) - (120px));
   margin-top: 40px;
-  height: calc(100% - 40px);
+  height: calc((100%) - (40px));
   margin-left: 120px;
   background-color: white; }
   .container.padded {
@@ -189,7 +189,7 @@ body {
     flex-flow: column;
     align-items: stretch; }
     .list-container table thead {
-      width: calc(100% - 18px) !important; }
+      width: calc((100%) - (18px)) !important; }
       .list-container table thead th {
         text-align: left; }
         .list-container table thead th a {
