@@ -2,7 +2,7 @@ var gSearchInputDelay = 1000;
 
 // show string on ellipsis
 $(document).on('mouseenter', 'dd', function (e) {
-    if (e.currentTarget.offsetWidth < e.currentTarget.scrollWidth) {
+    if ($(this).find('input').length === 0 && e.currentTarget.offsetWidth < e.currentTarget.scrollWidth) {
         showToolTip($('#help-tooltip'), $(this), $(this).text());
     }
 }).on('mouseleave', 'dl', function () {
@@ -10,6 +10,20 @@ $(document).on('mouseenter', 'dd', function (e) {
         $('#help-tooltip').hide();
     }
 });
+
+// show field validation error on hover for dd
+$(document).on('mouseenter', 'dd', function () {
+    var fieldValidationError = $(this).find('.field-validation-error:not(.ng-hide)');
+    if (fieldValidationError.length == 0) {
+        return;
+    }
+
+    var message = fieldValidationError.html();
+    showToolTip($('#validation-tooltip'), $(this), message);
+}).on('mouseleave', 'dl', function () {
+    $('#validation-tooltip').hide();
+});
+
 
 function showToolTip(toolTipSelector, hoveringElementSelector, message) {
     var offset = hoveringElementSelector.offset();
@@ -23,19 +37,6 @@ function showToolTip(toolTipSelector, hoveringElementSelector, message) {
         toolTipSelector.css({ bottom: bodyHeight - offset.top - toolTipSelector.outerHeight() - hoveringElementSelector.outerHeight() - 10 });
     }
 };
-
-// show field validation error on hover for dd
-$(document).on('mouseenter', 'dd', function () {
-    var fieldValidationError = $(this).find('.field-validation-error:not(.ng-hide)');
-    if (fieldValidationError.length == 0) {
-        return;
-    }
-
-    var message = fieldValidationError.html();
-    showToolTip($('#validation-tooltip'), $(this), message);
-}).on('mouseleave', 'dl', function () {
-    $('#validation-tooltip').hide();
-    });
 
 // auto extend session every 5 minutes (the session timeout is set to be 20 minutes but javascript setInterval is inaccurate so to be REALLY safe we do 5 minutes)
 $(document).ready(function () { 

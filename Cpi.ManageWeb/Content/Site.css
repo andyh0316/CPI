@@ -149,13 +149,14 @@ body {
       display: inline-block;
       font-size: 11px;
       color: #b9b9b9; }
-  .secondary-menu .others-container {
-    margin-left: 150px;
+  .secondary-menu .main-container {
+    float: left;
     padding: 5px 10px 0px 10px; }
-    .secondary-menu .others-container .search {
+    .secondary-menu .main-container .search {
       display: inline-block; }
-    .secondary-menu .others-container .buttons {
-      float: right; }
+  .secondary-menu .buttons {
+    float: right;
+    padding: 5px 10px 0px 10px; }
 
 [ui-view] {
   position: fixed;
@@ -472,9 +473,10 @@ section dl {
 input.search-box {
   float: left;
   width: 200px;
-  height: 30px !important;
+  height: 28px !important;
   padding-left: 30px !important;
   padding-right: 0;
+  margin-right: 5px !important;
   background-image: url("/Images/Icons/search-box-icon.png");
   background-size: 16px 16px;
   background-repeat: no-repeat;

@@ -3,15 +3,18 @@
         <div class="title">Calls</div>
         <div class="list-total">{{model.ListLoadCalculator.Total}}</div>
     </div>
-    <div class="others-container">
+
+    <div class="main-container">
         <input search-box type="text" class="search-box" ng-model="scopeData.filter.SearchString" placeholder="Search" />
-        <div class="buttons">
-            <button ng-show="isEditingAny()" class="button" ng-click="cancelAll()">Cancel</button>
-            <button ng-show="isEditingAny()" class="button main" ng-click="save()">Save</button>
-            <!--<span id="import-file-input" file-input label="Import" on-change="importFile()"></span>-->
-            <button class="button main" ng-click="import()">Import</button>
-            <button class="button main" ng-click="create()">+ Create</button>
-        </div>
+        <button class="button">Advanced</button>
+    </div>
+
+    <div class="buttons">
+        <button ng-show="isEditingAny()" class="button" ng-click="cancelAll()">Cancel</button>
+        <button ng-show="isEditingAny()" class="button main" ng-click="save()">Save</button>
+        <!--<span id="import-file-input" file-input label="Import" on-change="importFile()"></span>-->
+        <button class="button main" ng-click="import()">Import</button>
+        <button class="button main" ng-click="create()">+ Create</button>
     </div>
 </div>
 

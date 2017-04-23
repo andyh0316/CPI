@@ -189,17 +189,19 @@ $secondary-menu-height: 40px;
         }
     }
 
-    .others-container {
-        margin-left: $title-container-width;
+    .main-container {
+        float: left;
+        //margin-left: $title-container-width;
         padding: $padding;
 
         .search {
             display: inline-block;
         }
+    }
 
-        .buttons {
-            float: right;
-        }
+    .buttons {
+        float: right;
+        padding: $padding;
     }
 }
 
@@ -653,9 +655,10 @@ section {
 input.search-box {
     float: left;
     width: 200px;
-    height: 30px !important;
+    height: 28px !important;
     padding-left: 30px !important;
     padding-right: 0;
+    margin-right: 5px !important;
     background-image: url('/Images/Icons/search-box-icon.png');
     background-size: 16px 16px;
     background-repeat: no-repeat;
