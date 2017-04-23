@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Cpi.Application.Filters
 {
     public class ListFilter
@@ -18,10 +15,20 @@ namespace Cpi.Application.Filters
 
         public class Call : BaseListFilter
         {
-            //public AdvancedSearch AdvancedSearch { get; set; }
-            public class AdvancedSearch
+            public AdvancedSearchClass AdvancedSearch { get; set; }
+            public class AdvancedSearchClass
             {
                 public DateTime? DateFrom { get; set; }
+                public DateTime? DateTo { get; set; }
+                public int? StatusId { get; set; }
+            }
+        }
+
+        public class User : BaseListFilter
+        {
+            public AdvancedSearchClass AdvancedSearch { get; set; }
+            public class AdvancedSearchClass
+            {
             }
         }
     }

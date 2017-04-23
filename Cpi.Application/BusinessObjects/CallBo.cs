@@ -3,6 +3,7 @@ using Cpi.Application.DataModels;
 using Cpi.Application.Filters;
 using System.Linq;
 using System.Data.Entity;
+using System;
 
 namespace Cpi.Application.BusinessObjects
 {
@@ -19,6 +20,26 @@ namespace Cpi.Application.BusinessObjects
                                          a.CustomerPhone.StartsWith(filter.SearchString) ||
                                          a.Operator.Name.StartsWith(filter.SearchString) ||
                                          a.DeliveryStaff.Name.StartsWith(filter.SearchString));
+            }
+
+            if (filter.AdvancedSearch != null)
+            {
+                if (filter.AdvancedSearch.DateFrom.HasValue)
+                {
+                    DateTime dateFrom = filter.AdvancedSearch.DateFrom.Value.ToUniversalTime();
+                    query = query.Where(a => a.CreatedDate >= dateFrom);
+                }
+
+                if (filter.AdvancedSearch.DateTo.HasValue)
+                {
+                    DateTime dateTo = filter.AdvancedSearch.DateTo.Value.ToUniversalTime();
+                    query = query.Where(a => a.CreatedDate >= dateTo);
+                }
+
+                if (filter.AdvancedSearch.StatusId.HasValue)
+                {
+                    query = query.Where(a => a.StatusId == filter.AdvancedSearch.StatusId.Value);
+                }
             }
 
             return query;

@@ -297,34 +297,57 @@ baseModule.controller('ListBaseController', ['$scope', '$controller', 'baseBo', 
     };
 
     /**** ADVANCED SEARCH ****/
-    if (typeof gShowAdvancedSearch !== 'undefined') {
-        $scope.showAdvancedSearch = gShowAdvancedSearch;
-    }
+    $scope.advancedSearchGo = function () {
+        $scope.advancedSearchPrevious = angular.copy($scope.scopeData.filter.AdvancedSearch);
+        $scope.getList();
+        $scope.showAdvancedSearch = false;
+    };
 
-    $scope.doNotTriggerAdvancedSearch = false;
-    $scope.advancedSearchTimeout = null;
-    $scope.$watch('filter.AdvancedSearch', function (newVal, oldVal) {
-        if ($scope.doNotTriggerAdvancedSearch) {
-            $scope.doNotTriggerAdvancedSearch = false;
-            return;
+    $scope.advancedSearchReset = function () {
+
+    };
+
+    $scope.advancedSearchUndo = function () {
+        $scope.scopeData.filter.AdvancedSearch = angular.copy($scope.advancedSearchPrevious);
+    };
+
+    $scope.$watch('showAdvancedSearch', function () {
+        if ($scope.showAdvancedSearch === true) {
+            $scope.scopeData.filter.AdvancedSearch = ($scope.scopeData.filter.AdvancedSearch) ? $scope.scopeData.filter.AdvancedSearch : {};
+            $scope.advancedSearchPrevious = angular.copy($scope.scopeData.filter.AdvancedSearch);
         }
+    })
 
-        if (newVal == oldVal)
-            return;
+    //if (typeof gShowAdvancedSearch !== 'undefined') {
+    //    $scope.showAdvancedSearch = gShowAdvancedSearch;
+    //} else {
+    //    $scope.showAdvancedSearch = false;
+    //}
 
-        var advancedSearchDelay = 0;
-        if ($scope.delayAdvancedSearch) {
-            $scope.delayAdvancedSearch = false;
-            advancedSearchDelay = 700;
-        }
+    //$scope.doNotTriggerAdvancedSearch = false;
+    //$scope.advancedSearchTimeout = null;
+    //$scope.$watch('filter.AdvancedSearch', function (newVal, oldVal) {
+    //    if ($scope.doNotTriggerAdvancedSearch) {
+    //        $scope.doNotTriggerAdvancedSearch = false;
+    //        return;
+    //    }
 
-        $scope.page = 1;
+    //    if (newVal == oldVal)
+    //        return;
 
-        clearTimeout($scope.advancedSearchTimeout);
-        $scope.advancedSearchTimeout = setTimeout(function () {
-            $scope.getList();
-        }, advancedSearchDelay);
-    }, true);
+    //    var advancedSearchDelay = 0;
+    //    if ($scope.delayAdvancedSearch) {
+    //        $scope.delayAdvancedSearch = false;
+    //        advancedSearchDelay = 700;
+    //    }
+
+    //    $scope.page = 1;
+
+    //    clearTimeout($scope.advancedSearchTimeout);
+    //    $scope.advancedSearchTimeout = setTimeout(function () {
+    //        $scope.getList();
+    //    }, advancedSearchDelay);
+    //}, true);
 
 }]);
 
@@ -1331,6 +1354,25 @@ baseModule.directive('searchBox', function () {
                 }
             });
         }
+    };
+});
+
+baseModule.directive('advancedSearch', function () {
+    return {
+        restrict: 'A',
+        scope: {
+            ngShow: '=',
+            advancedSearchUndo: '&'
+        },
+        link: function ($scope, $element, $attrs) {
+            $(document).on('mousedown', function (e) {
+                if ($scope.ngShow === true && !$element.is(e.target) && $element.has(e.target).length === 0) {
+                    $scope.advancedSearchUndo();
+                    $scope.ngShow = false;
+                    $scope.$apply();
+                }
+            });
+        },
     };
 });
 

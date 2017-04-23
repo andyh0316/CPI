@@ -5,11 +5,10 @@ $main-font-color: black;
 $light-font-color: #b9b9b9;
 $main-color: #2d4756;
 
+$search-drop-down-z-index: 350;
 $main-menu-z-index: 1000;
 $secondary-menu-z-index: 1000;
-$secondary-menu-buttons-z-index: 1000;
 $tooltip-box-z-index: 2000;
-$search-drop-down-z-index: 350;
 
 $main-border-color: #BDBDBD;
 $main-border-hover-color: #b5b5b5;
@@ -164,6 +163,7 @@ $secondary-menu-height: 40px;
     left: $main-menu-width;
     right: 0px;
     @extend %border-box;
+    z-index: $secondary-menu-z-index;
 
     $padding: 5px 10px 0px 10px;
     $title-container-width: 150px;
@@ -189,7 +189,7 @@ $secondary-menu-height: 40px;
         }
     }
 
-    .main-container {
+    .filters-container {
         float: left;
         //margin-left: $title-container-width;
         padding: $padding;
@@ -197,13 +197,25 @@ $secondary-menu-height: 40px;
         .search {
             display: inline-block;
         }
+
+        .advanced-search {
+            position: absolute;
+            padding: 20px;
+            margin-top: 4px;
+            @include box-shadow(0px 0px 5px #e0dfdf);
+            background-color: white;
+            border: 1px solid #d0d0d0;
+        }
     }
 
     .buttons {
-        float: right;
         padding: $padding;
     }
 }
+
+.buttons {
+    float: right;
+} 
 
 [ui-view] {
     position: fixed;
@@ -403,7 +415,7 @@ $secondary-menu-height: 40px;
     padding: 0px 5px;
     text-align: center;
     color: $main-color;
-    vertical-align: middle;
+    //vertical-align: middle;
     text-decoration: none;
     font-size: 11px;
 
@@ -653,12 +665,11 @@ section {
 }*/
 
 input.search-box {
-    float: left;
     width: 200px;
     height: 28px !important;
     padding-left: 30px !important;
     padding-right: 0;
-    margin-right: 5px !important;
+    margin-right: 1px !important;
     background-image: url('/Images/Icons/search-box-icon.png');
     background-size: 16px 16px;
     background-repeat: no-repeat;
