@@ -30,8 +30,10 @@
   /* Support for IE. */
   font-feature-settings: 'liga'; }
 
-.search-drop-down .results-container, .commodities-edit .edit-container {
-  box-shadow: 0px 0px 5px #E2E2E2; }
+.search-drop-down .results-container, .commodities-edit .edit-container, #finance .panels {
+  -webkit-box-shadow: 0px 0px 2px #E2E2E2;
+  -moz-box-shadow: 0px 0px 2px #E2E2E2;
+  box-shadow: 0px 0px 2px #E2E2E2; }
 
 .commodities-edit .edit-container {
   -webkit-user-select: none;
@@ -944,4 +946,19 @@ textarea {
 :disabled {
   opacity: 0.5;
   pointer-events: none; }
+
+#finance .panels {
+  display: flex;
+  width: 100%; }
+  #finance .panels .panel {
+    flex-grow: 1;
+    flex-basis: 0;
+    height: 150px;
+    border: 1px solid #e0e0e0;
+    background-color: whitesmoke;
+    text-align: center; }
+    #finance .panels .panel:not(:last-child) {
+      border-right: none; }
+    #finance .panels .panel .data {
+      font-size: 30px; }
 

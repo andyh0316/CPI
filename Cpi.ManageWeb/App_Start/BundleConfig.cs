@@ -45,6 +45,9 @@ namespace Cpi.ManageWeb
 
             bundles.Add(new ScriptBundle("~/bundles/call/call").Include(
                         "~/Areas/Call/Views/Call/CallApp.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/finance/finance").Include(
+                        "~/Areas/Finance/Views/Finance/FinanceApp.js"));
         }
     }
 }

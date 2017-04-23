@@ -72,6 +72,7 @@
                 </th>
                 <th class="right-content"><a ng-class="getSortOrder('TotalPrice')" ng-click="sort('TotalPrice')">Cost</a></th>
                 <th class="center-content"><a ng-class="getSortOrder('Status.Name')" ng-click="sort('Status.Name')">Status</a></th>
+                <th><a ng-class="getSortOrder('CompletionDate')" ng-click="sort('CompletionDate')">Complete Date</a></th>
                 <th class="action"></th>
             </tr>
         </thead>
@@ -164,6 +165,11 @@
                                 <option></option>
                             </select>
                         </dd>
+                    </dl>
+                </td>
+                <td>
+                    <dl>
+                        <dd>{{record.CompletionDate | shortDate}}</dd>
                     </dl>
                 </td>
                 <td class="action">

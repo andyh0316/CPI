@@ -217,6 +217,8 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Call\Controllers\CallController.cs" />
     <Compile Include="Areas\Call\CallAreaRegistration.cs" />
+    <Compile Include="Areas\Finance\Controllers\FinanceController.cs" />
+    <Compile Include="Areas\Finance\FinanceAreaRegistration.cs" />
     <Compile Include="Attributes\CpiAuthenticateAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Base\BaseController.cs" />
@@ -230,6 +232,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Finance\Views\Finance\FinanceApp.js" />
+    <Content Include="Areas\Finance\Views\Finance\Finance.html" />
     <Content Include="Content\Fonts\Fonts.css">
       <DependentUpon>Fonts.scss</DependentUpon>
     </Content>
@@ -279,6 +283,8 @@
     <Content Include="Content\Fonts\Fonts.scss" />
     <Content Include="Areas\Call\Views\Web.config" />
     <Content Include="Areas\Call\Views\Call\Import.html" />
+    <Content Include="Areas\Finance\Views\Web.config" />
+    <Content Include="Areas\Finance\Views\Finance\Index.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

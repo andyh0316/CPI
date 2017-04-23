@@ -12,14 +12,32 @@ $tooltip-box-z-index: 2000;
 
 $main-border-color: #BDBDBD;
 $main-border-hover-color: #b5b5b5;
+$light-border-color: #e0e0e0;
 
 $error-color: #AD0606;
 $error-border-color: #B30F0F;
 
 $app-min-width: 1280px;
 
+@mixin transition($param) {
+    -webkit-transition: $param;
+    -moz-transition: $param;
+    -o-transition: $param;
+    transition: $param;
+}
+
+@mixin opacity($param) {
+    opacity: $param;
+}
+
+@mixin box-shadow($param) {
+    -webkit-box-shadow: $param;
+    -moz-box-shadow: $param;
+    box-shadow: $param;
+}
+
 %main-box-shadow {
-    box-shadow: 0px 0px 5px #E2E2E2;
+    @include box-shadow(0px 0px 2px #E2E2E2);
 }
 
 %prevent-user-select {
@@ -54,22 +72,6 @@ $app-min-width: 1280px;
     @extend %ellipsis;
 }
 
-@mixin transition($param) {
-    -webkit-transition: $param;
-    -moz-transition: $param;
-    -o-transition: $param;
-    transition: $param;
-}
-
-@mixin opacity($param) {
-    opacity: $param;
-}
-
-@mixin box-shadow($param) {
-    -webkit-box-shadow: $param;
-    -moz-box-shadow: $param;
-    box-shadow: $param;
-}
 
 html, body {
     position: relative;
@@ -1323,4 +1325,32 @@ textarea {
 :disabled {
     opacity: 0.5;
     pointer-events: none;
+}
+
+#finance {
+    .panels {
+        display: flex;
+        //align-items: stretch;
+        //flex-basis: 0;
+        width: 100%;
+        @extend %main-box-shadow;
+        
+        .panel {
+            //width: 50px;
+            flex-grow: 1;
+            flex-basis: 0;
+            height: 150px;
+            border: 1px solid $light-border-color;
+            background-color: whitesmoke;
+            text-align: center;
+
+            &:not(:last-child) {
+                border-right: none;
+            }
+
+            .data {
+                font-size: 30px;
+            }
+        }
+    }
 }

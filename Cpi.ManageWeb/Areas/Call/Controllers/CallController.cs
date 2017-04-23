@@ -26,12 +26,12 @@ namespace Cpi.ManageWeb.Areas.Call.Controllers
         private CommodityBo CommodityBo;
         private CallCommodityBo CallCommodityBo;
         private LookUpBo LookUpBo;
-        public CallController(CallBo callBo, CommodityBo commodityBo, CallCommodityBo callCommodityBo, LookUpBo lookUpBo)
+        public CallController(CallBo CallBo, CommodityBo CommodityBo, CallCommodityBo CallCommodityBo, LookUpBo LookUpBo)
         {
-            CallBo = callBo;
-            CommodityBo = commodityBo;
-            CallCommodityBo = callCommodityBo;
-            LookUpBo = lookUpBo;
+            this.CallBo = CallBo;
+            this.CommodityBo = CommodityBo;
+            this.CallCommodityBo = CallCommodityBo;
+            this.LookUpBo = LookUpBo;
         }
 
         public ActionResult Index()
@@ -106,6 +106,19 @@ namespace Cpi.ManageWeb.Areas.Call.Controllers
                 {
                     decimal? commodityPrice = allCommodities.Find(a => a.Id == callCommodity.CommodityId).Price;
                     trackedCall.TotalPrice = trackedCall.TotalPrice + (commodityPrice * callCommodity.Quantity);
+                }
+
+                // if status is set to completed: set the completion date
+                if (trackedCall.StatusId == LookUpCallStatusDm.ID_COMPLETED)
+                {
+                    if (!trackedCall.CompletionDate.HasValue)
+                    {
+                        trackedCall.CompletionDate = DateTime.UtcNow;
+                    }
+                }
+                else
+                {
+                    trackedCall.CompletionDate = null;
                 }
 
                 if (trackedCall.Id > 0)

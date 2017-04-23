@@ -40,6 +40,8 @@ namespace Cpi.Application.DataModels
 
         [CpiRequired]
         public decimal? TotalPrice { get; set; }
+
+        public DateTime? CompletionDate { get; set; }
     }
 
     public class CallMap : BaseMap<CallDm>
