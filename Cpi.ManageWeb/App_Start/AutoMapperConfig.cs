@@ -13,7 +13,6 @@ namespace Cpi.ManageWeb.App_Start
                 cfg =>
                 {
                     cfg.CreateMap<CallDm, CallDm>().InheritBase();
-                    cfg.CreateMap<AddressDm, AddressDm>().InheritBase();
                     cfg.CreateMap<CallCommodityDm, CallCommodityDm>().InheritBase();
                 }
             );

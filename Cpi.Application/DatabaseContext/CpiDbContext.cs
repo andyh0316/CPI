@@ -37,7 +37,6 @@ namespace Cpi.Application.DatabaseContext
 
             modelBuilder.Configurations.Add(new CallMap());
             modelBuilder.Configurations.Add(new UserMap());
-            modelBuilder.Configurations.Add(new AddressMap());
             modelBuilder.Configurations.Add(new CommodityMap());
             modelBuilder.Configurations.Add(new CallCommodityMap());
 

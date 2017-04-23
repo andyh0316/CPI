@@ -67,7 +67,6 @@
     <Compile Include="BusinessRules\CpiRequiredAttribute.cs" />
     <Compile Include="BusinessRules\CpiStringLengthAttribute.cs" />
     <Compile Include="DatabaseContext\CpiDbContext.cs" />
-    <Compile Include="DataModels\AddressDm.cs" />
     <Compile Include="DataModels\Base\BaseDm.cs" />
     <Compile Include="DataModels\Base\LookUpBaseDm.cs" />
     <Compile Include="DataModels\CallCommodityDm.cs" />

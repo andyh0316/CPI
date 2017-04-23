@@ -12,7 +12,7 @@ namespace Cpi.Application.BusinessObjects
         public IQueryable<CallDm> GetListBaseQuery(ListFilter.Call filter)
         {
             //IQueryable<CallDm> query = GetListQuery().Include(a => a.Address).Include(a => a.Operator.UserOccupation).Include(a => a.Operator.UserRole).Include(a => a.DeliveryStaff.UserOccupation).Include(a => a.DeliveryStaff.UserRole).Include(a => a.Status).Include(a => a.Commodities);
-            IQueryable<CallDm> query = GetListQuery().Include(a => a.Address);
+            IQueryable<CallDm> query = GetListQuery();
 
             if (!string.IsNullOrEmpty(filter.SearchString))
             {
@@ -39,13 +39,13 @@ namespace Cpi.Application.BusinessObjects
                 {
                     if (filter.AdvancedSearch.DateFrom.HasValue)
                     {
-                        DateTime dateFrom = filter.AdvancedSearch.DateFrom.Value.ToUniversalTime();
+                        DateTime dateFrom = filter.AdvancedSearch.DateFrom.Value.ToUniversalTime(); // convert from local date to UTC
                         query = query.Where(a => a.CreatedDate >= dateFrom);
                     }
 
                     if (filter.AdvancedSearch.DateTo.HasValue)
                     {
-                        DateTime dateTo = filter.AdvancedSearch.DateTo.Value.ToUniversalTime().AddDays(1);
+                        DateTime dateTo = filter.AdvancedSearch.DateTo.Value.ToUniversalTime().AddDays(1).AddSeconds(-1); // convert then add one day minus one second
                         query = query.Where(a => a.CreatedDate <= dateTo);
                     }
                 }

@@ -74,10 +74,8 @@ namespace Cpi.ManageWeb.Areas.Call.Controllers
             foreach (CallDm call in calls)
             {
                 CallDm trackedCall = (call.Id > 0) ? trackedCalls.Find(a => a.Id == call.Id) : new CallDm();
-                trackedCall.Address = (trackedCall.Address) ?? new AddressDm();
 
                 Mapper.Map(call, trackedCall);
-                Mapper.Map(call.Address, trackedCall.Address);
 
                 call.CallCommodities = (call.CallCommodities) ?? new List<CallCommodityDm>();
                 trackedCall.CallCommodities = (trackedCall.CallCommodities) ?? new List<CallCommodityDm>();
@@ -101,11 +99,14 @@ namespace Cpi.ManageWeb.Areas.Call.Controllers
                 }
 
                 // calculate the total price
-                trackedCall.TotalPrice = 0;
-                foreach (CallCommodityDm callCommodity in trackedCall.CallCommodities)
+                if (trackedCall.CallCommodities != null && trackedCall.CallCommodities.Count > 0)
                 {
-                    decimal? commodityPrice = allCommodities.Find(a => a.Id == callCommodity.CommodityId).Price;
-                    trackedCall.TotalPrice = trackedCall.TotalPrice + (commodityPrice * callCommodity.Quantity);
+                    trackedCall.TotalPrice = 0;
+                    foreach (CallCommodityDm callCommodity in trackedCall.CallCommodities)
+                    {
+                        decimal? commodityPrice = allCommodities.Find(a => a.Id == callCommodity.CommodityId).Price;
+                        trackedCall.TotalPrice = trackedCall.TotalPrice + (commodityPrice * callCommodity.Quantity);
+                    }
                 }
 
                 // if status is set to completed: set the completion date
