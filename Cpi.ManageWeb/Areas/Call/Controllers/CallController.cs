@@ -80,7 +80,9 @@ namespace Cpi.ManageWeb.Areas.Call.Controllers
                 call.CallCommodities = (call.CallCommodities) ?? new List<CallCommodityDm>();
                 trackedCall.CallCommodities = (trackedCall.CallCommodities) ?? new List<CallCommodityDm>();
 
-                CallCommodityBo.RemoveRange(trackedCall.CallCommodities.Where(a => !call.CallCommodities.Select(b => b.Id).Contains(a.Id)).ToList()); // first delete all the call commodities that are not in the view model
+                //CallCommodityBo.RemoveRange(trackedCall.CallCommodities.Where(a => !call.CallCommodities.Select(b => b.Id).Contains(a.Id)).ToList()); // first delete all the call commodities that are not in the view model
+
+                // save each callCommodity
                 foreach (CallCommodityDm callCommodity in call.CallCommodities)
                 {
                     CallCommodityDm trackedCallCommodity = (callCommodity.Id > 0) ? trackedCall.CallCommodities.Find(a => a.Id == callCommodity.Id) : new CallCommodityDm();
@@ -89,7 +91,14 @@ namespace Cpi.ManageWeb.Areas.Call.Controllers
 
                     if (trackedCallCommodity.Id > 0)
                     {
-                        SetModified(trackedCallCommodity);
+                        if (trackedCallCommodity.Quantity == 0) // deleting
+                        {
+                            CallCommodityBo.Remove(trackedCallCommodity);
+                        }
+                        else
+                        {
+                            SetModified(trackedCallCommodity);
+                        }
                     }
                     else
                     {

@@ -599,15 +599,18 @@ baseModule.filter('callCommodities', function () {
 
         for (var i = 0; i < callCommodities.length; i++)
         {
-            returnString = returnString + callCommodities[i].Commodity.Name;
-            if (callCommodities[i].Quantity > 1)
+            if (callCommodities[i].Id > 0)
             {
-                returnString = returnString + ' ' + '(' + callCommodities[i].Quantity + ')'
-            }
+                returnString = returnString + callCommodities[i].Commodity.Name;
+                if (callCommodities[i].Quantity > 1)
+                {
+                    returnString = returnString + ' ' + '(' + callCommodities[i].Quantity + ')'
+                }
 
-            if (callCommodities.length > 1 && i !== callCommodities.length - 1)
-            {
-                returnString = returnString + ', ';
+                if (callCommodities.length > 1 && i !== callCommodities.length - 1)
+                {
+                    returnString = returnString + ', ';
+                }
             }
         }
 
@@ -1240,13 +1243,18 @@ baseModule.directive('commoditiesEdit', function () {
             $scope.subtractQuantity = function (item) {
                 // find the item in the ngModel
                 for (var i in $scope.ngModel) {
-                    if ($scope.ngModel[i].CommodityId === item.Id) // if found .. subtract quantity
+                    if ($scope.ngModel[i].CommodityId === item.Id) 
                     {
-                        $scope.ngModel[i].Quantity--;
-                        if ($scope.ngModel[i].Quantity === 0) // is quantity is 0: take it out of the array
+                        if ($scope.ngModel[i].Quantity > 0) // subtract only if quantity is > 0
+                        {
+                            $scope.ngModel[i].Quantity--;
+                        }
+
+                        if ($scope.ngModel[i].Quantity === 0 && !$scope.ngModel[i].Id) // if quantity is 0 and the item was just created, take it out of the array
                         {
                             $scope.ngModel.splice(i, 1);
                         }
+
                         return;
                     }
                 }
@@ -1266,7 +1274,7 @@ baseModule.directive('commoditiesEdit', function () {
         '' +
         '<div class="commodities-edit">' +
             '<div class="view-container input-container" ng-click="showEditContainer = true">' +
-                '<span ng-repeat="item in ngModel">' +
+                '<span ng-if="item.Quantity > 0" ng-repeat="item in ngModel">' +
                     '{{getCommodityName(item)}}' + 
                     '<span ng-show="item.Quantity > 1"> ({{item.Quantity}})</span>' +
                     '<span ng-show="ngModel.length > 1 && $index != ngModel.length - 1">, </span>' +
