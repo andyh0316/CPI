@@ -2,7 +2,6 @@
 using Cpi.Application.DataModels;
 using Cpi.Application.Filters;
 using System.Linq;
-using System.Data.Entity;
 using System;
 
 namespace Cpi.Application.BusinessObjects

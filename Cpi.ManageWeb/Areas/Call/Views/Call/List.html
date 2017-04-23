@@ -80,7 +80,7 @@
             <tr ng-repeat="record in model.Records" ng-class="{deleting: record.Deleted}">
                 <td class="date-time">
                     <dl>
-                        <dd>{{record.CreatedDate | localDateTime | shortDateWithTime}}</dd>
+                        <dd>{{record.CreatedDate | shortDateWithTime}}</dd>
                     </dl>
                 </td>
                 <td>

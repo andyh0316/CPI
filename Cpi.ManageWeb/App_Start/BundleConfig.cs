@@ -26,7 +26,8 @@ namespace Cpi.ManageWeb
 
             bundles.Add(new ScriptBundle("~/bundles/javascript").Include(
                         "~/Scripts/javascript/javascript-base.js",
-                        "~/Scripts/javascript/moment.js"));
+                        "~/Scripts/javascript/moment.js",
+                        "~/Scripts/javascript/moment-timezone-with-data.js"));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.

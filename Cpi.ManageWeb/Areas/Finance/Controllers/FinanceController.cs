@@ -27,7 +27,7 @@ namespace Cpi.ManageWeb.Areas.Finance.Controllers
         {
             var model = new
             {
-                Revenue = FinanceBo.GetRevenue(),
+                //Revenue = FinanceBo.GetRevenueForToday(),
             };
 
             return JsonModel(model);

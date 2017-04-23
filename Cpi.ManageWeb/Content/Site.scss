@@ -1338,8 +1338,7 @@ textarea {
         //align-items: stretch;
         //flex-basis: 0;
         width: 100%;
-        @extend %main-box-shadow;
-        
+
         .panel {
             //width: 50px;
             flex-grow: 1;
@@ -1348,12 +1347,14 @@ textarea {
             border: 1px solid $light-border-color;
             background-color: whitesmoke;
             text-align: center;
+            margin-right: 20px;
+            @extend %main-box-shadow;
 
             &:not(:last-child) {
-                border-right: none;
+                //border-right: none;
             }
 
-            .data {
+            .content {
                 font-size: 30px;
             }
         }
