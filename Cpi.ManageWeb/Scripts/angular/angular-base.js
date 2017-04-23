@@ -541,14 +541,14 @@ baseModule.factory('baseBo', ['$http', '$window', '$q', function ($http, $window
 baseModule.filter('shortDate', ['$filter', function ($filter) {
     var angularDateFilter = $filter('date');
     return function (date) {
-        return angularDateFilter(date, 'dd/MM/yyyy');
+        return angularDateFilter(date, 'dd.MM.yyyy');
     }
 }]);
 
 baseModule.filter('shortDateWithTime', ['$filter', function ($filter) {
     var angularDateFilter = $filter('date');
     return function (date) {
-        return angularDateFilter(date, 'dd/MM/yyyy hh:mm a');
+        return angularDateFilter(date, 'dd.MM.yyyy hh:mm a');
     }
 }]);
 
@@ -671,16 +671,22 @@ baseModule.directive('dateInput', ['$filter', function ($filter) {
         link: function (scope, element, attrs, ngModelController) {
             ngModelController.$parsers.push(function (modelValue) {
                 // take the date MM/dd/yyyy (ex. 30/1/2017) and parse it into arrays of 3
-                dateArray = modelValue.split("/");
-
-                if (dateArray.length !== 3)
+                if (modelValue.split("/").length === 3)
+                {
+                    dateArray = modelValue.split("/");
+                    
+                }
+                else if (modelValue.split(".").length === 3) // also user wants to type period instead of backslash that's fine too
+                {
+                    dateArray = modelValue.split(".");
+                }
+                else
                 {
                     return modelValue;
                 }
 
-                // reverse the order of month and day and put it in a format that serializer can understand (ex. 2017-1-30)
+                // reverse the order of month and day (ex. 1/30/2017). If you use period instead of / the serializer will understand it as well but no need
                 return dateArray[1] + '/' + dateArray[0] + '/' + dateArray[2]; 
-                return dateArray[2] + '-' + dateArray[1] + '-' + dateArray[0]; 
             });
 
             ngModelController.$formatters.push(function (modelValue) {
