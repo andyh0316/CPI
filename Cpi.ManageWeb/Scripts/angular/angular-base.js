@@ -1401,6 +1401,19 @@ baseModule.directive('advancedSearch', function () {
     };
 });
 
+baseModule.directive('fieldValidationError', function () {
+    return {
+        restrict: 'A',
+        scope: {
+            ngShow: '=',
+        },
+        link: function ($scope, $element, $attrs) {
+        },
+        template: '' +
+        '{{ngShow}}'
+    };
+});
+
 //baseModule.directive('tr', ['$timeout', function ($timeout) {
 //    return {
 //        restrict: 'E',

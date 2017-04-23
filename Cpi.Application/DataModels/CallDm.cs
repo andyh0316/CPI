@@ -4,7 +4,7 @@ using Cpi.Compass.Application.BusinessRules;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+
 namespace Cpi.Application.DataModels
 {
     public class CallDm : BaseDm
@@ -14,22 +14,25 @@ namespace Cpi.Application.DataModels
 
         [CpiRequired]
         [CpiMaxLength(100)]
-        [DisplayName("Customer Phone")]
         public string CustomerPhone { get; set; }
 
         public DateTime? DeliveryDate { get; set; }
 
+        [CpiRequiredOnCallStatus]
         public virtual List<CallCommodityDm> CallCommodities { get; set; }
 
+        [CpiRequiredOnCallStatus]
         public int? OperatorId { get; set; }
         public virtual UserDm Operator { get; set; }
 
+        [CpiRequiredOnCallStatus]
         public int? DeliveryStaffId { get; set; }
         public virtual UserDm DeliveryStaff { get; set; }
 
         [CpiMaxLength(300)]
         public string AddressString { get; set; }
 
+        [CpiRequiredOnCallStatus]
         public int? StatusId { get; set; }
         public virtual LookUpCallStatusDm Status { get; set; }
 

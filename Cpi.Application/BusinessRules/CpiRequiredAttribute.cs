@@ -14,7 +14,7 @@ namespace Cpi.Compass.Application.BusinessRules
 
             if (base.IsValid(value, validationContext) != ValidationResult.Success)
             {
-                return new ValidationResult(string.Format("{0} is required.", validationContext.DisplayName));
+                return new ValidationResult("Required");
             }
 
             return ValidationResult.Success;

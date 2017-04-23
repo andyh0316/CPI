@@ -870,6 +870,9 @@ textarea {
   .field-validation-error:not(.ng-hide) ~ .search-drop-down .input-container:not(:disabled) {
     border: 1px solid #B30F0F;
     background-color: #FFF2F2; }
+  .field-validation-error:not(.ng-hide) ~ [commodities-edit] .input-container {
+    border: 1px solid #B30F0F !important;
+    background-color: #FFF2F2 !important; }
 
 #validation-tooltip {
   position: absolute;

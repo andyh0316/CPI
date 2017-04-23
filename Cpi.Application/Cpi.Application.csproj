@@ -62,6 +62,7 @@
     <Compile Include="BusinessObjects\LookUp\LookUpBo.cs" />
     <Compile Include="BusinessObjects\Other\FinanceBo.cs" />
     <Compile Include="BusinessObjects\UserBo.cs" />
+    <Compile Include="BusinessRules\CpiRequiredOnCallStatusAttribute.cs" />
     <Compile Include="BusinessRules\CpiMaxLengthAttribute.cs" />
     <Compile Include="BusinessRules\CpiMinLengthAttribute.cs" />
     <Compile Include="BusinessRules\CpiRequiredAttribute.cs" />

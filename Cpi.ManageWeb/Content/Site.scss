@@ -1216,6 +1216,11 @@ textarea {
                 background-color: #FFF2F2;
             }
         }
+        // for commodities edit (probably for this application only)
+        ~ [commodities-edit] .input-container {
+            border: 1px solid #B30F0F !important;
+            background-color: #FFF2F2 !important;
+        }
     }
 }
 

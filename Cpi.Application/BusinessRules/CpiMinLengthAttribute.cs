@@ -20,7 +20,7 @@ namespace Cpi.Compass.Application.BusinessRules
 
             if (base.IsValid(value, validationContext) != ValidationResult.Success)
             {
-                return new ValidationResult(string.Format("{0} must be at least {1} characters.", validationContext.DisplayName, Length));
+                return new ValidationResult(string.Format("Must be at least {1} characters.", Length));
             }
 
             return ValidationResult.Success;

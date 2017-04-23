@@ -20,7 +20,7 @@ namespace Cobro.Compass.Application.BusinessRules
 
             if (base.IsValid(value, validationContext) != ValidationResult.Success)
             {
-                return new ValidationResult(string.Format("{0} must be between {1} and {2} characters.", validationContext.DisplayName, MinimumLength, MaximumLength));
+                return new ValidationResult(string.Format("Must be between {1} and {2} characters.", MinimumLength, MaximumLength));
             }
 
             return ValidationResult.Success;
