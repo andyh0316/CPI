@@ -77,7 +77,7 @@ namespace Cpi.ManageWeb.Controllers
                 return JsonModelState(ModelState);
             }
 
-            trackedUser.LastLoginDate = DateTime.UtcNow;
+            trackedUser.LastLoginDate = DateTime.Now;
             UserBo.Commit();
 
             UserHelper.Login(trackedUser);

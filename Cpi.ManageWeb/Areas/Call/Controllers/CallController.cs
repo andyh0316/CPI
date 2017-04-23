@@ -123,7 +123,7 @@ namespace Cpi.ManageWeb.Areas.Call.Controllers
                 {
                     if (!trackedCall.CompletionDate.HasValue)
                     {
-                        trackedCall.CompletionDate = DateTime.UtcNow;
+                        trackedCall.CompletionDate = DateTime.Now;
                     }
                 }
                 else

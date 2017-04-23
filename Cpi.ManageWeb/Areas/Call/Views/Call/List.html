@@ -138,7 +138,10 @@
                 <td>
                     <dl>
                         <dd ng-show="!record.isEditing">{{record.DeliveryDate | shortDate}}</dd>
-                        <dd ng-show="record.isEditing"><input ng-model="record.DeliveryDate" date-input /></dd>
+                        <dd ng-show="record.isEditing">
+                            <span field-validation-error ng-show="modelState['[' + getEditingRecordIndex(record) + '].DeliveryDate']" class="field-validation-error"></span>
+                            <input ng-model="record.DeliveryDate" date-input />
+                        </dd>
                     </dl>
                 </td>
                 <td class="address">

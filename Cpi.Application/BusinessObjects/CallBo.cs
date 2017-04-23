@@ -31,20 +31,20 @@ namespace Cpi.Application.BusinessObjects
 
                 if (filter.AdvancedSearch.TodayOnly)
                 {
-                    DateTime dateFrom = DateTime.Now.Date.ToUniversalTime();
+                    DateTime dateFrom = DateTime.Now.Date;
                     query = query.Where(a => a.CreatedDate >= dateFrom);
                 }
                 else
                 {
                     if (filter.AdvancedSearch.DateFrom.HasValue)
                     {
-                        DateTime dateFrom = filter.AdvancedSearch.DateFrom.Value.ToUniversalTime(); // convert from local date to UTC
-                        query = query.Where(a => a.CreatedDate >= dateFrom);
+                        query = query.Where(a => a.CreatedDate >= filter.AdvancedSearch.DateFrom.Value);
                     }
 
                     if (filter.AdvancedSearch.DateTo.HasValue)
                     {
-                        DateTime dateTo = filter.AdvancedSearch.DateTo.Value.ToUniversalTime().AddDays(1).AddSeconds(-1); // convert then add one day minus one second
+                        // add one day minus one second to cover towards the end of day since CreatedDate contains time
+                        DateTime dateTo = filter.AdvancedSearch.DateTo.Value.AddDays(1).AddSeconds(-1);
                         query = query.Where(a => a.CreatedDate <= dateTo);
                     }
                 }
