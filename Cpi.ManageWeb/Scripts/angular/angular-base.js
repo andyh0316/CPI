@@ -304,11 +304,27 @@ baseModule.controller('ListBaseController', ['$scope', '$controller', 'baseBo', 
     };
 
     $scope.advancedSearchReset = function () {
-
+        $scope.advancedSearchPrevious = {};
+        $scope.scopeData.filter.AdvancedSearch = {};
+        $scope.getList();
     };
 
     $scope.advancedSearchUndo = function () {
         $scope.scopeData.filter.AdvancedSearch = angular.copy($scope.advancedSearchPrevious);
+    };
+
+    $scope.getAdvancedSearchCount = function () {
+        if ($scope.scopeData.filter.AdvancedSearch) {
+            var count = 0;
+            for (var property in $scope.scopeData.filter.AdvancedSearch) {
+                if ($scope.scopeData.filter.AdvancedSearch.hasOwnProperty(property)) {
+                    if (property) {
+                        count++;
+                    }
+                }
+            }
+            return count;
+        }
     };
 
     $scope.$watch('showAdvancedSearch', function () {
