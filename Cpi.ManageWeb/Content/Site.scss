@@ -971,16 +971,22 @@ textarea {
 
 #login {
     height: 100%;
-    background-color: $main-color; /* fallback for old browsers */
+
     [ui-view] {
-        position: relative;
+        //position: relative;
+        margin-left: 0px;
+        width: 100%;
+        background-color: none;
+        margin-top: 0px;
+        height: 100%;
+        background-color: $main-color; /* fallback for old browsers */
     }
 
     .error-message {
         color: $error-color;
         margin-bottom: 10px;
-    } 
-    
+    }
+
     .login-page {
         width: 400px;
         padding: 8% 0 0;
