@@ -157,7 +157,7 @@ body {
       display: inline-block; }
     .secondary-menu .filters-container .advanced-search {
       position: absolute;
-      padding: 20px;
+      padding: 25px 30px;
       margin-top: 4px;
       -webkit-box-shadow: 0px 0px 5px #e0dfdf;
       -moz-box-shadow: 0px 0px 5px #e0dfdf;
@@ -368,7 +368,7 @@ dl {
     /*&:empty:after {
             content: "--";
         }*/ }
-    dl dd input,
+    dl dd input:not([type=checkbox]):not([type="radio"]),
     dl dd select,
     dl dd textarea {
       width: 100%; }
@@ -939,4 +939,9 @@ textarea {
           font-size: 28px; }
         #import .results-container .company-container .phone-number-container .phone-company {
           font-size: 16px; }
+
+.disabled,
+:disabled {
+  opacity: 0.5;
+  pointer-events: none; }
 

@@ -10,25 +10,29 @@
         <div advanced-search ng-show="showAdvancedSearch" advanced-search-undo="advancedSearchUndo()" class="advanced-search">
             <section>
                 <dl class="dl-S">
-                    <dt>Date (From)</dt>
-                    <dd>
-                        <input ng-model="scopeData.filter.AdvancedSearch.DateFrom" date-input />
-                    </dd>
-                </dl>
-                <dl class="dl-S">
-                    <dt>Date (To)</dt>
-                    <dd>
-                        <input ng-model="scopeData.filter.AdvancedSearch.DateTo" date-input />
-                    </dd>
-                </dl>
-            </section>
-            <section>
-                <dl class="dl-S">
                     <dt>Status</dt>
                     <dd>
                         <select ng-model="scopeData.filter.AdvancedSearch.StatusId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.CallStatuses">
                             <option></option>
                         </select>
+                    </dd>
+                </dl>
+                <dl class="dl-S">
+                    <dt>Date (From)</dt>
+                    <dd>
+                        <input ng-model="scopeData.filter.AdvancedSearch.DateFrom" ng-class="{'disabled': scopeData.filter.AdvancedSearch.TodayOnly}" date-input />
+                    </dd>
+                </dl>
+                <dl class="dl-S">
+                    <dt>Date (To)</dt>
+                    <dd>
+                        <input ng-model="scopeData.filter.AdvancedSearch.DateTo" ng-class="{'disabled': scopeData.filter.AdvancedSearch.TodayOnly}" date-input />
+                    </dd>
+                </dl>
+                <dl class="dl-S">
+                    <dt>Today Only</dt>
+                    <dd>
+                        <input ng-model="scopeData.filter.AdvancedSearch.TodayOnly" type="checkbox" />
                     </dd>
                 </dl>
             </section>

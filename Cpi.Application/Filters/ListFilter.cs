@@ -21,6 +21,7 @@ namespace Cpi.Application.Filters
                 public DateTime? DateFrom { get; set; }
                 public DateTime? DateTo { get; set; }
                 public int? StatusId { get; set; }
+                public bool TodayOnly { get; set; }
             }
         }
 

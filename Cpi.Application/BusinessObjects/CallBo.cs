@@ -24,21 +24,30 @@ namespace Cpi.Application.BusinessObjects
 
             if (filter.AdvancedSearch != null)
             {
-                if (filter.AdvancedSearch.DateFrom.HasValue)
-                {
-                    DateTime dateFrom = filter.AdvancedSearch.DateFrom.Value.ToUniversalTime();
-                    query = query.Where(a => a.CreatedDate >= dateFrom);
-                }
-
-                if (filter.AdvancedSearch.DateTo.HasValue)
-                {
-                    DateTime dateTo = filter.AdvancedSearch.DateTo.Value.ToUniversalTime().AddDays(1);
-                    query = query.Where(a => a.CreatedDate <= dateTo);
-                }
 
                 if (filter.AdvancedSearch.StatusId.HasValue)
                 {
                     query = query.Where(a => a.StatusId == filter.AdvancedSearch.StatusId.Value);
+                }
+
+                if (filter.AdvancedSearch.TodayOnly)
+                {
+                    DateTime dateFrom = DateTime.Now.Date.ToUniversalTime();
+                    query = query.Where(a => a.CreatedDate >= dateFrom);
+                }
+                else
+                {
+                    if (filter.AdvancedSearch.DateFrom.HasValue)
+                    {
+                        DateTime dateFrom = filter.AdvancedSearch.DateFrom.Value.ToUniversalTime();
+                        query = query.Where(a => a.CreatedDate >= dateFrom);
+                    }
+
+                    if (filter.AdvancedSearch.DateTo.HasValue)
+                    {
+                        DateTime dateTo = filter.AdvancedSearch.DateTo.Value.ToUniversalTime().AddDays(1);
+                        query = query.Where(a => a.CreatedDate <= dateTo);
+                    }
                 }
             }
 

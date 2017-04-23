@@ -200,7 +200,7 @@ $secondary-menu-height: 40px;
 
         .advanced-search {
             position: absolute;
-            padding: 20px;
+            padding: 25px 30px;
             margin-top: 4px;
             @include box-shadow(0px 0px 5px #e0dfdf);
             background-color: white;
@@ -496,7 +496,7 @@ dl {
         @extend %ellipsis;
         @extend %border-box;
 
-        input,
+        input:not([type=checkbox]):not([type="radio"]),
         select,
         textarea {
             width: 100%;
@@ -506,11 +506,9 @@ dl {
             width: 100%;
             white-space: normal;
         }
-
         /*&:empty:after {
             content: "--";
         }*/
-
         &.thin {
             font-weight: 400;
         }
@@ -1319,4 +1317,10 @@ textarea {
             }
         }
     }
+}
+
+.disabled,
+:disabled {
+    opacity: 0.5;
+    pointer-events: none;
 }
