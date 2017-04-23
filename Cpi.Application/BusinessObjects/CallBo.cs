@@ -32,7 +32,7 @@ namespace Cpi.Application.BusinessObjects
 
                 if (filter.AdvancedSearch.DateTo.HasValue)
                 {
-                    DateTime dateTo = filter.AdvancedSearch.DateTo.Value.ToUniversalTime();
+                    DateTime dateTo = filter.AdvancedSearch.DateTo.Value.ToUniversalTime().AddDays(1);
                     query = query.Where(a => a.CreatedDate <= dateTo);
                 }
 
