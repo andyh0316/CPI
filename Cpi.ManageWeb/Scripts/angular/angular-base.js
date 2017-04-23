@@ -315,10 +315,11 @@ baseModule.controller('ListBaseController', ['$scope', '$controller', 'baseBo', 
 
     $scope.getAdvancedSearchCount = function () {
         if ($scope.scopeData.filter.AdvancedSearch) {
+            var object = $scope.scopeData.filter.AdvancedSearch;
             var count = 0;
-            for (var property in $scope.scopeData.filter.AdvancedSearch) {
-                if ($scope.scopeData.filter.AdvancedSearch.hasOwnProperty(property)) {
-                    if (property) {
+            for (var property in object) {
+                if (object.hasOwnProperty(property)) {
+                    if (object[property]) {
                         count++;
                     }
                 }

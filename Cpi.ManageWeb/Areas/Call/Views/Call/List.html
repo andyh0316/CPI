@@ -7,7 +7,8 @@
     <div class="filters-container">
         <input search-box type="text" class="search-box" ng-model="scopeData.filter.SearchString" placeholder="Search" />
         <button ng-show="!showAdvancedSearch" ng-click="showAdvancedSearch = true" class="button">
-            Advanced<span ng-show="getAdvancedSearchCount() > 0"> ({{getAdvancedSearchCount()}})</span>
+            Advanced
+           <span ng-show="getAdvancedSearchCount() > 0"> ({{getAdvancedSearchCount()}})</span>
         </button>
         <div advanced-search ng-show="showAdvancedSearch" advanced-search-undo="advancedSearchUndo()" class="advanced-search">
             <section>
@@ -34,13 +35,13 @@
                 <dl class="dl-S">
                     <dt>Today Only</dt>
                     <dd>
-                        <input ng-model="scopeData.filter.AdvancedSearch.TodayOnly" type="checkbox" />
+                        <input ng-model="scopeData.filter.AdvancedSearch.TodayOnly" ng-change="scopeData.filter.AdvancedSearch.DateFrom = null; scopeData.filter.AdvancedSearch.DateTo = null;" type="checkbox" />
                     </dd>
                 </dl>
             </section>
 
             <div class="buttons">
-                <button class="button" ng-click="showAdvancedSearch = false">Close</button>
+                <button class="button" ng-click="showAdvancedSearch = false; advancedSearchUndo();">Close</button>
                 <button class="button main" ng-click="advancedSearchReset()">Reset</button>
                 <button class="button main" ng-click="advancedSearchGo()">Search</button>
             </div>
