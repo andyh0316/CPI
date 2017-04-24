@@ -19,7 +19,7 @@ namespace Cpi.ManageWeb.Controllers
             var results = UserBo.SearchDropDownQuery(searchString).Select(a => new
             {
                 Id = a.Id,
-                Name = a.Name
+                Name = a.Nickname
             }).ToList();
 
             return JsonModel(results);

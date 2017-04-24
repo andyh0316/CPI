@@ -962,5 +962,6 @@ textarea {
     text-align: center;
     margin-right: 20px; }
     #finance .panels .panel .content {
+      margin-top: 30px;
       font-size: 30px; }
 

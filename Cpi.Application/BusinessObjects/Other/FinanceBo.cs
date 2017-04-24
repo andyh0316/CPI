@@ -13,29 +13,29 @@ namespace Cpi.Application.BusinessObjects.Other
             this.CallBo = CallBo;
         }
 
-        //public decimal GetRevenueForToday()
-        //{
-        //    IQueryable<CallDm> callQuery = CallBo.GetListQuery();
+        public decimal GetRevenueForToday()
+        {
+            IQueryable<CallDm> callQuery = CallBo.GetListQuery();
 
-        //    DateTime dateFrom = DateTime.Now.Date.ToUniversalTime();
-        //    callQuery = callQuery.Where(a => a.CompletionDate >= dateFrom);
+            DateTime dateFrom = DateTime.Now.Date;
+            callQuery = callQuery.Where(a => a.CompletionDate >= dateFrom);
 
-        //    decimal revenue = callQuery.Select(a => a.TotalPrice.Value).DefaultIfEmpty(0).Sum();
+            decimal revenue = callQuery.Select(a => a.TotalPrice.Value).DefaultIfEmpty(0).Sum();
 
-        //    return revenue;
-        //}
+            return revenue;
+        }
 
-        //public decimal GetRevenueForThisMonth()
-        //{
-        //    IQueryable<CallDm> callQuery = CallBo.GetListQuery();
+        public decimal GetRevenueForThisMonth()
+        {
+            IQueryable<CallDm> callQuery = CallBo.GetListQuery();
 
-        //    DateTime dateFrom = DateTime.Now.AddMonths(-1).Date.ToUniversalTime();
-        //    callQuery = callQuery.Where(a => a.CompletionDate >= dateFrom);
+            DateTime dateFrom = DateTime.Now.AddMonths(-1).Date;
+            callQuery = callQuery.Where(a => a.CompletionDate >= dateFrom);
 
-        //    decimal revenue = callQuery.Select(a => a.TotalPrice.Value).DefaultIfEmpty(0).Sum();
+            decimal revenue = callQuery.Select(a => a.TotalPrice.Value).DefaultIfEmpty(0).Sum();
 
-        //    return revenue;
-        //}
+            return revenue;
+        }
 
         //public decimal GetCompletedCallCount()
         //{

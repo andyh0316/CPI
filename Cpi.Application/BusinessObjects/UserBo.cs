@@ -13,10 +13,10 @@ namespace Cpi.Application.BusinessObjects
 
             if (!string.IsNullOrEmpty(searchString))
             {
-                query = query.Where(a => a.Name.StartsWith(searchString));
+                query = query.Where(a => a.Nickname.StartsWith(searchString));
             }
 
-            return query.OrderBy(a => (a.Name == searchString) ? 0 : 1).ThenBy(a => (a.Name.StartsWith(searchString)) ? 0 : 1).Take(ConstHelper.SEARCH_DROP_DOWN_ITEMS);
+            return query.OrderBy(a => (a.Nickname == searchString) ? 0 : 1).ThenBy(a => (a.Nickname.StartsWith(searchString)) ? 0 : 1).Take(ConstHelper.SEARCH_DROP_DOWN_ITEMS);
         }
 
         public UserDm GetByUsername(string username)

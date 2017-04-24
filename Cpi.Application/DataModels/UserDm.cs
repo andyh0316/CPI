@@ -3,7 +3,6 @@ using Cpi.Application.DataModels.Base;
 using Cpi.Application.DataModels.LookUp;
 using Cpi.Compass.Application.BusinessRules;
 using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace Cpi.Application.DataModels
 {
@@ -13,8 +12,12 @@ namespace Cpi.Application.DataModels
         public string Username { get; set; }
 
         [CpiRequired]
+        [CpiMaxLength(100)]
+        public string Fullname { get; set; }
+
+        [CpiRequired]
         [CpiMaxLength(30)]
-        public string Name { get; set; }
+        public string Nickname { get; set; }
 
         [CpiMaxLength(500)]
         public string Password { get; set; }

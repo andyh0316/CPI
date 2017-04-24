@@ -18,7 +18,7 @@ namespace Cpi.Application.DataModels.Base
         [NotMapped]
         public string CreatedByUsername {
             get {
-                return (CreatedBy != null) ? CreatedBy.Name : null;
+                return (CreatedBy != null) ? CreatedBy.Nickname : null;
             }
         }
 
