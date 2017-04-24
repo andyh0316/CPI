@@ -1,4 +1,5 @@
 ﻿using Cpi.Application.DataModels.Base;
+using Cpi.Application.DataModels.LookUp;
 using Cpi.Compass.Application.BusinessRules;
 using Newtonsoft.Json;
 
@@ -11,7 +12,7 @@ namespace Cpi.Application.DataModels
         public virtual CallDm Call { get; set; }
 
         public int CommodityId { get; set; }
-        public virtual CommodityDm Commodity { get; set; }
+        public virtual LookUpCommodityDm Commodity { get; set; }
 
         [CpiRequired]
         public int? Quantity { get; set; }

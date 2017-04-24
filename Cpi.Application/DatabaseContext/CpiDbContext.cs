@@ -37,12 +37,12 @@ namespace Cpi.Application.DatabaseContext
 
             modelBuilder.Configurations.Add(new CallMap());
             modelBuilder.Configurations.Add(new UserMap());
-            modelBuilder.Configurations.Add(new CommodityMap());
             modelBuilder.Configurations.Add(new CallCommodityMap());
 
             modelBuilder.Configurations.Add(new LookUpUserRoleMap());
             modelBuilder.Configurations.Add(new LookUpUserOccupationMap());
             modelBuilder.Configurations.Add(new LookUpCallStatusMap());
+            modelBuilder.Configurations.Add(new LookUpCommodityMap());
         }
 
 

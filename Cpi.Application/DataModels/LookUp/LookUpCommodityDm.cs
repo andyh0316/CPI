@@ -3,14 +3,10 @@ using Cpi.Compass.Application.BusinessRules;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace Cpi.Application.DataModels
+namespace Cpi.Application.DataModels.LookUp
 {
-    public class CommodityDm : BaseDm
+    public class LookUpCommodityDm : LookUpBaseDm
     {
-        [CpiRequired]
-        [CpiMaxLength(200)]
-        public string Name { get; set; }
-
         [JsonIgnore]
         public virtual List<CallCommodityDm> CallCommodities { get; set; }
 
@@ -20,11 +16,11 @@ namespace Cpi.Application.DataModels
         public bool Inactive { get; set; }
     }
 
-    public class CommodityMap : BaseMap<CommodityDm>
+    public class LookUpCommodityMap : BaseMap<LookUpCommodityDm>
     {
-        public CommodityMap()
+        public LookUpCommodityMap()
         {
-            ToTable("Commodity");
+            ToTable("LookUp.Commodity");
             HasMany(a => a.CallCommodities).WithRequired(a => a.Commodity).HasForeignKey(a => a.CommodityId).WillCascadeOnDelete(false);
         }
     }

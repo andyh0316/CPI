@@ -58,7 +58,6 @@
     <Compile Include="BusinessObjects\Base\BaseBo.cs" />
     <Compile Include="BusinessObjects\CallBo.cs" />
     <Compile Include="BusinessObjects\CallCommodityBo.cs" />
-    <Compile Include="BusinessObjects\CommodityBo.cs" />
     <Compile Include="BusinessObjects\LookUp\LookUpBo.cs" />
     <Compile Include="BusinessObjects\Other\FinanceBo.cs" />
     <Compile Include="BusinessObjects\UserBo.cs" />
@@ -72,17 +71,18 @@
     <Compile Include="DataModels\Base\LookUpBaseDm.cs" />
     <Compile Include="DataModels\CallCommodityDm.cs" />
     <Compile Include="DataModels\LookUp\LookUpCallStatusDm.cs" />
+    <Compile Include="DataModels\LookUp\LookUpCommodityDm.cs" />
     <Compile Include="DataModels\LookUp\LookUpUserOccupationDm.cs" />
     <Compile Include="DataModels\LookUp\LookUpUserRoleDm.cs" />
     <Compile Include="DataModels\UserDm.cs" />
     <Compile Include="DataModels\CallDm.cs" />
     <Compile Include="DataModels\Interface\ISoftDeleteDm.cs" />
-    <Compile Include="DataModels\CommodityDm.cs" />
     <Compile Include="Filters\FinanceFilter.cs" />
     <Compile Include="Filters\ListFilter.cs" />
     <Compile Include="Helpers\ConstHelper.cs" />
     <Compile Include="Helpers\PasswordHelper.cs" />
     <Compile Include="Helpers\UserHelper.cs" />
+    <Compile Include="Models\CpiSelectListItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

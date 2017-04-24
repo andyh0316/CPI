@@ -16,6 +16,7 @@ using System.Web;
 using System.IO;
 using Excel;
 using System.Data;
+using Cpi.Application.Models;
 
 namespace Cpi.ManageWeb.Areas.Call.Controllers
 {
@@ -23,15 +24,15 @@ namespace Cpi.ManageWeb.Areas.Call.Controllers
     public class CallController : BaseController
     {
         private CallBo CallBo;
-        private CommodityBo CommodityBo;
         private CallCommodityBo CallCommodityBo;
         private LookUpBo LookUpBo;
-        public CallController(CallBo CallBo, CommodityBo CommodityBo, CallCommodityBo CallCommodityBo, LookUpBo LookUpBo)
+        private UserBo UserBo;
+        public CallController(CallBo CallBo, CallCommodityBo CallCommodityBo, LookUpBo LookUpBo, UserBo UserBo)
         {
             this.CallBo = CallBo;
-            this.CommodityBo = CommodityBo;
             this.CallCommodityBo = CallCommodityBo;
             this.LookUpBo = LookUpBo;
+            this.UserBo = UserBo;
         }
 
         public ActionResult Index()
@@ -53,8 +54,13 @@ namespace Cpi.ManageWeb.Areas.Call.Controllers
         {
             var model = new
             {
-                Commodities = CommodityBo.GetList(),
+                Commodities = LookUpBo.GetList<LookUpCommodityDm>().ToList(),
                 CallStatuses = LookUpBo.GetList<LookUpCallStatusDm>().ToList(),
+                Users = UserBo.GetListQuery().OrderBy(a => a.Nickname).Select(a => new CpiSelectListItem
+                {
+                    Id = a.Id,
+                    Name = a.Nickname
+                }).ToList()
             };
 
             return JsonModel(model);
@@ -69,7 +75,7 @@ namespace Cpi.ManageWeb.Areas.Call.Controllers
             }
 
             List<CallDm> trackedCalls = CallBo.GetListByIds(calls.Where(a => a.Id > 0).Select(a => a.Id).ToList(), true).ToList();
-            List<CommodityDm> allCommodities = CommodityBo.GetList();
+            List<LookUpCommodityDm> allCommodities = LookUpBo.GetList<LookUpCommodityDm>();
 
             foreach (CallDm call in calls)
             {

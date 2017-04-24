@@ -1,7 +1,5 @@
 ﻿using Cpi.Application.BusinessObjects;
 using Cpi.ManageWeb.Controllers.Base;
-using System.Web.Mvc;
-using System.Linq;
 
 namespace Cpi.ManageWeb.Controllers
 {
@@ -13,16 +11,16 @@ namespace Cpi.ManageWeb.Controllers
             UserBo = userBo;
         }
 
-        [HttpGet]
-        public ContentResult Users(string searchString)
-        {
-            var results = UserBo.SearchDropDownQuery(searchString).Select(a => new
-            {
-                Id = a.Id,
-                Name = a.Nickname
-            }).ToList();
+        //[HttpGet]
+        //public ContentResult Users(string searchString)
+        //{
+        //    var results = UserBo.SearchDropDownQuery(searchString).Select(a => new
+        //    {
+        //        Id = a.Id,
+        //        Name = a.Nickname
+        //    }).ToList();
 
-            return JsonModel(results);
-        }
+        //    return JsonModel(results);
+        //}
     }
 }

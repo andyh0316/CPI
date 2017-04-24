@@ -115,7 +115,7 @@
                         <dd ng-if="record.isEditing" class="overflow-visible">
                             <span field-validation-error ng-show="modelState['[' + getEditingRecordIndex(record) + '].OperatorId']" class="field-validation-error"></span>
                             <div search-drop-down class="search-drop-down"
-                                    search-url="/SearchDropDown/Users/"
+                                    search-object="modelData.Users"
                                     input-string="{{record.Operator.Name}}"
                                     input-key="record.OperatorId">
                             </div>
@@ -128,7 +128,7 @@
                         <dd ng-if="record.isEditing" class="overflow-visible">
                             <span field-validation-error ng-show="modelState['[' + getEditingRecordIndex(record) + '].DeliveryStaffId']" class="field-validation-error"></span>
                             <div search-drop-down class="search-drop-down"
-                                    search-url="/SearchDropDown/Users/"
+                                    search-object="modelData.Users"
                                     input-string="{{record.DeliveryStaff.Name}}"
                                     input-key="record.DeliveryStaffId">
                             </div>
