@@ -64,12 +64,12 @@
                 <th><a ng-class="getSortOrder('CustomerName')" ng-click="sort('CustomerName')">Name</a></th>
                 <th>Phone</th>
                 <th ng-class="{commodities: isEditingAny()}">Product</th>
-                <th><a ng-class="getSortOrder('Operator.Name')" ng-click="sort('Operator.Name')">Operator</a></th>
-                <th><a ng-class="getSortOrder('DeliveryStaff.Name')" ng-click="sort('DeliveryStaff.Name')">Delivery Staff</a></th>
+                <th><a ng-class="getSortOrder('Operator.NickName')" ng-click="sort('Operator.NickName')">Operator</a></th>
+                <th><a ng-class="getSortOrder('DeliveryStaff.NickName')" ng-click="sort('DeliveryStaff.NickName')">Delivery Staff</a></th>
                 <th><a ng-class="getSortOrder('DeliveryDate')" ng-click="sort('DeliveryDate')">Delivery Date</a></th>
-                <th class="address">
+                <!--<th class="address">
                     Address
-                </th>
+                </th>-->
                 <th class="right-content"><a ng-class="getSortOrder('TotalPrice')" ng-click="sort('TotalPrice')">Cost</a></th>
                 <th class="center-content"><a ng-class="getSortOrder('Status.Name')" ng-click="sort('Status.Name')">Status</a></th>
                 <th><a ng-class="getSortOrder('CompletionDate')" ng-click="sort('CompletionDate')">Completed</a></th>
@@ -144,14 +144,14 @@
                         </dd>
                     </dl>
                 </td>
-                <td class="address">
+                <!--<td class="address">
                     <dl>
                         <dd ng-show="!record.isEditing">{{record.AddressString}}</dd>
                         <dd ng-show="record.isEditing">
                             <input ng-model="record.AddressString" />
                         </dd>
                     </dl>
-                </td>
+                </td>-->
                 <td class="right-content">
                     <dl>
                         <dd ng-show="!record.isEditing">

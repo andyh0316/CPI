@@ -144,8 +144,14 @@ namespace Cpi.ManageWeb.Areas.Call.Controllers
                 else
                 {
                     SetCreated(trackedCall);
-                    CallBo.Add(trackedCall);
+
+                    if (!CallBo.CallWithPhoneExistsToday(trackedCall.CustomerPhone))
+                    {
+                        CallBo.Add(trackedCall);
+                    }
                 }
+
+
             }
 
             CallBo.Commit();
@@ -163,7 +169,7 @@ namespace Cpi.ManageWeb.Areas.Call.Controllers
             List<string> cellCardPrefixes = new List<string> { "11", "12", "14", "17", "61", "76", "77", "78", "85", "89", "92", "95", "99" };
 
             List<string> smartPhoneNumbers = new List<string>();
-            List<string> metFoneNumbers = new List<string>();
+            List<string> metFonePhoneNumbers = new List<string>();
             List<string> cellCardPhoneNumbers = new List<string>();
             List<string> otherPhoneNumbers = new List<string>();
 
@@ -175,7 +181,7 @@ namespace Cpi.ManageWeb.Areas.Call.Controllers
                 }
                 else if (metFonePrefixes.Any(a => phoneNumber.StartsWith(a)))
                 {
-                    metFoneNumbers.Add(phoneNumber);
+                    metFonePhoneNumbers.Add(phoneNumber);
                 }
                 else if (cellCardPrefixes.Any(a => phoneNumber.StartsWith(a)))
                 {
@@ -190,7 +196,7 @@ namespace Cpi.ManageWeb.Areas.Call.Controllers
             var model = new
             {
                 SmartPhoneNumbers = smartPhoneNumbers,
-                MetFoneNumbers = metFoneNumbers,
+                MetFonePhoneNumbers = metFonePhoneNumbers,
                 CellCardPhoneNumbers = cellCardPhoneNumbers,
                 OtherPhoneNumbers = otherPhoneNumbers
             };
@@ -216,7 +222,7 @@ namespace Cpi.ManageWeb.Areas.Call.Controllers
             string line;
             while (null != (line = reader.ReadLine()))
             {
-                phoneNumbersList.Add(line);
+                phoneNumbersList.Add(line.Trim());
             }
 
             phoneNumbersList = phoneNumbersList.Distinct().ToList();

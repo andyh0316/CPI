@@ -25,7 +25,6 @@ namespace Cpi.Application.DataModels
         public int? OperatorId { get; set; }
         public virtual UserDm Operator { get; set; }
 
-        [CpiRequiredOnCallStatus]
         public int? DeliveryStaffId { get; set; }
         public virtual UserDm DeliveryStaff { get; set; }
 

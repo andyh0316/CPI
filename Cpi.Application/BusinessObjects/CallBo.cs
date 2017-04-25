@@ -52,5 +52,11 @@ namespace Cpi.Application.BusinessObjects
 
             return query;
         }
+
+        public bool CallWithPhoneExistsToday(string phoneNumber)
+        {
+            DateTime today = DateTime.Now.Date;
+            return GetListQuery().Any(a => a.CustomerPhone == phoneNumber && a.CreatedDate >= today);
+        }
     }
 }
