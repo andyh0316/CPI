@@ -111,12 +111,12 @@
                 </td>
                 <td>
                     <dl>
-                        <dd ng-show="!record.isEditing">{{record.Operator.Name}}</dd>
+                        <dd ng-show="!record.isEditing">{{record.Operator.Nickname}}</dd>
                         <dd ng-if="record.isEditing" class="overflow-visible">
                             <span field-validation-error ng-show="modelState['[' + getEditingRecordIndex(record) + '].OperatorId']" class="field-validation-error"></span>
                             <div search-drop-down class="search-drop-down"
                                     search-object="modelData.Users"
-                                    input-string="{{record.Operator.Name}}"
+                                    input-string="{{record.Operator.Nickname}}"
                                     input-key="record.OperatorId">
                             </div>
                         </dd>
@@ -124,12 +124,12 @@
                 </td>
                 <td>
                     <dl>
-                        <dd ng-show="!record.isEditing">{{record.DeliveryStaff.Name}}</dd>
+                        <dd ng-show="!record.isEditing">{{record.DeliveryStaff.Nickname}}</dd>
                         <dd ng-if="record.isEditing" class="overflow-visible">
                             <span field-validation-error ng-show="modelState['[' + getEditingRecordIndex(record) + '].DeliveryStaffId']" class="field-validation-error"></span>
                             <div search-drop-down class="search-drop-down"
                                     search-object="modelData.Users"
-                                    input-string="{{record.DeliveryStaff.Name}}"
+                                    input-string="{{record.DeliveryStaff.Nickname}}"
                                     input-key="record.DeliveryStaffId">
                             </div>
                         </dd>
