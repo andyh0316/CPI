@@ -77,6 +77,12 @@ namespace Cpi.ManageWeb.Controllers
                 return JsonModelState(ModelState);
             }
 
+            TryValidateModel(trackedUser);
+            if (!ModelState.IsValid)
+            {
+                return JsonModelState(ModelState);
+            }
+
             trackedUser.LastLoginDate = DateTime.Now;
             UserBo.Commit();
 

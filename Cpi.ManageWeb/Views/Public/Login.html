@@ -2,7 +2,10 @@
     <div class="login-page">
         <div class="form">
             <form class="login-form">
-                <div class="error-message">{{modelState['ErrorMessage']}}</div>
+                <div class="error-message">
+                    {{modelState['ErrorMessage']}}
+                    {{modelState['Username']}}
+                </div>
                 <input ng-model="model.Username" type="text" placeholder="Username" />
                 <input ng-model="model.Password" type="password" placeholder="Password" />
                 <input ng-show="model.IsUpdatingPassword" ng-model="model.NewPassword" type="password" placeholder="New Password" />
