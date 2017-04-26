@@ -106,12 +106,6 @@
                 </td>
                 <td>
                     <dl>
-                        <dd ng-show="!record.isEditing">{{record.CustomerName}}</dd>
-                        <dd ng-show="record.isEditing"><input ng-model="record.CustomerName" /></dd>
-                    </dl>
-                </td>
-                <td>
-                    <dl>
                         <dd ng-show="!record.isEditing">{{record.CustomerPhone}}</dd>
                         <dd ng-show="record.isEditing">
                             <span field-validation-error ng-show="modelState['[' + getEditingRecordIndex(record) + '].CustomerPhone']" class="field-validation-error"></span>
