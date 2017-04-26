@@ -907,7 +907,21 @@ baseModule.directive('searchDropDown', ['baseBo', '$rootScope', function (baseBo
             $scope.selectedIndex = 0;
             $scope.showContainer = false;
             $scope.multiSelect = ($scope.multiSelect === 'true') ? true : false;
-            $scope.searchString = $scope.inputString;
+            
+            if ($scope.searchObject) {
+                for (var i in $scope.searchObject)
+                {
+                    if ($scope.inputKey === $scope.searchObject[i].Id)
+                    {
+                        $scope.searchString = $scope.searchObject[i].Name;
+                        break;
+                    }
+                }
+                
+            } else {
+                $scope.searchString = $scope.inputString;
+            }
+
             $scope.formatString = $rootScope.formatString;
             $scope.debugMode = ($scope.debugMode === 'true') ? true : false;
 
@@ -974,7 +988,7 @@ baseModule.directive('searchDropDown', ['baseBo', '$rootScope', function (baseBo
                         Description: $scope.searchObject[i].Description,
                     };
 
-                    if (!$scope.searchString || newResult.Name.toLowerCase().startsWith($scope.searchString.toLowerCase())) {
+                    if (!$scope.searchString || newResult.Name.toLowerCase().includes($scope.searchString.toLowerCase())) {
                         results.push(newResult);
                     }
                 }

@@ -12,9 +12,7 @@ using System.Web.Mvc;
 using System.Data.Entity;
 using Cpi.Application.BusinessObjects.LookUp;
 using Cpi.Application.DataModels.LookUp;
-using System.Web;
 using System.IO;
-using Excel;
 using System.Data;
 using Cpi.Application.Models;
 
@@ -56,10 +54,10 @@ namespace Cpi.ManageWeb.Areas.Call.Controllers
             {
                 Commodities = LookUpBo.GetList<LookUpCommodityDm>().ToList(),
                 CallStatuses = LookUpBo.GetList<LookUpCallStatusDm>().ToList(),
-                Users = UserBo.GetListQuery().OrderBy(a => a.Nickname).Select(a => new CpiSelectListItem
+                Users = UserBo.GetListQuery().OrderBy(a => a.Nickname).ThenBy(a => a.Fullname).Select(a => new CpiSelectListItem
                 {
                     Id = a.Id,
-                    Name = a.Nickname
+                    Name = a.Nickname + " (" + a.Fullname + ")"
                 }).ToList()
             };
 
