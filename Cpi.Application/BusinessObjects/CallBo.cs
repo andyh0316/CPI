@@ -29,25 +29,41 @@ namespace Cpi.Application.BusinessObjects
                     query = query.Where(a => a.StatusId == filter.AdvancedSearch.StatusId.Value);
                 }
 
-                if (filter.AdvancedSearch.TodayOnly)
+                if (filter.AdvancedSearch.CreatedTodayOnly)
                 {
                     DateTime dateFrom = DateTime.Now.Date;
                     query = query.Where(a => a.CreatedDate >= dateFrom);
                 }
-                else
-                {
-                    if (filter.AdvancedSearch.DateFrom.HasValue)
-                    {
-                        query = query.Where(a => a.CreatedDate >= filter.AdvancedSearch.DateFrom.Value);
-                    }
 
-                    if (filter.AdvancedSearch.DateTo.HasValue)
-                    {
-                        // add one day minus one second to cover towards the end of day since CreatedDate contains time
-                        DateTime dateTo = filter.AdvancedSearch.DateTo.Value.AddDays(1).AddSeconds(-1);
-                        query = query.Where(a => a.CreatedDate <= dateTo);
-                    }
+                if (filter.AdvancedSearch.CreatedDateFrom.HasValue)
+                {
+                    query = query.Where(a => a.CreatedDate >= filter.AdvancedSearch.CreatedDateFrom.Value);
                 }
+
+                if (filter.AdvancedSearch.CreatedDateTo.HasValue)
+                {
+                    // add one day minus one second to cover towards the end of day since CreatedDate contains time
+                    DateTime dateTo = filter.AdvancedSearch.CreatedDateTo.Value.AddDays(1).AddSeconds(-1);
+                    query = query.Where(a => a.CreatedDate <= dateTo);
+                }
+
+                if (filter.AdvancedSearch.CompletedTodayOnly)
+                {
+                    DateTime dateFrom = DateTime.Now.Date;
+                    query = query.Where(a => a.CompletionDate >= dateFrom);
+                }
+
+                if (filter.AdvancedSearch.CompletedDateFrom.HasValue)
+                {
+                    query = query.Where(a => a.CompletionDate >= filter.AdvancedSearch.CompletedDateFrom.Value);
+                }
+
+                if (filter.AdvancedSearch.CompletedDateTo.HasValue)
+                {
+                    DateTime dateTo = filter.AdvancedSearch.CompletedDateTo.Value.AddDays(1).AddSeconds(-1);
+                    query = query.Where(a => a.CompletionDate <= dateTo);
+                }
+
             }
 
             return query;

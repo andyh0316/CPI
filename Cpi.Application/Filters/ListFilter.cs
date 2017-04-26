@@ -18,10 +18,15 @@ namespace Cpi.Application.Filters
             public AdvancedSearchClass AdvancedSearch { get; set; }
             public class AdvancedSearchClass
             {
-                public DateTime? DateFrom { get; set; }
-                public DateTime? DateTo { get; set; }
                 public int? StatusId { get; set; }
-                public bool TodayOnly { get; set; }
+
+                public DateTime? CreatedDateFrom { get; set; }
+                public DateTime? CreatedDateTo { get; set; }
+                public bool CreatedTodayOnly { get; set; }
+
+                public DateTime? CompletedDateFrom { get; set; }
+                public DateTime? CompletedDateTo { get; set; }
+                public bool CompletedTodayOnly { get; set; }
             }
         }
 

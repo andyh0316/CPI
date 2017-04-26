@@ -66,6 +66,41 @@ app.controller('ListController', ['$scope', '$controller', '$state', 'baseBo', '
                 }
             });
     };
+
+    //$scope.$watch('[scopeData.filter.AdvancedSearch.CreatedDateFrom, scopeData.filter.AdvancedSearch.CreatedDateTo]', function (newVal, oldVal) {
+    //    if (newVal)
+    //    {
+    //        $scope.scopeData.filter.AdvancedSearch.CreatedTodayOnly = null;
+    //        $scope.scopeData.filter.AdvancedSearch.CompletedTodayOnly = null;
+    //        $scope.scopeData.filter.AdvancedSearch.CompletedDateFrom = null;
+    //        $scope.scopeData.filter.AdvancedSearch.CompletedDateTo = null;
+    //    }
+    //});
+
+    //$scope.$watch('[scopeData.filter.AdvancedSearch.CompletedDateFrom, scopeData.filter.AdvancedSearch.CompletedDateTo]', function (newVal, oldVal) {
+    //    if (newVal) {
+    //        $scope.scopeData.filter.AdvancedSearch.CreatedTodayOnly = null;
+    //        $scope.scopeData.filter.AdvancedSearch.CompletedTodayOnly = null;
+    //        $scope.scopeData.filter.AdvancedSearch.CreatedDateFrom = null;
+    //        $scope.scopeData.filter.AdvancedSearch.CreatedDateTo = null;
+    //    }
+    //});
+
+    //$scope.$watch('scopeData.filter.AdvancedSearch.CreatedTodayOnly', function (newVal, oldVal) {
+    //    if (newVal)
+    //    {
+    //        $scope.scopeData.filter.AdvancedSearch.CreatedDateFrom = null;
+    //        $scope.scopeData.filter.AdvancedSearch.CreatedDateTo = null;
+    //    }
+    //});
+
+    //$scope.$watch('scopeData.filter.AdvancedSearch.CompletedTodayOnly', function (newVal, oldVal) {
+    //    if (newVal) {
+    //        $scope.scopeData.filter.AdvancedSearch.CreatedTodayOnly = null;
+    //        $scope.scopeData.filter.AdvancedSearch.CompletedDateFrom = null;
+    //        $scope.scopeData.filter.AdvancedSearch.CompletedDateTo = null;
+    //    }
+    //});
 }]);
 
 app.controller('ImportController', ['$scope', '$controller', '$state', 'baseBo', function ($scope, $controller, $state, baseBo) {

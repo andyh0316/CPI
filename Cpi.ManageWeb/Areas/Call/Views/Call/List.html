@@ -20,22 +20,44 @@
                         </select>
                     </dd>
                 </dl>
+            </section>
+            <section>
                 <dl class="dl-S">
-                    <dt>Date (From)</dt>
+                    <dt>Create Date (From)</dt>
                     <dd>
-                        <input ng-model="scopeData.filter.AdvancedSearch.DateFrom" ng-class="{'disabled': scopeData.filter.AdvancedSearch.TodayOnly}" date-input />
+                        <input ng-model="scopeData.filter.AdvancedSearch.CreatedDateFrom" date-input />
                     </dd>
                 </dl>
                 <dl class="dl-S">
-                    <dt>Date (To)</dt>
+                    <dt>Create Date (To)</dt>
                     <dd>
-                        <input ng-model="scopeData.filter.AdvancedSearch.DateTo" ng-class="{'disabled': scopeData.filter.AdvancedSearch.TodayOnly}" date-input />
+                        <input ng-model="scopeData.filter.AdvancedSearch.CreatedDateTo" date-input />
                     </dd>
                 </dl>
                 <dl class="dl-S">
-                    <dt>Today Only</dt>
+                    <dt>Created Today Only</dt>
                     <dd>
-                        <input ng-model="scopeData.filter.AdvancedSearch.TodayOnly" ng-change="scopeData.filter.AdvancedSearch.DateFrom = null; scopeData.filter.AdvancedSearch.DateTo = null;" type="checkbox" />
+                        <input ng-model="scopeData.filter.AdvancedSearch.CreatedTodayOnly" type="checkbox" />
+                    </dd>
+                </dl>
+            </section>
+            <section>
+                <dl class="dl-S">
+                    <dt>Completed Date (From)</dt>
+                    <dd>
+                        <input ng-model="scopeData.filter.AdvancedSearch.CompletedDateFrom" date-input />
+                    </dd>
+                </dl>
+                <dl class="dl-S">
+                    <dt>Completed Date (To)</dt>
+                    <dd>
+                        <input ng-model="scopeData.filter.AdvancedSearch.CompletedDateTo" date-input />
+                    </dd>
+                </dl>
+                <dl class="dl-S">
+                    <dt>Completed Today Only</dt>
+                    <dd>
+                        <input ng-model="scopeData.filter.AdvancedSearch.CompletedTodayOnly" type="checkbox" />
                     </dd>
                 </dl>
             </section>
