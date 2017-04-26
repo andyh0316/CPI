@@ -971,7 +971,7 @@ baseModule.directive('searchDropDown', ['baseBo', '$rootScope', function (baseBo
                         Description: $scope.searchObject[i].Description,
                     };
 
-                    if (!$scope.searchString || newResult.Name.startsWith($scope.searchString)) {
+                    if (!$scope.searchString || newResult.Name.toLowerCase().startsWith($scope.searchString.toLowerCase())) {
                         results.push(newResult);
                     }
                 }

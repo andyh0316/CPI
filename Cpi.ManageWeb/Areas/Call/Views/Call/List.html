@@ -66,7 +66,6 @@
                 <th ng-class="{commodities: isEditingAny()}">Product</th>
                 <th><a ng-class="getSortOrder('Operator.NickName')" ng-click="sort('Operator.NickName')">Operator</a></th>
                 <th><a ng-class="getSortOrder('DeliveryStaff.NickName')" ng-click="sort('DeliveryStaff.NickName')">Delivery Staff</a></th>
-                <th><a ng-class="getSortOrder('DeliveryDate')" ng-click="sort('DeliveryDate')">Delivery Date</a></th>
                 <!--<th class="address">
                     Address
                 </th>-->
@@ -135,7 +134,7 @@
                         </dd>
                     </dl>
                 </td>
-                <td>
+                <!--<td>
                     <dl>
                         <dd ng-show="!record.isEditing">{{record.DeliveryDate | shortDate}}</dd>
                         <dd ng-show="record.isEditing">
@@ -143,7 +142,7 @@
                             <input ng-model="record.DeliveryDate" date-input />
                         </dd>
                     </dl>
-                </td>
+                </td>-->
                 <!--<td class="address">
                     <dl>
                         <dd ng-show="!record.isEditing">{{record.AddressString}}</dd>
