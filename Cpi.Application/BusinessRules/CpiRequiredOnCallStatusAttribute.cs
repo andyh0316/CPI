@@ -18,7 +18,7 @@ namespace Cpi.Compass.Application.BusinessRules
 
             CallDm model = (CallDm)validationContext.ObjectInstance;
 
-            if (model.StatusId.HasValue && (model.StatusId == LookUpCallStatusDm.ID_COMPLETED || model.StatusId == LookUpCallStatusDm.ID_DELIVERING))
+            if (model.StatusId.HasValue && (model.StatusId == LookUpCallStatusDm.ID_COMPLETED))
             {
                 if (value == null)
                 {
