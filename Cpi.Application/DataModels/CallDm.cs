@@ -20,13 +20,6 @@ namespace Cpi.Application.DataModels
         //[CpiRequiredOnCallStatus]
         public virtual List<CallCommodityDm> CallCommodities { get; set; }
 
-        //[CpiRequiredOnCallStatus]
-        public int? OperatorId { get; set; }
-        public virtual UserDm Operator { get; set; }
-
-        public int? DeliveryStaffId { get; set; }
-        public virtual UserDm DeliveryStaff { get; set; }
-
         [CpiMaxLength(300)]
         public string AddressString { get; set; }
 
@@ -42,8 +35,6 @@ namespace Cpi.Application.DataModels
             ToTable("Call");
 
             HasMany(a => a.CallCommodities).WithRequired(a => a.Call).HasForeignKey(a => a.CallId).WillCascadeOnDelete(false);
-            HasOptional(a => a.Operator).WithMany().HasForeignKey(a => a.OperatorId).WillCascadeOnDelete(false);
-            HasOptional(a => a.DeliveryStaff).WithMany().HasForeignKey(a => a.DeliveryStaffId).WillCascadeOnDelete(false);
             HasOptional(a => a.Status).WithMany().HasForeignKey(a => a.StatusId).WillCascadeOnDelete(false);
         }
     }

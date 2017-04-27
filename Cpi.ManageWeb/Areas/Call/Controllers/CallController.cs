@@ -42,7 +42,7 @@ namespace Cpi.ManageWeb.Areas.Call.Controllers
         [HttpPost]
         public ContentResult GetList(ListFilter.Call filter)
         {
-            IQueryable<CallDm> query = CallBo.GetListBaseQuery(filter).Include(a => a.DeliveryStaff).Include(a => a.Operator).Include(a => a.Status).Include(a => a.CallCommodities.Select(b => b.Commodity));
+            IQueryable<CallDm> query = CallBo.GetListBaseQuery(filter).Include(a => a.Status).Include(a => a.CallCommodities.Select(b => b.Commodity));
             ListLoadCalculator listLoadCalculator = new ListLoadCalculator(filter.Loads, query.Count());
             List<CallDm> records = GetLoadedSortedQuery(query, listLoadCalculator.Skip, listLoadCalculator.Take, filter.SortColumn, filter.SortDesc).ToList();
             return JsonModel(new { Records = records, ListLoadCalculator = listLoadCalculator });
@@ -132,6 +132,7 @@ namespace Cpi.ManageWeb.Areas.Call.Controllers
                 {
                     SetCreated(trackedCall);
 
+                    // once theres commodities enterable from the website to here: we will need to check if thers already commodity, if so add new commodities to existing
                     if (!CallBo.CallWithPhoneExistsToday(trackedCall.CustomerPhone))
                     {
                         CallBo.Add(trackedCall);

@@ -66,9 +66,6 @@
                 <th>Phone</th>
                 <th>Name</th>
                 <th ng-class="{commodities: isEditingAny()}">Product</th>
-                <th><a ng-class="getSortOrder('Operator.NickName')" ng-click="sort('Operator.NickName')">Operator</a></th>
-                <th><a ng-class="getSortOrder('DeliveryStaff.NickName')" ng-click="sort('DeliveryStaff.NickName')">Deliverer</a></th>
-                <th class="right-content"><a ng-class="getSortOrder('TotalPrice')" ng-click="sort('TotalPrice')">Cost</a></th>
                 <th class="center-content"><a ng-class="getSortOrder('Status.Name')" ng-click="sort('Status.Name')">Status</a></th>
                 <th class="action"></th>
             </tr>
@@ -103,36 +100,10 @@
                         <dd ng-show="!record.isEditing">
                             {{record.CallCommodities | objectCommodities}}
                         </dd>
-                        <dd ng-show="record.isEditing" class="overflow-visible">
+                        <!--<dd ng-show="record.isEditing" class="overflow-visible">
                             <span field-validation-error ng-show="modelState['[' + getEditingRecordIndex(record) + '].CallCommodities']" class="field-validation-error"></span>
                             <div commodities-edit ng-model="record.CallCommodities" commodities="modelData.Commodities"></div>
-                        </dd>
-                    </dl>
-                </td>
-                <td>
-                    <dl>
-                        <dd ng-show="!record.isEditing">{{record.Operator.Nickname}} <span ng-show="record.Operator.Nickname">({{record.Operator.Fullname}})</span></dd>
-                        <dd ng-if="record.isEditing" class="overflow-visible">
-                            <span field-validation-error ng-show="modelState['[' + getEditingRecordIndex(record) + '].OperatorId']" class="field-validation-error"></span>
-                            <div search-drop-down class="search-drop-down"
-                                    search-object="modelData.Users"
-                                    input-string="{{record.Operator.Nickname}}"
-                                    input-key="record.OperatorId">
-                            </div>
-                        </dd>
-                    </dl>
-                </td>
-                <td>
-                    <dl>
-                        <dd ng-show="!record.isEditing">{{record.DeliveryStaff.Nickname}} <span ng-show="record.DeliveryStaff.Nickname">({{record.DeliveryStaff.Fullname}})</span></dd>
-                        <dd ng-if="record.isEditing" class="overflow-visible">
-                            <span field-validation-error ng-show="modelState['[' + getEditingRecordIndex(record) + '].DeliveryStaffId']" class="field-validation-error"></span>
-                            <div search-drop-down class="search-drop-down"
-                                    search-object="modelData.Users"
-                                    input-string="{{record.DeliveryStaff.Nickname}}"
-                                    input-key="record.DeliveryStaffId">
-                            </div>
-                        </dd>
+                        </dd>-->
                     </dl>
                 </td>
                 <!--<td>
@@ -152,13 +123,6 @@
                         </dd>
                     </dl>
                 </td>-->
-                <td class="right-content">
-                    <dl>
-                        <dd ng-show="!record.isEditing">
-                            <span ng-show="record.TotalPrice">${{record.TotalPrice | number: 2}}</span>
-                        </dd>
-                    </dl>
-                </td>
                 <td class="center-content">
                     <dl>
                         <dd ng-show="!record.isEditing">
