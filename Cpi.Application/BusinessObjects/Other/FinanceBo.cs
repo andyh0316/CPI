@@ -18,7 +18,7 @@ namespace Cpi.Application.BusinessObjects.Other
             IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetListQuery();
 
             DateTime dateFrom = DateTime.Now.Date;
-            invoiceQuery = invoiceQuery.Where(a => a.CreatedDate >= dateFrom);
+            invoiceQuery = invoiceQuery.Where(a => a.CreatedDate >= dateFrom && a.StatusId == (int)LookUpInvoiceStatusDm.LookUpIds.Sold);
 
             decimal revenue = invoiceQuery.Select(a => a.TotalPrice.Value).DefaultIfEmpty(0).Sum();
 
@@ -30,7 +30,7 @@ namespace Cpi.Application.BusinessObjects.Other
             IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetListQuery();
 
             DateTime dateFrom = DateTime.Now.AddMonths(-1).Date;
-            invoiceQuery = invoiceQuery.Where(a => a.CreatedDate >= dateFrom);
+            invoiceQuery = invoiceQuery.Where(a => a.CreatedDate >= dateFrom && a.StatusId == (int)LookUpInvoiceStatusDm.LookUpIds.Sold);
 
             decimal revenue = invoiceQuery.Select(a => a.TotalPrice.Value).DefaultIfEmpty(0).Sum();
 
