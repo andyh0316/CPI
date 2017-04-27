@@ -9,11 +9,11 @@ namespace Cpi.ManageWeb.Areas.Finance.Controllers
     [CpiAuthenticate]
     public class FinanceController : BaseController
     {
-        private CallBo CallBo;
+        private InvoiceBo InvoiceBo;
         private FinanceBo FinanceBo;
-        public FinanceController(CallBo CallBo, FinanceBo FinanceBo)
+        public FinanceController(InvoiceBo InvoiceBo, FinanceBo FinanceBo)
         {
-            this.CallBo = CallBo;
+            this.InvoiceBo = InvoiceBo;
             this.FinanceBo = FinanceBo;
         }
 

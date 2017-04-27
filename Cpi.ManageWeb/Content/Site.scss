@@ -785,21 +785,20 @@ textarea {
         content: "cancel";
     }
 
-    &.call-completed:before {
+    &.invoice-sold:before {
         content: "check";
         color: #4ab515;
         font-weight: bolder;
     }
 
-    &.call-delivering:before {
-        content: "send";
-        color: #eabc63;
-        //font-size: 20px;
-    }
-
-    &.call-cancelled:before {
+    &.invoice-cancelled:before {
         content: "close";
         opacity: 0.5;
+    }
+
+    &.call-sent-to-call-center:before {
+        content: "record_voice_over";
+        color: #4ab515;
     }
 }
 

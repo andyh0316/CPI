@@ -581,18 +581,18 @@ textarea {
 .icon.cancel:before {
   content: "cancel"; }
 
-.icon.call-completed:before {
+.icon.invoice-sold:before {
   content: "check";
   color: #4ab515;
   font-weight: bolder; }
 
-.icon.call-delivering:before {
-  content: "send";
-  color: #eabc63; }
-
-.icon.call-cancelled:before {
+.icon.invoice-cancelled:before {
   content: "close";
   opacity: 0.5; }
+
+.icon.call-sent-to-call-center:before {
+  content: "record_voice_over";
+  color: #4ab515; }
 
 .search-drop-down {
   position: relative;

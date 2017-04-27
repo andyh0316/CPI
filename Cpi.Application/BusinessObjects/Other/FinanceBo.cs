@@ -7,50 +7,50 @@ namespace Cpi.Application.BusinessObjects.Other
 {
     public class FinanceBo
     {
-        private CallBo CallBo;
-        public FinanceBo(CallBo CallBo)
+        private InvoiceBo InvoiceBo;
+        public FinanceBo(InvoiceBo InvoiceBo)
         {
-            this.CallBo = CallBo;
+            this.InvoiceBo = InvoiceBo;
         }
 
         public decimal GetRevenueForToday()
         {
-            IQueryable<CallDm> callQuery = CallBo.GetListQuery();
+            IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetListQuery();
 
             DateTime dateFrom = DateTime.Now.Date;
-            callQuery = callQuery.Where(a => a.CompletionDate >= dateFrom);
+            invoiceQuery = invoiceQuery.Where(a => a.CreatedDate >= dateFrom);
 
-            decimal revenue = callQuery.Select(a => a.TotalPrice.Value).DefaultIfEmpty(0).Sum();
+            decimal revenue = invoiceQuery.Select(a => a.TotalPrice.Value).DefaultIfEmpty(0).Sum();
 
             return revenue;
         }
 
         public decimal GetRevenueForThisMonth()
         {
-            IQueryable<CallDm> callQuery = CallBo.GetListQuery();
+            IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetListQuery();
 
             DateTime dateFrom = DateTime.Now.AddMonths(-1).Date;
-            callQuery = callQuery.Where(a => a.CompletionDate >= dateFrom);
+            invoiceQuery = invoiceQuery.Where(a => a.CreatedDate >= dateFrom);
 
-            decimal revenue = callQuery.Select(a => a.TotalPrice.Value).DefaultIfEmpty(0).Sum();
+            decimal revenue = invoiceQuery.Select(a => a.TotalPrice.Value).DefaultIfEmpty(0).Sum();
 
             return revenue;
         }
 
-        //public decimal GetCompletedCallCount()
+        //public decimal GetCompletedInvoiceCount()
         //{
-        //    IQueryable<CallDm> callQuery = CallBo.GetListQuery();
+        //    IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetListQuery();
 
-        //    callQuery = callQuery.Where(a => a.StatusId == LookUpCallStatusDm.ID_COMPLETED);
+        //    invoiceQuery = invoiceQuery.Where(a => a.StatusId == LookUpInvoiceStatusDm.ID_COMPLETED);
 
-        //    return callQuery.Count();
+        //    return invoiceQuery.Count();
         //}
 
-        //public decimal GetTotalCallCount()
+        //public decimal GetTotalInvoiceCount()
         //{
-        //    IQueryable<CallDm> callQuery = CallBo.GetListQuery();
+        //    IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetListQuery();
 
-        //    return callQuery.Count();
+        //    return invoiceQuery.Count();
         //}
     }
 }

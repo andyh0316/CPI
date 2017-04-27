@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+
 namespace Cpi.Application.Filters
 {
     public class ListFilter
@@ -23,10 +22,19 @@ namespace Cpi.Application.Filters
                 public DateTime? CreatedDateFrom { get; set; }
                 public DateTime? CreatedDateTo { get; set; }
                 public bool CreatedTodayOnly { get; set; }
+            }
+        }
 
-                public DateTime? CompletedDateFrom { get; set; }
-                public DateTime? CompletedDateTo { get; set; }
-                public bool CompletedTodayOnly { get; set; }
+        public class Invoice : BaseListFilter
+        {
+            public AdvancedSearchClass AdvancedSearch { get; set; }
+            public class AdvancedSearchClass
+            {
+                public int? StatusId { get; set; }
+
+                public DateTime? CreatedDateFrom { get; set; }
+                public DateTime? CreatedDateTo { get; set; }
+                public bool CreatedTodayOnly { get; set; }
             }
         }
 

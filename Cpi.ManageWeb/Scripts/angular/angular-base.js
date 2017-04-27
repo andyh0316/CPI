@@ -590,26 +590,26 @@ baseModule.filter('range', function () {
     };
 });
 
-baseModule.filter('callCommodities', function () {
-    return function (callCommodities) {
-        if (!callCommodities)
+baseModule.filter('objectCommodities', function () {
+    return function (objectCommodities) {
+        if (!objectCommodities)
         {
             return null;
         }
 
         var returnString = '';
 
-        for (var i = 0; i < callCommodities.length; i++)
+        for (var i = 0; i < objectCommodities.length; i++)
         {
-            if (callCommodities[i].Id > 0)
+            if (objectCommodities[i].Id > 0)
             {
-                returnString = returnString + callCommodities[i].Commodity.Name;
-                if (callCommodities[i].Quantity > 1)
+                returnString = returnString + objectCommodities[i].Commodity.Name;
+                if (objectCommodities[i].Quantity > 1)
                 {
-                    returnString = returnString + ' ' + '(' + callCommodities[i].Quantity + ')'
+                    returnString = returnString + ' ' + '(' + objectCommodities[i].Quantity + ')'
                 }
 
-                if (callCommodities.length > 1 && i !== callCommodities.length - 1)
+                if (objectCommodities.length > 1 && i !== objectCommodities.length - 1)
                 {
                     returnString = returnString + ', ';
                 }
@@ -1233,11 +1233,11 @@ baseModule.directive('commoditiesEdit', function () {
                 }
 
                 // else create the object in ngModel
-                var newCallCommodity = {
+                var newObjectCommodity = {
                     CommodityId: item.Id,
                     Quantity: 1
                 }
-                $scope.ngModel.push(newCallCommodity);
+                $scope.ngModel.push(newObjectCommodity);
             };
 
             $scope.subtractQuantity = function (item) {

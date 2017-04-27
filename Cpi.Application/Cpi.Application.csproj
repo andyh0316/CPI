@@ -56,12 +56,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessObjects\Base\BaseBo.cs" />
+    <Compile Include="BusinessObjects\InvoiceCommodityBo.cs" />
+    <Compile Include="BusinessObjects\InvoiceBo.cs" />
     <Compile Include="BusinessObjects\CallBo.cs" />
     <Compile Include="BusinessObjects\CallCommodityBo.cs" />
     <Compile Include="BusinessObjects\LookUp\LookUpBo.cs" />
     <Compile Include="BusinessObjects\Other\FinanceBo.cs" />
     <Compile Include="BusinessObjects\UserBo.cs" />
-    <Compile Include="BusinessRules\CpiRequiredOnCallStatusAttribute.cs" />
+    <Compile Include="BusinessRules\CpiRequiredOnInvoiceStatusAttribute.cs" />
     <Compile Include="BusinessRules\CpiMaxLengthAttribute.cs" />
     <Compile Include="BusinessRules\CpiMinLengthAttribute.cs" />
     <Compile Include="BusinessRules\CpiRequiredAttribute.cs" />
@@ -70,8 +72,11 @@
     <Compile Include="DataModels\Base\BaseDm.cs" />
     <Compile Include="DataModels\Base\LookUpBaseDm.cs" />
     <Compile Include="DataModels\CallCommodityDm.cs" />
+    <Compile Include="DataModels\InvoiceCommodityDm.cs" />
+    <Compile Include="DataModels\InvoiceDm.cs" />
     <Compile Include="DataModels\LookUp\LookUpCallStatusDm.cs" />
     <Compile Include="DataModels\LookUp\LookUpCommodityDm.cs" />
+    <Compile Include="DataModels\LookUp\LookUpInvoiceStatusDm.cs" />
     <Compile Include="DataModels\LookUp\LookUpUserOccupationDm.cs" />
     <Compile Include="DataModels\LookUp\LookUpUserRoleDm.cs" />
     <Compile Include="DataModels\UserDm.cs" />
@@ -80,6 +85,7 @@
     <Compile Include="Filters\FinanceFilter.cs" />
     <Compile Include="Filters\ListFilter.cs" />
     <Compile Include="Helpers\ConstHelper.cs" />
+    <Compile Include="Helpers\EnumHelper.cs" />
     <Compile Include="Helpers\PasswordHelper.cs" />
     <Compile Include="Helpers\UserHelper.cs" />
     <Compile Include="Models\CpiSelectListItem.cs" />

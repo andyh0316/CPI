@@ -6,17 +6,15 @@ using System;
 
 namespace Cpi.Application.BusinessObjects
 {
-    public class CallBo : BaseBo<CallDm>
+    public class InvoiceBo : BaseBo<InvoiceDm>
     {
-        public IQueryable<CallDm> GetListBaseQuery(ListFilter.Call filter)
+        public IQueryable<InvoiceDm> GetListBaseQuery(ListFilter.Invoice filter)
         {
-            //IQueryable<CallDm> query = GetListQuery().Include(a => a.Address).Include(a => a.Operator.UserOccupation).Include(a => a.Operator.UserRole).Include(a => a.DeliveryStaff.UserOccupation).Include(a => a.DeliveryStaff.UserRole).Include(a => a.Status).Include(a => a.Commodities);
-            IQueryable<CallDm> query = GetListQuery();
+            IQueryable<InvoiceDm> query = GetListQuery();
 
             if (!string.IsNullOrEmpty(filter.SearchString))
             {
-                query = query.Where(a => a.CustomerName.StartsWith(filter.SearchString) ||
-                                         a.CustomerPhone.StartsWith(filter.SearchString) ||
+                query = query.Where(a => a.CustomerPhone.StartsWith(filter.SearchString) ||
                                          a.Operator.Nickname.StartsWith(filter.SearchString) ||
                                          a.DeliveryStaff.Nickname.StartsWith(filter.SearchString));
             }
@@ -49,12 +47,6 @@ namespace Cpi.Application.BusinessObjects
             }
 
             return query;
-        }
-
-        public bool CallWithPhoneExistsToday(string phoneNumber)
-        {
-            DateTime today = DateTime.Now.Date;
-            return GetListQuery().Any(a => a.CustomerPhone == phoneNumber && a.CreatedDate >= today);
         }
     }
 }

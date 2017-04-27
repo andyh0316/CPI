@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Cpi.Compass.Application.BusinessRules
 {
-    public class CpiRequiredOnCallStatusAttribute : ValidationAttribute
+    public class CpiRequiredOnInvoiceStatusAttribute : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
@@ -16,9 +16,9 @@ namespace Cpi.Compass.Application.BusinessRules
                 return ValidationResult.Success;
             }
 
-            CallDm model = (CallDm)validationContext.ObjectInstance;
+            InvoiceDm model = (InvoiceDm)validationContext.ObjectInstance;
 
-            if (model.StatusId.HasValue && (model.StatusId == LookUpCallStatusDm.ID_COMPLETED))
+            if (model.StatusId.HasValue && (model.StatusId == (int)LookUpInvoiceStatusDm.LookUpIds.Sold))
             {
                 if (value == null)
                 {

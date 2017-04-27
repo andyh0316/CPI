@@ -15,6 +15,7 @@ using Cpi.Application.DataModels.LookUp;
 using System.IO;
 using System.Data;
 using Cpi.Application.Models;
+using Cpi.Application.Helpers;
 
 namespace Cpi.ManageWeb.Areas.Call.Controllers
 {
@@ -58,7 +59,8 @@ namespace Cpi.ManageWeb.Areas.Call.Controllers
                 {
                     Id = a.Id,
                     Name = a.Nickname + " (" + a.Fullname + ")"
-                }).ToList()
+                }).ToList(),
+                LookUpCallStatusIds = EnumHelper.GetEnumIntList(typeof(LookUpCallStatusDm.LookUpIds))
             };
 
             return JsonModel(model);
@@ -112,28 +114,15 @@ namespace Cpi.ManageWeb.Areas.Call.Controllers
                 }
 
                 // calculate the total price
-                if (trackedCall.CallCommodities != null && trackedCall.CallCommodities.Count > 0)
-                {
-                    trackedCall.TotalPrice = 0;
-                    foreach (CallCommodityDm callCommodity in trackedCall.CallCommodities)
-                    {
-                        decimal? commodityPrice = allCommodities.Find(a => a.Id == callCommodity.CommodityId).Price;
-                        trackedCall.TotalPrice = trackedCall.TotalPrice + (commodityPrice * callCommodity.Quantity);
-                    }
-                }
-
-                // if status is set to completed: set the completion date
-                if (trackedCall.StatusId == LookUpCallStatusDm.ID_COMPLETED)
-                {
-                    if (!trackedCall.CompletionDate.HasValue)
-                    {
-                        trackedCall.CompletionDate = DateTime.Now;
-                    }
-                }
-                else
-                {
-                    trackedCall.CompletionDate = null;
-                }
+                //if (trackedCall.CallCommodities != null && trackedCall.CallCommodities.Count > 0)
+                //{
+                //    trackedCall.TotalPrice = 0;
+                //    foreach (CallCommodityDm callCommodity in trackedCall.CallCommodities)
+                //    {
+                //        decimal? commodityPrice = allCommodities.Find(a => a.Id == callCommodity.CommodityId).Price;
+                //        trackedCall.TotalPrice = trackedCall.TotalPrice + (commodityPrice * callCommodity.Quantity);
+                //    }
+                //}
 
                 if (trackedCall.Id > 0)
                 {

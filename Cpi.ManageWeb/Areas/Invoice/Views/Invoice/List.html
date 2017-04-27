@@ -1,6 +1,6 @@
 ﻿<div ng-show="state.current.name == 'List'" class="secondary-menu">
     <div class="title-container">
-        <div class="title">Calls</div>
+        <div class="title">Invoices</div>
         <div class="list-total">{{model.ListLoadCalculator.Total}}</div>
     </div>
 
@@ -15,7 +15,7 @@
                 <dl class="dl-S">
                     <dt>Status</dt>
                     <dd>
-                        <select ng-model="scopeData.filter.AdvancedSearch.StatusId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.CallStatuses">
+                        <select ng-model="scopeData.filter.AdvancedSearch.StatusId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.InvoiceStatuses">
                             <option></option>
                         </select>
                     </dd>
@@ -53,7 +53,6 @@
     <div class="buttons">
         <button ng-show="isEditingAny()" class="button" ng-click="cancelAll()">Cancel</button>
         <button ng-show="isEditingAny()" class="button main" ng-click="save()">Save</button>
-        <button ng-show="!isEditingAny()" class="button main" ng-click="import()">Import</button>
         <button class="button main" ng-click="create()">+ Create</button>
     </div>
 </div>
@@ -64,7 +63,6 @@
             <tr>
                 <th class="date-time"><a ng-class="getSortOrder('CreatedDate')" ng-click="sort('CreatedDate')">Created</a></th>
                 <th>Phone</th>
-                <th>Name</th>
                 <th ng-class="{commodities: isEditingAny()}">Product</th>
                 <th><a ng-class="getSortOrder('Operator.NickName')" ng-click="sort('Operator.NickName')">Operator</a></th>
                 <th><a ng-class="getSortOrder('DeliveryStaff.NickName')" ng-click="sort('DeliveryStaff.NickName')">Deliverer</a></th>
@@ -89,23 +87,14 @@
                         </dd>                           
                     </dl>
                 </td>
-                <td>
-                    <dl>
-                        <dd ng-show="!record.isEditing">{{record.CustomerName}}</dd>
-                        <dd ng-show="record.isEditing">
-                            <span field-validation-error ng-show="modelState['[' + getEditingRecordIndex(record) + '].CustomerName']" class="field-validation-error"></span>
-                            <input ng-model="record.CustomerName" />
-                        </dd>
-                    </dl>
-                </td>
                 <td ng-class="{commodities: isEditingAny()}">
                     <dl>
                         <dd ng-show="!record.isEditing">
-                            {{record.CallCommodities | objectCommodities}}
+                            {{record.InvoiceCommodities | objectCommodities}}
                         </dd>
                         <dd ng-show="record.isEditing" class="overflow-visible">
-                            <span field-validation-error ng-show="modelState['[' + getEditingRecordIndex(record) + '].CallCommodities']" class="field-validation-error"></span>
-                            <div commodities-edit ng-model="record.CallCommodities" commodities="modelData.Commodities"></div>
+                            <span field-validation-error ng-show="modelState['[' + getEditingRecordIndex(record) + '].InvoiceCommodities']" class="field-validation-error"></span>
+                            <div commodities-edit ng-model="record.InvoiceCommodities" commodities="modelData.Commodities"></div>
                         </dd>
                     </dl>
                 </td>
@@ -162,10 +151,11 @@
                 <td class="center-content">
                     <dl>
                         <dd ng-show="!record.isEditing">
-                            <span ng-show="record.StatusId === modelData.LookUpCallStatusIds.SentToCallCenter" class="call-sent-to-call-center icon" title="Sent: Customer phone numbers are sent to the call center."></span>
+                            <span ng-show="record.StatusId === modelData.LookUpInvoiceStatusIds.Sold" class="invoice-sold icon" title="Sold: Product(s) delivered to and paid by customer."></span>
+                            <span ng-show="record.StatusId === modelData.LookUpInvoiceStatusIds.Cancelled" class="invoice-cancelled icon" title="Cancelled: Product(s) not delivered to the customer."></span>
                         </dd>
                         <dd ng-show="record.isEditing">
-                            <select ng-model="record.StatusId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.CallStatuses">
+                            <select ng-model="record.StatusId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.InvoiceStatuses">
                                 <option></option>
                             </select>
                         </dd>
