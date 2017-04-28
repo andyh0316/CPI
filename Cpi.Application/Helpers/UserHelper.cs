@@ -34,5 +34,10 @@ namespace Cpi.Application.Helpers
         {
             return Convert.ToInt32(HttpContext.Current.User.Identity.Name);
         }
+
+        public static int GetRoleId()
+        {
+            return (int)HttpContext.Current.Session[ROLE_ID];
+        }
     }
 }

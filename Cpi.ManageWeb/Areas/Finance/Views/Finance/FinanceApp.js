@@ -17,6 +17,9 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
                 model: ['$stateParams', 'baseBo', function ($stateParams, baseBo) {
                     return baseBo.httpRequest(financeScopeData.httpRequest.method, financeScopeData.httpRequest.url, financeScopeData.filter);
                 }],
+                modelData: ['$stateParams', 'baseBo', function ($stateParams, baseBo) {
+                    return baseBo.httpRequest('GET', '/Finance/Finance/GetFinanceData');
+                }],
                 scopeData: function () {
                     return financeScopeData;
                 }
@@ -24,10 +27,25 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
         })
 }]);
 
-app.controller('FinanceController', ['$scope', '$controller', '$state', 'baseBo', 'model', 'scopeData', function ($scope, $controller, $state, baseBo, model, scopeData) {
+app.controller('FinanceController', ['$scope', '$controller', '$state', 'baseBo', 'model', 'scopeData', 'modelData', function ($scope, $controller, $state, baseBo, model, scopeData, modelData) {
     angular.extend(this, $controller('BaseController', { $scope: $scope }));
     
     $scope.scopeData = scopeData;
-    //$scope.modelData = modelData.Object;
+    $scope.modelData = modelData.Object;
     $scope.model = model.Object;
+
+    $scope.filters = {};
+
+    $scope.$watch('filters', function () {
+        baseBo.httpRequest('POST', '/Call/Call/SaveList', savingRecords)
+            .then(function (result) {
+                if (result.ModelState) {
+                    $scope.modelState = result.ModelState;
+                }
+                else {
+                    $scope.cancelAll();
+                    $scope.getList();
+                }
+            });
+    });
 }]);

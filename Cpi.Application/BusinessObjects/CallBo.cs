@@ -40,9 +40,8 @@ namespace Cpi.Application.BusinessObjects
 
                 if (filter.AdvancedSearch.CreatedDateTo.HasValue)
                 {
-                    // add one day minus one second to cover towards the end of day since CreatedDate contains time
-                    DateTime dateTo = filter.AdvancedSearch.CreatedDateTo.Value.AddDays(1).AddSeconds(-1);
-                    query = query.Where(a => a.CreatedDate <= dateTo);
+                    DateTime dateTo = filter.AdvancedSearch.CreatedDateTo.Value.AddDays(1);
+                    query = query.Where(a => a.CreatedDate < dateTo);
                 }
             }
 

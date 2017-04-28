@@ -1,21 +1,29 @@
-﻿@{
+﻿@using Cpi.Application.Helpers
+@using Cpi.Application.DataModels.LookUp
+
+@{
     var currentArea = (ViewContext.RouteData.DataTokens["area"] != null) ? ViewContext.RouteData.DataTokens["area"].ToString() : null;
     var currentController = (ViewContext.RouteData.Values["controller"] != null) ? ViewContext.RouteData.Values["controller"].ToString() : null;
+    var roleId = UserHelper.GetRoleId();
 }
 
 <div id="main-menu">
     <div class="menu-body">
         <a href="/Call/Call/" class="menu-item @(currentArea == "Call" ? "selected" : "")">
             <i class="material-icons">call</i>
-            <span class="text">Calls</span>
+            <span class="text">Calls 外来电话</span>
         </a>
-        <a href="/Invoice/Invoice/" class="menu-item @(currentArea == "Invoice" ? "selected" : "")">
+        <a href="/Invoice/Invoice/" class="menu-item @(currentArea == "Invoice" ? "selected" : "") @(roleId != (int)LookUpUserRoleDm.LookUpIds.Admin ? "not-authorized" : "")">
             <i class="material-icons">storage</i>
-            <span class="text">Invoices</span>
+            <span class="text">Invoices 订单</span>
         </a>
-        <a href="/Finance/Finance/" class="menu-item @(currentArea == "Finance" ? "selected" : "")">
+        <a href="/Finance/Finance/" class="menu-item @(currentArea == "Finance" ? "selected" : "") @(roleId != (int)LookUpUserRoleDm.LookUpIds.Admin ? "not-authorized" : "")">
             <i class="material-icons">monetization_on</i>
-            <span class="text">Finance</span>
+            <span class="text">Finance 财务</span>
+        </a>
+        <a href="/Performance/Performance/" class="menu-item @(currentArea == "Performance" ? "selected" : "") @(roleId != (int)LookUpUserRoleDm.LookUpIds.Admin ? "not-authorized" : "")">
+            <i class="material-icons">local_library</i>
+            <span class="text">Performance 员工评估</span>
         </a>
     </div>
 </div>

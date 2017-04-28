@@ -60,7 +60,7 @@ namespace Cpi.ManageWeb.Areas.Call.Controllers
                     Id = a.Id,
                     Name = a.Nickname + " (" + a.Fullname + ")"
                 }).ToList(),
-                LookUpCallStatusIds = EnumHelper.GetEnumIntList(typeof(LookUpCallStatusDm.LookUpIds))
+                CallStatusIdEnums = EnumHelper.GetEnumIntList(typeof(LookUpCallStatusDm.LookUpIds))
             };
 
             return JsonModel(model);
@@ -86,8 +86,6 @@ namespace Cpi.ManageWeb.Areas.Call.Controllers
                 call.CallCommodities = (call.CallCommodities) ?? new List<CallCommodityDm>();
                 trackedCall.CallCommodities = (trackedCall.CallCommodities) ?? new List<CallCommodityDm>();
 
-                //CallCommodityBo.RemoveRange(trackedCall.CallCommodities.Where(a => !call.CallCommodities.Select(b => b.Id).Contains(a.Id)).ToList()); // first delete all the call commodities that are not in the view model
-
                 // save each callCommodity
                 foreach (CallCommodityDm callCommodity in call.CallCommodities)
                 {
@@ -112,17 +110,6 @@ namespace Cpi.ManageWeb.Areas.Call.Controllers
                         trackedCall.CallCommodities.Add(trackedCallCommodity);
                     }
                 }
-
-                // calculate the total price
-                //if (trackedCall.CallCommodities != null && trackedCall.CallCommodities.Count > 0)
-                //{
-                //    trackedCall.TotalPrice = 0;
-                //    foreach (CallCommodityDm callCommodity in trackedCall.CallCommodities)
-                //    {
-                //        decimal? commodityPrice = allCommodities.Find(a => a.Id == callCommodity.CommodityId).Price;
-                //        trackedCall.TotalPrice = trackedCall.TotalPrice + (commodityPrice * callCommodity.Quantity);
-                //    }
-                //}
 
                 if (trackedCall.Id > 0)
                 {

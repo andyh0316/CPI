@@ -88,7 +88,7 @@ body {
     font-size: 13px;
 }
 
-$main-menu-width: 120px;
+$main-menu-width: 200px;
 #main-menu {
     position: fixed;
     background-color: $main-color;
@@ -135,6 +135,15 @@ $main-menu-width: 120px;
 
             &.selected {
                 @include opacity(1);
+            }
+
+            &.not-authorized {
+                //pointer-events: none;
+
+                .text,
+                .material-icons {
+                    opacity: 0.4;
+                }
             }
         }
     }
@@ -208,6 +217,11 @@ $secondary-menu-height: 40px;
             background-color: white;
             border: 1px solid #d0d0d0;
         }
+
+        input,
+        select {
+            height: 28px !important;
+        }
     }
 
     .buttons {
@@ -221,6 +235,7 @@ $secondary-menu-height: 40px;
 
 [ui-view] {
     position: fixed;
+    //display: flex;
     min-width: calc((#{$app-min-width}) - (#{$main-menu-width}));
     top: 0;
     left: 0;
@@ -230,10 +245,6 @@ $secondary-menu-height: 40px;
     margin-left: $main-menu-width;
     background-color: white;
     @extend %border-box;
-
-    &.padded {
-        padding: 20px 30px;
-    }
 
     [ui-view] { // only children ui-view will get animated
         @include transition(all 400ms linear);
@@ -261,12 +272,20 @@ $secondary-menu-height: 40px;
     }
 }
 
+.container {
+    position: relative;
+    padding: 20px 30px;
+    height: 100%;
+    overflow: auto;
+    @extend %border-box;
+}
+
 /**** LIST AND TABLE ****/
 .list-container {
     display: flex;
     flex-flow: column;
-    height: 100%;
     margin-bottom: 20px;
+    height: 100%;
 
     @extend %border-box;
 
@@ -274,8 +293,8 @@ $secondary-menu-height: 40px;
         display: flex;
         flex-flow: column;
         align-items: stretch;
-        height: 100%;
         border-collapse: collapse;
+        height: 100%;
 
         thead {
             width: calc((100%) - (18px)) !important; //offset scrollbar
@@ -666,7 +685,6 @@ section {
 
 input.search-box {
     width: 200px;
-    height: 28px !important;
     padding-left: 30px !important;
     padding-right: 0;
     margin-right: 1px !important;
@@ -987,6 +1005,7 @@ textarea {
 
     [ui-view] {
         //position: relative;
+        display: block;
         margin-left: 0px;
         width: 100%;
         background-color: none;
@@ -1357,6 +1376,28 @@ textarea {
                 margin-top: 30px;
                 font-size: 30px;
             }
+        }
+    }
+}
+
+.title {
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+#performance {
+    .chart {
+        position: relative;
+        margin-bottom: 50px;
+        //height: 300px;
+        //max-height: 300px;
+        .title {
+            margin-bottom: 20px;
+        }
+
+        .chart-wrapper {
+            //height: 300px;
+            //height: 300px;
         }
     }
 }

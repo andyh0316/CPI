@@ -61,12 +61,12 @@
     <table>
         <thead>
             <tr>
-                <th class="date-time"><a ng-class="getSortOrder('CreatedDate')" ng-click="sort('CreatedDate')">Created</a></th>
-                <th>Phone</th>
-                <th ng-class="{commodities: isEditingAny()}">Product</th>
-                <th><a ng-class="getSortOrder('Operator.NickName')" ng-click="sort('Operator.NickName')">Operator</a></th>
-                <th><a ng-class="getSortOrder('DeliveryStaff.NickName')" ng-click="sort('DeliveryStaff.NickName')">Deliverer</a></th>
-                <th class="right-content"><a ng-class="getSortOrder('TotalPrice')" ng-click="sort('TotalPrice')">Cost</a></th>
+                <th class="date-time"><a ng-class="getSortOrder('CreatedDate')" ng-click="sort('CreatedDate')">Created 生成日期</a></th>
+                <th>Phone 顾客电话</th>
+                <th ng-class="{commodities: isEditingAny()}">Product 产品</th>
+                <th><a ng-class="getSortOrder('Operator.NickName')" ng-click="sort('Operator.NickName')">Operator 电话推销员</a></th>
+                <th><a ng-class="getSortOrder('DeliveryStaff.NickName')" ng-click="sort('DeliveryStaff.NickName')">Deliverer 递送员</a></th>
+                <th class="right-content"><a ng-class="getSortOrder('TotalPrice')" ng-click="sort('TotalPrice')">Cost 总价格</a></th>
                 <th class="center-content"><a ng-class="getSortOrder('Status.Name')" ng-click="sort('Status.Name')">Status</a></th>
                 <th class="action"></th>
             </tr>
@@ -151,8 +151,8 @@
                 <td class="center-content">
                     <dl>
                         <dd ng-show="!record.isEditing">
-                            <span ng-show="record.StatusId === modelData.LookUpInvoiceStatusIds.Sold" class="invoice-sold icon" title="Sold: Product(s) delivered to and paid by customer."></span>
-                            <span ng-show="record.StatusId === modelData.LookUpInvoiceStatusIds.Cancelled" class="invoice-cancelled icon" title="Cancelled: Product(s) not delivered to the customer."></span>
+                            <span ng-show="record.StatusId === modelData.InvoiceStatusIdEnums.Sold" class="invoice-sold icon" title="Sold: Product(s) delivered to and paid by customer. 以卖出"></span>
+                            <span ng-show="record.StatusId === modelData.InvoiceStatusIdEnums.Cancelled" class="invoice-cancelled icon" title="Cancelled: Product(s) not delivered to the customer. 取消"></span>
                         </dd>
                         <dd ng-show="record.isEditing">
                             <select ng-model="record.StatusId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.InvoiceStatuses">

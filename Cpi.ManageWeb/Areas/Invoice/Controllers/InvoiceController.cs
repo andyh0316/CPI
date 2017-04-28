@@ -17,7 +17,7 @@ using Cpi.Application.Helpers;
 
 namespace Cpi.ManageWeb.Areas.Invoice.Controllers
 {
-    [CpiAuthenticate]
+    [CpiAuthenticate((int)LookUpUserRoleDm.LookUpIds.Admin)]
     public class InvoiceController : BaseController
     {
         private InvoiceBo InvoiceBo;
@@ -58,7 +58,7 @@ namespace Cpi.ManageWeb.Areas.Invoice.Controllers
                     Id = a.Id,
                     Name = a.Nickname + " (" + a.Fullname + ")"
                 }).ToList(),
-                LookUpInvoiceStatusIds = EnumHelper.GetEnumIntList(typeof(LookUpInvoiceStatusDm.LookUpIds))
+                InvoiceStatusIdEnums = EnumHelper.GetEnumIntList(typeof(LookUpInvoiceStatusDm.LookUpIds))
             };
 
             return JsonModel(model);

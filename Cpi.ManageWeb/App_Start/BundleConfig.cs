@@ -40,6 +40,12 @@ namespace Cpi.ManageWeb
                     "~/Content/MaterialIcons/material-icons.css",
                     "~/Content/Fonts/fonts.css"));
 
+            string[] chartBundles = new string[] 
+            {
+                "~/Scripts/javascript/Chart.js",
+                "~/Scripts/angular/angular-chart.js",
+            };
+
             // angular apps
             bundles.Add(new ScriptBundle("~/bundles/public").Include(
                         "~/Views/Public/PublicApp.js"));
@@ -52,6 +58,10 @@ namespace Cpi.ManageWeb
 
             bundles.Add(new ScriptBundle("~/bundles/finance/finance").Include(
                         "~/Areas/Finance/Views/Finance/FinanceApp.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/performance/performance")
+                .Include("~/Areas/Performance/Views/Performance/PerformanceApp.js")
+                .Include(chartBundles));
         }
     }
 }

@@ -1,0 +1,24 @@
+﻿<div id="performance" class="container">
+    <div ng-show="state.current.name == 'Performance'" class="secondary-menu">
+        <div class="title-container">
+            <div class="title">Performance</div>
+        </div>
+    </div>
+
+    <div id="operator-chart" class="chart">
+        <div class="title">Operators 电话推销员</div>
+
+        <div class="chart-wrapper">
+            <canvas class="chart chart-bar" chart-data="PerformanceForOperatorCount" chart-labels="PerformanceForOperatorNames" chart-series="series"></canvas>
+        </div>
+        
+    </div>
+
+    <div id="deliverer-chart" class="chart">
+        <div class="title">Delivery Staff 递送员</div>
+
+        <div class="chart-wrapper">
+            <canvas class="chart chart-bar" chart-data="PerformanceForDeliveryStaffCount" chart-labels="PerformanceForDeliveryStaffNames" chart-series="series"></canvas>
+        </div>
+    </div>
+</div>

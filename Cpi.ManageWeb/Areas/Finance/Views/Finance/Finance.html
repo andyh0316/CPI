@@ -1,20 +1,29 @@
-﻿<div id="finance">
+﻿<div id="finance" class="container">
     <div ng-show="state.current.name == 'Finance'" class="secondary-menu">
         <div class="title-container">
             <div class="title">Finance</div>
         </div>
+        <div class="filters-container">
+            <select ng-model="asdasd" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.ReportDates">
+                <option></option>
+            </select>
+        </div>
     </div>
 
-    
+    <div class="results-for-dates">
+        <div>
+
+        </div>
+    </div>
 
     <div class="panels">
         <div class="panel">
             <div class="content">${{model.RevenueForToday | number: 2}}</div>
-            <div class="text">Today</div>
+            <div class="text">Today 今日收入</div>
         </div>
         <div class="panel">
             <div class="content">${{model.RevenueForThisMonth | number: 2}}</div>
-            <div class="text">This Month</div>
+            <div class="text">This Month 本月收入</div>
         </div>
         <div class="panel"></div>
         <div class="panel"></div>

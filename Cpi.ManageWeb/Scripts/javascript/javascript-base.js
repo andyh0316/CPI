@@ -25,6 +25,8 @@ $(document).on('mouseenter', 'dd', function () {
 });
 
 
+
+
 function showToolTip(toolTipSelector, hoveringElementSelector, message) {
     var offset = hoveringElementSelector.offset();
     var bodyHeight = $('body').outerHeight();
@@ -39,10 +41,24 @@ function showToolTip(toolTipSelector, hoveringElementSelector, message) {
 };
 
 // auto extend session every 5 minutes (the session timeout is set to be 20 minutes but javascript setInterval is inaccurate so to be REALLY safe we do 5 minutes)
-$(document).ready(function () { 
+$(document).ready(function () {
     gAutoExtendSession = setInterval(function () {
         extendSession();
     }, 300000);
+
+    // show un-authorized text on menu
+    $(".menu-item.not-authorized").hover(
+        function () {
+            showToolTip($('#help-tooltip'), $(this), 'You are not authorized to enter this section.');
+        },
+        function () {
+            $('#help-tooltip').hide();
+        }
+    );
+
+    $(".menu-item.not-authorized").click(function (e) {
+        e.preventDefault();
+    });
 })
 
 function extendSession() {

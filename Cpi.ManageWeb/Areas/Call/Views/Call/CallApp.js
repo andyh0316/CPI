@@ -92,7 +92,7 @@ app.controller('ImportController', ['$scope', '$controller', '$state', 'baseBo',
             .then(function (result) {
                 for (var i in result.Object.PhoneNumbers)
                 {
-                    $scope.$parent.create(result.Object.PhoneNumbers[i], $scope.modelData.LookUpCallStatusIds.SentToCallCenter);
+                    $scope.$parent.create(result.Object.PhoneNumbers[i], $scope.modelData.CallStatusIdEnums.SentToCallCenter);
                 }
 
                 $scope.back();

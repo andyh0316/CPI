@@ -45,7 +45,7 @@
   user-select: none;
   /* Likely future */ }
 
-#main-menu .menu-body .menu-item, #secondary-menu, .secondary-menu, .secondary-menu .title-container, [ui-view], .list-container, .button,
+#main-menu .menu-body .menu-item, #secondary-menu, .secondary-menu, .secondary-menu .title-container, [ui-view], .container, .list-container, .button,
 .dropdown button, dl dd, .search-drop-down .input-container, .search-drop-down .results-container, .search-drop-down .results-container .result-row, .commodities-edit .edit-container, #import .form, #import .results-container {
   -webkit-box-sizing: border-box;
   /* Chrome all / Safari all */
@@ -82,7 +82,7 @@ body {
 #main-menu {
   position: fixed;
   background-color: #2d4756;
-  width: 120px;
+  width: 200px;
   height: 100%;
   font-weight: 300;
   letter-spacing: -0px;
@@ -118,6 +118,9 @@ body {
         transition: opacity 500ms; }
       #main-menu .menu-body .menu-item.selected {
         opacity: 1; }
+      #main-menu .menu-body .menu-item.not-authorized .text,
+      #main-menu .menu-body .menu-item.not-authorized .material-icons {
+        opacity: 0.4; }
 
 #secondary-menu {
   position: fixed;
@@ -125,17 +128,17 @@ body {
   width: 100%;
   background-color: whitesmoke;
   padding: 10px 20px;
-  margin-left: 120px;
+  margin-left: 200px;
   height: 40px; }
 
 .secondary-menu {
   position: fixed;
-  width: calc((100%) - (120px));
-  min-width: calc((1280px) - (120px));
+  width: calc((100%) - (200px));
+  min-width: calc((1280px) - (200px));
   height: 40px;
   background-color: whitesmoke;
   top: 0px;
-  left: 120px;
+  left: 200px;
   right: 0px;
   z-index: 1000; }
   .secondary-menu .title-container {
@@ -166,6 +169,9 @@ body {
       box-shadow: 0px 0px 5px #e0dfdf;
       background-color: white;
       border: 1px solid #d0d0d0; }
+    .secondary-menu .filters-container input,
+    .secondary-menu .filters-container select {
+      height: 28px !important; }
   .secondary-menu .buttons {
     padding: 5px 10px 0px 10px; }
 
@@ -174,16 +180,14 @@ body {
 
 [ui-view] {
   position: fixed;
-  min-width: calc((1280px) - (120px));
+  min-width: calc((1280px) - (200px));
   top: 0;
   left: 0;
-  width: calc((100%) - (120px));
+  width: calc((100%) - (200px));
   margin-top: 40px;
   height: calc((100%) - (40px));
-  margin-left: 120px;
+  margin-left: 200px;
   background-color: white; }
-  [ui-view].padded {
-    padding: 20px 30px; }
   [ui-view] [ui-view] {
     -webkit-transition: all 400ms linear;
     -moz-transition: all 400ms linear;
@@ -203,18 +207,24 @@ body {
     [ui-view] [ui-view]:empty {
       display: none; }
 
+.container {
+  position: relative;
+  padding: 20px 30px;
+  height: 100%;
+  overflow: auto; }
+
 /**** LIST AND TABLE ****/
 .list-container {
   display: flex;
   flex-flow: column;
-  height: 100%;
-  margin-bottom: 20px; }
+  margin-bottom: 20px;
+  height: 100%; }
   .list-container table {
     display: flex;
     flex-flow: column;
     align-items: stretch;
-    height: 100%;
-    border-collapse: collapse; }
+    border-collapse: collapse;
+    height: 100%; }
     .list-container table thead {
       width: calc((100%) - (18px)) !important; }
       .list-container table thead tr {
@@ -485,7 +495,6 @@ section dl {
 }*/
 input.search-box {
   width: 200px;
-  height: 28px !important;
   padding-left: 30px !important;
   padding-right: 0;
   margin-right: 1px !important;
@@ -716,6 +725,7 @@ textarea {
 #login {
   height: 100%; }
   #login [ui-view] {
+    display: block;
     margin-left: 0px;
     width: 100%;
     background-color: none;
@@ -964,4 +974,14 @@ textarea {
     #finance .panels .panel .content {
       margin-top: 30px;
       font-size: 30px; }
+
+.title {
+  font-size: 20px;
+  margin-bottom: 5px; }
+
+#performance .chart {
+  position: relative;
+  margin-bottom: 50px; }
+  #performance .chart .title {
+    margin-bottom: 20px; }
 
