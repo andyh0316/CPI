@@ -4,7 +4,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
     $urlRouterProvider.when("", "/Performance");
 
     var listScopeData = {
-        filter: { Loads: 0, SortColumn: "CreatedDate", SortDesc: true },
+        filter: { ReportDateId: 1 },
         httpRequest: { method: 'GET', url: '/Performance/Performance/GetPerformance' }
     };
 
@@ -34,33 +34,23 @@ app.controller('PerformanceController', ['$scope', '$controller', '$state', 'bas
     $scope.modelData = modelData.Object;
     $scope.model = model.Object;
 
-    $scope.PerformanceForOperatorNames = $scope.model.PerformanceForOperators.map(function (a) { return a.Nickname; });
-    $scope.PerformanceForOperatorCount = $scope.model.PerformanceForOperators.map(function (a) { return a.PerformanceCount; });
+    $scope.$watch('scopeData.filter', function (newVal, oldVal) {
+        if (newVal !== oldVal) {
+            baseBo.httpRequest($scope.scopeData.httpRequest.method, $scope.scopeData.httpRequest.url, $scope.scopeData.filter)
+                .then(function (result) {
+                    $scope.model = result.Object;
+                    $scope.setGraphData();
+                });
+        }
+    }, true);
 
-    $scope.PerformanceForDeliveryStaffNames = $scope.model.PerformanceForDeliveryStaff.map(function (a) { return a.Nickname; });
-    $scope.PerformanceForDeliveryStaffCount = $scope.model.PerformanceForDeliveryStaff.map(function (a) { return a.PerformanceCount; });
+    $scope.setGraphData = function () {
+        $scope.performanceForOperatorNames = $scope.model.PerformanceForOperators.map(function (a) { return a.Nickname; });
+        $scope.performanceForOperatorCounts = $scope.model.PerformanceForOperators.map(function (a) { return a.PerformanceCount; });
 
-    $scope.create = function (phoneNumber) {
-        var newItem = {
-            isEditing: true,
-            CustomerPhone: phoneNumber
-        };
-        $scope.model.Records.unshift(newItem);
+        $scope.performanceForDeliveryStaffNames = $scope.model.PerformanceForDeliveryStaff.map(function (a) { return a.Nickname; });
+        $scope.performanceForDeliveryStaffCounts = $scope.model.PerformanceForDeliveryStaff.map(function (a) { return a.PerformanceCount; });
     };
 
-    $scope.save = function () {
-        var savingRecords = $scope.model.Records.filter(function (item) { return item.isEditing === true });
-        baseBo.httpRequest('POST', '/Performance/Performance/SaveList', savingRecords)
-            .then(function (result) {
-                if (result.ModelState)
-                {
-                    $scope.modelState = result.ModelState;
-                }
-                else
-                {
-                    $scope.cancelAll();
-                    $scope.getList();
-                }
-            });
-    };
+    $scope.setGraphData();
 }]);

@@ -2,7 +2,11 @@
 using Cpi.Application.BusinessObjects.LookUp;
 using Cpi.Application.BusinessObjects.Other;
 using Cpi.Application.DataModels.LookUp;
+using Cpi.Application.Filters;
+using Cpi.Application.Helpers;
+using Cpi.Application.Models;
 using Cpi.ManageWeb.Controllers.Base;
+using System.Collections.Generic;
 using System.Web.Mvc;
 
 namespace Cpi.ManageWeb.Areas.Invoice.Controllers
@@ -24,12 +28,20 @@ namespace Cpi.ManageWeb.Areas.Invoice.Controllers
         }
 
         [HttpGet]
-        public ContentResult GetPerformance()
+        public ContentResult GetPerformance(ReportDateFilter filter)
         {
+            if (filter == null)
+            {
+                filter = new ReportDateFilter
+                {
+                    ReportDateId = (int)ReportDateFilter.ReportDateIdEnums.Today
+                };
+            }
+
             var model = new
             {
-                PerformanceForOperators = PerformanceBo.GetPerformanceForOperators(),
-                PerformanceForDeliveryStaff = PerformanceBo.GetPerformanceForDeliverStaff()
+                PerformanceForOperators = PerformanceBo.GetPerformanceForOperators(filter),
+                PerformanceForDeliveryStaff = PerformanceBo.GetPerformanceForDeliverStaff(filter)
             };
 
             return JsonModel(model);
@@ -38,7 +50,13 @@ namespace Cpi.ManageWeb.Areas.Invoice.Controllers
         [HttpGet]
         public ContentResult GetPerformanceData()
         {
-            return JsonModel(null);
+            var model = new
+            {
+                ReportDates = ReportDateFilter.GetSelectList(),
+                ReportDateIdEnums = EnumHelper.GetEnumIntList(typeof(ReportDateFilter.ReportDateIdEnums))
+            };
+
+            return JsonModel(model);
         }
     }
 }

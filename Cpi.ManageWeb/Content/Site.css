@@ -960,9 +960,14 @@ textarea {
   opacity: 0.5;
   pointer-events: none; }
 
+#finance .results-for-dates {
+  font-size: 30px;
+  margin-bottom: 15px; }
+
 #finance .panels {
   display: flex;
-  width: 100%; }
+  width: 100%;
+  margin-bottom: 20px; }
   #finance .panels .panel {
     flex-grow: 1;
     flex-basis: 0;
@@ -973,15 +978,15 @@ textarea {
     margin-right: 20px; }
     #finance .panels .panel .content {
       margin-top: 30px;
-      font-size: 30px; }
+      font-size: 26px; }
 
 .title {
   font-size: 20px;
   margin-bottom: 5px; }
 
-#performance .chart {
+.chart {
   position: relative;
   margin-bottom: 50px; }
-  #performance .chart .title {
+  .chart .title {
     margin-bottom: 20px; }
 

@@ -2,32 +2,24 @@
 using Cpi.Application.DataModels.LookUp;
 using Cpi.Application.Filters;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Cpi.Application.BusinessObjects.Other
 {
     public class FinanceBo
     {
-        public enum ReportDates
-        {
-            Today = 1,
-            Yesterday = 2,
-            ThisMonth = 3,
-            Last30Days = 4,
-            ThisYear = 5,
-            AllTime = 6,
-            SelectDates = 7
-        }
-
         private InvoiceBo InvoiceBo;
-        public FinanceBo(InvoiceBo InvoiceBo)
+        private CallBo CallBo;
+        public FinanceBo(InvoiceBo InvoiceBo, CallBo CallBo)
         {
             this.InvoiceBo = InvoiceBo;
+            this.CallBo = CallBo;
         }
 
-        public decimal GetRevenue(FinanceFilter filter)
+        public decimal GetRevenue(ReportDateFilter filter)
         {
-            IQueryable<InvoiceDm> invoiceQuery = GetFilteredQuery(filter);
+            IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetDateFilteredQuery(filter);
 
             invoiceQuery = invoiceQuery.Where(a => a.StatusId == (int)LookUpInvoiceStatusDm.LookUpIds.Sold);
 
@@ -36,82 +28,108 @@ namespace Cpi.Application.BusinessObjects.Other
             return revenue;
         }
 
-        private IQueryable<InvoiceDm> GetFilteredQuery(FinanceFilter filter)
+        public int GetProductSoldCount(ReportDateFilter filter)
         {
-            IQueryable<InvoiceDm> query = InvoiceBo.GetListQuery();
+            IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetDateFilteredQuery(filter);
+
+            invoiceQuery = invoiceQuery.Where(a => a.StatusId == (int)LookUpInvoiceStatusDm.LookUpIds.Sold);
+
+            return invoiceQuery.SelectMany(a => a.InvoiceCommodities.Select(b => b.Quantity.Value)).DefaultIfEmpty(0).Sum();
+        }
+
+        public int GetProductCancelledCount(ReportDateFilter filter)
+        {
+            IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetDateFilteredQuery(filter);
+
+            invoiceQuery = invoiceQuery.Where(a => a.StatusId == (int)LookUpInvoiceStatusDm.LookUpIds.Cancelled);
+
+            return invoiceQuery.SelectMany(a => a.InvoiceCommodities.Select(b => b.Quantity.Value)).DefaultIfEmpty(0).Sum();
+        }
+
+
+        public int GetInvoiceSoldCount(ReportDateFilter filter)
+        {
+            IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetDateFilteredQuery(filter);
+
+            invoiceQuery = invoiceQuery.Where(a => a.StatusId == (int)LookUpInvoiceStatusDm.LookUpIds.Sold);
+
+            return invoiceQuery.Count();
+        }
+
+        public int GetInvoiceCancelledCount(ReportDateFilter filter)
+        {
+            IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetDateFilteredQuery(filter);
+
+            invoiceQuery = invoiceQuery.Where(a => a.StatusId == (int)LookUpInvoiceStatusDm.LookUpIds.Cancelled);
+
+            return invoiceQuery.Count();
+        }
+
+        public int GetReceivedCallCount(ReportDateFilter filter)
+        {
+            IQueryable<CallDm> callQuery = CallBo.GetDateFilteredQuery(filter);
+
+            return callQuery.Count();
+        }
+
+        public List<Tuple<string, decimal>> GetRevenues(ReportDateFilter filter)
+        {
+            IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetDateFilteredQuery(filter);
+
+            List<Tuple<string, decimal>> revenues = new List<Tuple<string, decimal>>();
 
             if (filter.ReportDateId.HasValue)
             {
-                if (filter.ReportDateId == (int)ReportDates.Today)
+                if (filter.ReportDateId == (int)ReportDateFilter.ReportDateIdEnums.Past30Days)
                 {
-                    DateTime dateFrom = DateTime.Now.Date;
-                    query = query.Where(a => a.CreatedDate >= dateFrom);
-                }
-                else if (filter.ReportDateId == (int)ReportDates.Yesterday)
-                {
-                    DateTime dateFrom = DateTime.Now.Date.AddDays(-1);
-                    DateTime dateTo = DateTime.Now.Date;
-                    query = query.Where(a => a.CreatedDate >= dateFrom && a.CreatedDate < dateTo);
-                }
-                else if (filter.ReportDateId == (int)ReportDates.ThisMonth)
-                {
-                    DateTime dateNow = DateTime.Now;
-                    DateTime dateFrom = new DateTime(dateNow.Year, dateNow.Month, 1);
-                    query = query.Where(a => a.CreatedDate >= dateFrom);
-                }
-                else if (filter.ReportDateId == (int)ReportDates.Last30Days)
-                {
-                    DateTime dateFrom = DateTime.Now.Date.AddMonths(-1);
-                    query = query.Where(a => a.CreatedDate >= dateFrom);
-                }
-                else if (filter.ReportDateId == (int)ReportDates.AllTime)
-                {
-                    // do nothing
-                }
-                else if (filter.ReportDateId == (int)ReportDates.SelectDates)
-                {
-                    if (filter.DateFrom.HasValue)
+                    for (DateTime currentDate = DateTime.Now.Date.AddMonths(-1); currentDate <= DateTime.Now.Date; currentDate = currentDate.AddDays(1))
                     {
-                        query = query.Where(a => a.CreatedDate >= filter.DateFrom.Value);
+                        DateTime dateAfter = currentDate.AddDays(1);
+                        decimal revenue = invoiceQuery.Where(a => a.CreatedDate >= currentDate && a.CreatedDate < dateAfter)
+                                                      .Where(a => a.StatusId == (int)LookUpInvoiceStatusDm.LookUpIds.Sold)
+                                                      .Select(a => a.TotalPrice.Value).DefaultIfEmpty(0).Sum();
+                        revenues.Add(new Tuple<string, decimal>(currentDate.ToString("dd.MM"), revenue));
                     }
 
-                    if (filter.DateTo.HasValue)
-                    {
-                        DateTime dateTo = filter.DateTo.Value.AddDays(1);
-                        query = query.Where(a => a.CreatedDate < dateTo);
-                    }
+                    return revenues;
+                }
+                else
+                {
                 }
             }
 
-            return query;
+            return null;
         }
 
-        //public decimal GetRevenueForThisMonth()
-        //{
-        //    IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetListQuery();
+        public List<Tuple<string, int, int>> GetCalls(ReportDateFilter filter)
+        {
+            IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetDateFilteredQuery(filter);
+            IQueryable<CallDm> callQuery = CallBo.GetDateFilteredQuery(filter);
 
-        //    DateTime dateFrom = DateTime.Now.AddMonths(-1).Date;
-        //    invoiceQuery = invoiceQuery.Where(a => a.CreatedDate >= dateFrom && a.StatusId == (int)LookUpInvoiceStatusDm.LookUpIds.Sold);
+            List<Tuple<string, int, int>> calls = new List<Tuple<string, int, int>>();
 
-        //    decimal revenue = invoiceQuery.Select(a => a.TotalPrice.Value).DefaultIfEmpty(0).Sum();
+            if (filter.ReportDateId == (int)ReportDateFilter.ReportDateIdEnums.Past30Days)
+            {
+                for (DateTime currentDate = DateTime.Now.Date.AddMonths(-1); currentDate <= DateTime.Now.Date; currentDate = currentDate.AddDays(1))
+                {
+                    DateTime dateAfter = currentDate.AddDays(1);
+                    int callCount = callQuery.Where(a => a.CreatedDate >= currentDate && a.CreatedDate < dateAfter)
+                                         .Count();
 
-        //    return revenue;
-        //}
+                    int callSuceededCount = invoiceQuery.Where(a => a.CreatedDate >= currentDate && a.CreatedDate < dateAfter)
+                                                      .Where(a => a.StatusId == (int)LookUpInvoiceStatusDm.LookUpIds.Sold)
+                                                      .Count();
 
-        //public decimal GetCompletedInvoiceCount()
-        //{
-        //    IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetListQuery();
+                    calls.Add(new Tuple<string, int, int>(currentDate.ToString("dd.MM"), callCount, callSuceededCount));
+                }
 
-        //    invoiceQuery = invoiceQuery.Where(a => a.StatusId == LookUpInvoiceStatusDm.ID_COMPLETED);
+                return calls;
+            }
+            else
+            {
+            }
 
-        //    return invoiceQuery.Count();
-        //}
-
-        //public decimal GetTotalInvoiceCount()
-        //{
-        //    IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetListQuery();
-
-        //    return invoiceQuery.Count();
-        //}
+            return null;
+        }
     }
 }

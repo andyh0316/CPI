@@ -1,6 +1,7 @@
 ﻿using Cpi.Application.DataModels;
 using Cpi.Application.DataModels.LookUp;
 using Cpi.Application.DataTransferObjects;
+using Cpi.Application.Filters;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -16,9 +17,9 @@ namespace Cpi.Application.BusinessObjects.Other
             this.UserBo = UserBo;
         }
 
-        public List<EmployeePerformanceDto> GetPerformanceForOperators()
+        public List<EmployeePerformanceDto> GetPerformanceForOperators(ReportDateFilter filter)
         {
-            IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetListQuery();
+            IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetDateFilteredQuery(filter);
 
             invoiceQuery = invoiceQuery.Where(a => a.StatusId == (int)LookUpInvoiceStatusDm.LookUpIds.Sold);
 
@@ -27,7 +28,6 @@ namespace Cpi.Application.BusinessObjects.Other
             List<EmployeePerformanceDto> dtos = (from a in operatorQuery
                                                  join b in invoiceQuery
                                                  on a.Id equals b.OperatorId into bGroup
-                                                 //from bSub in bGroup.DefaultIfEmpty()
                                                  select new EmployeePerformanceDto
                                                  {
                                                      Nickname = a.Nickname,
@@ -37,9 +37,9 @@ namespace Cpi.Application.BusinessObjects.Other
             return dtos;
         }
 
-        public List<EmployeePerformanceDto> GetPerformanceForDeliverStaff()
+        public List<EmployeePerformanceDto> GetPerformanceForDeliverStaff(ReportDateFilter filter)
         {
-            IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetListQuery();
+            IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetDateFilteredQuery(filter);
 
             invoiceQuery = invoiceQuery.Where(a => a.StatusId == (int)LookUpInvoiceStatusDm.LookUpIds.Sold);
 
@@ -48,7 +48,6 @@ namespace Cpi.Application.BusinessObjects.Other
             List<EmployeePerformanceDto> dtos = (from a in operatorQuery
                                                  join b in invoiceQuery
                                                  on a.Id equals b.DeliveryStaffId into bGroup
-                                                 //from bSub in bGroup.DefaultIfEmpty()
                                                  select new EmployeePerformanceDto
                                                  {
                                                      Nickname = a.Nickname,

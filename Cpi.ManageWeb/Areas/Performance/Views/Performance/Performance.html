@@ -3,13 +3,16 @@
         <div class="title-container">
             <div class="title">Performance</div>
         </div>
+        <div class="filters-container">
+            <select ng-model="scopeData.filter.ReportDateId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.ReportDates"></select>
+        </div>
     </div>
 
     <div id="operator-chart" class="chart">
         <div class="title">Operators 电话推销员</div>
 
         <div class="chart-wrapper">
-            <canvas class="chart chart-bar" chart-data="PerformanceForOperatorCount" chart-labels="PerformanceForOperatorNames" chart-series="series"></canvas>
+            <canvas class="chart chart-bar" chart-data="performanceForOperatorCounts" chart-labels="performanceForOperatorNames" height="100"></canvas>
         </div>
         
     </div>
@@ -18,7 +21,7 @@
         <div class="title">Delivery Staff 递送员</div>
 
         <div class="chart-wrapper">
-            <canvas class="chart chart-bar" chart-data="PerformanceForDeliveryStaffCount" chart-labels="PerformanceForDeliveryStaffNames" chart-series="series"></canvas>
+            <canvas class="chart chart-bar" chart-data="performanceForDeliveryStaffCounts" chart-labels="performanceForDeliveryStaffNames" height="100"></canvas>
         </div>
     </div>
 </div>

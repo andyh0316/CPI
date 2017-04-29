@@ -28,13 +28,13 @@ namespace Cpi.ManageWeb.Areas.Finance.Controllers
         }
 
         [HttpPost]
-        public ContentResult GetFinance(FinanceFilter filter)
+        public ContentResult GetFinance(ReportDateFilter filter)
         {
             if (filter == null)
             {
-                filter = new FinanceFilter
+                filter = new ReportDateFilter
                 {
-                    ReportDateId = (int)FinanceBo.ReportDates.Today
+                    ReportDateId = (int)ReportDateFilter.ReportDateIdEnums.Today
                 };
             }
 
@@ -42,6 +42,13 @@ namespace Cpi.ManageWeb.Areas.Finance.Controllers
             {
                 Filter = filter,
                 Revenue = FinanceBo.GetRevenue(filter),
+                ProductSoldCount = FinanceBo.GetProductSoldCount(filter),
+                ProductCancelledCount = FinanceBo.GetProductCancelledCount(filter),
+                InvoiceSoldCount = FinanceBo.GetInvoiceSoldCount(filter),
+                InvoiceCancelledCount = FinanceBo.GetInvoiceCancelledCount(filter),
+                ReceivedCallCount = FinanceBo.GetReceivedCallCount(filter),
+                Revenues = FinanceBo.GetRevenues(filter),
+                Calls = FinanceBo.GetCalls(filter)
             };
 
             return JsonModel(model);
@@ -50,21 +57,10 @@ namespace Cpi.ManageWeb.Areas.Finance.Controllers
         [HttpGet]
         public ContentResult GetFinanceData()
         {
-            List<CpiSelectListItem> reportDates = new List<CpiSelectListItem>
-            {
-                new CpiSelectListItem { Id = (int)FinanceBo.ReportDates.Today, Name = "Today 今天" },
-                new CpiSelectListItem { Id = (int)FinanceBo.ReportDates.Yesterday, Name = "Yesterday 昨天" },
-                new CpiSelectListItem { Id = (int)FinanceBo.ReportDates.ThisMonth, Name = "This Month 本月" },
-                new CpiSelectListItem { Id = (int)FinanceBo.ReportDates.Last30Days, Name = "Last 30 Days 近三十天" },
-                new CpiSelectListItem { Id = (int)FinanceBo.ReportDates.ThisYear, Name = "This Year 今年" },
-                new CpiSelectListItem { Id = (int)FinanceBo.ReportDates.AllTime, Name = "Beginning of Time 所有" },
-                new CpiSelectListItem { Id = (int)FinanceBo.ReportDates.SelectDates, Name = "Select Your Dates 自定日期" }
-            };
-
             var model = new
             {
-                ReportDates = reportDates,
-                ReportDateIdEnums = EnumHelper.GetEnumIntList(typeof(FinanceBo.ReportDates))
+                ReportDates = ReportDateFilter.GetSelectList(),
+                ReportDateIdEnums = EnumHelper.GetEnumIntList(typeof(ReportDateFilter.ReportDateIdEnums))
             };
 
             return JsonModel(model);

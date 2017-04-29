@@ -84,7 +84,7 @@
     <Compile Include="DataModels\CallDm.cs" />
     <Compile Include="DataModels\Interface\ISoftDeleteDm.cs" />
     <Compile Include="DataTransferObjects\EmployeePerformanceDto.cs" />
-    <Compile Include="Filters\FinanceFilter.cs" />
+    <Compile Include="Filters\ReportDateFilter.cs" />
     <Compile Include="Filters\ListFilter.cs" />
     <Compile Include="Helpers\ConstHelper.cs" />
     <Compile Include="Helpers\EnumHelper.cs" />

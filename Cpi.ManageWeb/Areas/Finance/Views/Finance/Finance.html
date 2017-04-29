@@ -4,29 +4,64 @@
             <div class="title">Finance</div>
         </div>
         <div class="filters-container">
-            <select ng-model="asdasd" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.ReportDates">
-                <option></option>
+            <select ng-model="scopeData.filter.ReportDateId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.ReportDates">
             </select>
         </div>
     </div>
 
-    <div class="results-for-dates">
+    <!--<div class="results-for-dates">
         <div>
+            {{getReportDateName()}}
+        </div>
+    </div>-->
 
+    <div class="title">Overview</div>
+    <div class="panels">
+        <div class="panel">
+            <div class="content">${{model.Revenue | number: 2}}</div>
+            <div class="text">Revenue</div>
+            <div class="text">收入</div>
+        </div>
+        <div class="panel">
+            <div class="content">{{model.ProductSoldCount}}</div>
+            <div class="text">Products Sold</div>
+            <div class="text">卖出产品量</div>
+        </div>
+        <div class="panel">
+            <div class="content">{{model.ProductCancelledCount}}</div>
+            <div class="text">Products Cancelled </div>
+            <div class="text">取消产品量</div>
+        </div>
+        <div class="panel">
+            <div class="content">{{model.InvoiceSoldCount}}</div>
+            <div class="text">Invoices Sold</div>
+            <div class="text">卖出订单量</div>
+        </div>
+        <div class="panel">
+            <div class="content">{{model.InvoiceCancelledCount}}</div>
+            <div class="text">Invoices Cancelled</div>
+            <div class="text">取消订单量</div>
+        </div>
+        <div class="panel">
+            <div class="content">{{model.ReceivedCallCount}}</div>
+            <div class="text">Calls Received</div>
+            <div class="text">外来电话量</div>
         </div>
     </div>
 
-    <div class="panels">
-        <div class="panel">
-            <div class="content">${{model.RevenueForToday | number: 2}}</div>
-            <div class="text">Today 今日收入</div>
+    <div ng-show="model.Revenues" class="chart">
+        <div class="title">Revenue 收入</div>
+
+        <div class="chart-wrapper">
+            <canvas class="chart chart-bar" chart-data="revenueNumbers" chart-labels="revenueDates" height="100"></canvas>
         </div>
-        <div class="panel">
-            <div class="content">${{model.RevenueForThisMonth | number: 2}}</div>
-            <div class="text">This Month 本月收入</div>
+    </div>
+
+    <div ng-show="model.Revenues" class="chart">
+        <div class="title">Calls vs Sold Invoices 外来电话与卖出订单比例</div>
+
+        <div class="chart-wrapper">
+            <canvas class="chart chart-bar" chart-data="callCounts" chart-labels="callDates" height="100"></canvas>
         </div>
-        <div class="panel"></div>
-        <div class="panel"></div>
-        <div class="panel"></div>
     </div>
 </div>

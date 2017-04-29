@@ -53,5 +53,54 @@ namespace Cpi.Application.BusinessObjects
             DateTime today = DateTime.Now.Date;
             return GetListQuery().Any(a => a.CustomerPhone == phoneNumber && a.CreatedDate >= today);
         }
+
+        public IQueryable<CallDm> GetDateFilteredQuery(ReportDateFilter filter)
+        {
+            IQueryable<CallDm> query = GetListQuery();
+
+            if (filter.ReportDateId.HasValue)
+            {
+                if (filter.ReportDateId == (int)ReportDateFilter.ReportDateIdEnums.Today)
+                {
+                    DateTime dateFrom = DateTime.Now.Date;
+                    query = query.Where(a => a.CreatedDate >= dateFrom);
+                }
+                else if (filter.ReportDateId == (int)ReportDateFilter.ReportDateIdEnums.Yesterday)
+                {
+                    DateTime dateFrom = DateTime.Now.Date.AddDays(-1);
+                    DateTime dateTo = DateTime.Now.Date;
+                    query = query.Where(a => a.CreatedDate >= dateFrom && a.CreatedDate < dateTo);
+                }
+                else if (filter.ReportDateId == (int)ReportDateFilter.ReportDateIdEnums.Past30Days)
+                {
+                    DateTime dateFrom = DateTime.Now.Date.AddMonths(-1);
+                    query = query.Where(a => a.CreatedDate >= dateFrom);
+                }
+                else if (filter.ReportDateId == (int)ReportDateFilter.ReportDateIdEnums.PastYear)
+                {
+                    DateTime dateFrom = DateTime.Now.Date.AddYears(-1);
+                    query = query.Where(a => a.CreatedDate >= dateFrom);
+                }
+                else if (filter.ReportDateId == (int)ReportDateFilter.ReportDateIdEnums.AllTime)
+                {
+                    // do nothing
+                }
+                else if (filter.ReportDateId == (int)ReportDateFilter.ReportDateIdEnums.SelectDates)
+                {
+                    if (filter.DateFrom.HasValue)
+                    {
+                        query = query.Where(a => a.CreatedDate >= filter.DateFrom.Value);
+                    }
+
+                    if (filter.DateTo.HasValue)
+                    {
+                        DateTime dateTo = filter.DateTo.Value.AddDays(1);
+                        query = query.Where(a => a.CreatedDate < dateTo);
+                    }
+                }
+            }
+
+            return query;
+        }
     }
 }
