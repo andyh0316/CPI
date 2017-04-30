@@ -11,7 +11,7 @@ using System.Web.Mvc;
 
 namespace Cpi.ManageWeb.Areas.Invoice.Controllers
 {
-    [CpiAuthenticate((int)LookUpUserRoleDm.LookUpIds.Admin)]
+    [CpiAuthenticate((int)LookUpUserRoleDm.LookUpIds.Admin, (int)LookUpUserRoleDm.LookUpIds.DataSpecialist)]
     public class PerformanceController : BaseController
     {
         private LookUpBo LookUpBo;

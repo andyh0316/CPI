@@ -21,7 +21,7 @@
             <i class="material-icons">monetization_on</i>
             <span class="text">Finance 财务</span>
         </a>
-        <a href="/Performance/Performance/" class="menu-item @(currentArea == "Performance" ? "selected" : "") @(roleId != (int)LookUpUserRoleDm.LookUpIds.Admin ? "not-authorized" : "")">
+        <a href="/Performance/Performance/" class="menu-item @(currentArea == "Performance" ? "selected" : "") @(roleId != (int)LookUpUserRoleDm.LookUpIds.Admin && roleId != (int)LookUpUserRoleDm.LookUpIds.DataSpecialist ? "not-authorized" : "")">
             <i class="material-icons">local_library</i>
             <span class="text">Performance 员工评估</span>
         </a>
