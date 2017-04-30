@@ -74,28 +74,82 @@ namespace Cpi.Application.BusinessObjects.Other
 
         public List<Tuple<string, decimal>> GetRevenues(ReportDateFilter filter)
         {
-            IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetDateFilteredQuery(filter);
+            IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetListQuery().Where(a => a.StatusId == (int)LookUpInvoiceStatusDm.LookUpIds.Sold);
 
             List<Tuple<string, decimal>> revenues = new List<Tuple<string, decimal>>();
 
             if (filter.ReportDateId.HasValue)
             {
-                if (filter.ReportDateId == (int)ReportDateFilter.ReportDateIdEnums.Past30Days)
+                DateTime dateFrom = DateTime.Now;
+                DateTime dateTo = DateTime.Now;
+                bool splitByMonth = false;
+
+                if (filter.ReportDateId == (int)ReportDateFilter.ReportDateIdEnums.Past7Days)
                 {
-                    for (DateTime currentDate = DateTime.Now.Date.AddMonths(-1); currentDate <= DateTime.Now.Date; currentDate = currentDate.AddDays(1))
+                    dateFrom = dateFrom.Date.AddDays(-6);
+                }
+                else if (filter.ReportDateId == (int)ReportDateFilter.ReportDateIdEnums.Past30Days)
+                {
+                    dateFrom = dateFrom.Date.AddDays(-29);
+                }
+                else if (filter.ReportDateId == (int)ReportDateFilter.ReportDateIdEnums.PastYear)
+                {
+                    DateTime dateLastYear = DateTime.Now.Date.AddYears(-1).AddMonths(1);
+                    dateFrom = new DateTime(dateLastYear.Year, dateLastYear.Month, 1);
+                    splitByMonth = true;
+                }
+                else if (filter.ReportDateId == (int)ReportDateFilter.ReportDateIdEnums.AllTimeOrSelectDateRange)
+                {
+                    InvoiceDm earliestInvoice = invoiceQuery.Where(a => a.CreatedDate.HasValue).OrderBy(a => a.CreatedDate.Value).FirstOrDefault();
+
+                    if (earliestInvoice == null) // if theres no invoices with created date
                     {
-                        DateTime dateAfter = currentDate.AddDays(1);
-                        decimal revenue = invoiceQuery.Where(a => a.CreatedDate >= currentDate && a.CreatedDate < dateAfter)
-                                                      .Where(a => a.StatusId == (int)LookUpInvoiceStatusDm.LookUpIds.Sold)
-                                                      .Select(a => a.TotalPrice.Value).DefaultIfEmpty(0).Sum();
-                        revenues.Add(new Tuple<string, decimal>(currentDate.ToString("dd.MM"), revenue));
+                        return null;
                     }
 
-                    return revenues;
+                    DateTime earliestInvoiceDate = earliestInvoice.CreatedDate.Value; // this is guaranteed to have value because of the query and check above
+                    dateFrom = earliestInvoiceDate;
+
+                    if (filter.DateFrom.HasValue)
+                    {
+                        if (filter.DateFrom.Value > dateFrom)
+                        {
+                            dateFrom = filter.DateFrom.Value;
+                        }
+                    }
+                    
+                    if (filter.DateTo.HasValue)
+                    {
+                        if (filter.DateTo.Value < dateTo)
+                        {
+                            dateTo = filter.DateTo.Value;
+                        }
+                    }
+
+                    // if dateTo is more than a month away from dateFrom: do more things
+                    if (dateTo.AddMonths(-1) > dateFrom)
+                    {
+                        splitByMonth = true;
+                    }
                 }
                 else
                 {
+                    return null;
                 }
+
+                while (dateFrom <= dateTo)
+                {
+                    DateTime dateAfter = (splitByMonth) ? dateFrom.AddMonths(1) : dateFrom.AddDays(1);
+                    string dateDisplayFormat = (splitByMonth) ? "MM.yyyy" : "dd.MM.yyyy";
+
+                    decimal revenue = invoiceQuery.Where(a => a.CreatedDate >= dateFrom && a.CreatedDate < dateAfter)
+                                                      .Select(a => a.TotalPrice.Value).DefaultIfEmpty(0).Sum();
+                    revenues.Add(new Tuple<string, decimal>(dateFrom.ToString(dateDisplayFormat), revenue));
+
+                    dateFrom = (splitByMonth) ? dateFrom.AddMonths(1) : dateFrom.AddDays(1);
+                }
+
+                return revenues;
             }
 
             return null;
@@ -103,30 +157,87 @@ namespace Cpi.Application.BusinessObjects.Other
 
         public List<Tuple<string, int, int>> GetCalls(ReportDateFilter filter)
         {
-            IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetDateFilteredQuery(filter);
-            IQueryable<CallDm> callQuery = CallBo.GetDateFilteredQuery(filter);
+            IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetListQuery().Where(a => a.StatusId == (int)LookUpInvoiceStatusDm.LookUpIds.Sold);
+            IQueryable<CallDm> callQuery = CallBo.GetListQuery();
 
             List<Tuple<string, int, int>> calls = new List<Tuple<string, int, int>>();
 
-            if (filter.ReportDateId == (int)ReportDateFilter.ReportDateIdEnums.Past30Days)
+            if (filter.ReportDateId.HasValue)
             {
-                for (DateTime currentDate = DateTime.Now.Date.AddMonths(-1); currentDate <= DateTime.Now.Date; currentDate = currentDate.AddDays(1))
-                {
-                    DateTime dateAfter = currentDate.AddDays(1);
-                    int callCount = callQuery.Where(a => a.CreatedDate >= currentDate && a.CreatedDate < dateAfter)
-                                         .Count();
+                DateTime dateFrom = DateTime.Now;
+                DateTime dateTo = DateTime.Now;
+                bool splitByMonth = false;
 
-                    int callSuceededCount = invoiceQuery.Where(a => a.CreatedDate >= currentDate && a.CreatedDate < dateAfter)
-                                                      .Where(a => a.StatusId == (int)LookUpInvoiceStatusDm.LookUpIds.Sold)
+                if (filter.ReportDateId == (int)ReportDateFilter.ReportDateIdEnums.Past7Days)
+                {
+                    dateFrom = DateTime.Now.Date.AddDays(-6);
+                }
+                else if (filter.ReportDateId == (int)ReportDateFilter.ReportDateIdEnums.Past30Days)
+                {
+                    dateFrom = DateTime.Now.Date.AddDays(-29);
+                }
+                else if (filter.ReportDateId == (int)ReportDateFilter.ReportDateIdEnums.PastYear)
+                {
+                    DateTime dateLastYear = DateTime.Now.Date.AddYears(-1).AddMonths(1);
+                    dateFrom = new DateTime(dateLastYear.Year, dateLastYear.Month, 1);
+                    splitByMonth = true;
+                }
+                else if (filter.ReportDateId == (int)ReportDateFilter.ReportDateIdEnums.AllTimeOrSelectDateRange)
+                {
+                    InvoiceDm earliestInvoice = invoiceQuery.Where(a => a.CreatedDate.HasValue).OrderBy(a => a.CreatedDate.Value).FirstOrDefault();
+
+                    if (earliestInvoice == null) // if theres no invoices with created date
+                    {
+                        return null;
+                    }
+
+                    DateTime earliestInvoiceDate = earliestInvoice.CreatedDate.Value; // this is guaranteed to have value because of the query and check above
+                    dateFrom = earliestInvoiceDate;
+
+                    if (filter.DateFrom.HasValue)
+                    {
+                        if (filter.DateFrom.Value > dateFrom)
+                        {
+                            dateFrom = filter.DateFrom.Value;
+                        }
+                    }
+
+                    if (filter.DateTo.HasValue)
+                    {
+                        if (filter.DateTo.Value < dateTo)
+                        {
+                            dateTo = filter.DateTo.Value;
+                        }
+                    }
+
+                    // if dateTo is more than a month away from dateFrom: do more things
+                    if (dateTo.AddMonths(-1) > dateFrom)
+                    {
+                        splitByMonth = true;
+                    }
+                }
+                else
+                {
+                    return null;
+                }
+
+                while (dateFrom <= dateTo)
+                {
+                    DateTime dateAfter = (splitByMonth) ? dateFrom.AddMonths(1) : dateFrom.AddDays(1);
+                    string dateDisplayFormat = (splitByMonth) ? "MM.yyyy" : "dd.MM.yyyy";
+
+                    int callCount = callQuery.Where(a => a.CreatedDate >= dateFrom && a.CreatedDate < dateAfter)
+                                             .Count();
+
+                    int callSuceededCount = invoiceQuery.Where(a => a.CreatedDate >= dateFrom && a.CreatedDate < dateAfter)
                                                       .Count();
 
-                    calls.Add(new Tuple<string, int, int>(currentDate.ToString("dd.MM"), callCount, callSuceededCount));
+                    calls.Add(new Tuple<string, int, int>(dateFrom.ToString(dateDisplayFormat), callCount, callSuceededCount));
+
+                    dateFrom = (splitByMonth) ? dateFrom.AddMonths(1) : dateFrom.AddDays(1);
                 }
 
                 return calls;
-            }
-            else
-            {
             }
 
             return null;

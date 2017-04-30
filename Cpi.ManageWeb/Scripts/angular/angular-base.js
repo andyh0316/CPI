@@ -467,6 +467,16 @@ baseModule.run(['$rootScope', '$state', function ($rootScope, $state) {
 
         //$(deepest).show();
     });
+
+    $rootScope.generalChartOptions = {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    };
 }]);
 
 baseModule.factory('baseBo', ['$http', '$window', '$q', function ($http, $window, $q) {

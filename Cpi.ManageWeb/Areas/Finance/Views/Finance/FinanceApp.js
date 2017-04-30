@@ -34,26 +34,26 @@ app.controller('FinanceController', ['$scope', '$controller', '$state', 'baseBo'
     $scope.modelData = modelData.Object;
     $scope.model = model.Object;
 
+    $scope.filterSearchTimeout = null;
     $scope.$watch('scopeData.filter', function (newVal, oldVal) {
         if (newVal !== oldVal)
         {
-            baseBo.httpRequest($scope.scopeData.httpRequest.method, $scope.scopeData.httpRequest.url, $scope.scopeData.filter)
-                .then(function (result) {
-                    $scope.model = result.Object;
-                    $scope.setGraphData();
-                });
+            var filterSearchDelay = 0;
+            if ($scope.delayFilterSearch) {
+                $scope.delayFilterSearch = false;
+                filterSearchDelay = 1000;
+            }
+
+            clearTimeout($scope.filterSearchTimeout);
+            $scope.filterSearchTimeout = setTimeout(function () {
+                baseBo.httpRequest($scope.scopeData.httpRequest.method, $scope.scopeData.httpRequest.url, $scope.scopeData.filter)
+                    .then(function (result) {
+                        $scope.model = result.Object;
+                        $scope.setGraphData();
+                    });
+            }, filterSearchDelay);
         }
     }, true);
-
-    $scope.getReportDateName = function () {
-        for (var i in $scope.modelData.ReportDates)
-        {
-            if ($scope.scopeData.filter.ReportDateId === $scope.modelData.ReportDates[i].Id)
-            {
-                return $scope.modelData.ReportDates[i].Name;
-            }
-        }
-    };
 
     $scope.setGraphData = function () {
         if ($scope.model.Revenues)

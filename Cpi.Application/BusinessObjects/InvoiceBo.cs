@@ -65,9 +65,14 @@ namespace Cpi.Application.BusinessObjects
                     DateTime dateTo = DateTime.Now.Date;
                     query = query.Where(a => a.CreatedDate >= dateFrom && a.CreatedDate < dateTo);
                 }
+                else if (filter.ReportDateId == (int)ReportDateFilter.ReportDateIdEnums.Past7Days)
+                {
+                    DateTime dateFrom = DateTime.Now.Date.AddDays(-6);
+                    query = query.Where(a => a.CreatedDate >= dateFrom);
+                }
                 else if (filter.ReportDateId == (int)ReportDateFilter.ReportDateIdEnums.Past30Days)
                 {
-                    DateTime dateFrom = DateTime.Now.Date.AddMonths(-1);
+                    DateTime dateFrom = DateTime.Now.Date.AddDays(-29);
                     query = query.Where(a => a.CreatedDate >= dateFrom);
                 }
                 else if (filter.ReportDateId == (int)ReportDateFilter.ReportDateIdEnums.PastYear)
@@ -75,11 +80,7 @@ namespace Cpi.Application.BusinessObjects
                     DateTime dateFrom = DateTime.Now.Date.AddYears(-1);
                     query = query.Where(a => a.CreatedDate >= dateFrom);
                 }
-                else if (filter.ReportDateId == (int)ReportDateFilter.ReportDateIdEnums.AllTime)
-                {
-                    // do nothing
-                }
-                else if (filter.ReportDateId == (int)ReportDateFilter.ReportDateIdEnums.SelectDates)
+                else if (filter.ReportDateId == (int)ReportDateFilter.ReportDateIdEnums.AllTimeOrSelectDateRange)
                 {
                     if (filter.DateFrom.HasValue)
                     {

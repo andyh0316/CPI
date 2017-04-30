@@ -4,16 +4,27 @@
             <div class="title">Finance</div>
         </div>
         <div class="filters-container">
-            <select ng-model="scopeData.filter.ReportDateId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.ReportDates">
-            </select>
+            <section>
+                <dl>
+                    <dd>
+                        <select ng-model="scopeData.filter.ReportDateId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.ReportDates" ng-change="scopeData.filter.DateFrom = null; scopeData.filter.DateTo = null;"></select>
+                    </dd>
+                </dl>
+
+                <dl ng-show="scopeData.filter.ReportDateId === modelData.ReportDateIdEnums.AllTimeOrSelectDateRange" class="dl-XS">
+                    <dd>
+                        <input ng-model="scopeData.filter.DateFrom" placeholder="Date (From)" ng-change="delayFilterSearch = true" date-input />
+                    </dd>
+                </dl>
+                
+                <dl ng-show="scopeData.filter.ReportDateId === modelData.ReportDateIdEnums.AllTimeOrSelectDateRange" class="dl-XS">
+                    <dd>
+                        <input ng-model="scopeData.filter.DateTo" placeholder="Date (To)" ng-change="delayFilterSearch = true" date-input />
+                    </dd>
+                </dl>
+            </section>
         </div>
     </div>
-
-    <!--<div class="results-for-dates">
-        <div>
-            {{getReportDateName()}}
-        </div>
-    </div>-->
 
     <div class="title">Overview</div>
     <div class="panels">
@@ -49,19 +60,19 @@
         </div>
     </div>
 
-    <div ng-show="model.Revenues" class="chart">
+    <div ng-show="model.Revenues.length > 0" class="chart">
         <div class="title">Revenue 收入</div>
 
         <div class="chart-wrapper">
-            <canvas class="chart chart-bar" chart-data="revenueNumbers" chart-labels="revenueDates" height="100"></canvas>
+            <canvas class="chart chart-bar" chart-data="revenueNumbers" chart-labels="revenueDates" height="100" chart-options="generalChartOptions"></canvas>
         </div>
     </div>
 
-    <div ng-show="model.Revenues" class="chart">
+    <div ng-show="model.Calls.length > 0" class="chart">
         <div class="title">Calls vs Sold Invoices 外来电话与卖出订单比例</div>
 
         <div class="chart-wrapper">
-            <canvas class="chart chart-bar" chart-data="callCounts" chart-labels="callDates" height="100"></canvas>
+            <canvas class="chart chart-bar" chart-data="callCounts" chart-labels="callDates" height="100" chart-options="generalChartOptions"></canvas>
         </div>
     </div>
 </div>
