@@ -1371,7 +1371,7 @@ textarea {
             border: 1px solid $light-border-color;
             background-color: whitesmoke;
             text-align: center;
-            margin-right: 20px;
+            margin-right: 8px;
             @extend %main-box-shadow;
 
             &:not(:last-child) {

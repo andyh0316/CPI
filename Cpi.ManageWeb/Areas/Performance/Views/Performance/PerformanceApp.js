@@ -4,7 +4,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
     $urlRouterProvider.when("", "/Performance");
 
     var listScopeData = {
-        filter: { ReportDateId: 1 },
+        filter: { ReportDateId: 3 },
         httpRequest: { method: 'GET', url: '/Performance/Performance/GetPerformance' }
     };
 
