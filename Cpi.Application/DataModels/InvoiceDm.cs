@@ -1,7 +1,9 @@
 ﻿using Cpi.Application.DataModels.Base;
 using Cpi.Application.DataModels.LookUp;
 using Cpi.Compass.Application.BusinessRules;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Cpi.Application.DataModels
 {

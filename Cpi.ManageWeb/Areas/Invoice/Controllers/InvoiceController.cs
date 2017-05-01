@@ -14,6 +14,7 @@ using Cpi.Application.DataModels.LookUp;
 using System.Data;
 using Cpi.Application.Models;
 using Cpi.Application.Helpers;
+using System;
 
 namespace Cpi.ManageWeb.Areas.Invoice.Controllers
 {
@@ -79,6 +80,8 @@ namespace Cpi.ManageWeb.Areas.Invoice.Controllers
             {
                 InvoiceDm trackedInvoice = (invoice.Id > 0) ? trackedInvoices.Find(a => a.Id == invoice.Id) : new InvoiceDm();
 
+                bool isUpdatingStatusWithValue = (invoice.StatusId.HasValue && invoice.StatusId != trackedInvoice.StatusId);
+
                 Mapper.Map(invoice, trackedInvoice);
 
                 invoice.InvoiceCommodities = (invoice.InvoiceCommodities) ?? new List<InvoiceCommodityDm>();
@@ -125,6 +128,15 @@ namespace Cpi.ManageWeb.Areas.Invoice.Controllers
                 if (trackedInvoice.Id > 0)
                 {
                     SetModified(trackedInvoice);
+
+                    // if the invoice's status is set to something, and the invoice's created date was yesterday or earlier, then we make
+                    // the invoice's createdDate to now. The reason for this is sometimes they entered invoices from yesterday night, but the
+                    // deliverers take the product and go home and keeps the product to deliver today, in that case, we need to make the invoice
+                    // today to reflect proper revenue analysis
+                    if (isUpdatingStatusWithValue && DateTime.Now.Date > trackedInvoice.CreatedDate.Value.Date)
+                    {
+                        trackedInvoice.CreatedDate = DateTime.Now;
+                    }
                 }
                 else
                 {
