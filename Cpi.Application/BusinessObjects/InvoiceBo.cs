@@ -16,7 +16,9 @@ namespace Cpi.Application.BusinessObjects
             {
                 query = query.Where(a => a.CustomerPhone.StartsWith(filter.SearchString) ||
                                          a.Operator.Nickname.StartsWith(filter.SearchString) ||
-                                         a.DeliveryStaff.Nickname.StartsWith(filter.SearchString));
+                                         a.Operator.Fullname.StartsWith(filter.SearchString) ||
+                                         a.DeliveryStaff.Nickname.StartsWith(filter.SearchString) ||
+                                         a.DeliveryStaff.Fullname.StartsWith(filter.SearchString));
             }
 
             if (filter.AdvancedSearch != null)

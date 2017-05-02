@@ -280,9 +280,6 @@ baseModule.controller('ListBaseController', ['$scope', '$controller', 'baseBo', 
             return;
         }
 
-        $scope.advancedSearchPrevious = {};
-        $scope.scopeData.filter.AdvancedSearch = {};
-
         clearTimeout($scope.searchStringTimeout);
         $scope.searchStringTimeout = setTimeout(function () {
             if ($scope.doNotTriggerSearchString) {
