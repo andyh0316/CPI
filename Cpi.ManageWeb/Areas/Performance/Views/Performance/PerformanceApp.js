@@ -54,11 +54,21 @@ app.controller('PerformanceController', ['$scope', '$controller', '$state', 'bas
     }, true);
 
     $scope.setGraphData = function () {
-        $scope.performanceForOperatorNames = $scope.model.PerformanceForOperators.map(function (a) { return a.Nickname; });
-        $scope.performanceForOperatorCounts = $scope.model.PerformanceForOperators.map(function (a) { return a.PerformanceCount; });
+        $scope.performanceForOperatorNames = $scope.model.PerformanceForOperators.map(function (a) { return a.Item1; });
+        $scope.performanceForOperatorCounts = $scope.model.PerformanceForOperators.map(function (a) { return a.Item2; });
 
-        $scope.performanceForDeliveryStaffNames = $scope.model.PerformanceForDeliveryStaff.map(function (a) { return a.Nickname; });
-        $scope.performanceForDeliveryStaffCounts = $scope.model.PerformanceForDeliveryStaff.map(function (a) { return a.PerformanceCount; });
+        $scope.performanceForDeliveryStaffNames = $scope.model.PerformanceForDeliveryStaff.map(function (a) { return a.Item1; });
+        $scope.performanceForDeliveryStaffCounts =
+            [
+                $scope.model.PerformanceForDeliveryStaff.map(function (a) { return a.Item2; }),
+                $scope.model.PerformanceForDeliveryStaff.map(function (a) { return a.Item3; })
+            ];
+
+        //$scope.callCounts =
+        //    [
+        //        $scope.model.Calls.map(function (a) { return a.Item2; }),
+        //        $scope.model.Calls.map(function (a) { return a.Item3; }),
+        //    ];
     };
 
     $scope.setGraphData();
