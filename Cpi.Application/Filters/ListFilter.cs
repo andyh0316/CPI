@@ -18,10 +18,7 @@ namespace Cpi.Application.Filters
             public class AdvancedSearchClass
             {
                 public int? StatusId { get; set; }
-
-                public DateTime? CreatedDateFrom { get; set; }
-                public DateTime? CreatedDateTo { get; set; }
-                public bool CreatedTodayOnly { get; set; }
+                public ReportDateFilter ReportDateFilter { get; set; }
             }
         }
 
@@ -31,10 +28,7 @@ namespace Cpi.Application.Filters
             public class AdvancedSearchClass
             {
                 public int? StatusId { get; set; }
-
-                public DateTime? CreatedDateFrom { get; set; }
-                public DateTime? CreatedDateTo { get; set; }
-                public bool CreatedTodayOnly { get; set; }
+                public ReportDateFilter ReportDateFilter { get; set; }
             }
         }
 

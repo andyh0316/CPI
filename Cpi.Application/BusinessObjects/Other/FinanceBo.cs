@@ -22,7 +22,9 @@ namespace Cpi.Application.BusinessObjects.Other
 
         public decimal GetRevenue(ReportDateFilter filter)
         {
-            IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetDateFilteredQuery(filter);
+            IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetListQuery();
+
+            invoiceQuery = InvoiceBo.GetDateFilteredQuery(invoiceQuery, filter);
 
             invoiceQuery = invoiceQuery.Where(a => a.StatusId == (int)LookUpInvoiceStatusDm.LookUpIds.Sold);
 
@@ -33,7 +35,9 @@ namespace Cpi.Application.BusinessObjects.Other
 
         public int GetProductSoldCount(ReportDateFilter filter)
         {
-            IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetDateFilteredQuery(filter);
+            IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetListQuery();
+
+            invoiceQuery = InvoiceBo.GetDateFilteredQuery(invoiceQuery, filter);
 
             invoiceQuery = invoiceQuery.Where(a => a.StatusId == (int)LookUpInvoiceStatusDm.LookUpIds.Sold);
 
@@ -42,7 +46,9 @@ namespace Cpi.Application.BusinessObjects.Other
 
         public int GetProductCancelledCount(ReportDateFilter filter)
         {
-            IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetDateFilteredQuery(filter);
+            IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetListQuery();
+
+            invoiceQuery = InvoiceBo.GetDateFilteredQuery(invoiceQuery, filter);
 
             invoiceQuery = invoiceQuery.Where(a => a.StatusId == (int)LookUpInvoiceStatusDm.LookUpIds.Cancelled);
 
@@ -51,7 +57,9 @@ namespace Cpi.Application.BusinessObjects.Other
 
         public int GetProductPendingCount(ReportDateFilter filter)
         {
-            IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetDateFilteredQuery(filter);
+            IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetListQuery();
+
+            invoiceQuery = InvoiceBo.GetDateFilteredQuery(invoiceQuery, filter);
 
             invoiceQuery = invoiceQuery.Where(a => !a.StatusId.HasValue);
 
@@ -60,14 +68,18 @@ namespace Cpi.Application.BusinessObjects.Other
 
         public int GetProductTotalCount(ReportDateFilter filter)
         {
-            IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetDateFilteredQuery(filter);
+            IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetListQuery();
+
+            invoiceQuery = InvoiceBo.GetDateFilteredQuery(invoiceQuery, filter);
 
             return invoiceQuery.SelectMany(a => a.InvoiceCommodities.Select(b => b.Quantity.Value)).DefaultIfEmpty(0).Sum();
         }
 
         public int GetInvoiceSoldCount(ReportDateFilter filter)
         {
-            IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetDateFilteredQuery(filter);
+            IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetListQuery();
+
+            invoiceQuery = InvoiceBo.GetDateFilteredQuery(invoiceQuery, filter);
 
             invoiceQuery = invoiceQuery.Where(a => a.StatusId == (int)LookUpInvoiceStatusDm.LookUpIds.Sold);
 
@@ -76,7 +88,9 @@ namespace Cpi.Application.BusinessObjects.Other
 
         public int GetInvoiceCancelledCount(ReportDateFilter filter)
         {
-            IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetDateFilteredQuery(filter);
+            IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetListQuery();
+
+            invoiceQuery = InvoiceBo.GetDateFilteredQuery(invoiceQuery, filter);
 
             invoiceQuery = invoiceQuery.Where(a => a.StatusId == (int)LookUpInvoiceStatusDm.LookUpIds.Cancelled);
 
@@ -85,7 +99,9 @@ namespace Cpi.Application.BusinessObjects.Other
 
         public int GetInvoicePendingCount(ReportDateFilter filter)
         {
-            IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetDateFilteredQuery(filter);
+            IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetListQuery();
+
+            invoiceQuery = InvoiceBo.GetDateFilteredQuery(invoiceQuery, filter);
 
             invoiceQuery = invoiceQuery.Where(a => !a.StatusId.HasValue);
 
@@ -94,14 +110,18 @@ namespace Cpi.Application.BusinessObjects.Other
 
         public int GetInvoiceTotalCount(ReportDateFilter filter)
         {
-            IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetDateFilteredQuery(filter);
+            IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetListQuery();
+
+            invoiceQuery = InvoiceBo.GetDateFilteredQuery(invoiceQuery, filter);
 
             return invoiceQuery.Count();
         }
 
         public int GetReceivedCallCount(ReportDateFilter filter)
         {
-            IQueryable<CallDm> callQuery = CallBo.GetDateFilteredQuery(filter);
+            IQueryable<CallDm> callQuery = CallBo.GetListQuery();
+
+            callQuery = CallBo.GetDateFilteredQuery(callQuery, filter);
 
             return callQuery.Count();
         }
@@ -114,62 +134,15 @@ namespace Cpi.Application.BusinessObjects.Other
 
             if (filter.ReportDateId.HasValue)
             {
-                DateTime dateFrom = DateTime.Now;
-                DateTime dateTo = DateTime.Now;
-                bool splitByMonth = false;
-
-                if (filter.ReportDateId == (int)ReportDateFilter.ReportDateIdEnums.Past7Days)
-                {
-                    dateFrom = dateFrom.Date.AddDays(-6);
-                }
-                else if (filter.ReportDateId == (int)ReportDateFilter.ReportDateIdEnums.Past30Days)
-                {
-                    dateFrom = dateFrom.Date.AddDays(-29);
-                }
-                else if (filter.ReportDateId == (int)ReportDateFilter.ReportDateIdEnums.PastYear)
-                {
-                    DateTime dateLastYear = DateTime.Now.Date.AddYears(-1).AddMonths(1);
-                    dateFrom = new DateTime(dateLastYear.Year, dateLastYear.Month, 1);
-                    splitByMonth = true;
-                }
-                else if (filter.ReportDateId == (int)ReportDateFilter.ReportDateIdEnums.AllTimeOrSelectDateRange)
-                {
-                    InvoiceDm earliestInvoice = invoiceQuery.Where(a => a.CreatedDate.HasValue).OrderBy(a => a.CreatedDate.Value).FirstOrDefault();
-
-                    if (earliestInvoice == null) // if theres no invoices with created date
-                    {
-                        return null;
-                    }
-
-                    DateTime earliestInvoiceDate = earliestInvoice.CreatedDate.Value; // this is guaranteed to have value because of the query and check above
-                    dateFrom = earliestInvoiceDate;
-
-                    if (filter.DateFrom.HasValue)
-                    {
-                        if (filter.DateFrom.Value > dateFrom)
-                        {
-                            dateFrom = filter.DateFrom.Value;
-                        }
-                    }
-
-                    if (filter.DateTo.HasValue)
-                    {
-                        if (filter.DateTo.Value < dateTo)
-                        {
-                            dateTo = filter.DateTo.Value;
-                        }
-                    }
-
-                    // if dateTo is more than a month away from dateFrom: do more things
-                    if (dateTo.AddMonths(-1) > dateFrom)
-                    {
-                        splitByMonth = true;
-                    }
-                }
-                else
+                Tuple<DateTime, DateTime, bool> dateFilteredInfo = InvoiceBo.GetDateFilteredInfo(invoiceQuery, filter);
+                if (dateFilteredInfo == null)
                 {
                     return null;
                 }
+
+                DateTime dateFrom = dateFilteredInfo.Item1;
+                DateTime dateTo = dateFilteredInfo.Item2;
+                bool splitByMonth = dateFilteredInfo.Item3;
 
                 while (dateFrom <= dateTo)
                 {
@@ -198,62 +171,15 @@ namespace Cpi.Application.BusinessObjects.Other
 
             if (filter.ReportDateId.HasValue)
             {
-                DateTime dateFrom = DateTime.Now;
-                DateTime dateTo = DateTime.Now;
-                bool splitByMonth = false;
-
-                if (filter.ReportDateId == (int)ReportDateFilter.ReportDateIdEnums.Past7Days)
-                {
-                    dateFrom = DateTime.Now.Date.AddDays(-6);
-                }
-                else if (filter.ReportDateId == (int)ReportDateFilter.ReportDateIdEnums.Past30Days)
-                {
-                    dateFrom = DateTime.Now.Date.AddDays(-29);
-                }
-                else if (filter.ReportDateId == (int)ReportDateFilter.ReportDateIdEnums.PastYear)
-                {
-                    DateTime dateLastYear = DateTime.Now.Date.AddYears(-1).AddMonths(1);
-                    dateFrom = new DateTime(dateLastYear.Year, dateLastYear.Month, 1);
-                    splitByMonth = true;
-                }
-                else if (filter.ReportDateId == (int)ReportDateFilter.ReportDateIdEnums.AllTimeOrSelectDateRange)
-                {
-                    InvoiceDm earliestInvoice = invoiceQuery.Where(a => a.CreatedDate.HasValue).OrderBy(a => a.CreatedDate.Value).FirstOrDefault();
-
-                    if (earliestInvoice == null) // if theres no invoices with created date
-                    {
-                        return null;
-                    }
-
-                    DateTime earliestInvoiceDate = earliestInvoice.CreatedDate.Value; // this is guaranteed to have value because of the query and check above
-                    dateFrom = earliestInvoiceDate;
-
-                    if (filter.DateFrom.HasValue)
-                    {
-                        if (filter.DateFrom.Value > dateFrom)
-                        {
-                            dateFrom = filter.DateFrom.Value;
-                        }
-                    }
-
-                    if (filter.DateTo.HasValue)
-                    {
-                        if (filter.DateTo.Value < dateTo)
-                        {
-                            dateTo = filter.DateTo.Value;
-                        }
-                    }
-
-                    // if dateTo is more than a month away from dateFrom: do more things
-                    if (dateTo.AddMonths(-1) > dateFrom)
-                    {
-                        splitByMonth = true;
-                    }
-                }
-                else
+                Tuple<DateTime, DateTime, bool> dateFilteredInfo = InvoiceBo.GetDateFilteredInfo(invoiceQuery, filter);
+                if (dateFilteredInfo == null)
                 {
                     return null;
                 }
+
+                DateTime dateFrom = dateFilteredInfo.Item1;
+                DateTime dateTo = dateFilteredInfo.Item2;
+                bool splitByMonth = dateFilteredInfo.Item3;
 
                 while (dateFrom <= dateTo)
                 {
@@ -279,7 +205,9 @@ namespace Cpi.Application.BusinessObjects.Other
 
         public List<Tuple<string, int, int>> GetProducts(ReportDateFilter filter)
         {
-            IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetDateFilteredQuery(filter);
+            IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetListQuery();
+            invoiceQuery = InvoiceBo.GetDateFilteredQuery(invoiceQuery, filter);
+
             IQueryable<LookUpCommodityDm> commodityQuery = LookUpBo.GetListQuery<LookUpCommodityDm>();
 
             List<Tuple<string, int, int>> dtos = (from a in commodityQuery

@@ -20,24 +20,26 @@
                         </select>
                     </dd>
                 </dl>
-            </section>
-            <section>
-                <dl class="dl-S">
-                    <dt>Create Date (From)</dt>
+                <dl>
+                    <dt>Created Date</dt>
                     <dd>
-                        <input ng-model="scopeData.filter.AdvancedSearch.CreatedDateFrom" date-input />
+                        <select ng-model="scopeData.filter.AdvancedSearch.ReportDateFilter.ReportDateId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.ReportDates">
+                            <option></option>
+                        </select>
                     </dd>
                 </dl>
-                <dl class="dl-S">
-                    <dt>Create Date (To)</dt>
+
+                <dl ng-show="scopeData.filter.AdvancedSearch.ReportDateFilter.ReportDateId === modelData.ReportDateIdEnums.AllTimeOrSelectDateRange" class="dl-S">
+                    <dt>Created Date: From</dt>
                     <dd>
-                        <input ng-model="scopeData.filter.AdvancedSearch.CreatedDateTo" date-input />
+                        <input ng-model="scopeData.filter.AdvancedSearch.ReportDateFilter.DateFrom" date-input />
                     </dd>
                 </dl>
-                <dl class="dl-S">
-                    <dt>Created Today Only</dt>
+
+                <dl ng-show="scopeData.filter.AdvancedSearch.ReportDateFilter.ReportDateId === modelData.ReportDateIdEnums.AllTimeOrSelectDateRange" class="dl-S">
+                    <dt>Created Date: To</dt>
                     <dd>
-                        <input ng-model="scopeData.filter.AdvancedSearch.CreatedTodayOnly" type="checkbox" />
+                        <input ng-model="scopeData.filter.AdvancedSearch.ReportDateFilter.DateTo" date-input />
                     </dd>
                 </dl>
             </section>

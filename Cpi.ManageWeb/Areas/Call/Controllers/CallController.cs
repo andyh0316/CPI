@@ -60,7 +60,9 @@ namespace Cpi.ManageWeb.Areas.Call.Controllers
                     Id = a.Id,
                     Name = a.Nickname + " (" + a.Fullname + ")"
                 }).ToList(),
-                CallStatusIdEnums = EnumHelper.GetEnumIntList(typeof(LookUpCallStatusDm.LookUpIds))
+                ReportDates = ReportDateFilter.GetSelectList(),
+                CallStatusIdEnums = EnumHelper.GetEnumIntList(typeof(LookUpCallStatusDm.LookUpIds)),
+                ReportDateIdEnums = EnumHelper.GetEnumIntList(typeof(ReportDateFilter.ReportDateIdEnums))
             };
 
             return JsonModel(model);

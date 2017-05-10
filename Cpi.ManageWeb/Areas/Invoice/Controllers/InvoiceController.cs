@@ -59,7 +59,9 @@ namespace Cpi.ManageWeb.Areas.Invoice.Controllers
                     Id = a.Id,
                     Name = a.Nickname + " (" + a.Fullname + ")"
                 }).ToList(),
-                InvoiceStatusIdEnums = EnumHelper.GetEnumIntList(typeof(LookUpInvoiceStatusDm.LookUpIds))
+                ReportDates = ReportDateFilter.GetSelectList(),
+                InvoiceStatusIdEnums = EnumHelper.GetEnumIntList(typeof(LookUpInvoiceStatusDm.LookUpIds)),
+                ReportDateIdEnums = EnumHelper.GetEnumIntList(typeof(ReportDateFilter.ReportDateIdEnums))
             };
 
             return JsonModel(model);

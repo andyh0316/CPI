@@ -315,17 +315,30 @@ baseModule.controller('ListBaseController', ['$scope', '$controller', 'baseBo', 
 
     $scope.getAdvancedSearchCount = function () {
         if ($scope.scopeData.filter.AdvancedSearch) {
-            var object = $scope.scopeData.filter.AdvancedSearch;
             var count = 0;
-            for (var property in object) {
-                if (object.hasOwnProperty(property)) {
-                    if (object[property]) {
+            var object = $scope.scopeData.filter.AdvancedSearch;
+            return $scope.getAdvancedSearchCountRecursionFunction(object);
+        }
+    };
+
+    $scope.getAdvancedSearchCountRecursionFunction = function (object) {
+        var count = 0;
+        for (var property in object) {
+            if (object.hasOwnProperty(property)) {
+                if (object[property]) {
+                    if (typeof object[property] === 'object')
+                    {
+                        console.log(1);
+                        count = count + $scope.getAdvancedSearchCountRecursionFunction(object[property]);
+                    }
+                    else
+                    {
                         count++;
                     }
                 }
             }
-            return count;
         }
+        return count;
     };
 
     $scope.$watch('showAdvancedSearch', function () {

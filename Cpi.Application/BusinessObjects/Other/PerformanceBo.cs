@@ -20,7 +20,9 @@ namespace Cpi.Application.BusinessObjects.Other
 
         public List<Tuple<string, int>> GetPerformanceForOperators(ReportDateFilter filter)
         {
-            IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetDateFilteredQuery(filter);
+            IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetListQuery();
+
+            invoiceQuery = InvoiceBo.GetDateFilteredQuery(invoiceQuery, filter);
 
             invoiceQuery = invoiceQuery.Where(a => a.StatusId == (int)LookUpInvoiceStatusDm.LookUpIds.Sold);
 
@@ -42,7 +44,9 @@ namespace Cpi.Application.BusinessObjects.Other
 
         public List<Tuple<string, int, int>> GetPerformanceForDeliverStaff(ReportDateFilter filter)
         {
-            IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetDateFilteredQuery(filter);
+            IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetListQuery();
+
+            invoiceQuery = InvoiceBo.GetDateFilteredQuery(invoiceQuery, filter);
 
             invoiceQuery = invoiceQuery.Where(a => a.StatusId == (int)LookUpInvoiceStatusDm.LookUpIds.Sold);
 
