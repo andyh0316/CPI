@@ -102,7 +102,7 @@ namespace Cpi.Application.BusinessObjects.Base
 
         public IQueryable<T> GetDateFilteredQuery(IQueryable<T> query, ReportDateFilter filter)
         {
-            if (filter.ReportDateId.HasValue)
+            if (filter != null && filter.ReportDateId.HasValue)
             {
                 if (filter.ReportDateId == (int)ReportDateFilter.ReportDateIdEnums.Today)
                 {

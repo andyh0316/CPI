@@ -274,10 +274,10 @@ $secondary-menu-height: 40px;
 
 .container {
     position: relative;
-    padding: 20px 30px;
     height: 100%;
     overflow: auto;
     @extend %border-box;
+    padding: 20px 30px;
 }
 
 /**** LIST AND TABLE ****/
@@ -397,7 +397,8 @@ $secondary-menu-height: 40px;
             }
 
             &.action {
-                width: 50px;
+                width: 100px;
+                text-align: center;
             }
 
             &.address {
@@ -1404,5 +1405,16 @@ textarea {
     .chart-wrapper {
         //height: 300px;
         //height: 300px;
+    }
+}
+
+#expense-list {
+    .zero-or-negative {
+        color: $error-color;
+        font-weight: bold;
+    }
+
+    .expense {
+        font-weight: bold;
     }
 }

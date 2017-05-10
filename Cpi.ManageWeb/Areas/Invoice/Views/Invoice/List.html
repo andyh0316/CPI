@@ -1,176 +1,178 @@
-﻿<div ng-show="state.current.name == 'List'" class="secondary-menu">
-    <div class="title-container">
-        <div class="title">Invoices</div>
-        <div class="list-total">{{model.ListLoadCalculator.Total}}</div>
-    </div>
-
-    <div class="filters-container">
-        <input search-box type="text" class="search-box" ng-model="scopeData.filter.SearchString" placeholder="Search" />
-        <button ng-show="!showAdvancedSearch" ng-click="showAdvancedSearch = true" class="button">
-            Advanced
-           <span ng-show="getAdvancedSearchCount() > 0"> ({{getAdvancedSearchCount()}})</span>
-        </button>
-        <div advanced-search ng-show="showAdvancedSearch" advanced-search-undo="advancedSearchUndo()" class="advanced-search">
-            <section>
-                <dl class="dl-S">
-                    <dt>Status</dt>
-                    <dd>
-                        <select ng-model="scopeData.filter.AdvancedSearch.StatusId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.InvoiceStatuses">
-                            <option></option>
-                        </select>
-                    </dd>
-                </dl>
-                <dl>
-                    <dt>Created Date</dt>
-                    <dd>
-                        <select ng-model="scopeData.filter.AdvancedSearch.ReportDateFilter.ReportDateId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.ReportDates">
-                            <option></option>
-                        </select>
-                    </dd>
-                </dl>
-
-                <dl ng-show="scopeData.filter.AdvancedSearch.ReportDateFilter.ReportDateId === modelData.ReportDateIdEnums.AllTimeOrSelectDateRange" class="dl-S">
-                    <dt>Created Date: From</dt>
-                    <dd>
-                        <input ng-model="scopeData.filter.AdvancedSearch.ReportDateFilter.DateFrom" date-input />
-                    </dd>
-                </dl>
-
-                <dl ng-show="scopeData.filter.AdvancedSearch.ReportDateFilter.ReportDateId === modelData.ReportDateIdEnums.AllTimeOrSelectDateRange" class="dl-S">
-                    <dt>Created Date: To</dt>
-                    <dd>
-                        <input ng-model="scopeData.filter.AdvancedSearch.ReportDateFilter.DateTo" date-input />
-                    </dd>
-                </dl>
-            </section>
-
-            <div class="buttons">
-                <button class="button" ng-click="showAdvancedSearch = false; advancedSearchUndo();">Close</button>
-                <button class="button main" ng-click="advancedSearchReset()">Reset</button>
-                <button class="button main" ng-click="advancedSearchGo()">Search</button>
-            </div>
+﻿<div class="list-container">
+    <div ng-show="state.current.name == 'List'" class="secondary-menu">
+        <div class="title-container">
+            <div class="title">Invoices</div>
+            <div class="list-total">{{model.ListLoadCalculator.Total}}</div>
         </div>
-    </div>
 
-    <div class="buttons">
-        <button ng-show="isEditingAny()" class="button" ng-click="cancelAll()">Cancel</button>
-        <button ng-show="isEditingAny()" class="button main" ng-click="save()">Save</button>
-        <button class="button main" ng-click="create()">+ Create</button>
-    </div>
-</div>
-
-<div class="list-container">
-    <table>
-        <thead>
-            <tr>
-                <th class="date-time"><a ng-class="getSortOrder('CreatedDate')" ng-click="sort('CreatedDate')">Created 生成日期</a></th>
-                <th>Phone 顾客电话</th>
-                <th ng-class="{commodities: isEditingAny()}">Product 产品</th>
-                <th><a ng-class="getSortOrder('Operator.NickName')" ng-click="sort('Operator.NickName')">Operator 电话推销员</a></th>
-                <th><a ng-class="getSortOrder('DeliveryStaff.NickName')" ng-click="sort('DeliveryStaff.NickName')">Deliverer 递送员</a></th>
-                <th class="right-content"><a ng-class="getSortOrder('TotalPrice')" ng-click="sort('TotalPrice')">Cost 总价格</a></th>
-                <th class="center-content"><a ng-class="getSortOrder('Status.Name')" ng-click="sort('Status.Name')">Status</a></th>
-                <th class="action"></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="record in model.Records" ng-class="{deleting: record.Deleted}">
-                <td class="date-time">
-                    <dl>
-                        <dd>{{record.CreatedDate | shortDateWithTime}}</dd>
-                    </dl>
-                </td>
-                <td>
-                    <dl>
-                        <dd ng-show="!record.isEditing">{{record.CustomerPhone}}</dd>
-                        <dd ng-show="record.isEditing">
-                            <span field-validation-error ng-show="modelState['[' + getEditingRecordIndex(record) + '].CustomerPhone']" class="field-validation-error"></span>
-                            <input ng-model="record.CustomerPhone" />
-                        </dd>                           
-                    </dl>
-                </td>
-                <td ng-class="{commodities: isEditingAny()}">
-                    <dl>
-                        <dd ng-show="!record.isEditing">
-                            {{record.InvoiceCommodities | objectCommodities}}
-                        </dd>
-                        <dd ng-show="record.isEditing" class="overflow-visible">
-                            <span field-validation-error ng-show="modelState['[' + getEditingRecordIndex(record) + '].InvoiceCommodities']" class="field-validation-error"></span>
-                            <div commodities-edit ng-model="record.InvoiceCommodities" commodities="modelData.Commodities"></div>
-                        </dd>
-                    </dl>
-                </td>
-                <td>
-                    <dl>
-                        <dd ng-show="!record.isEditing">{{record.Operator.Nickname}} <span ng-show="record.Operator.Nickname">({{record.Operator.Fullname}})</span></dd>
-                        <dd ng-if="record.isEditing" class="overflow-visible">
-                            <span field-validation-error ng-show="modelState['[' + getEditingRecordIndex(record) + '].OperatorId']" class="field-validation-error"></span>
-                            <div search-drop-down class="search-drop-down"
-                                    search-object="modelData.Users"
-                                    input-string="{{record.Operator.Nickname}}"
-                                    input-key="record.OperatorId">
-                            </div>
-                        </dd>
-                    </dl>
-                </td>
-                <td>
-                    <dl>
-                        <dd ng-show="!record.isEditing">{{record.DeliveryStaff.Nickname}} <span ng-show="record.DeliveryStaff.Nickname">({{record.DeliveryStaff.Fullname}})</span></dd>
-                        <dd ng-if="record.isEditing" class="overflow-visible">
-                            <span field-validation-error ng-show="modelState['[' + getEditingRecordIndex(record) + '].DeliveryStaffId']" class="field-validation-error"></span>
-                            <div search-drop-down class="search-drop-down"
-                                    search-object="modelData.Users"
-                                    input-string="{{record.DeliveryStaff.Nickname}}"
-                                    input-key="record.DeliveryStaffId">
-                            </div>
-                        </dd>
-                    </dl>
-                </td>
-                <!--<td>
-                    <dl>
-                        <dd ng-show="!record.isEditing">{{record.DeliveryDate | shortDate}}</dd>
-                        <dd ng-show="record.isEditing">
-                            <span field-validation-error ng-show="modelState['[' + getEditingRecordIndex(record) + '].DeliveryDate']" class="field-validation-error"></span>
-                            <input ng-model="record.DeliveryDate" date-input />
-                        </dd>
-                    </dl>
-                </td>-->
-                <!--<td class="address">
-                    <dl>
-                        <dd ng-show="!record.isEditing">{{record.AddressString}}</dd>
-                        <dd ng-show="record.isEditing">
-                            <input ng-model="record.AddressString" />
-                        </dd>
-                    </dl>
-                </td>-->
-                <td class="right-content">
-                    <dl>
-                        <dd ng-show="!record.isEditing">
-                            <span ng-show="record.TotalPrice">${{record.TotalPrice | number: 2}}</span>
-                        </dd>
-                    </dl>
-                </td>
-                <td class="center-content">
-                    <dl>
-                        <dd ng-show="!record.isEditing">
-                            <span ng-show="record.StatusId === modelData.InvoiceStatusIdEnums.Sold" class="invoice-sold icon" title="Sold: Product(s) delivered to and paid by customer. 以卖出"></span>
-                            <span ng-show="record.StatusId === modelData.InvoiceStatusIdEnums.Cancelled" class="invoice-cancelled icon" title="Cancelled: Product(s) not delivered to the customer. 取消"></span>
-                        </dd>
-                        <dd ng-show="record.isEditing">
-                            <select ng-model="record.StatusId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.InvoiceStatuses">
+        <div class="filters-container">
+            <input search-box type="text" class="search-box" ng-model="scopeData.filter.SearchString" placeholder="Search" />
+            <button ng-show="!showAdvancedSearch" ng-click="showAdvancedSearch = true" class="button">
+                Advanced
+                <span ng-show="getAdvancedSearchCount() > 0"> ({{getAdvancedSearchCount()}})</span>
+            </button>
+            <div advanced-search ng-show="showAdvancedSearch" advanced-search-undo="advancedSearchUndo()" class="advanced-search">
+                <section>
+                    <dl class="dl-S">
+                        <dt>Status</dt>
+                        <dd>
+                            <select ng-model="scopeData.filter.AdvancedSearch.StatusId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.InvoiceStatuses">
                                 <option></option>
                             </select>
                         </dd>
                     </dl>
-                </td>
-                <td class="action">
-                    <div ng-show="!record.isEditing" class="edit icon" ng-click="edit(record); $event.stopPropagation();"></div>
-                    <!--<div ng-show="record.Id" class="delete icon" ng-click="record.Deleted = true; record.isEditing = true; $event.stopPropagation();"></div>-->
-                    <div ng-show="record.isEditing" class="cancel icon" ng-click="cancel(record)"; $event.stopPropagation();"></div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+                    <dl>
+                        <dt>Created Date</dt>
+                        <dd>
+                            <select ng-model="scopeData.filter.AdvancedSearch.ReportDateFilter.ReportDateId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.ReportDates">
+                                <option></option>
+                            </select>
+                        </dd>
+                    </dl>
 
-    <div ui-view class="padded ng-animate-enabled"></div>
+                    <dl ng-show="scopeData.filter.AdvancedSearch.ReportDateFilter.ReportDateId === modelData.ReportDateIdEnums.AllTimeOrSelectDateRange" class="dl-S">
+                        <dt>Created Date: From</dt>
+                        <dd>
+                            <input ng-model="scopeData.filter.AdvancedSearch.ReportDateFilter.DateFrom" date-input />
+                        </dd>
+                    </dl>
+
+                    <dl ng-show="scopeData.filter.AdvancedSearch.ReportDateFilter.ReportDateId === modelData.ReportDateIdEnums.AllTimeOrSelectDateRange" class="dl-S">
+                        <dt>Created Date: To</dt>
+                        <dd>
+                            <input ng-model="scopeData.filter.AdvancedSearch.ReportDateFilter.DateTo" date-input />
+                        </dd>
+                    </dl>
+                </section>
+
+                <div class="buttons">
+                    <button class="button" ng-click="showAdvancedSearch = false; advancedSearchUndo();">Close</button>
+                    <button class="button main" ng-click="advancedSearchReset()">Reset</button>
+                    <button class="button main" ng-click="advancedSearchGo()">Search</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="buttons">
+            <button ng-show="isEditingAny()" class="button" ng-click="cancelAll()">Cancel</button>
+            <button ng-show="isEditingAny()" class="button main" ng-click="save()">Save</button>
+            <button class="button main" ng-click="create()">+ Create</button>
+        </div>
+    </div>
+
+    <div class="list-container">
+        <table>
+            <thead>
+                <tr>
+                    <th class="date-time"><a ng-class="getSortOrder('CreatedDate')" ng-click="sort('CreatedDate')">Created 生成日期</a></th>
+                    <th>Phone 顾客电话</th>
+                    <th ng-class="{commodities: isEditingAny()}">Product 产品</th>
+                    <th><a ng-class="getSortOrder('Operator.NickName')" ng-click="sort('Operator.NickName')">Operator 电话推销员</a></th>
+                    <th><a ng-class="getSortOrder('DeliveryStaff.NickName')" ng-click="sort('DeliveryStaff.NickName')">Deliverer 递送员</a></th>
+                    <th class="right-content"><a ng-class="getSortOrder('TotalPrice')" ng-click="sort('TotalPrice')">Cost 总价格</a></th>
+                    <th class="center-content"><a ng-class="getSortOrder('Status.Name')" ng-click="sort('Status.Name')">Status</a></th>
+                    <th class="action"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="record in model.Records" ng-class="{deleting: record.Deleted}">
+                    <td class="date-time">
+                        <dl>
+                            <dd>{{record.CreatedDate | shortDateWithTime}}</dd>
+                        </dl>
+                    </td>
+                    <td>
+                        <dl>
+                            <dd ng-show="!record.isEditing">{{record.CustomerPhone}}</dd>
+                            <dd ng-show="record.isEditing">
+                                <span field-validation-error ng-show="modelState['[' + getEditingRecordIndex(record) + '].CustomerPhone']" class="field-validation-error"></span>
+                                <input ng-model="record.CustomerPhone" />
+                            </dd>
+                        </dl>
+                    </td>
+                    <td ng-class="{commodities: isEditingAny()}">
+                        <dl>
+                            <dd ng-show="!record.isEditing">
+                                {{record.InvoiceCommodities | objectCommodities}}
+                            </dd>
+                            <dd ng-show="record.isEditing" class="overflow-visible">
+                                <span field-validation-error ng-show="modelState['[' + getEditingRecordIndex(record) + '].InvoiceCommodities']" class="field-validation-error"></span>
+                                <div commodities-edit ng-model="record.InvoiceCommodities" commodities="modelData.Commodities"></div>
+                            </dd>
+                        </dl>
+                    </td>
+                    <td>
+                        <dl>
+                            <dd ng-show="!record.isEditing">{{record.Operator.Nickname}} <span ng-show="record.Operator.Nickname">({{record.Operator.Fullname}})</span></dd>
+                            <dd ng-if="record.isEditing" class="overflow-visible">
+                                <span field-validation-error ng-show="modelState['[' + getEditingRecordIndex(record) + '].OperatorId']" class="field-validation-error"></span>
+                                <div search-drop-down class="search-drop-down"
+                                     search-object="modelData.Users"
+                                     input-string="{{record.Operator.Nickname}}"
+                                     input-key="record.OperatorId">
+                                </div>
+                            </dd>
+                        </dl>
+                    </td>
+                    <td>
+                        <dl>
+                            <dd ng-show="!record.isEditing">{{record.DeliveryStaff.Nickname}} <span ng-show="record.DeliveryStaff.Nickname">({{record.DeliveryStaff.Fullname}})</span></dd>
+                            <dd ng-if="record.isEditing" class="overflow-visible">
+                                <span field-validation-error ng-show="modelState['[' + getEditingRecordIndex(record) + '].DeliveryStaffId']" class="field-validation-error"></span>
+                                <div search-drop-down class="search-drop-down"
+                                     search-object="modelData.Users"
+                                     input-string="{{record.DeliveryStaff.Nickname}}"
+                                     input-key="record.DeliveryStaffId">
+                                </div>
+                            </dd>
+                        </dl>
+                    </td>
+                    <!--<td>
+                        <dl>
+                            <dd ng-show="!record.isEditing">{{record.DeliveryDate | shortDate}}</dd>
+                            <dd ng-show="record.isEditing">
+                                <span field-validation-error ng-show="modelState['[' + getEditingRecordIndex(record) + '].DeliveryDate']" class="field-validation-error"></span>
+                                <input ng-model="record.DeliveryDate" date-input />
+                            </dd>
+                        </dl>
+                    </td>-->
+                    <!--<td class="address">
+                        <dl>
+                            <dd ng-show="!record.isEditing">{{record.AddressString}}</dd>
+                            <dd ng-show="record.isEditing">
+                                <input ng-model="record.AddressString" />
+                            </dd>
+                        </dl>
+                    </td>-->
+                    <td class="right-content">
+                        <dl>
+                            <dd ng-show="!record.isEditing">
+                                <span ng-show="record.TotalPrice">${{record.TotalPrice | number: 2}}</span>
+                            </dd>
+                        </dl>
+                    </td>
+                    <td class="center-content">
+                        <dl>
+                            <dd ng-show="!record.isEditing">
+                                <span ng-show="record.StatusId === modelData.InvoiceStatusIdEnums.Sold" class="invoice-sold icon" title="Sold: Product(s) delivered to and paid by customer. 以卖出"></span>
+                                <span ng-show="record.StatusId === modelData.InvoiceStatusIdEnums.Cancelled" class="invoice-cancelled icon" title="Cancelled: Product(s) not delivered to the customer. 取消"></span>
+                            </dd>
+                            <dd ng-show="record.isEditing">
+                                <select ng-model="record.StatusId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.InvoiceStatuses">
+                                    <option></option>
+                                </select>
+                            </dd>
+                        </dl>
+                    </td>
+                    <td class="action">
+                        <div ng-show="!record.isEditing" class="edit icon" ng-click="edit(record); $event.stopPropagation();"></div>
+                        <!--<div ng-show="record.Id" class="delete icon" ng-click="record.Deleted = true; record.isEditing = true; $event.stopPropagation();"></div>-->
+                        <div ng-show="record.isEditing" class="cancel icon" ng-click="cancel(record)" ; $event.stopPropagation();"></div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div ui-view class="ng-animate-enabled"></div>
+    </div>
 </div>

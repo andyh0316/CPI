@@ -25,11 +25,6 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
                 }
             }
         })
-        .state('List.Import', {
-            url: '/Import/',
-            templateUrl: '/Areas/Expense/Views/Expense/Import.html',
-            controller: 'ImportController'
-        })
 }]);
 
 app.controller('ListController', ['$scope', '$controller', '$state', 'baseBo', 'model', 'scopeData', 'modelData', function ($scope, $controller, $state, baseBo, model, scopeData, modelData) {

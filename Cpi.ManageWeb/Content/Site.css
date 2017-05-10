@@ -209,9 +209,9 @@ body {
 
 .container {
   position: relative;
-  padding: 20px 30px;
   height: 100%;
-  overflow: auto; }
+  overflow: auto;
+  padding: 20px 30px; }
 
 /**** LIST AND TABLE ****/
 .list-container {
@@ -289,7 +289,8 @@ body {
     .list-container table td.number, .list-container table th.number {
       width: 50px; }
     .list-container table td.action, .list-container table th.action {
-      width: 50px; }
+      width: 100px;
+      text-align: center; }
     .list-container table td.address, .list-container table th.address {
       width: 200px; }
     .list-container table td.commodities, .list-container table th.commodities {
@@ -989,4 +990,11 @@ textarea {
   margin-bottom: 50px; }
   .chart .title {
     margin-bottom: 20px; }
+
+#expense-list .zero-or-negative {
+  color: #AD0606;
+  font-weight: bold; }
+
+#expense-list .expense {
+  font-weight: bold; }
 

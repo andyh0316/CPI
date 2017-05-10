@@ -1,5 +1,6 @@
 ﻿using Cpi.Application.DataModels.Base;
 using Cpi.Compass.Application.BusinessRules;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Cpi.Application.DataModels
 {
@@ -10,7 +11,14 @@ namespace Cpi.Application.DataModels
         public string Name { get; set; }
 
         [CpiRequired]
+        [CpiGreaterThanZero]
         public decimal? Expense { get; set; }
+
+        [NotMapped]
+        public decimal? PeriodBalance { get; set; }
+
+        [NotMapped]
+        public decimal? TotalBalance { get; set; }
     }
 
     public class ExpenseMap : BaseMap<ExpenseDm>
