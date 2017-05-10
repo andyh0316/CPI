@@ -1,33 +1,33 @@
-﻿var app = angular.module('FinanceApp', ['AngularBaseModule', 'chart.js', 'ui.router']);
+﻿var app = angular.module('RevenueApp', ['AngularBaseModule', 'chart.js', 'ui.router']);
 
 app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
-    $urlRouterProvider.when("", "/Finance");
+    $urlRouterProvider.when("", "/Revenue");
 
-    var financeScopeData = {
+    var revenueScopeData = {
         filter: { ReportDateId: 3 },
-        httpRequest: { method: 'POST', url: '/Finance/Finance/GetFinance' }
+        httpRequest: { method: 'POST', url: '/Revenue/Revenue/GetRevenue' }
     };
 
     $stateProvider
-        .state('Finance', {
-            url: '/Finance',
-            templateUrl: '/Areas/Finance/Views/Finance/Finance.html',
-            controller: 'FinanceController',
+        .state('Revenue', {
+            url: '/Revenue',
+            templateUrl: '/Areas/Revenue/Views/Revenue/Revenue.html',
+            controller: 'RevenueController',
             resolve: {
                 model: ['$stateParams', 'baseBo', function ($stateParams, baseBo) {
-                    return baseBo.httpRequest(financeScopeData.httpRequest.method, financeScopeData.httpRequest.url, financeScopeData.filter);
+                    return baseBo.httpRequest(revenueScopeData.httpRequest.method, revenueScopeData.httpRequest.url, revenueScopeData.filter);
                 }],
                 modelData: ['$stateParams', 'baseBo', function ($stateParams, baseBo) {
-                    return baseBo.httpRequest('GET', '/Finance/Finance/GetFinanceData');
+                    return baseBo.httpRequest('GET', '/Revenue/Revenue/GetRevenueData');
                 }],
                 scopeData: function () {
-                    return financeScopeData;
+                    return revenueScopeData;
                 }
             }
         })
 }]);
 
-app.controller('FinanceController', ['$scope', '$controller', '$state', 'baseBo', 'model', 'scopeData', 'modelData', function ($scope, $controller, $state, baseBo, model, scopeData, modelData) {
+app.controller('RevenueController', ['$scope', '$controller', '$state', 'baseBo', 'model', 'scopeData', 'modelData', function ($scope, $controller, $state, baseBo, model, scopeData, modelData) {
     angular.extend(this, $controller('BaseController', { $scope: $scope }));
     
     $scope.scopeData = scopeData;

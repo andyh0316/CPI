@@ -221,8 +221,8 @@
     <Compile Include="Areas\Invoice\Controllers\InvoiceController.cs" />
     <Compile Include="Areas\Call\Controllers\CallController.cs" />
     <Compile Include="Areas\Call\CallAreaRegistration.cs" />
-    <Compile Include="Areas\Finance\Controllers\FinanceController.cs" />
-    <Compile Include="Areas\Finance\FinanceAreaRegistration.cs" />
+    <Compile Include="Areas\Revenue\Controllers\RevenueController.cs" />
+    <Compile Include="Areas\Revenue\RevenueAreaRegistration.cs" />
     <Compile Include="Attributes\CpiAuthenticateAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Base\BaseController.cs" />
@@ -239,8 +239,8 @@
     <Content Include="Areas\Performance\Views\Performance\PerformanceApp.js" />
     <Content Include="Areas\Invoice\Views\Invoice\InvoiceApp.js" />
     <Content Include="Areas\Invoice\Views\Invoice\List.html" />
-    <Content Include="Areas\Finance\Views\Finance\FinanceApp.js" />
-    <Content Include="Areas\Finance\Views\Finance\Finance.html" />
+    <Content Include="Areas\Revenue\Views\Revenue\RevenueApp.js" />
+    <Content Include="Areas\Revenue\Views\Revenue\Revenue.html" />
     <Content Include="Content\Fonts\Fonts.css">
       <DependentUpon>Fonts.scss</DependentUpon>
     </Content>
@@ -290,8 +290,8 @@
     <Content Include="Content\Fonts\Fonts.scss" />
     <Content Include="Areas\Call\Views\Web.config" />
     <Content Include="Areas\Call\Views\Call\Import.html" />
-    <Content Include="Areas\Finance\Views\Web.config" />
-    <Content Include="Areas\Finance\Views\Finance\Index.cshtml" />
+    <Content Include="Areas\Revenue\Views\Web.config" />
+    <Content Include="Areas\Revenue\Views\Revenue\Index.cshtml" />
     <Content Include="Areas\Invoice\Views\Invoice\Index.cshtml" />
     <Content Include="Areas\Invoice\Views\Web.config" />
     <Content Include="Areas\Performance\Views\Performance\Index.cshtml" />

@@ -56,8 +56,8 @@ namespace Cpi.ManageWeb
             bundles.Add(new ScriptBundle("~/bundles/invoice/invoice").Include(
                         "~/Areas/Invoice/Views/Invoice/InvoiceApp.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/finance/finance")
-                .Include("~/Areas/Finance/Views/Finance/FinanceApp.js")
+            bundles.Add(new ScriptBundle("~/bundles/revenue/revenue")
+                .Include("~/Areas/Revenue/Views/Revenue/RevenueApp.js")
                 .Include(chartBundles));
 
             bundles.Add(new ScriptBundle("~/bundles/performance/performance")

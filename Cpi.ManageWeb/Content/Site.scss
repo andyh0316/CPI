@@ -1350,7 +1350,7 @@ textarea {
     pointer-events: none;
 }
 
-#finance {
+#revenue {
     .results-for-dates {
         font-size: 30px;
         margin-bottom: 15px;
@@ -1367,7 +1367,7 @@ textarea {
             //width: 50px;
             flex-grow: 1;
             flex-basis: 0;
-            height: 150px;
+            height: 120px;
             border: 1px solid $light-border-color;
             background-color: whitesmoke;
             text-align: center;
@@ -1379,7 +1379,7 @@ textarea {
             }
 
             .content {
-                margin-top: 30px;
+                margin-top: 20px;
                 font-size: 26px;
             }
         }

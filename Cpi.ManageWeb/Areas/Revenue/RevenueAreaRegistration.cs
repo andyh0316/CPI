@@ -1,22 +1,22 @@
 ﻿using System.Web.Mvc;
 
-namespace Cpi.ManageWeb.Areas.Finance
+namespace Cpi.ManageWeb.Areas.Revenue
 {
-    public class FinanceAreaRegistration : AreaRegistration
+    public class RevenueAreaRegistration : AreaRegistration
     {
         public override string AreaName
         {
             get
             {
-                return "Finance";
+                return "Revenue";
             }
         }
 
         public override void RegisterArea(AreaRegistrationContext context)
         {
             context.MapRoute(
-                "Finance_default",
-                "Finance/{controller}/{action}/{id}",
+                "Revenue_default",
+                "Revenue/{controller}/{action}/{id}",
                 new { action = "Index", id = UrlParameter.Optional }
             );
         }

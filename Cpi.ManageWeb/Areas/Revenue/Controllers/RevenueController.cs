@@ -9,17 +9,17 @@ using Cpi.ManageWeb.Controllers.Base;
 using System.Collections.Generic;
 using System.Web.Mvc;
 
-namespace Cpi.ManageWeb.Areas.Finance.Controllers
+namespace Cpi.ManageWeb.Areas.Revenue.Controllers
 {
     [CpiAuthenticate((int)LookUpUserRoleDm.LookUpIds.Admin)]
-    public class FinanceController : BaseController
+    public class RevenueController : BaseController
     {
         private InvoiceBo InvoiceBo;
-        private FinanceBo FinanceBo;
-        public FinanceController(InvoiceBo InvoiceBo, FinanceBo FinanceBo)
+        private RevenueBo RevenueBo;
+        public RevenueController(InvoiceBo InvoiceBo, RevenueBo RevenueBo)
         {
             this.InvoiceBo = InvoiceBo;
-            this.FinanceBo = FinanceBo;
+            this.RevenueBo = RevenueBo;
         }
 
         public ActionResult Index()
@@ -28,7 +28,7 @@ namespace Cpi.ManageWeb.Areas.Finance.Controllers
         }
 
         [HttpPost]
-        public ContentResult GetFinance(ReportDateFilter filter)
+        public ContentResult GetRevenue(ReportDateFilter filter)
         {
             if (filter == null)
             {
@@ -41,21 +41,21 @@ namespace Cpi.ManageWeb.Areas.Finance.Controllers
             var model = new
             {
                 Filter = filter,
-                Revenue = FinanceBo.GetRevenue(filter),
-                ProductSoldCount = FinanceBo.GetProductSoldCount(filter),
-                ProductCancelledCount = FinanceBo.GetProductCancelledCount(filter),
-                InvoiceSoldCount = FinanceBo.GetInvoiceSoldCount(filter),
-                InvoiceCancelledCount = FinanceBo.GetInvoiceCancelledCount(filter),
-                ReceivedCallCount = FinanceBo.GetReceivedCallCount(filter),
-                Revenues = FinanceBo.GetRevenues(filter),
-                Calls = FinanceBo.GetCalls(filter)
+                Revenue = RevenueBo.GetRevenue(filter),
+                ProductSoldCount = RevenueBo.GetProductSoldCount(filter),
+                ProductCancelledCount = RevenueBo.GetProductCancelledCount(filter),
+                InvoiceSoldCount = RevenueBo.GetInvoiceSoldCount(filter),
+                InvoiceCancelledCount = RevenueBo.GetInvoiceCancelledCount(filter),
+                ReceivedCallCount = RevenueBo.GetReceivedCallCount(filter),
+                Revenues = RevenueBo.GetRevenues(filter),
+                Calls = RevenueBo.GetCalls(filter)
             };
 
             return JsonModel(model);
         } 
 
         [HttpGet]
-        public ContentResult GetFinanceData()
+        public ContentResult GetRevenueData()
         {
             var model = new
             {

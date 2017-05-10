@@ -7,11 +7,11 @@ using System.Linq;
 
 namespace Cpi.Application.BusinessObjects.Other
 {
-    public class FinanceBo
+    public class RevenueBo
     {
         private InvoiceBo InvoiceBo;
         private CallBo CallBo;
-        public FinanceBo(InvoiceBo InvoiceBo, CallBo CallBo)
+        public RevenueBo(InvoiceBo InvoiceBo, CallBo CallBo)
         {
             this.InvoiceBo = InvoiceBo;
             this.CallBo = CallBo;

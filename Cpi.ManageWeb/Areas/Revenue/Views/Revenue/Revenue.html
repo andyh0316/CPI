@@ -1,7 +1,7 @@
-﻿<div id="finance" class="container">
-    <div ng-show="state.current.name == 'Finance'" class="secondary-menu">
+﻿<div id="revenue" class="container">
+    <div ng-show="state.current.name == 'Revenue'" class="secondary-menu">
         <div class="title-container">
-            <div class="title">Finance</div>
+            <div class="title">Revenue</div>
         </div>
         <div class="filters-container">
             <section>
@@ -29,7 +29,7 @@
     <div class="title">Overview</div>
     <div class="panels">
         <div class="panel">
-            <div class="content">${{model.Revenue | number: 2}}</div>
+            <div class="content">${{model.Revenue}}</div>
             <div class="text">Revenue</div>
             <div class="text">收入</div>
         </div>
@@ -64,7 +64,7 @@
         <div class="title">Revenue 收入</div>
 
         <div class="chart-wrapper">
-            <canvas class="chart chart-bar" chart-data="revenueNumbers" chart-labels="revenueDates" height="100" chart-options="generalChartOptions"></canvas>
+            <canvas class="chart chart-bar" chart-data="revenueNumbers" chart-labels="revenueDates" height="70" chart-options="generalChartOptions"></canvas>
         </div>
     </div>
 
@@ -72,7 +72,7 @@
         <div class="title">Calls vs Sold Invoices 外来电话与卖出订单比例</div>
 
         <div class="chart-wrapper">
-            <canvas class="chart chart-bar" chart-data="callCounts" chart-labels="callDates" height="100" chart-options="generalChartOptions"></canvas>
+            <canvas class="chart chart-bar" chart-data="callCounts" chart-labels="callDates" height="70" chart-options="generalChartOptions"></canvas>
         </div>
     </div>
 </div>
