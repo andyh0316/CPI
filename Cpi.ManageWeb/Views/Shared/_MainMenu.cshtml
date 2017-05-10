@@ -17,9 +17,13 @@
             <i class="material-icons">storage</i>
             <span class="text">Invoices 订单</span>
         </a>
-        <a href="/Revenue/Revenue/" class="menu-item @(currentArea == "Revenue" ? "selected" : "") @(roleId != (int)LookUpUserRoleDm.LookUpIds.Admin ? "not-authorized" : "")">
+        <a href="/Expense/Expense/" class="menu-item @(currentArea == "Expense" ? "selected" : "") @(roleId != (int)LookUpUserRoleDm.LookUpIds.Admin ? "not-authorized" : "")">
+            <i class="material-icons">insert_photo</i>
+            <span class="text">Expense 支出</span>
+        </a>
+        <a href="/Finance/Finance/" class="menu-item @(currentArea == "Finance" ? "selected" : "") @(roleId != (int)LookUpUserRoleDm.LookUpIds.Admin ? "not-authorized" : "")">
             <i class="material-icons">monetization_on</i>
-            <span class="text">Revenue 收入</span>
+            <span class="text">Finance 财务</span>
         </a>
         <a href="/Performance/Performance/" class="menu-item @(currentArea == "Performance" ? "selected" : "") @(roleId != (int)LookUpUserRoleDm.LookUpIds.Admin && roleId != (int)LookUpUserRoleDm.LookUpIds.DataSpecialist ? "not-authorized" : "")">
             <i class="material-icons">local_library</i>

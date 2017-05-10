@@ -8,12 +8,12 @@ using System.Linq;
 
 namespace Cpi.Application.BusinessObjects.Other
 {
-    public class RevenueBo
+    public class FinanceBo
     {
         private InvoiceBo InvoiceBo;
         private CallBo CallBo;
         private LookUpBo LookUpBo;
-        public RevenueBo(InvoiceBo InvoiceBo, CallBo CallBo, LookUpBo LookUpBo)
+        public FinanceBo(InvoiceBo InvoiceBo, CallBo CallBo, LookUpBo LookUpBo)
         {
             this.InvoiceBo = InvoiceBo;
             this.CallBo = CallBo;
@@ -110,7 +110,7 @@ namespace Cpi.Application.BusinessObjects.Other
         {
             IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetListQuery().Where(a => a.StatusId == (int)LookUpInvoiceStatusDm.LookUpIds.Sold);
 
-            List<Tuple<string, decimal>> revenues = new List<Tuple<string, decimal>>();
+            List<Tuple<string, decimal>> finances = new List<Tuple<string, decimal>>();
 
             if (filter.ReportDateId.HasValue)
             {
@@ -176,14 +176,14 @@ namespace Cpi.Application.BusinessObjects.Other
                     DateTime dateAfter = (splitByMonth) ? dateFrom.AddMonths(1) : dateFrom.AddDays(1);
                     string dateDisplayFormat = (splitByMonth) ? "MM.yyyy" : "dd.MM.yyyy";
 
-                    decimal revenue = invoiceQuery.Where(a => a.CreatedDate >= dateFrom && a.CreatedDate < dateAfter)
+                    decimal finance = invoiceQuery.Where(a => a.CreatedDate >= dateFrom && a.CreatedDate < dateAfter)
                                                       .Select(a => a.TotalPrice.Value).DefaultIfEmpty(0).Sum();
-                    revenues.Add(new Tuple<string, decimal>(dateFrom.ToString(dateDisplayFormat), revenue));
+                    finances.Add(new Tuple<string, decimal>(dateFrom.ToString(dateDisplayFormat), finance));
 
                     dateFrom = (splitByMonth) ? dateFrom.AddMonths(1) : dateFrom.AddDays(1);
                 }
 
-                return revenues;
+                return finances;
             }
 
             return null;

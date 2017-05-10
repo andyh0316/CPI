@@ -56,12 +56,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessObjects\Base\BaseBo.cs" />
+    <Compile Include="BusinessObjects\ExpenseBo.cs" />
     <Compile Include="BusinessObjects\InvoiceCommodityBo.cs" />
     <Compile Include="BusinessObjects\InvoiceBo.cs" />
     <Compile Include="BusinessObjects\CallBo.cs" />
     <Compile Include="BusinessObjects\CallCommodityBo.cs" />
     <Compile Include="BusinessObjects\LookUp\LookUpBo.cs" />
-    <Compile Include="BusinessObjects\Other\RevenueBo.cs" />
+    <Compile Include="BusinessObjects\Other\FinanceBo.cs" />
     <Compile Include="BusinessObjects\Other\PerformanceBo.cs" />
     <Compile Include="BusinessObjects\UserBo.cs" />
     <Compile Include="BusinessRules\CpiRequiredOnInvoiceStatusAttribute.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="DataModels\Base\BaseDm.cs" />
     <Compile Include="DataModels\Base\LookUpBaseDm.cs" />
     <Compile Include="DataModels\CallCommodityDm.cs" />
+    <Compile Include="DataModels\ExpenseDm.cs" />
     <Compile Include="DataModels\InvoiceCommodityDm.cs" />
     <Compile Include="DataModels\InvoiceDm.cs" />
     <Compile Include="DataModels\LookUp\LookUpCallStatusDm.cs" />

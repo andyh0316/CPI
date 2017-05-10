@@ -45,5 +45,14 @@ namespace Cpi.Application.Filters
             {
             }
         }
+
+        //public class Expense : BaseListFilter
+        //{
+        //    public AdvancedSearchClass AdvancedSearch { get; set; }
+        //    public class AdvancedSearchClass
+        //    {
+        //        public ReportDateFilter ReportDateFilter { get; set; }
+        //    }
+        //}
     }
 }

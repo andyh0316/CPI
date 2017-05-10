@@ -16,6 +16,7 @@ namespace Cpi.ManageWeb.App_Start
                     cfg.CreateMap<CallCommodityDm, CallCommodityDm>().InheritBase();
                     cfg.CreateMap<InvoiceDm, InvoiceDm>().InheritBase();
                     cfg.CreateMap<InvoiceCommodityDm, InvoiceCommodityDm>().InheritBase();
+                    cfg.CreateMap<ExpenseDm, ExpenseDm>().InheritBase();
                 }
             );
             Mapper.AssertConfigurationIsValid();

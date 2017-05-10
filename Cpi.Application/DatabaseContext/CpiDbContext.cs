@@ -40,6 +40,7 @@ namespace Cpi.Application.DatabaseContext
             modelBuilder.Configurations.Add(new CallCommodityMap());
             modelBuilder.Configurations.Add(new InvoiceMap());
             modelBuilder.Configurations.Add(new InvoiceCommodityMap());
+            modelBuilder.Configurations.Add(new ExpenseMap());
 
             modelBuilder.Configurations.Add(new LookUpUserRoleMap());
             modelBuilder.Configurations.Add(new LookUpUserOccupationMap());

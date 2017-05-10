@@ -215,14 +215,16 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Expense\ExpenseAreaRegistration.cs" />
+    <Compile Include="Areas\Expense\Controllers\ExpenseController.cs" />
+    <Compile Include="Areas\Finance\Controllers\FinanceController.cs" />
+    <Compile Include="Areas\Finance\FinanceAreaRegistration.cs" />
     <Compile Include="Areas\Performance\Controllers\PerformanceController.cs" />
     <Compile Include="Areas\Performance\PerformanceAreaRegistration.cs" />
     <Compile Include="Areas\Invoice\InvoiceAreaRegistration.cs" />
     <Compile Include="Areas\Invoice\Controllers\InvoiceController.cs" />
     <Compile Include="Areas\Call\Controllers\CallController.cs" />
     <Compile Include="Areas\Call\CallAreaRegistration.cs" />
-    <Compile Include="Areas\Revenue\Controllers\RevenueController.cs" />
-    <Compile Include="Areas\Revenue\RevenueAreaRegistration.cs" />
     <Compile Include="Attributes\CpiAuthenticateAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Base\BaseController.cs" />
@@ -236,11 +238,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Expense\Views\Expense\ExpenseApp.js" />
+    <Content Include="Areas\Expense\Views\Expense\List.html" />
+    <Content Include="Areas\Finance\Views\Finance\Finance.html" />
+    <Content Include="Areas\Finance\Views\Finance\FinanceApp.js" />
     <Content Include="Areas\Performance\Views\Performance\PerformanceApp.js" />
     <Content Include="Areas\Invoice\Views\Invoice\InvoiceApp.js" />
     <Content Include="Areas\Invoice\Views\Invoice\List.html" />
-    <Content Include="Areas\Revenue\Views\Revenue\RevenueApp.js" />
-    <Content Include="Areas\Revenue\Views\Revenue\Revenue.html" />
     <Content Include="Content\Fonts\Fonts.css">
       <DependentUpon>Fonts.scss</DependentUpon>
     </Content>
@@ -290,13 +294,15 @@
     <Content Include="Content\Fonts\Fonts.scss" />
     <Content Include="Areas\Call\Views\Web.config" />
     <Content Include="Areas\Call\Views\Call\Import.html" />
-    <Content Include="Areas\Revenue\Views\Web.config" />
-    <Content Include="Areas\Revenue\Views\Revenue\Index.cshtml" />
     <Content Include="Areas\Invoice\Views\Invoice\Index.cshtml" />
     <Content Include="Areas\Invoice\Views\Web.config" />
     <Content Include="Areas\Performance\Views\Performance\Index.cshtml" />
     <Content Include="Areas\Performance\Views\Web.config" />
     <Content Include="Areas\Performance\Views\Performance\Performance.html" />
+    <Content Include="Areas\Finance\Views\Finance\Index.cshtml" />
+    <Content Include="Areas\Finance\Views\Web.config" />
+    <Content Include="Areas\Expense\Views\Expense\Index.cshtml" />
+    <Content Include="Areas\Expense\Views\Web.config" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -358,6 +364,8 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Call\Models\" />
     <Folder Include="Areas\Call\Views\Shared\" />
+    <Folder Include="Areas\Expense\Models\" />
+    <Folder Include="Areas\Expense\Views\Shared\" />
     <Folder Include="Areas\Invoice\Models\" />
     <Folder Include="Areas\Invoice\Views\Shared\" />
     <Folder Include="Areas\Performance\Models\" />
