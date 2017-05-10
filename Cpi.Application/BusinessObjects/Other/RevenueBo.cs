@@ -1,4 +1,5 @@
-﻿using Cpi.Application.DataModels;
+﻿using Cpi.Application.BusinessObjects.LookUp;
+using Cpi.Application.DataModels;
 using Cpi.Application.DataModels.LookUp;
 using Cpi.Application.Filters;
 using System;
@@ -11,10 +12,12 @@ namespace Cpi.Application.BusinessObjects.Other
     {
         private InvoiceBo InvoiceBo;
         private CallBo CallBo;
-        public RevenueBo(InvoiceBo InvoiceBo, CallBo CallBo)
+        private LookUpBo LookUpBo;
+        public RevenueBo(InvoiceBo InvoiceBo, CallBo CallBo, LookUpBo LookUpBo)
         {
             this.InvoiceBo = InvoiceBo;
             this.CallBo = CallBo;
+            this.LookUpBo = LookUpBo;
         }
 
         public decimal GetRevenue(ReportDateFilter filter)
@@ -46,6 +49,21 @@ namespace Cpi.Application.BusinessObjects.Other
             return invoiceQuery.SelectMany(a => a.InvoiceCommodities.Select(b => b.Quantity.Value)).DefaultIfEmpty(0).Sum();
         }
 
+        public int GetProductPendingCount(ReportDateFilter filter)
+        {
+            IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetDateFilteredQuery(filter);
+
+            invoiceQuery = invoiceQuery.Where(a => !a.StatusId.HasValue);
+
+            return invoiceQuery.SelectMany(a => a.InvoiceCommodities.Select(b => b.Quantity.Value)).DefaultIfEmpty(0).Sum();
+        }
+
+        public int GetProductTotalCount(ReportDateFilter filter)
+        {
+            IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetDateFilteredQuery(filter);
+
+            return invoiceQuery.SelectMany(a => a.InvoiceCommodities.Select(b => b.Quantity.Value)).DefaultIfEmpty(0).Sum();
+        }
 
         public int GetInvoiceSoldCount(ReportDateFilter filter)
         {
@@ -61,6 +79,22 @@ namespace Cpi.Application.BusinessObjects.Other
             IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetDateFilteredQuery(filter);
 
             invoiceQuery = invoiceQuery.Where(a => a.StatusId == (int)LookUpInvoiceStatusDm.LookUpIds.Cancelled);
+
+            return invoiceQuery.Count();
+        }
+
+        public int GetInvoicePendingCount(ReportDateFilter filter)
+        {
+            IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetDateFilteredQuery(filter);
+
+            invoiceQuery = invoiceQuery.Where(a => !a.StatusId.HasValue);
+
+            return invoiceQuery.Count();
+        }
+
+        public int GetInvoiceTotalCount(ReportDateFilter filter)
+        {
+            IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetDateFilteredQuery(filter);
 
             return invoiceQuery.Count();
         }
@@ -117,7 +151,7 @@ namespace Cpi.Application.BusinessObjects.Other
                             dateFrom = filter.DateFrom.Value;
                         }
                     }
-                    
+
                     if (filter.DateTo.HasValue)
                     {
                         if (filter.DateTo.Value < dateTo)
@@ -241,6 +275,33 @@ namespace Cpi.Application.BusinessObjects.Other
             }
 
             return null;
+        }
+
+        public List<Tuple<string, int, int>> GetProducts(ReportDateFilter filter)
+        {
+            IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetDateFilteredQuery(filter);
+            IQueryable<LookUpCommodityDm> commodityQuery = LookUpBo.GetListQuery<LookUpCommodityDm>();
+
+            List<Tuple<string, int, int>> dtos = (from a in commodityQuery
+                                                join b in invoiceQuery.SelectMany(a => a.InvoiceCommodities).GroupBy(a => a.CommodityId).Select(a => new
+                                                {
+                                                    Id = a.Key,
+                                                    SoldCount = a.Where(b => b.Invoice.StatusId == (int)LookUpInvoiceStatusDm.LookUpIds.Sold).Select(b => b.Quantity).DefaultIfEmpty(0).Sum(),
+                                                    CancelledCount = a.Where(b => b.Invoice.StatusId == (int)LookUpInvoiceStatusDm.LookUpIds.Cancelled).Select(b => b.Quantity).DefaultIfEmpty(0).Sum(),
+                                                })
+                                                on a.Id equals b.Id into bGroup
+                                                from bSub in bGroup.DefaultIfEmpty()
+                                                select new
+                                                {
+                                                    Name = a.Name,
+                                                    SoldCount = (bSub != null) ? bSub.SoldCount.Value : 0,
+                                                    CancelledCount = (bSub != null) ? bSub.CancelledCount.Value : 0
+                                                })
+                                                .ToList()
+                                                .Select(a => new Tuple<string, int, int>(a.Name, a.SoldCount, a.CancelledCount))
+                                                .ToList();
+
+            return dtos;
         }
     }
 }

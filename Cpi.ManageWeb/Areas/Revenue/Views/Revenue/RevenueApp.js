@@ -4,7 +4,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
     $urlRouterProvider.when("", "/Revenue");
 
     var revenueScopeData = {
-        filter: { ReportDateId: 3 },
+        filter: { ReportDateId: 1 },
         httpRequest: { method: 'POST', url: '/Revenue/Revenue/GetRevenue' }
     };
 
@@ -69,6 +69,16 @@ app.controller('RevenueController', ['$scope', '$controller', '$state', 'baseBo'
                 [
                     $scope.model.Calls.map(function (a) { return a.Item2; }),
                     $scope.model.Calls.map(function (a) { return a.Item3; }),
+                ];
+        }
+
+        if ($scope.model.Products)
+        {
+            $scope.productNames = $scope.model.Products.map(function (a) { return a.Item1; });
+            $scope.productCounts =
+                [
+                    $scope.model.Products.map(function (a) { return a.Item2; }),
+                    $scope.model.Products.map(function (a) { return a.Item3; }),
                 ];
         }
     }

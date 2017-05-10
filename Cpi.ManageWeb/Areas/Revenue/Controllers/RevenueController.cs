@@ -44,11 +44,16 @@ namespace Cpi.ManageWeb.Areas.Revenue.Controllers
                 Revenue = RevenueBo.GetRevenue(filter),
                 ProductSoldCount = RevenueBo.GetProductSoldCount(filter),
                 ProductCancelledCount = RevenueBo.GetProductCancelledCount(filter),
+                ProductPendingCount = RevenueBo.GetProductPendingCount(filter),
+                ProductTotalCount = RevenueBo.GetProductTotalCount(filter),
                 InvoiceSoldCount = RevenueBo.GetInvoiceSoldCount(filter),
                 InvoiceCancelledCount = RevenueBo.GetInvoiceCancelledCount(filter),
+                InvoicePendingCount = RevenueBo.GetInvoicePendingCount(filter),
+                InvoiceTotalCount = RevenueBo.GetInvoiceTotalCount(filter),
                 ReceivedCallCount = RevenueBo.GetReceivedCallCount(filter),
                 Revenues = RevenueBo.GetRevenues(filter),
-                Calls = RevenueBo.GetCalls(filter)
+                Calls = RevenueBo.GetCalls(filter),
+                Products = RevenueBo.GetProducts(filter),
             };
 
             return JsonModel(model);
