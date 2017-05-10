@@ -30,7 +30,7 @@
     <div class="panels">
         <div class="panel">
             <div class="content">${{model.Revenue | number: 0}}</div>
-            <div class="text">Finance</div>
+            <div class="text">Revenue</div>
             <div class="text">收入</div>
         </div>
         <div class="panel">
@@ -83,7 +83,7 @@
     </div>
 
     <div ng-show="model.Revenues.length > 0" class="chart">
-        <div class="title">Finance 收入</div>
+        <div class="title">Revenue 收入</div>
 
         <div class="chart-wrapper">
             <canvas class="chart chart-bar" chart-data="revenueNumbers" chart-labels="revenueDates" height="70" chart-options="generalChartOptions"></canvas>
