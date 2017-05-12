@@ -44,15 +44,15 @@ namespace Cpi.ManageWeb.Areas.Expense.Controllers
             List<ExpenseDm> records = GetLoadedSortedQuery(query, listLoadCalculator.Skip, listLoadCalculator.Take, filter.SortColumn, filter.SortDesc).ToList();
 
             filter.AdvancedSearch = (filter.AdvancedSearch) ?? new ListFilter.Expense.AdvancedSearchClass();
-            decimal periodBalance = FinanceBo.GetRevenue(filter.AdvancedSearch.ReportDateFilter);
-            decimal totalBalance = FinanceBo.GetRevenue(null);
-            foreach (ExpenseDm record in records)
-            {
-                periodBalance = periodBalance - record.Expense.Value;
-                record.PeriodBalance = periodBalance;
-                totalBalance = totalBalance - record.Expense.Value;
-                record.TotalBalance = totalBalance;
-            }
+            //decimal periodBalance = FinanceBo.GetRevenue(filter.AdvancedSearch.ReportDateFilter);
+            //decimal totalBalance = FinanceBo.GetRevenue(null);
+            //foreach (ExpenseDm record in records)
+            //{
+            //    periodBalance = periodBalance - record.Expense.Value;
+            //    record.PeriodBalance = periodBalance;
+            //    totalBalance = totalBalance - record.Expense.Value;
+            //    record.TotalBalance = totalBalance;
+            //}
             return JsonModel(new { Records = records, ListLoadCalculator = listLoadCalculator });
         }
 

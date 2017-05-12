@@ -15,11 +15,18 @@
             position: absolute;
             width: 100% !important;
             margin: 0 !important;
+            height: auto !important;
+            overflow: visible !important;
         }
     }
 
     [ui-view] {
-        position: static !important;
+        position: absolute !important;
+        top: 0px !important;
+        left: 0px !important;
+        margin-top: 0px !important;
+        margin-left: 0px !important;
+        overflow: visible !important;
     }
 
     #print-section {
@@ -27,6 +34,7 @@
         left: 0;
         top: 0;
         width: 100% !important;
+        height: auto !important;
         visibility: visible;
         overflow: visible !important;
         border: 0px !important;

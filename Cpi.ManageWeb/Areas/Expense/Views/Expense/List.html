@@ -57,8 +57,8 @@
             <tr>
                 <th class="date-time"><a ng-class="getSortOrder('CreatedDate')" ng-click="sort('CreatedDate')">Created 生成日期</a></th>
                 <th><a ng-class="getSortOrder('Name')" ng-click="sort('Name')">Name 名</a></th>
-                <th class="right-content">Period Balance 期间余额</th>
-                <th class="right-content">Total Balance 总余额</th>
+                <!--<th class="right-content">Period Balance 期间余额</th>
+                <th class="right-content">Total Balance 总余额</th>-->
                 <th class="right-content"><a ng-class="getSortOrder('Expense')" ng-click="sort('Expense')">Expense 支出</a></th>
                 <th class="action"></th>
             </tr>
@@ -86,7 +86,7 @@
                         </dd>
                     </dl>
                 </td>
-                <td class="right-content">
+                <!--<td class="right-content">
                     <dl>
                         <dd ng-show="!record.isEditing">
                             ${{record.TotalBalance | number: 2}}
@@ -101,7 +101,7 @@
                             <input ng-model="record.Expense" />
                         </dd>
                     </dl>
-                </td>
+                </td>-->
                 <td class="action">
                     <div ng-show="!record.isEditing" class="edit icon" ng-click="edit(record); $event.stopPropagation();"></div>
                     <div ng-show="record.isEditing" class="cancel icon" ng-click="cancel(record)" ; $event.stopPropagation();"></div>
