@@ -42,6 +42,8 @@ namespace Cpi.ManageWeb.Areas.Finance.Controllers
             {
                 Filter = filter,
                 Revenue = FinanceBo.GetRevenue(filter),
+                Expense = FinanceBo.GetExpense(filter),
+                Profit = FinanceBo.GetRevenue(filter) - FinanceBo.GetExpense(filter),
                 ProductSoldCount = FinanceBo.GetProductSoldCount(filter),
                 ProductCancelledCount = FinanceBo.GetProductCancelledCount(filter),
                 ProductPendingCount = FinanceBo.GetProductPendingCount(filter),

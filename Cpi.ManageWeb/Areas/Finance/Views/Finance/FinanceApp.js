@@ -46,14 +46,18 @@ app.controller('FinanceController', ['$scope', '$controller', '$state', 'baseBo'
 
             clearTimeout($scope.filterSearchTimeout);
             $scope.filterSearchTimeout = setTimeout(function () {
-                baseBo.httpRequest($scope.scopeData.httpRequest.method, $scope.scopeData.httpRequest.url, $scope.scopeData.filter)
-                    .then(function (result) {
-                        $scope.model = result.Object;
-                        $scope.setGraphData();
-                    });
+                $scope.getFinance();
             }, filterSearchDelay);
         }
     }, true);
+
+    $scope.getFinance = function () {
+        baseBo.httpRequest($scope.scopeData.httpRequest.method, $scope.scopeData.httpRequest.url, $scope.scopeData.filter)
+            .then(function (result) {
+                $scope.model = result.Object;
+                $scope.setGraphData();
+            });
+    };
 
     $scope.setGraphData = function () {
         if ($scope.model.Revenues)

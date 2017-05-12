@@ -980,6 +980,12 @@ textarea {
     #finance .panels .panel .content {
       margin-top: 20px;
       font-size: 26px; }
+    #finance .panels .panel.profit .content {
+      color: #059811;
+      font-weight: 600; }
+    #finance .panels .panel.expense .content {
+      color: #AD0606;
+      font-weight: 600; }
 
 .title {
   font-size: 20px;

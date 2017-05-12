@@ -24,15 +24,35 @@
                 </dl>
             </section>
         </div>
+        <div class="buttons">
+            <button class="button main" ng-click="getFinance()">Refresh</button>
+        </div>
     </div>
 
     <div class="title">Overview</div>
     <div class="panels">
+        <div class="panel profit">
+            <div class="content">${{model.Profit | number: 0}}</div>
+            <div class="text">Profit</div>
+            <div class="text">利润</div>
+        </div>
+        <div class="panel expense">
+            <div class="content">${{model.Expense | number: 0}}</div>
+            <div class="text">Expense</div>
+            <div class="text">支出</div>
+        </div>
         <div class="panel">
             <div class="content">${{model.Revenue | number: 0}}</div>
             <div class="text">Revenue</div>
             <div class="text">收入</div>
         </div>
+        <div class="panel">
+            <div class="content">{{model.ReceivedCallCount | number: 0}}</div>
+            <div class="text">Calls Received</div>
+            <div class="text">外来电话量</div>
+        </div>
+    </div>
+    <div class="panels">
         <div class="panel">
             <div class="content">{{model.ProductSoldCount | number: 0}}</div>
             <div class="text">Products Sold</div>
@@ -55,11 +75,6 @@
         </div>
     </div>
     <div class="panels">
-        <div class="panel">
-            <div class="content">{{model.ReceivedCallCount | number: 0}}</div>
-            <div class="text">Calls Received</div>
-            <div class="text">外来电话量</div>
-        </div>
         <div class="panel">
             <div class="content">{{model.InvoiceSoldCount | number: 0}}</div>
             <div class="text">Invoices Sold</div>

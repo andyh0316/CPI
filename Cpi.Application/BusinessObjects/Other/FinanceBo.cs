@@ -13,11 +13,13 @@ namespace Cpi.Application.BusinessObjects.Other
         private InvoiceBo InvoiceBo;
         private CallBo CallBo;
         private LookUpBo LookUpBo;
-        public FinanceBo(InvoiceBo InvoiceBo, CallBo CallBo, LookUpBo LookUpBo)
+        private ExpenseBo ExpenseBo;
+        public FinanceBo(InvoiceBo InvoiceBo, CallBo CallBo, LookUpBo LookUpBo, ExpenseBo ExpenseBo)
         {
             this.InvoiceBo = InvoiceBo;
             this.CallBo = CallBo;
             this.LookUpBo = LookUpBo;
+            this.ExpenseBo = ExpenseBo;
         }
 
         public decimal GetRevenue(ReportDateFilter filter)
@@ -31,6 +33,17 @@ namespace Cpi.Application.BusinessObjects.Other
             decimal revenue = invoiceQuery.Select(a => a.TotalPrice.Value).DefaultIfEmpty(0).Sum();
 
             return revenue;
+        }
+
+        public decimal GetExpense(ReportDateFilter filter)
+        {
+            IQueryable<ExpenseDm> expenseQuery = ExpenseBo.GetListQuery();
+
+            expenseQuery = ExpenseBo.GetDateFilteredQuery(expenseQuery, filter);
+
+            decimal expense = expenseQuery.Select(a => a.Expense.Value).DefaultIfEmpty(0).Sum();
+
+            return expense;
         }
 
         public int GetProductSoldCount(ReportDateFilter filter)
@@ -125,6 +138,8 @@ namespace Cpi.Application.BusinessObjects.Other
 
             return callQuery.Count();
         }
+
+
 
         public List<Tuple<string, decimal>> GetRevenues(ReportDateFilter filter)
         {

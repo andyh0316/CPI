@@ -17,6 +17,7 @@ $light-border-color: #e0e0e0;
 $error-color: #AD0606;
 $error-border-color: #B30F0F;
 
+$active-color: #059811;
 $app-min-width: 1280px;
 
 @mixin transition($param) {
@@ -1355,8 +1356,8 @@ textarea {
     .results-for-dates {
         font-size: 30px;
         margin-bottom: 15px;
-    } 
-    
+    }
+
     .panels {
         display: flex;
         //align-items: stretch;
@@ -1382,6 +1383,20 @@ textarea {
             .content {
                 margin-top: 20px;
                 font-size: 26px;
+            }
+
+            &.profit {
+                .content {
+                    color: $active-color;
+                    font-weight: 600;
+                }
+            }
+
+            &.expense {
+                .content {
+                    color: $error-color;
+                    font-weight: 600;
+                }
             }
         }
     }
