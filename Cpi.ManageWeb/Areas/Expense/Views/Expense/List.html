@@ -57,8 +57,6 @@
             <tr>
                 <th class="date-time"><a ng-class="getSortOrder('CreatedDate')" ng-click="sort('CreatedDate')">Created 生成日期</a></th>
                 <th><a ng-class="getSortOrder('Name')" ng-click="sort('Name')">Name 名</a></th>
-                <!--<th class="right-content">Period Balance 期间余额</th>
-                <th class="right-content">Total Balance 总余额</th>-->
                 <th class="right-content"><a ng-class="getSortOrder('Expense')" ng-click="sort('Expense')">Expense 支出</a></th>
                 <th class="action"></th>
             </tr>
@@ -79,20 +77,6 @@
                         </dd>
                     </dl>
                 </td>
-                <!--<td class="right-content">
-                    <dl>
-                        <dd ng-show="!record.isEditing">
-                            <span ng-class="{'zero-or-negative': record.PeriodBalance <= 0}">${{record.PeriodBalance | number: 2}}</span>
-                        </dd>
-                    </dl>
-                </td>-->
-                <!--<td class="right-content">
-                    <dl>
-                        <dd ng-show="!record.isEditing">
-                            ${{record.TotalBalance | number: 2}}
-                        </dd>
-                    </dl>
-                </td>-->
                 <td class="right-content">
                     <dl>
                         <dd ng-show="!record.isEditing" class="expense">${{record.Expense | number: 2}}</dd>
@@ -106,6 +90,18 @@
                     <div ng-show="!record.isEditing" class="edit icon" ng-click="edit(record); $event.stopPropagation();"></div>
                     <div ng-show="record.isEditing" class="cancel icon" ng-click="cancel(record)" ; $event.stopPropagation();"></div>
                 </td>
+            </tr>
+            <tr>
+                <td class="date-time"></td>
+                <td></td>
+                <td class="right-content">
+                    <dl ng-show="!isEditingAny()">
+                        <dd>
+                            <b>Total:</b> ${{getTotalExpense() | number: 2}}
+                        </dd>
+                    </dl>
+                </td>
+                <td class="action"></td>
             </tr>
         </tbody>
     </table>

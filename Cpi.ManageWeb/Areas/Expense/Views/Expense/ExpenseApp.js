@@ -70,27 +70,18 @@ app.controller('ListController', ['$scope', '$controller', '$state', 'baseBo', '
             $scope.scopeData.filter.AdvancedSearch.CreatedDateTo = null;
         }
     });
-}]);
 
-app.controller('ImportController', ['$scope', '$controller', '$state', 'baseBo', function ($scope, $controller, $state, baseBo) {
-    angular.extend(this, $controller('BaseController', { $scope: $scope }));
+    $scope.getTotalExpense = function () {
+        var total = 0;
+        for (var i in $scope.model.Records)
+        {
+            var record = $scope.model.Records[i];
+            if (record.Expense)
+            {
+                total = total + record.Expense;
+            }
+        }
 
-    $scope.organizePhoneNumbers = function () {
-        baseBo.httpRequest('POST', '/Expense/Expense/OrganizePhoneNumbers', { phoneNumbers: $scope.phoneNumbers })
-            .then(function (result) {
-                $scope.parsedPhoneNumbersModel = result.Object;
-            });
-    };
-
-    $scope.createPhoneNumbers = function () {
-        baseBo.httpRequest('POST', '/Expense/Expense/ParsePhoneNumbers', { phoneNumbers: $scope.phoneNumbers })
-            .then(function (result) {
-                for (var i in result.Object.PhoneNumbers)
-                {
-                    $scope.$parent.create(result.Object.PhoneNumbers[i], $scope.modelData.ExpenseStatusIdEnums.SentToExpenseCenter);
-                }
-
-                $scope.back();
-            });
+        return total;
     };
 }]);
