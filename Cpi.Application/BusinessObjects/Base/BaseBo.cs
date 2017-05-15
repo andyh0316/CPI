@@ -197,10 +197,12 @@ namespace Cpi.Application.BusinessObjects.Base
                     }
                 }
 
-                // if dateTo is more than a month away from dateFrom: do more things
-                if (dateTo.AddMonths(-1) > dateFrom)
+                // if dateTo is more than a month away from dateFrom: then we have to split by month
+                if (dateTo.AddMonths(-1) >= dateFrom)
                 {
                     splitByMonth = true;
+                    dateFrom = new DateTime(dateFrom.Year, dateFrom.Month, 1);
+                    dateTo = new DateTime(dateTo.Year, dateTo.Month, DateTime.DaysInMonth(dateTo.Year, dateTo.Month));
                 }
             }
             else

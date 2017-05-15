@@ -740,22 +740,6 @@ baseModule.directive('dateInput', ['$filter', function ($filter) {
     };
 }]);
 
-baseModule.directive('tbody', function () {
-    return {
-        restrict: 'E',
-        scope: true, // pass in the entire scope
-        link: function (scope, element, attrs) {
-            scope.$watch(function () { // watch for any scope changes
-                if (element.find('tr').length == 0) {
-                    element.addClass('empty');
-                } else {
-                    element.removeClass('empty');
-                }
-            });
-        }
-    }
-});
-
 baseModule.directive('listPanelsContainer', function () {
     return {
         restrict: 'AEC',
@@ -1376,12 +1360,21 @@ baseModule.directive('fileInput', function () {
 baseModule.directive('tbody', function () {
     return {
         restrict: 'E',
+        scope: true, // pass in the entire scope
         link: function ($scope, $element, $attrs) {
             var raw = $element[0];
             $element.bind('scroll', function () {
                 //console.log(raw.scrollTop + raw.offsetHeight + ' ' + raw.scrollHeight);
                 if (raw.scrollTop + raw.offsetHeight >= raw.scrollHeight) { //at the bottom
                     $scope.getList(true);
+                }
+            });
+
+            $scope.$watch(function () { // watch for any scope changes
+                if ($element.find('tr').length == 0) {
+                    $element.addClass('empty');
+                } else {
+                    $element.removeClass('empty');
                 }
             });
         }
