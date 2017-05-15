@@ -384,6 +384,20 @@ $secondary-menu-height: 40px;
                     font-size: 24px;
                 }
             }
+
+            &.has-more-records {
+                &:after {
+                    display: block;
+                    position: relative;
+                    width: 100%;
+                    padding-top: 50px;
+                    height: 150px;
+                    content: "Scroll Down For More Records";
+                    text-align: center;
+                    color: #BFBFBF;
+                    font-size: 24px;
+                }
+            }
         }
 
         thead, tbody tr {

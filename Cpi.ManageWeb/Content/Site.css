@@ -282,6 +282,16 @@ body {
         text-align: center;
         color: #BFBFBF;
         font-size: 24px; }
+      .list-container table tbody.has-more-records:after {
+        display: block;
+        position: relative;
+        width: 100%;
+        padding-top: 50px;
+        height: 150px;
+        content: "Scroll Down For More Records";
+        text-align: center;
+        color: #BFBFBF;
+        font-size: 24px; }
     .list-container table thead, .list-container table tbody tr {
       display: table;
       width: 100%;

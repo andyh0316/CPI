@@ -1360,21 +1360,39 @@ baseModule.directive('fileInput', function () {
 baseModule.directive('tbody', function () {
     return {
         restrict: 'E',
-        scope: true, // pass in the entire scope
+        scope: {
+            ngRecords: '=',
+            ngTotal: '=',
+            ngGetList: '&',
+        },
         link: function ($scope, $element, $attrs) {
             var raw = $element[0];
+            var hasMoreRecords = false;
+
             $element.bind('scroll', function () {
-                //console.log(raw.scrollTop + raw.offsetHeight + ' ' + raw.scrollHeight);
-                if (raw.scrollTop + raw.offsetHeight >= raw.scrollHeight) { //at the bottom
-                    $scope.getList(true);
+                if (hasMoreRecords && raw.scrollTop + raw.offsetHeight >= raw.scrollHeight) { //at the bottom
+                    $scope.ngGetList();
                 }
             });
 
-            $scope.$watch(function () { // watch for any scope changes
-                if ($element.find('tr').length == 0) {
+            $scope.$watch('ngRecords.length', function (newVal, oldVal) { // watch for any scope changes
+                var recordCount = $scope.ngRecords.filter(function (record) { return record.Id > 0 }).length;
+                if (recordCount === 0) {
                     $element.addClass('empty');
                 } else {
                     $element.removeClass('empty');
+
+                    if (recordCount < $scope.ngTotal)
+                    {
+                        hasMoreRecords = true;
+                        $element.addClass('has-more-records');
+                    }
+
+                    if (recordCount >= $scope.ngTotal)
+                    {
+                        hasMoreRecords = false;
+                        $element.removeClass('has-more-records');
+                    }
                 }
             });
         }
