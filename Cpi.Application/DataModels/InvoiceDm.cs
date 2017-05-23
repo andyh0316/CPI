@@ -13,10 +13,8 @@ namespace Cpi.Application.DataModels
         [CpiMaxLength(100)]
         public string CustomerPhone { get; set; }
 
-        [CpiRequiredOnInvoiceStatus]
         public virtual List<InvoiceCommodityDm> InvoiceCommodities { get; set; }
 
-        [CpiRequiredOnInvoiceStatus]
         public int? OperatorId { get; set; }
         public virtual UserDm Operator { get; set; }
 

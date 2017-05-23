@@ -8,6 +8,11 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
         httpRequest: { method: 'POST', url: '/Finance/Finance/GetFinance' }
     };
 
+    var listScopeData = {
+        filter: { Loads: 0, SortColumn: "CreatedDate", SortDesc: true },
+        httpRequest: { method: 'POST', url: '/Finance/Finance/GetFinanceList' }
+    };
+
     $stateProvider
         .state('Finance', {
             url: '/Finance',
@@ -22,6 +27,19 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
                 }],
                 scopeData: function () {
                     return financeScopeData;
+                }
+            }
+        })
+        .state('Finance.List', {
+            url: '/List',
+            templateUrl: '/Areas/Finance/Views/Finance/List.html',
+            controller: 'ListController',
+            resolve: {
+                model: ['$stateParams', 'baseBo', function ($stateParams, baseBo) {
+                    return baseBo.httpRequest(listScopeData.httpRequest.method, listScopeData.httpRequest.url, listScopeData.filter);
+                }],
+                scopeData: function () {
+                    return listScopeData;
                 }
             }
         })
@@ -59,6 +77,10 @@ app.controller('FinanceController', ['$scope', '$controller', '$state', 'baseBo'
             });
     };
 
+    $scope.goListView = function () {
+        $state.go('Finance.List');
+    };
+
     $scope.setGraphData = function () {
         if ($scope.model.Revenues)
         {
@@ -88,4 +110,11 @@ app.controller('FinanceController', ['$scope', '$controller', '$state', 'baseBo'
     }
 
     $scope.setGraphData();
+}]);
+
+app.controller('ListController', ['$scope', '$controller', '$state', 'baseBo', 'model', 'scopeData', function ($scope, $controller, $state, baseBo, model, scopeData) {
+    angular.extend(this, $controller('ListBaseController', { $scope: $scope }));
+
+    $scope.scopeData = scopeData;
+    $scope.model = model.Object;
 }]);

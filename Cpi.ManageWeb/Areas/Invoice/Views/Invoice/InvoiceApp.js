@@ -58,6 +58,17 @@ app.controller('ListController', ['$scope', '$controller', '$state', 'baseBo', '
             });
     };
 
+    $scope.invoiceCommodityChange = function (record) {
+        var total = 0;
+        for (var i in record.InvoiceCommodities)
+        {
+            var invoiceCommodity = record.InvoiceCommodities[i];
+            var commodityPrice = $scope.modelData.Commodities.filter(function (item) { return item.Id === invoiceCommodity.CommodityId })[0].Price;
+            total = total + invoiceCommodity.Quantity * commodityPrice;
+        }
+        record.TotalPrice = total;
+    };
+
     $scope.$watch('scopeData.filter.AdvancedSearch.CreatedTodayOnly', function (newVal, oldVal) {
         if (newVal) {
             $scope.scopeData.filter.AdvancedSearch.CreatedDateFrom = null;

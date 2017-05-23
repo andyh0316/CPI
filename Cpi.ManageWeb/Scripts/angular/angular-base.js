@@ -13,7 +13,9 @@ baseModule.config(['$httpProvider', '$animateProvider', function ($httpProvider,
 
 
 baseModule.controller('BaseController', ['$scope', '$state', function ($scope, $state) {
-
+    $scope.back = function () {
+        $state.go('^');
+    }
 }]);
 
 /* provides server/backend sorting, paging and searching. For client side sorting and paging */
@@ -697,7 +699,6 @@ baseModule.directive('dateInput', ['$filter', function ($filter) {
                 if (modelValue.split("/").length === 3)
                 {
                     dateArray = modelValue.split("/");
-                    
                 }
                 else if (modelValue.split(".").length === 3) // also user wants to type period instead of backslash that's fine too
                 {
@@ -1185,10 +1186,18 @@ baseModule.directive('commoditiesEdit', function () {
         restrict: 'A',
         scope: {
             ngModel: '=',
-            commodities: '='
+            commodities: '=',
+            ngChange: '&'
         },
         link: function ($scope, $element, $attrs) {
             $scope.ngModel = ($scope.ngModel) ? $scope.ngModel : [];
+
+            $scope.$watch('ngModel', function (newVal, oldVal) {
+                if (newVal !== oldVal)
+                {
+                    $scope.ngChange();
+                }
+            }, true);
 
             $(document).mousedown(function (e) {
                 if ($scope.showEditContainer && !$element.is(e.target) && $element.has(e.target).length === 0) {
@@ -1376,23 +1385,20 @@ baseModule.directive('tbody', function () {
             });
 
             $scope.$watch('ngRecords.length', function (newVal, oldVal) { // watch for any scope changes
-                var recordCount = $scope.ngRecords.filter(function (record) { return record.Id > 0 }).length;
-                if (recordCount === 0) {
+                if (!newVal || newVal === 0) {
                     $element.addClass('empty');
                 } else {
                     $element.removeClass('empty');
+                }
 
-                    if (recordCount < $scope.ngTotal)
-                    {
-                        hasMoreRecords = true;
-                        $element.addClass('has-more-records');
-                    }
-
-                    if (recordCount >= $scope.ngTotal)
-                    {
-                        hasMoreRecords = false;
-                        $element.removeClass('has-more-records');
-                    }
+                var recordCount = ($scope.ngRecords) ? $scope.ngRecords.filter(function (record) { return record.Id > 0 }).length : 0;
+                if (recordCount < $scope.ngTotal)
+                {
+                    hasMoreRecords = true;
+                    $element.addClass('has-more-records');
+                } else {
+                    hasMoreRecords = false;
+                    $element.removeClass('has-more-records');
                 }
             });
         }

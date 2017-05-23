@@ -97,7 +97,7 @@
                             </dd>
                             <dd ng-show="record.isEditing" class="overflow-visible">
                                 <span field-validation-error ng-show="modelState['[' + getEditingRecordIndex(record) + '].InvoiceCommodities']" class="field-validation-error"></span>
-                                <div commodities-edit ng-model="record.InvoiceCommodities" commodities="modelData.Commodities"></div>
+                                <div commodities-edit ng-model="record.InvoiceCommodities" ng-change="invoiceCommodityChange(record)" commodities="modelData.Commodities"></div>
                             </dd>
                         </dl>
                     </td>
@@ -127,27 +127,13 @@
                             </dd>
                         </dl>
                     </td>
-                    <!--<td>
-                        <dl>
-                            <dd ng-show="!record.isEditing">{{record.DeliveryDate | shortDate}}</dd>
-                            <dd ng-show="record.isEditing">
-                                <span field-validation-error ng-show="modelState['[' + getEditingRecordIndex(record) + '].DeliveryDate']" class="field-validation-error"></span>
-                                <input ng-model="record.DeliveryDate" date-input />
-                            </dd>
-                        </dl>
-                    </td>-->
-                    <!--<td class="address">
-                        <dl>
-                            <dd ng-show="!record.isEditing">{{record.AddressString}}</dd>
-                            <dd ng-show="record.isEditing">
-                                <input ng-model="record.AddressString" />
-                            </dd>
-                        </dl>
-                    </td>-->
                     <td class="right-content">
                         <dl>
                             <dd ng-show="!record.isEditing">
                                 <span ng-show="record.TotalPrice">${{record.TotalPrice | number: 2}}</span>
+                            </dd>
+                            <dd ng-show="record.isEditing" class="overflow-visible">
+                                <input ng-model="record.TotalPrice" />
                             </dd>
                         </dl>
                     </td>

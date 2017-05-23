@@ -48,5 +48,13 @@ namespace Cpi.Application.Filters
                 public ReportDateFilter ReportDateFilter { get; set; }
             }
         }
+
+        public class Finance : BaseListFilter
+        {
+            public AdvancedSearchClass AdvancedSearch { get; set; }
+            public class AdvancedSearchClass
+            {
+            }
+        }
     }
 }

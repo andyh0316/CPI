@@ -242,6 +242,7 @@
     <Content Include="Areas\Expense\Views\Expense\List.html" />
     <Content Include="Areas\Finance\Views\Finance\Finance.html" />
     <Content Include="Areas\Finance\Views\Finance\FinanceApp.js" />
+    <Content Include="Areas\Finance\Views\Finance\List.html" />
     <Content Include="Areas\Performance\Views\Performance\PerformanceApp.js" />
     <Content Include="Areas\Invoice\Views\Invoice\InvoiceApp.js" />
     <Content Include="Areas\Invoice\Views\Invoice\List.html" />

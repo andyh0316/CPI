@@ -87,6 +87,7 @@
     <Compile Include="DataModels\CallDm.cs" />
     <Compile Include="DataModels\Interface\ISoftDeleteDm.cs" />
     <Compile Include="DataTransferObjects\EmployeePerformanceDto.cs" />
+    <Compile Include="DataTransferObjects\FinanceDto.cs" />
     <Compile Include="Filters\ReportDateFilter.cs" />
     <Compile Include="Filters\ListFilter.cs" />
     <Compile Include="Helpers\ConstHelper.cs" />

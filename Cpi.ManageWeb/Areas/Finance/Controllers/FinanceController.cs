@@ -2,11 +2,14 @@
 using Cpi.Application.BusinessObjects;
 using Cpi.Application.BusinessObjects.Other;
 using Cpi.Application.DataModels.LookUp;
+using Cpi.Application.DataTransferObjects;
 using Cpi.Application.Filters;
 using Cpi.Application.Helpers;
 using Cpi.Application.Models;
 using Cpi.ManageWeb.Controllers.Base;
+using Cpi.ManageWeb.Models;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace Cpi.ManageWeb.Areas.Finance.Controllers
@@ -60,6 +63,15 @@ namespace Cpi.ManageWeb.Areas.Finance.Controllers
 
             return JsonModel(model);
         } 
+
+        [HttpPost]
+        public ContentResult GetFinanceList(ListFilter.Finance filter)
+        {
+            IQueryable<FinanceDto> query = FinanceBo.GetListBaseQuery();
+            ListLoadCalculator listLoadCalculator = new ListLoadCalculator(filter.Loads, query.Count());
+            List<FinanceDto> records = GetLoadedSortedQuery(query, listLoadCalculator.Skip, listLoadCalculator.Take, filter.SortColumn, filter.SortDesc).ToList();
+            return JsonModel(new { Records = records, ListLoadCalculator = listLoadCalculator });
+        }
 
         [HttpGet]
         public ContentResult GetFinanceData()

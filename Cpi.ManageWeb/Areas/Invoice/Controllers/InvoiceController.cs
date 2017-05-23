@@ -117,15 +117,15 @@ namespace Cpi.ManageWeb.Areas.Invoice.Controllers
                 }
 
                 // calculate the total price
-                if (trackedInvoice.InvoiceCommodities != null && trackedInvoice.InvoiceCommodities.Count > 0)
-                {
-                    trackedInvoice.TotalPrice = 0;
-                    foreach (InvoiceCommodityDm invoiceCommodity in trackedInvoice.InvoiceCommodities)
-                    {
-                        decimal? commodityPrice = allCommodities.Find(a => a.Id == invoiceCommodity.CommodityId).Price;
-                        trackedInvoice.TotalPrice = trackedInvoice.TotalPrice + (commodityPrice * invoiceCommodity.Quantity);
-                    }
-                }
+                //if (trackedInvoice.InvoiceCommodities != null && trackedInvoice.InvoiceCommodities.Count > 0)
+                //{
+                //    trackedInvoice.TotalPrice = 0;
+                //    foreach (InvoiceCommodityDm invoiceCommodity in trackedInvoice.InvoiceCommodities)
+                //    {
+                //        decimal? commodityPrice = allCommodities.Find(a => a.Id == invoiceCommodity.CommodityId).Price;
+                //        trackedInvoice.TotalPrice = trackedInvoice.TotalPrice + (commodityPrice * invoiceCommodity.Quantity);
+                //    }
+                //}
 
                 if (trackedInvoice.Id > 0)
                 {

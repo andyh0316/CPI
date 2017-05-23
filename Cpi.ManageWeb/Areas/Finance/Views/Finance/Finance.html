@@ -25,7 +25,8 @@
             </section>
         </div>
         <div class="buttons">
-            <button class="button main" ng-click="getFinance()">Refresh</button>
+            <button class="button main" ng-click="goListView()">List View 表格</button>
+            <button class="button main" ng-click="getFinance()">Refresh 刷新</button>
         </div>
     </div>
 
@@ -60,17 +61,17 @@
         </div>
         <div class="panel">
             <div class="content">{{model.ProductCancelledCount | number: 0}}</div>
-            <div class="text">Products Cancelled </div>
+            <div class="text">Products Cancelled</div>
             <div class="text">产品取消量</div>
         </div>
         <div class="panel">
             <div class="content">{{model.ProductPendingCount | number: 0}}</div>
-            <div class="text">Products Pending </div>
+            <div class="text">Products Pending</div>
             <div class="text">待定产品量</div>
         </div>
         <div class="panel">
             <div class="content">{{model.ProductTotalCount | number: 0}}</div>
-            <div class="text">Products Total </div>
+            <div class="text">Products Total</div>
             <div class="text">总产品量</div>
         </div>
     </div>
@@ -120,4 +121,6 @@
             <canvas class="chart chart-bar" chart-data="productCounts" chart-labels="productNames" height="70" chart-options="generalChartOptions"></canvas>
         </div>
     </div>
+
+    <div ui-view class="ng-animate-enabled"></div>
 </div>

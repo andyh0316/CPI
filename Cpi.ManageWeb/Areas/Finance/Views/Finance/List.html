@@ -1,0 +1,79 @@
+﻿<div class="list-container">
+    <div ng-show="state.current.name == 'Finance.List'" class="secondary-menu">
+        <div class="title-container">
+            <div class="title">Finance</div>
+            <div class="list-total">{{model.ListLoadCalculator.Total}}</div>
+        </div>
+
+        <div class="buttons">
+            <button class="button" ng-click="back()">Back</button>
+        </div>
+    </div>
+
+    <div class="list-container">
+        <table>
+            <thead>
+                <tr>
+                    <th><a ng-class="getSortOrder('CreatedDate')" ng-click="sort('CreatedDate')">Created<br />生成日期</a></th>
+                    <th class="right-content">Profit<br />利润</th>
+                    <th class="right-content">Expense<br />支出</th>
+                    <th class="right-content">Revenue<br />收入</th>
+                    <th class="right-content">Calls Received<br />外来电话量</th>
+                    <th class="right-content">Products Sold<br />卖出产品量</th>
+                    <th class="right-content">Products Cancelled<br />产品取消量</th>
+                    <th class="right-content">Products Pending<br />待定产品量</th>
+                    <th class="right-content">Products Total<br />总产品量</th>
+                    <th class="right-content">Invoices Sold<br />卖出订单量</th>
+                    <th class="right-content">Invoices Cancelled<br />订单取消量</th>
+                    <th class="right-content">Invoices Pending<br />待定订单量</th>
+                    <th class="right-content">Invoices Total<br />总订单量</th>
+                </tr>
+            </thead>
+            <tbody ng-records="model.Records" ng-total="model.ListLoadCalculator.Total" ng-get-list="getList(true)">
+                <tr ng-repeat="record in model.Records" ng-class="{deleting: record.Deleted}">
+                    <td>
+                        {{record.CreatedDate | shortDate}}
+                    </td>
+                    <td class="right-content">
+                        ${{record.Revenue - record.Expense | number: 2}}
+                    </td>
+                    <td class="right-content">
+                        ${{record.Expense | number: 2}}
+                    </td>
+                    <td class="right-content">
+                        ${{record.Revenue | number: 2}}
+                    </td>
+                    <td class="right-content">
+                        {{record.CallsReceived}}
+                    </td>
+                    <td class="right-content">
+                        {{record.ProductsSold}}
+                    </td>
+                    <td class="right-content">
+                        {{record.ProductsCancelled}}
+                    </td>
+                    <td class="right-content">
+                        {{record.ProductsPending}}
+                    </td>
+                    <td class="right-content">
+                        {{record.ProductsTotal}}
+                    </td>
+                    <td class="right-content">
+                        {{record.InvoicesSold}}
+                    </td>
+                    <td class="right-content">
+                        {{record.InvoicesCancelled}}
+                    </td>
+                    <td class="right-content">
+                        {{record.InvoicesPending}}
+                    </td>
+                    <td class="right-content">
+                        {{record.InvoicesTotal}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div ui-view class="ng-animate-enabled"></div>
+    </div>
+</div>
