@@ -14,7 +14,7 @@ using System.Web.Mvc;
 
 namespace Cpi.ManageWeb.Areas.Finance.Controllers
 {
-    [CpiAuthenticate((int)LookUpUserRoleDm.LookUpIds.Admin)]
+    [CpiAuthenticate((int)LookUpUserRoleDm.LookUpIds.老子, (int)LookUpUserRoleDm.LookUpIds.Admin)]
     public class FinanceController : BaseController
     {
         private InvoiceBo InvoiceBo;
@@ -79,7 +79,8 @@ namespace Cpi.ManageWeb.Areas.Finance.Controllers
             var model = new
             {
                 ReportDates = ReportDateFilter.GetSelectList(),
-                ReportDateIdEnums = EnumHelper.GetEnumIntList(typeof(ReportDateFilter.ReportDateIdEnums))
+                ReportDateIdEnums = EnumHelper.GetEnumIntList(typeof(ReportDateFilter.ReportDateIdEnums)),
+                CanSeeMoney = (UserHelper.GetRoleId() == (int)LookUpUserRoleDm.LookUpIds.老子) ? true : false
             };
 
             return JsonModel(model);

@@ -90,6 +90,7 @@
     <Compile Include="DataTransferObjects\FinanceDto.cs" />
     <Compile Include="Filters\ReportDateFilter.cs" />
     <Compile Include="Filters\ListFilter.cs" />
+    <Compile Include="Helpers\CommonHelper.cs" />
     <Compile Include="Helpers\ConstHelper.cs" />
     <Compile Include="Helpers\EnumHelper.cs" />
     <Compile Include="Helpers\PasswordHelper.cs" />

@@ -3,11 +3,26 @@ using Cpi.Application.DataModels;
 using Cpi.Application.Filters;
 using System.Linq;
 using System;
+using Cpi.Application.DataModels.LookUp;
+using Cpi.Application.Helpers;
 
 namespace Cpi.Application.BusinessObjects
 {
     public class InvoiceBo : BaseBo<InvoiceDm>
     {
+        public IQueryable<InvoiceDm> GetListQuery()
+        {
+            IQueryable<InvoiceDm> query = base.GetListQuery();
+
+            if (UserHelper.GetRoleId() != (int)LookUpUserRoleDm.LookUpIds.老子)
+            {
+                DateTime globalFilteredDate = CommonHelper.GetGlobalFilteredDate();
+                query = query.Where(a => a.CreatedDate >= globalFilteredDate);
+            }
+
+            return query;
+        }
+
         public IQueryable<InvoiceDm> GetListBaseQuery(ListFilter.Invoice filter)
         {
             IQueryable<InvoiceDm> query = GetListQuery();

@@ -13,22 +13,31 @@
             <i class="material-icons">call</i>
             <span class="text">Calls 外来电话</span>
         </a>
-        <a href="/Invoice/Invoice/" class="menu-item @(currentArea == "Invoice" ? "selected" : "") @(roleId != (int)LookUpUserRoleDm.LookUpIds.Admin ? "not-authorized" : "")">
-            <i class="material-icons">storage</i>
-            <span class="text">Invoices 订单</span>
-        </a>
-        <a href="/Expense/Expense/" class="menu-item @(currentArea == "Expense" ? "selected" : "") @(roleId != (int)LookUpUserRoleDm.LookUpIds.Admin ? "not-authorized" : "")">
-            <i class="material-icons">insert_photo</i>
-            <span class="text">Expenses 支出</span>
-        </a>
-        <a href="/Finance/Finance/" class="menu-item @(currentArea == "Finance" ? "selected" : "") @(roleId != (int)LookUpUserRoleDm.LookUpIds.Admin ? "not-authorized" : "")">
-            <i class="material-icons">monetization_on</i>
-            <span class="text">Finance 财务</span>
-        </a>
-        <a href="/Performance/Performance/" class="menu-item @(currentArea == "Performance" ? "selected" : "") @(roleId != (int)LookUpUserRoleDm.LookUpIds.Admin && roleId != (int)LookUpUserRoleDm.LookUpIds.DataSpecialist ? "not-authorized" : "")">
-            <i class="material-icons">local_library</i>
-            <span class="text">Performance 员工评估</span>
-        </a>
+
+        @if (roleId == (int)LookUpUserRoleDm.LookUpIds.老子 || roleId == (int)LookUpUserRoleDm.LookUpIds.Admin)
+        {
+            <a href="/Invoice/Invoice/" class="menu-item @(currentArea == "Invoice" ? "selected" : "")">
+                <i class="material-icons">storage</i>
+                <span class="text">Invoices 订单</span>
+            </a>
+            <a href="/Expense/Expense/" class="menu-item @(currentArea == "Expense" ? "selected" : "")">
+                <i class="material-icons">insert_photo</i>
+                <span class="text">Expenses 支出</span>
+            </a>
+            <a href="/Finance/Finance/" class="menu-item @(currentArea == "Finance" ? "selected" : "")">
+                <i class="material-icons">monetization_on</i>
+                <span class="text">Finance 财务</span>
+            </a>
+        }
+        
+        @if (roleId == (int)LookUpUserRoleDm.LookUpIds.老子 || roleId == (int)LookUpUserRoleDm.LookUpIds.Admin || roleId == (int)LookUpUserRoleDm.LookUpIds.DataSpecialist)
+        {
+            <a href="/Performance/Performance/" class="menu-item @(currentArea == "Performance" ? "selected" : "")">
+                <i class="material-icons">local_library</i>
+                <span class="text">Performance 员工评估</span>
+            </a>
+        }
+
         @*<a href="/Product/Product/" class="menu-item @(currentArea == "Product" ? "selected" : "") @(roleId != (int)LookUpUserRoleDm.LookUpIds.Admin && roleId != (int)LookUpUserRoleDm.LookUpIds.DataSpecialist ? "not-authorized" : "")">
             <i class="material-icons">local_library</i>
             <span class="text">Products 产品</span>

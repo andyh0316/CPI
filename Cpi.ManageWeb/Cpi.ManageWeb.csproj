@@ -225,6 +225,8 @@
     <Compile Include="Areas\Invoice\Controllers\InvoiceController.cs" />
     <Compile Include="Areas\Call\Controllers\CallController.cs" />
     <Compile Include="Areas\Call\CallAreaRegistration.cs" />
+    <Compile Include="Areas\Staff\Controllers\StaffController.cs" />
+    <Compile Include="Areas\Staff\StaffAreaRegistration.cs" />
     <Compile Include="Attributes\CpiAuthenticateAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Base\BaseController.cs" />
@@ -371,6 +373,7 @@
     <Folder Include="Areas\Invoice\Views\Shared\" />
     <Folder Include="Areas\Performance\Models\" />
     <Folder Include="Areas\Performance\Views\Shared\" />
+    <Folder Include="Areas\Staff\Views\" />
     <Folder Include="Filters\" />
     <Folder Include="node_modules\" />
   </ItemGroup>
