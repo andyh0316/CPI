@@ -1,11 +1,11 @@
 ﻿using Cobro.Compass.Web.Attributes;
 using Cpi.Application.BusinessObjects;
+using Cpi.Application.BusinessObjects.LookUp;
 using Cpi.Application.BusinessObjects.Other;
 using Cpi.Application.DataModels.LookUp;
 using Cpi.Application.DataTransferObjects;
 using Cpi.Application.Filters;
 using Cpi.Application.Helpers;
-using Cpi.Application.Models;
 using Cpi.ManageWeb.Controllers.Base;
 using Cpi.ManageWeb.Models;
 using System.Collections.Generic;
@@ -19,10 +19,12 @@ namespace Cpi.ManageWeb.Areas.Finance.Controllers
     {
         private InvoiceBo InvoiceBo;
         private FinanceBo FinanceBo;
-        public FinanceController(InvoiceBo InvoiceBo, FinanceBo FinanceBo)
+        private LookUpBo LookUpBo;
+        public FinanceController(InvoiceBo InvoiceBo, FinanceBo FinanceBo, LookUpBo LookUpBo)
         {
             this.InvoiceBo = InvoiceBo;
             this.FinanceBo = FinanceBo;
+            this.LookUpBo = LookUpBo;
         }
 
         public ActionResult Index()
@@ -31,16 +33,8 @@ namespace Cpi.ManageWeb.Areas.Finance.Controllers
         }
 
         [HttpPost]
-        public ContentResult GetFinance(ReportDateFilter filter)
+        public ContentResult GetFinance(ClassFilter.Finance filter)
         {
-            if (filter == null)
-            {
-                filter = new ReportDateFilter
-                {
-                    ReportDateId = (int)ReportDateFilter.ReportDateIdEnums.Today
-                };
-            }
-
             var model = new
             {
                 Filter = filter,
@@ -64,23 +58,15 @@ namespace Cpi.ManageWeb.Areas.Finance.Controllers
             return JsonModel(model);
         } 
 
-        [HttpPost]
-        public ContentResult GetFinanceList(ListFilter.Finance filter)
-        {
-            IQueryable<FinanceDto> query = FinanceBo.GetListBaseQuery();
-            ListLoadCalculator listLoadCalculator = new ListLoadCalculator(filter.Loads, query.Count());
-            List<FinanceDto> records = GetLoadedSortedQuery(query, listLoadCalculator.Skip, listLoadCalculator.Take, filter.SortColumn, filter.SortDesc).ToList();
-            return JsonModel(new { Records = records, ListLoadCalculator = listLoadCalculator });
-        }
-
         [HttpGet]
         public ContentResult GetFinanceData()
         {
             var model = new
             {
+                Locations = LookUpBo.GetList<LookUpLocationDm>(),
                 ReportDates = ReportDateFilter.GetSelectList(),
                 ReportDateIdEnums = EnumHelper.GetEnumIntList(typeof(ReportDateFilter.ReportDateIdEnums)),
-                CanSeeMoney = (UserHelper.GetRoleId() == (int)LookUpUserRoleDm.LookUpIds.老子) ? true : false
+                //CanSeeMoney = (UserHelper.GetRoleId() == (int)LookUpUserRoleDm.LookUpIds.老子) ? true : false
             };
 
             return JsonModel(model);

@@ -68,11 +68,16 @@ namespace Cpi.Application.BusinessObjects.Other
             return dtoQuery;
         }
 
-        public decimal GetRevenue(ReportDateFilter filter)
+        public decimal GetRevenue(ClassFilter.Finance filter)
         {
             IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetListQuery();
 
-            invoiceQuery = InvoiceBo.GetDateFilteredQuery(invoiceQuery, filter);
+            if (filter.LocationId.HasValue)
+            {
+                invoiceQuery = invoiceQuery.Where(a => a.LocationId == filter.LocationId);
+            }
+
+            invoiceQuery = InvoiceBo.GetDateFilteredQuery(invoiceQuery, filter.ReportDateFilter);
 
             invoiceQuery = invoiceQuery.Where(a => a.StatusId == (int)LookUpInvoiceStatusDm.LookUpIds.Sold);
 
@@ -81,121 +86,164 @@ namespace Cpi.Application.BusinessObjects.Other
             return revenue;
         }
 
-        public decimal GetExpense(ReportDateFilter filter)
+        public decimal GetExpense(ClassFilter.Finance filter)
         {
             IQueryable<ExpenseDm> expenseQuery = ExpenseBo.GetListQuery();
 
-            expenseQuery = ExpenseBo.GetDateFilteredQuery(expenseQuery, filter);
+            expenseQuery = ExpenseBo.GetDateFilteredQuery(expenseQuery, filter.ReportDateFilter);
 
             decimal expense = expenseQuery.Select(a => a.Expense.Value).DefaultIfEmpty(0).Sum();
 
             return expense;
         }
 
-        public int GetProductSoldCount(ReportDateFilter filter)
+        public int GetProductSoldCount(ClassFilter.Finance filter)
         {
             IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetListQuery();
 
-            invoiceQuery = InvoiceBo.GetDateFilteredQuery(invoiceQuery, filter);
+            if (filter.LocationId.HasValue)
+            {
+                invoiceQuery = invoiceQuery.Where(a => a.LocationId == filter.LocationId);
+            }
+
+            invoiceQuery = InvoiceBo.GetDateFilteredQuery(invoiceQuery, filter.ReportDateFilter);
 
             invoiceQuery = invoiceQuery.Where(a => a.StatusId == (int)LookUpInvoiceStatusDm.LookUpIds.Sold);
 
             return invoiceQuery.SelectMany(a => a.InvoiceCommodities.Select(b => b.Quantity.Value)).DefaultIfEmpty(0).Sum();
         }
 
-        public int GetProductCancelledCount(ReportDateFilter filter)
+        public int GetProductCancelledCount(ClassFilter.Finance filter)
         {
             IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetListQuery();
 
-            invoiceQuery = InvoiceBo.GetDateFilteredQuery(invoiceQuery, filter);
+            if (filter.LocationId.HasValue)
+            {
+                invoiceQuery = invoiceQuery.Where(a => a.LocationId == filter.LocationId);
+            }
+
+            invoiceQuery = InvoiceBo.GetDateFilteredQuery(invoiceQuery, filter.ReportDateFilter);
 
             invoiceQuery = invoiceQuery.Where(a => a.StatusId == (int)LookUpInvoiceStatusDm.LookUpIds.Cancelled);
 
             return invoiceQuery.SelectMany(a => a.InvoiceCommodities.Select(b => b.Quantity.Value)).DefaultIfEmpty(0).Sum();
         }
 
-        public int GetProductPendingCount(ReportDateFilter filter)
+        public int GetProductPendingCount(ClassFilter.Finance filter)
         {
             IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetListQuery();
 
-            invoiceQuery = InvoiceBo.GetDateFilteredQuery(invoiceQuery, filter);
+            if (filter.LocationId.HasValue)
+            {
+                invoiceQuery = invoiceQuery.Where(a => a.LocationId == filter.LocationId);
+            }
+
+            invoiceQuery = InvoiceBo.GetDateFilteredQuery(invoiceQuery, filter.ReportDateFilter);
 
             invoiceQuery = invoiceQuery.Where(a => !a.StatusId.HasValue);
 
             return invoiceQuery.SelectMany(a => a.InvoiceCommodities.Select(b => b.Quantity.Value)).DefaultIfEmpty(0).Sum();
         }
 
-        public int GetProductTotalCount(ReportDateFilter filter)
+        public int GetProductTotalCount(ClassFilter.Finance filter)
         {
             IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetListQuery();
 
-            invoiceQuery = InvoiceBo.GetDateFilteredQuery(invoiceQuery, filter);
+            if (filter.LocationId.HasValue)
+            {
+                invoiceQuery = invoiceQuery.Where(a => a.LocationId == filter.LocationId);
+            }
+
+            invoiceQuery = InvoiceBo.GetDateFilteredQuery(invoiceQuery, filter.ReportDateFilter);
 
             return invoiceQuery.SelectMany(a => a.InvoiceCommodities.Select(b => b.Quantity.Value)).DefaultIfEmpty(0).Sum();
         }
 
-        public int GetInvoiceSoldCount(ReportDateFilter filter)
+        public int GetInvoiceSoldCount(ClassFilter.Finance filter)
         {
             IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetListQuery();
 
-            invoiceQuery = InvoiceBo.GetDateFilteredQuery(invoiceQuery, filter);
+            if (filter.LocationId.HasValue)
+            {
+                invoiceQuery = invoiceQuery.Where(a => a.LocationId == filter.LocationId);
+            }
+
+            invoiceQuery = InvoiceBo.GetDateFilteredQuery(invoiceQuery, filter.ReportDateFilter);
 
             invoiceQuery = invoiceQuery.Where(a => a.StatusId == (int)LookUpInvoiceStatusDm.LookUpIds.Sold);
 
             return invoiceQuery.Count();
         }
 
-        public int GetInvoiceCancelledCount(ReportDateFilter filter)
+        public int GetInvoiceCancelledCount(ClassFilter.Finance filter)
         {
             IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetListQuery();
 
-            invoiceQuery = InvoiceBo.GetDateFilteredQuery(invoiceQuery, filter);
+            if (filter.LocationId.HasValue)
+            {
+                invoiceQuery = invoiceQuery.Where(a => a.LocationId == filter.LocationId);
+            }
+
+            invoiceQuery = InvoiceBo.GetDateFilteredQuery(invoiceQuery, filter.ReportDateFilter);
 
             invoiceQuery = invoiceQuery.Where(a => a.StatusId == (int)LookUpInvoiceStatusDm.LookUpIds.Cancelled);
 
             return invoiceQuery.Count();
         }
 
-        public int GetInvoicePendingCount(ReportDateFilter filter)
+        public int GetInvoicePendingCount(ClassFilter.Finance filter)
         {
             IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetListQuery();
 
-            invoiceQuery = InvoiceBo.GetDateFilteredQuery(invoiceQuery, filter);
+            if (filter.LocationId.HasValue)
+            {
+                invoiceQuery = invoiceQuery.Where(a => a.LocationId == filter.LocationId);
+            }
+
+            invoiceQuery = InvoiceBo.GetDateFilteredQuery(invoiceQuery, filter.ReportDateFilter);
 
             invoiceQuery = invoiceQuery.Where(a => !a.StatusId.HasValue);
 
             return invoiceQuery.Count();
         }
 
-        public int GetInvoiceTotalCount(ReportDateFilter filter)
+        public int GetInvoiceTotalCount(ClassFilter.Finance filter)
         {
             IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetListQuery();
 
-            invoiceQuery = InvoiceBo.GetDateFilteredQuery(invoiceQuery, filter);
+            if (filter.LocationId.HasValue)
+            {
+                invoiceQuery = invoiceQuery.Where(a => a.LocationId == filter.LocationId);
+            }
+
+            invoiceQuery = InvoiceBo.GetDateFilteredQuery(invoiceQuery, filter.ReportDateFilter);
 
             return invoiceQuery.Count();
         }
 
-        public int GetReceivedCallCount(ReportDateFilter filter)
+        public int GetReceivedCallCount(ClassFilter.Finance filter)
         {
             IQueryable<CallDm> callQuery = CallBo.GetListQuery();
 
-            callQuery = CallBo.GetDateFilteredQuery(callQuery, filter);
+            callQuery = CallBo.GetDateFilteredQuery(callQuery, filter.ReportDateFilter);
 
             return callQuery.Count();
         }
 
-
-
-        public List<Tuple<string, decimal>> GetRevenues(ReportDateFilter filter)
+        public List<Tuple<string, decimal>> GetRevenues(ClassFilter.Finance filter)
         {
             IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetListQuery().Where(a => a.StatusId == (int)LookUpInvoiceStatusDm.LookUpIds.Sold);
 
+            if (filter.LocationId.HasValue)
+            {
+                invoiceQuery = invoiceQuery.Where(a => a.LocationId == filter.LocationId);
+            }
+
             List<Tuple<string, decimal>> finances = new List<Tuple<string, decimal>>();
 
-            if (filter.ReportDateId.HasValue)
+            if (filter.ReportDateFilter.ReportDateId.HasValue)
             {
-                Tuple<DateTime, DateTime, bool> dateFilteredInfo = InvoiceBo.GetDateFilteredInfo(invoiceQuery, filter);
+                Tuple<DateTime, DateTime, bool> dateFilteredInfo = InvoiceBo.GetDateFilteredInfo(invoiceQuery, filter.ReportDateFilter);
                 if (dateFilteredInfo == null)
                 {
                     return null;
@@ -223,16 +271,22 @@ namespace Cpi.Application.BusinessObjects.Other
             return null;
         }
 
-        public List<Tuple<string, int, int>> GetCalls(ReportDateFilter filter)
+        public List<Tuple<string, int, int>> GetCalls(ClassFilter.Finance filter)
         {
             IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetListQuery().Where(a => a.StatusId == (int)LookUpInvoiceStatusDm.LookUpIds.Sold);
+
+            if (filter.LocationId.HasValue)
+            {
+                invoiceQuery = invoiceQuery.Where(a => a.LocationId == filter.LocationId);
+            }
+
             IQueryable<CallDm> callQuery = CallBo.GetListQuery();
 
             List<Tuple<string, int, int>> calls = new List<Tuple<string, int, int>>();
 
-            if (filter.ReportDateId.HasValue)
+            if (filter.ReportDateFilter.ReportDateId.HasValue)
             {
-                Tuple<DateTime, DateTime, bool> dateFilteredInfo = InvoiceBo.GetDateFilteredInfo(invoiceQuery, filter);
+                Tuple<DateTime, DateTime, bool> dateFilteredInfo = InvoiceBo.GetDateFilteredInfo(invoiceQuery, filter.ReportDateFilter);
                 if (dateFilteredInfo == null)
                 {
                     return null;
@@ -264,10 +318,16 @@ namespace Cpi.Application.BusinessObjects.Other
             return null;
         }
 
-        public List<Tuple<string, int, int>> GetProducts(ReportDateFilter filter)
+        public List<Tuple<string, int, int>> GetProducts(ClassFilter.Finance filter)
         {
             IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetListQuery();
-            invoiceQuery = InvoiceBo.GetDateFilteredQuery(invoiceQuery, filter);
+
+            if (filter.LocationId.HasValue)
+            {
+                invoiceQuery = invoiceQuery.Where(a => a.LocationId == filter.LocationId);
+            }
+
+            invoiceQuery = InvoiceBo.GetDateFilteredQuery(invoiceQuery, filter.ReportDateFilter);
 
             IQueryable<LookUpCommodityDm> commodityQuery = LookUpBo.GetListQuery<LookUpCommodityDm>();
 

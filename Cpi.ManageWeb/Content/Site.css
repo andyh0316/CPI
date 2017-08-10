@@ -149,7 +149,7 @@ body {
             opacity: 0.75;
             color: white;
             text-decoration: none;
-            padding: 2px 0px; }
+            padding: 4px 0px; }
             #main-menu .menu-body .menu-item .sub-menu .sub-menu-body .sub-menu-item:hover {
               opacity: 1; }
             #main-menu .menu-body .menu-item .sub-menu .sub-menu-body .sub-menu-item.selected {

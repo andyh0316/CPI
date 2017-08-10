@@ -4,13 +4,8 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
     $urlRouterProvider.when("", "/Finance");
 
     var financeScopeData = {
-        filter: { ReportDateId: 1 },
+        filter: { LocationId: 1, ReportDateFilter: { ReportDateId: 1 }},
         httpRequest: { method: 'POST', url: '/Finance/Finance/GetFinance' }
-    };
-
-    var listScopeData = {
-        filter: { Loads: 0, SortColumn: "CreatedDate", SortDesc: true },
-        httpRequest: { method: 'POST', url: '/Finance/Finance/GetFinanceList' }
     };
 
     $stateProvider
@@ -27,19 +22,6 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
                 }],
                 scopeData: function () {
                     return financeScopeData;
-                }
-            }
-        })
-        .state('Finance.List', {
-            url: '/List',
-            templateUrl: '/Areas/Finance/Views/Finance/List.html',
-            controller: 'ListController',
-            resolve: {
-                model: ['$stateParams', 'baseBo', function ($stateParams, baseBo) {
-                    return baseBo.httpRequest(listScopeData.httpRequest.method, listScopeData.httpRequest.url, listScopeData.filter);
-                }],
-                scopeData: function () {
-                    return listScopeData;
                 }
             }
         })
@@ -75,10 +57,6 @@ app.controller('FinanceController', ['$scope', '$controller', '$state', 'baseBo'
                 $scope.model = result.Object;
                 $scope.setGraphData();
             });
-    };
-
-    $scope.goListView = function () {
-        $state.go('Finance.List');
     };
 
     $scope.setGraphData = function () {

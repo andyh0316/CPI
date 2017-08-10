@@ -218,6 +218,7 @@
     <Compile Include="Areas\Expense\ExpenseAreaRegistration.cs" />
     <Compile Include="Areas\Expense\Controllers\ExpenseController.cs" />
     <Compile Include="Areas\Finance\Controllers\FinanceController.cs" />
+    <Compile Include="Areas\Finance\Controllers\FinanceListController.cs" />
     <Compile Include="Areas\Finance\FinanceAreaRegistration.cs" />
     <Compile Include="Areas\Performance\Controllers\PerformanceController.cs" />
     <Compile Include="Areas\Performance\PerformanceAreaRegistration.cs" />
@@ -242,9 +243,10 @@
   <ItemGroup>
     <Content Include="Areas\Expense\Views\Expense\ExpenseApp.js" />
     <Content Include="Areas\Expense\Views\Expense\List.html" />
+    <Content Include="Areas\Finance\Views\FinanceList\FinanceListApp.js" />
     <Content Include="Areas\Finance\Views\Finance\Finance.html" />
     <Content Include="Areas\Finance\Views\Finance\FinanceApp.js" />
-    <Content Include="Areas\Finance\Views\Finance\List.html" />
+    <Content Include="Areas\Finance\Views\FinanceList\List.html" />
     <Content Include="Areas\Performance\Views\Performance\PerformanceApp.js" />
     <Content Include="Areas\Invoice\Views\Invoice\InvoiceApp.js" />
     <Content Include="Areas\Invoice\Views\Invoice\List.html" />
@@ -311,6 +313,7 @@
     <Content Include="Areas\User\Views\Web.config" />
     <Content Include="Areas\User\Views\User\Index.cshtml" />
     <Content Include="Areas\User\Views\User\User.html" />
+    <Content Include="Areas\Finance\Views\FinanceList\Index.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

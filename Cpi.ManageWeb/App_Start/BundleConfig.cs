@@ -60,6 +60,9 @@ namespace Cpi.ManageWeb
                 .Include("~/Areas/Finance/Views/Finance/FinanceApp.js")
                 .Include(chartBundles));
 
+            bundles.Add(new ScriptBundle("~/bundles/finance/financeList")
+                .Include("~/Areas/Finance/Views/FinanceList/FinanceListApp.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/performance/performance")
                 .Include("~/Areas/Performance/Views/Performance/PerformanceApp.js")
                 .Include(chartBundles));

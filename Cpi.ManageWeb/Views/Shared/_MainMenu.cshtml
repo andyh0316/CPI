@@ -33,8 +33,6 @@
                 <div class="sub-menu">
                     <div class="sub-menu-body">
                         <a href="/Invoice/Invoice" class="sub-menu-item @(currentController == "Invoice" ? "selected" : "")">
-                            <i class="material-icons">school</i>
-                            <span class="text">Students</span>
                         </a>
                     </div>
                 </div>
@@ -61,7 +59,13 @@
 
                 <div class="sub-menu">
                     <div class="sub-menu-body">
-                        <a href="/Finance/Finance/" class="sub-menu-item"></a>
+                        <a href="/Finance/Finance/" class="sub-menu-item">
+                            <span class="text">Overview</span>
+                        </a>
+
+                        <a href="/Finance/FinanceList/" class="sub-menu-item">
+                            <span class="text">List</span>
+                        </a>
                     </div>
                 </div>
             </div>

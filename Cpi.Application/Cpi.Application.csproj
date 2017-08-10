@@ -91,6 +91,7 @@
     <Compile Include="DataTransferObjects\EmployeePerformanceDto.cs" />
     <Compile Include="DataTransferObjects\FinanceDto.cs" />
     <Compile Include="DataTransferObjects\UserDto.cs" />
+    <Compile Include="Filters\ClassFilter.cs" />
     <Compile Include="Filters\ReportDateFilter.cs" />
     <Compile Include="Filters\ListFilter.cs" />
     <Compile Include="Helpers\CommonHelper.cs" />
