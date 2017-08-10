@@ -209,7 +209,7 @@ body {
   top: 0;
   left: 0;
   height: 100%;
-  padding-top: calc((50px) + (42px));
+  padding-top: calc(92px);
   background-color: white; }
   [ui-view] [ui-view] {
     -webkit-transition: all 400ms linear;
