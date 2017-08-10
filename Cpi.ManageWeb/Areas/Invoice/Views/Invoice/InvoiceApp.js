@@ -37,7 +37,8 @@ app.controller('ListController', ['$scope', '$controller', '$state', 'baseBo', '
     $scope.create = function (phoneNumber) {
         var newItem = {
             isEditing: true,
-            CustomerPhone: phoneNumber
+            CustomerPhone: phoneNumber,
+            LocationId: 1
         };
         $scope.model.Records.unshift(newItem);
     };

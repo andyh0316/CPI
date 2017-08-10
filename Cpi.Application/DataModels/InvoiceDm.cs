@@ -24,6 +24,9 @@ namespace Cpi.Application.DataModels
         public int? StatusId { get; set; }
         public virtual LookUpInvoiceStatusDm Status { get; set; }
 
+        public int? LocationId { get; set; }
+        public virtual LookUpLocationDm Location { get; set; }
+
         public decimal? TotalPrice { get; set; }
     }
 
@@ -37,6 +40,7 @@ namespace Cpi.Application.DataModels
             HasOptional(a => a.Operator).WithMany().HasForeignKey(a => a.OperatorId).WillCascadeOnDelete(false);
             HasOptional(a => a.DeliveryStaff).WithMany().HasForeignKey(a => a.DeliveryStaffId).WillCascadeOnDelete(false);
             HasOptional(a => a.Status).WithMany().HasForeignKey(a => a.StatusId).WillCascadeOnDelete(false);
+            HasOptional(a => a.Location).WithMany().HasForeignKey(a => a.LocationId).WillCascadeOnDelete(false);
         }
     }
 }

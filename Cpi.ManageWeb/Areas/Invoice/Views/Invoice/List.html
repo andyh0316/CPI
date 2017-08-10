@@ -14,6 +14,14 @@
             <div advanced-search ng-show="showAdvancedSearch" advanced-search-undo="advancedSearchUndo()" class="advanced-search">
                 <section>
                     <dl class="dl-S">
+                        <dt>Location</dt>
+                        <dd>
+                            <select ng-model="scopeData.filter.AdvancedSearch.LocationId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.Locations">
+                                <option></option>
+                            </select>
+                        </dd>
+                    </dl>
+                    <dl class="dl-S">
                         <dt>Status</dt>
                         <dd>
                             <select ng-model="scopeData.filter.AdvancedSearch.StatusId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.InvoiceStatuses">
@@ -64,13 +72,14 @@
         <table>
             <thead>
                 <tr>
-                    <th class="date-time"><a ng-class="getSortOrder('CreatedDate')" ng-click="sort('CreatedDate')">Created 生成日期</a></th>
-                    <th>Phone 顾客电话</th>
-                    <th ng-class="{commodities: isEditingAny()}">Product 产品</th>
-                    <th><a ng-class="getSortOrder('Operator.NickName')" ng-click="sort('Operator.NickName')">Operator 电话推销员</a></th>
-                    <th><a ng-class="getSortOrder('DeliveryStaff.NickName')" ng-click="sort('DeliveryStaff.NickName')">Deliverer 递送员</a></th>
-                    <th class="right-content"><a ng-class="getSortOrder('TotalPrice')" ng-click="sort('TotalPrice')">Cost 总价格</a></th>
-                    <th class="center-content"><a ng-class="getSortOrder('Status.Name')" ng-click="sort('Status.Name')">Status</a></th>
+                    <th class="date-time"><a ng-class="getSortOrder('CreatedDate')" ng-click="sort('CreatedDate')">Created <br /> 生成日期</a></th>
+                    <th>Phone <br /> 顾客电话</th>
+                    <th ng-class="{commodities: isEditingAny()}">Product <br /> 产品</th>
+                    <th><a ng-class="getSortOrder('Operator.NickName')" ng-click="sort('Operator.NickName')">Operator <br/> 电话推销员</a></th>
+                    <th><a ng-class="getSortOrder('DeliveryStaff.NickName')" ng-click="sort('DeliveryStaff.NickName')">Deliverer <br /> 递送员</a></th>
+                    <th><a ng-class="getSortOrder('Location.Name')" ng-click="sort('Location.Name')">Location <br /> 地点</a></th>
+                    <th class="th-S right-content"><a ng-class="getSortOrder('TotalPrice')" ng-click="sort('TotalPrice')">Cost <br /> 总价格</a></th>
+                    <th class="th-S center-content"><a ng-class="getSortOrder('Status.Name')" ng-click="sort('Status.Name')">Status</a></th>
                     <th class="action"></th>
                 </tr>
             </thead>
@@ -127,7 +136,17 @@
                             </dd>
                         </dl>
                     </td>
-                    <td class="right-content">
+                    <td>
+                        <dl>
+                            <dd ng-show="!record.isEditing">{{record.Location.Name}}</dd>
+                            <dd ng-if="record.isEditing" class="overflow-visible">
+                                <span field-validation-error ng-show="modelState['[' + getEditingRecordIndex(record) + '].LocationId']" class="field-validation-error"></span>
+                                <select ng-model="record.LocationId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.Locations">
+                                </select>
+                            </dd>
+                        </dl>
+                    </td>
+                    <td class="th-S right-content">
                         <dl>
                             <dd ng-show="!record.isEditing">
                                 <span ng-show="record.TotalPrice">${{record.TotalPrice | number: 2}}</span>
@@ -137,7 +156,7 @@
                             </dd>
                         </dl>
                     </td>
-                    <td class="center-content">
+                    <td class="th-S center-content">
                         <dl>
                             <dd ng-show="!record.isEditing">
                                 <span ng-show="record.StatusId === modelData.InvoiceStatusIdEnums.Sold" class="invoice-sold icon" title="Sold: Product(s) delivered to and paid by customer. 以卖出"></span>

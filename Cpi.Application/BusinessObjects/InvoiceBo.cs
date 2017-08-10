@@ -38,6 +38,10 @@ namespace Cpi.Application.BusinessObjects
 
             if (filter.AdvancedSearch != null)
             {
+                if (filter.AdvancedSearch.LocationId.HasValue)
+                {
+                    query = query.Where(a => a.LocationId == filter.AdvancedSearch.LocationId.Value);
+                }
 
                 if (filter.AdvancedSearch.StatusId.HasValue)
                 {

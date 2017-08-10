@@ -1,0 +1,69 @@
+﻿<div id="user" class="container">
+    <div ng-show="state.current.name == 'List.User'" class="secondary-menu">
+        <div class="title-container">
+            <div class="title">Staff</div>
+        </div>
+        <div class="filters-container">
+        </div>
+        <div class="buttons">
+            <button ng-show="isViewMode()" class="button main" ng-click="setMode(editMode)">Edit</button>
+            <button ng-show="isCreateMode() || isEditMode()" class="button main" ng-click="setMode(gEditMode)">Save</button>
+            <button class="button" ng-click="back()">Cancel</button>
+        </div>
+    </div>
+
+    <div>
+        <section>
+            <dl>
+                <dt>Fullname 姓名 {{mode}}</dt>
+                <dd ng-show="isCreateMode() || isEditMode()">
+                    <input ng-model="model.Fullname" />
+                </dd>
+                <dd ng-show="isViewMode()">
+                    {{model.Fullname}}
+                </dd>
+            </dl>
+
+            <dl>
+                <dt>Nickname 昵称</dt>
+                <dd ng-show="isCreateMode() || isEditMode()">
+                    <input ng-model="model.Nickname" />
+                </dd>
+                <dd ng-show="isViewMode()">
+                    {{model.Nickname}}
+                </dd>
+            </dl>
+
+            <dl>
+                <dt>Username 账号</dt>
+                <dd ng-show="isCreateMode() || isEditMode()">
+                    <input ng-model="model.Username" />
+                </dd>
+                <dd ng-show="isViewMode()">
+                    {{model.Username}}
+                </dd>
+            </dl>
+
+            <dl>
+                <dt>Role</dt>
+                <dd>
+                    {{model.UserRole.Name}}
+                </dd>
+            </dl>
+
+            <dl>
+                <dt>Occupation</dt>
+                <dd ng-show="isViewMode()">
+                    {{model.UserOccupation.Name}}
+                </dd>
+            </dl>
+
+            <dl>
+                <dt>Last Login Date</dt>
+                <dd>
+                    {{model.LastLoginDate | shortDate}}
+                </dd>
+            </dl>
+        </section>
+    </div>
+</div>

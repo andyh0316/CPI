@@ -41,7 +41,7 @@ namespace Cpi.ManageWeb.Areas.Invoice.Controllers
         [HttpPost]
         public ContentResult GetList(ListFilter.Invoice filter)
         {
-            IQueryable<InvoiceDm> query = InvoiceBo.GetListBaseQuery(filter).Include(a => a.DeliveryStaff).Include(a => a.Operator).Include(a => a.Status).Include(a => a.InvoiceCommodities.Select(b => b.Commodity));
+            IQueryable<InvoiceDm> query = InvoiceBo.GetListBaseQuery(filter).Include(a => a.DeliveryStaff).Include(a => a.Operator).Include(a => a.Status).Include(a => a.Location).Include(a => a.InvoiceCommodities.Select(b => b.Commodity));
             ListLoadCalculator listLoadCalculator = new ListLoadCalculator(filter.Loads, query.Count());
             List<InvoiceDm> records = GetLoadedSortedQuery(query, listLoadCalculator.Skip, listLoadCalculator.Take, filter.SortColumn, filter.SortDesc).ToList();
             return JsonModel(new { Records = records, ListLoadCalculator = listLoadCalculator });
@@ -54,6 +54,7 @@ namespace Cpi.ManageWeb.Areas.Invoice.Controllers
             {
                 Commodities = LookUpBo.GetList<LookUpCommodityDm>().ToList(),
                 InvoiceStatuses = LookUpBo.GetList<LookUpInvoiceStatusDm>().ToList(),
+                Locations = LookUpBo.GetList<LookUpLocationDm>().ToList(),
                 Users = UserBo.GetListQuery().OrderBy(a => a.Nickname).ThenBy(a => a.Fullname).Select(a => new CpiSelectListItem
                 {
                     Id = a.Id,
@@ -61,7 +62,7 @@ namespace Cpi.ManageWeb.Areas.Invoice.Controllers
                 }).ToList(),
                 ReportDates = ReportDateFilter.GetSelectList(),
                 InvoiceStatusIdEnums = EnumHelper.GetEnumIntList(typeof(LookUpInvoiceStatusDm.LookUpIds)),
-                ReportDateIdEnums = EnumHelper.GetEnumIntList(typeof(ReportDateFilter.ReportDateIdEnums))
+                ReportDateIdEnums = EnumHelper.GetEnumIntList(typeof(ReportDateFilter.ReportDateIdEnums)),
             };
 
             return JsonModel(model);

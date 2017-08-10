@@ -47,7 +47,7 @@ namespace Cpi.Application.DatabaseContext
             modelBuilder.Configurations.Add(new LookUpCallStatusMap());
             modelBuilder.Configurations.Add(new LookUpInvoiceStatusMap());
             modelBuilder.Configurations.Add(new LookUpCommodityMap());
-
+            modelBuilder.Configurations.Add(new LookUpLocationMap());
         }
 
 

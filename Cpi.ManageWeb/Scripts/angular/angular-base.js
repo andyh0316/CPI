@@ -16,6 +16,26 @@ baseModule.controller('BaseController', ['$scope', '$state', function ($scope, $
     $scope.back = function () {
         $state.go('^');
     }
+
+    $scope.viewMode = 'View';
+    $scope.createMode = 'Create';
+    $scope.editMode = 'Edit';
+
+    $scope.isViewMode = function () {
+        return $scope.mode === $scope.viewMode;
+    };
+
+    $scope.isCreateMode = function () {
+        return $scope.mode === $scope.createMode;
+    };
+
+    $scope.isEditMode = function () {
+        return $scope.mode === $scope.editMode;
+    };
+
+    $scope.setMode = function (mode) {
+        $scope.mode = mode;
+    };
 }]);
 
 /* provides server/backend sorting, paging and searching. For client side sorting and paging */

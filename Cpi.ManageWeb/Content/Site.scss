@@ -107,16 +107,21 @@ $main-menu-width: 200px;
         border-top: 1px solid #263a46;
 
         .menu-item {
+            position: relative;
             display: block;
             width: 100%;
             color: whitesmoke;
             text-decoration: none;
             padding: 10px 15px;
-            @include opacity(0.7);
             font-weight: 700;
             @extend %border-box;
             border-top: 1px solid #385a6d;
             border-bottom: 1px solid #263a46;
+            float: left;
+
+            .menu-item-inner {
+                @include opacity(0.7);
+            }
 
             .material-icons {
                 position: relative;
@@ -130,20 +135,77 @@ $main-menu-width: 200px;
             }
 
             &:hover {
-                @include opacity(1);
-                @include transition(opacity 500ms);
+                cursor: pointer;
+
+                .menu-item-inner {
+                    @include opacity(1);
+                    @include transition(opacity 500ms);
+                }
+
+                .sub-menu {
+                    display: block;
+                }
             }
 
             &.selected {
-                @include opacity(1);
+                .menu-item-inner {
+                    @include opacity(1);
+                }
             }
 
-            &.not-authorized {
-                //pointer-events: none;
+            .sub-menu {
+                position: absolute;
+                display: none;
+                top: 0px;
+                left: $main-menu-width;
+                min-width: 100%;
+                /*.padder {
+                    position: relative;
+                    left: 37px;
+                    top: 1px;
+                    width: 0;
+                    height: 10px;
+                    border-left: 7px solid transparent;
+                    border-right: 7px solid transparent;
+                    border-bottom: 7px solid #11506F;
+                }*/
+                .sub-menu-body {
+                    background-color: $main-color;
+                    //box-shadow: inset 0px 0px 50px #11506F;
+                    padding: 15px 15px 15px 15px;
+                    text-align: left;
 
-                .text,
-                .material-icons {
-                    opacity: 0.4;
+                    .sub-menu-item {
+                        display: block;
+                        opacity: 0.75;
+                        color: white;
+
+                        a {
+                            display: block;
+                            width: 100%;
+                            padding-top: 3px;
+                            padding-bottom: 3px;
+                            font-weight: bold;
+                            white-space: nowrap;
+                            text-decoration: none;
+                            text-transform: uppercase;
+                            letter-spacing: 0px;
+                            text-decoration: none;
+                            color: white;
+                        }
+
+                        &:hover {
+                            opacity: 1;
+                        }
+
+                        &.selected {
+                            opacity: 1;
+                        }
+                    }
+                }
+
+                &:hover {
+                    cursor: auto;
                 }
             }
         }
@@ -427,6 +489,10 @@ $secondary-menu-height: 40px;
             &.date-time {
                 width: 140px;
             }
+
+            &.th-S {
+                width: 80px;
+            }
         }
 
         .icon {
@@ -543,9 +609,7 @@ dl {
             width: 100%;
             white-space: normal;
         }
-        /*&:empty:after {
-            content: "--";
-        }*/
+
         &.thin {
             font-weight: 400;
         }
@@ -558,6 +622,10 @@ dl {
         input[type=radio] + label {
             font-weight: 100;
             font-size: 15px;
+        }
+
+        &:empty:after {
+            //content: "--";
         }
     }
 
@@ -639,65 +707,6 @@ section {
 .file-uploader-input {
     opacity: 0;
 }
-
-/*.file-uploader {
-    position: relative;
-    width: 100%;
-    min-height: 150px;
-
-    .file-uploader-container {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        border: 1px solid $main-border-color;
-        text-align: center;
-        padding: 0px 20px 0px 20px;
-        @extend %border-box;
-
-        .file-uploader-input {
-            position: absolute;
-            width: 100%;
-            height: 100% !important;
-            top: 0px;
-            left: 0px;
-            bottom: 0px;
-            right: 0px;
-            font-size: 20px;
-            cursor: pointer;
-            opacity: 0;
-        }
-
-        .default-text {
-            position: relative;
-            width: 100%;
-            font-size: 17px;
-            font-weight: 100;
-            color: #989898;
-            top: 45%;
-        }
-
-        .uploading-files {
-            position: relative;
-            top: 35%;
-            //color: $selection-color;
-            font-size: 14px;
-
-            .material-icons {
-                font-size: 60px;
-            }
-        }
-
-        &:hover {
-            border: 1px solid $main-border-hover-color !important;
-            cursor: pointer;
-        }
-
-        &.active {
-            //border: 1px solid $selection-border-color;
-            background-color: #f6fcff;
-        }
-    }
-}*/
 
 input.search-box {
     width: 200px;
@@ -1445,5 +1454,11 @@ textarea {
 
     .expense {
         //font-weight: bold;
+    }
+}
+
+[ng-click] {
+    &:hover {
+        cursor: pointer;
     }
 }

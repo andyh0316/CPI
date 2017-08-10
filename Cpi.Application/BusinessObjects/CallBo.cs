@@ -25,7 +25,6 @@ namespace Cpi.Application.BusinessObjects
 
         public IQueryable<CallDm> GetListBaseQuery(ListFilter.Call filter)
         {
-            //IQueryable<CallDm> query = GetListQuery().Include(a => a.Address).Include(a => a.Operator.UserOccupation).Include(a => a.Operator.UserRole).Include(a => a.DeliveryStaff.UserOccupation).Include(a => a.DeliveryStaff.UserRole).Include(a => a.Status).Include(a => a.Commodities);
             IQueryable<CallDm> query = GetListQuery();
 
             if (!string.IsNullOrEmpty(filter.SearchString))

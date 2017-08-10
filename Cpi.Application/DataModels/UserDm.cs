@@ -3,6 +3,7 @@ using Cpi.Application.DataModels.Base;
 using Cpi.Application.DataModels.LookUp;
 using Cpi.Compass.Application.BusinessRules;
 using System;
+using System.Collections.Generic;
 
 namespace Cpi.Application.DataModels
 {
@@ -33,6 +34,8 @@ namespace Cpi.Application.DataModels
         public int? UserOccupationId { get; set; }
         public virtual LookUpUserOccupationDm UserOccupation { get; set; }
 
+        public virtual List<UserSalaryDm> UserSalaries { get; set; }
+
         public DateTime? LastLoginDate { get; set; }
     }
 
@@ -41,6 +44,8 @@ namespace Cpi.Application.DataModels
         public UserMap()
         {
             ToTable("User");
+
+            HasMany(a => a.UserSalaries).WithRequired(a => a.User).HasForeignKey(a => a.UserId).WillCascadeOnDelete(false);
             HasRequired(a => a.UserRole).WithMany().HasForeignKey(a => a.UserRoleId).WillCascadeOnDelete(false);
             HasOptional(a => a.UserOccupation).WithMany().HasForeignKey(a => a.UserOccupationId).WillCascadeOnDelete(false);
         }

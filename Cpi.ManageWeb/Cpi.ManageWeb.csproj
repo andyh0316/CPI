@@ -225,8 +225,8 @@
     <Compile Include="Areas\Invoice\Controllers\InvoiceController.cs" />
     <Compile Include="Areas\Call\Controllers\CallController.cs" />
     <Compile Include="Areas\Call\CallAreaRegistration.cs" />
-    <Compile Include="Areas\Staff\Controllers\StaffController.cs" />
-    <Compile Include="Areas\Staff\StaffAreaRegistration.cs" />
+    <Compile Include="Areas\User\Controllers\UserController.cs" />
+    <Compile Include="Areas\User\UserAreaRegistration.cs" />
     <Compile Include="Attributes\CpiAuthenticateAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Base\BaseController.cs" />
@@ -248,6 +248,8 @@
     <Content Include="Areas\Performance\Views\Performance\PerformanceApp.js" />
     <Content Include="Areas\Invoice\Views\Invoice\InvoiceApp.js" />
     <Content Include="Areas\Invoice\Views\Invoice\List.html" />
+    <Content Include="Areas\User\Views\User\List.html" />
+    <Content Include="Areas\User\Views\User\UserApp.js" />
     <Content Include="Content\Fonts\Fonts.css">
       <DependentUpon>Fonts.scss</DependentUpon>
     </Content>
@@ -306,6 +308,9 @@
     <Content Include="Areas\Finance\Views\Web.config" />
     <Content Include="Areas\Expense\Views\Expense\Index.cshtml" />
     <Content Include="Areas\Expense\Views\Web.config" />
+    <Content Include="Areas\User\Views\Web.config" />
+    <Content Include="Areas\User\Views\User\Index.cshtml" />
+    <Content Include="Areas\User\Views\User\User.html" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -373,7 +378,6 @@
     <Folder Include="Areas\Invoice\Views\Shared\" />
     <Folder Include="Areas\Performance\Models\" />
     <Folder Include="Areas\Performance\Views\Shared\" />
-    <Folder Include="Areas\Staff\Views\" />
     <Folder Include="Filters\" />
     <Folder Include="node_modules\" />
   </ItemGroup>
