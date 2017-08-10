@@ -9,10 +9,16 @@
 
 <div id="main-menu">
     <div class="menu-body">
-        <div href="/Call/Call/" class="menu-item @(currentArea == "Call" ? "selected" : "")">
+        <div class="menu-item @(currentArea == "Call" ? "selected" : "")">
             <div class="menu-item-inner">
                 <i class="material-icons">call</i>
                 <span class="text">Calls 外来电话</span>
+            </div>
+
+            <div class="sub-menu">
+                <div class="sub-menu-body">
+                    <a href="/Call/Call/" class="sub-menu-item"></a>
+                </div>
             </div>
         </div>
 
@@ -26,49 +32,69 @@
 
                 <div class="sub-menu">
                     <div class="sub-menu-body">
-                        <a class="sub-menu-item @(currentController == "Invoice" ? "selected" : "")">
+                        <a href="/Invoice/Invoice" class="sub-menu-item @(currentController == "Invoice" ? "selected" : "")">
                             <i class="material-icons">school</i>
                             <span class="text">Students</span>
-                        </a>
-                        <a class="sub-menu-item @(currentController == "Invoice" ? "selected" : "")">
-                            <i class="material-icons">event_note</i>
-                            <span class="text">Services</span>
                         </a>
                     </div>
                 </div>
             </div>
 
-            <div href="/Expense/Expense/" class="menu-item @(currentArea == "Expense" ? "selected" : "")">
+            <div class="menu-item @(currentArea == "Expense" ? "selected" : "")">
                 <div class="menu-item-inner">
                     <i class="material-icons">insert_photo</i>
                     <span class="text">Expenses 支出</span>
                 </div>
+
+                <div class="sub-menu">
+                    <div class="sub-menu-body">
+                        <a href="/Expense/Expense/" class="sub-menu-item"></a>
+                    </div>
+                </div>
             </div>
 
-            <div href="/Finance/Finance/" class="menu-item @(currentArea == "Finance" ? "selected" : "")">
+            <div class="menu-item @(currentArea == "Finance" ? "selected" : "")">
                 <div class="menu-item-inner">
                     <i class="material-icons">monetization_on</i>
                     <span class="text">Finance 财务</span>
+                </div>
+
+                <div class="sub-menu">
+                    <div class="sub-menu-body">
+                        <a href="/Finance/Finance/" class="sub-menu-item"></a>
+                    </div>
                 </div>
             </div>
         }
         
         @if (roleId == (int)LookUpUserRoleDm.LookUpIds.老子 || roleId == (int)LookUpUserRoleDm.LookUpIds.Admin || roleId == (int)LookUpUserRoleDm.LookUpIds.DataSpecialist)
         {
-            <div href="/Performance/Performance/" class="menu-item @(currentArea == "Performance" ? "selected" : "")">
+            <div class="menu-item @(currentArea == "Performance" ? "selected" : "")">
                 <div class="menu-item-inner">
                     <i class="material-icons">local_library</i>
                     <span class="text">Performance 员工评估</span>
+                </div>
+
+                <div class="sub-menu">
+                    <div class="sub-menu-body">
+                        <a href="/Performance/Performance/" class="sub-menu-item"></a>
+                    </div>
                 </div>
             </div>
         }
 
         @if (roleId == (int)LookUpUserRoleDm.LookUpIds.老子 || roleId == (int)LookUpUserRoleDm.LookUpIds.Admin || roleId == (int)LookUpUserRoleDm.LookUpIds.DataSpecialist)
         {
-            <div href="/User/User/" class="menu-item @(currentArea == "User" ? "selected" : "")">
+            <div class="menu-item @(currentArea == "User" ? "selected" : "")">
                 <div class="menu-item-inner">
                     <i class="material-icons">people</i>
                     <span class="text">Staff 员工</span>
+                </div>
+
+                <div class="sub-menu">
+                    <div class="sub-menu-body">
+                        <a href="/User/User/" class="sub-menu-item"></a>
+                    </div>
                 </div>
             </div>
         }
@@ -77,15 +103,16 @@
 
 <script type="text/javascript">
     $('.menu-item').click(function () {
-        window.location.href = $(this).next('.sub-menu').find('.sub-menu-item:first-child a').attr('href');
+        debugger;
+        window.location.href = $(this).find('.sub-menu').find('.sub-menu-item:first-child').attr('href');
     });
 
-    //$(document).ready(function () {
-    //    $('.menu-item').each(function (index) {
-    //        if ($(this).find('.sub-menu .sub-menu-item').length < 2)
-    //        {
-    //            $(this).find('.sub-menu').css('visibility', 'hidden');
-    //        }
-    //    });
-    //});
+    $(document).ready(function () {
+        $('.menu-item').each(function (index) {
+            if ($(this).find('.sub-menu .sub-menu-item').length < 2)
+            {
+                $(this).find('.sub-menu').css('visibility', 'hidden');
+            }
+        });
+    });
 </script>

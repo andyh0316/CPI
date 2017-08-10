@@ -6,6 +6,7 @@ $light-font-color: #b9b9b9;
 $main-color: #2d4756;
 
 $search-drop-down-z-index: 350;
+$notification-message-z-index: 450;
 $main-menu-z-index: 1000;
 $secondary-menu-z-index: 1000;
 $tooltip-box-z-index: 2000;
@@ -16,6 +17,7 @@ $light-border-color: #e0e0e0;
 
 $error-color: #AD0606;
 $error-border-color: #B30F0F;
+$error-hover-color: #8C0505;
 
 $active-color: #059811;
 $app-min-width: 1280px;
@@ -89,35 +91,37 @@ body {
     font-size: 13px;
 }
 
-$main-menu-width: 200px;
+$main-menu-height: 50px;
 #main-menu {
     position: fixed;
     background-color: $main-color;
-    width: $main-menu-width;
-    height: 100%;
+    width: 100%;
+    height: $main-menu-height;
     font-weight: 300;
     letter-spacing: -0px;
     z-index: $main-menu-z-index;
+    @extend %clearfix;
 
     .menu-body {
         position: relative;
         width: 100%;
-        margin-top: 50px;
-        border-bottom: 1px solid #385a6d;
-        border-top: 1px solid #263a46;
+        height: 100%;
+        /*border-bottom: 1px solid #385a6d;
+        border-top: 1px solid #263a46;*/
+        @extend %clearfix;
 
         .menu-item {
             position: relative;
-            display: block;
-            width: 100%;
+            display: inline-block;
             color: whitesmoke;
             text-decoration: none;
             padding: 10px 15px;
             font-weight: 700;
             @extend %border-box;
-            border-top: 1px solid #385a6d;
-            border-bottom: 1px solid #263a46;
+            border-left: 1px solid #385a6d;
+            border-right: 1px solid #263a46;
             float: left;
+            height: 100%;
 
             .menu-item-inner {
                 @include opacity(0.7);
@@ -156,9 +160,10 @@ $main-menu-width: 200px;
             .sub-menu {
                 position: absolute;
                 display: none;
-                top: 0px;
-                left: $main-menu-width;
-                min-width: 100%;
+                top: $main-menu-height;
+                left: 0px;
+                //left: $main-menu-width;
+                //min-width: 100%;
                 /*.padder {
                     position: relative;
                     left: 37px;
@@ -179,20 +184,8 @@ $main-menu-width: 200px;
                         display: block;
                         opacity: 0.75;
                         color: white;
-
-                        a {
-                            display: block;
-                            width: 100%;
-                            padding-top: 3px;
-                            padding-bottom: 3px;
-                            font-weight: bold;
-                            white-space: nowrap;
-                            text-decoration: none;
-                            text-transform: uppercase;
-                            letter-spacing: 0px;
-                            text-decoration: none;
-                            color: white;
-                        }
+                        text-decoration: none;
+                        padding: 2px 0px;
 
                         &:hover {
                             opacity: 1;
@@ -212,34 +205,23 @@ $main-menu-width: 200px;
     }
 }
 
-$secondary-menu-height: 40px;
-#secondary-menu {
-    position: fixed;
-    top: 0px;
-    width: 100%;
-    background-color: whitesmoke;
-    padding: 10px 20px;
-    margin-left: $main-menu-width;
-    height: $secondary-menu-height;
-    //z-index: $secondary-menu-z-index;
-    @extend %border-box;
-    @extend %clearfix;
-}
-
+$secondary-menu-height: 42px;
 .secondary-menu {
     position: fixed;
-    width: calc((100%) - (#{$main-menu-width}));
-    min-width: calc((#{$app-min-width}) - (#{$main-menu-width}));
+    width: 100%;
+    //width: calc((100%) - (#{$main-menu-width}));
+    //min-width: calc((#{$app-min-width}) - (#{$main-menu-width}));
     height: $secondary-menu-height;
     background-color: whitesmoke;
     //margin-left: $main-menu-width;
-    top: 0px;
-    left: $main-menu-width;
+    top: $main-menu-height;
+    //left: $main-menu-width;
     right: 0px;
     @extend %border-box;
     z-index: $secondary-menu-z-index;
-
-    $padding: 5px 10px 0px 10px;
+    border-bottom: 1px solid #ececec;
+    //padding-top: 5px;
+    $padding: 8px 10px 0px 10px;
     $title-container-width: 150px;
 
     .title-container {
@@ -294,18 +276,21 @@ $secondary-menu-height: 40px;
 
 .buttons {
     float: right;
-} 
+}
 
 [ui-view] {
     position: fixed;
+    width: 100%;
     //display: flex;
-    min-width: calc((#{$app-min-width}) - (#{$main-menu-width}));
+    //min-width: calc((#{$app-min-width}) - (#{$main-menu-width}));
     top: 0;
     left: 0;
-    width: calc((100%) - (#{$main-menu-width}));
-    margin-top: $secondary-menu-height;
-    height: calc((100%) - (#{$secondary-menu-height}));
-    margin-left: $main-menu-width;
+    //width: calc((100%) - (#{$main-menu-width}));
+    //margin-top: $main-menu-height;
+    //height: calc((100%) - (#{$secondary-menu-height}));
+    height: 100%;
+    padding-top: calc((#{$main-menu-height}) + (#{$secondary-menu-height}));
+    //margin-left: $main-menu-width;
     background-color: white;
     @extend %border-box;
 
@@ -341,13 +326,20 @@ $secondary-menu-height: 40px;
     overflow: auto;
     @extend %border-box;
     padding: 20px 30px;
+
+    .button.delete {
+        position: absolute;
+        right: 10px;
+        bottom: 20px;
+    }
 }
 
 /**** LIST AND TABLE ****/
 .list-container {
     display: flex;
     flex-flow: column;
-    margin-bottom: 20px;
+    //margin-bottom: 20px;
+    border: 1px solid $light-border-color;
     height: 100%;
 
     @extend %border-box;
@@ -361,6 +353,9 @@ $secondary-menu-height: 40px;
 
         thead {
             width: calc((100%) - (18px)) !important; //offset scrollbar
+            width: 100%;
+            border-bottom: 1px solid $light-border-color;
+
             tr {
                 //border-bottom: 1px solid #CECECE;
                 text-transform: uppercase;
@@ -536,6 +531,16 @@ $secondary-menu-height: 40px;
         }
     }
 
+    &.delete {
+        background-color: $error-color;
+        border: 1px solid $error-border-color;
+        color: white;
+
+        &:hover {
+            background-color: $error-hover-color;
+        }
+    }
+
     &.disabled,
     &:disabled {
         @include opacity(0.5);
@@ -558,6 +563,7 @@ dl {
     width: 240px;
     padding: 0px;
     margin: 0px 0px 8px 0px;
+    //min-height: 48px;
 
     dt {
         position: relative;
@@ -624,8 +630,8 @@ dl {
             font-size: 15px;
         }
 
-        &:empty:after {
-            //content: "--";
+        &:blank:after {
+            content: "--";
         }
     }
 
@@ -1460,5 +1466,88 @@ textarea {
 [ng-click] {
     &:hover {
         cursor: pointer;
+    }
+}
+
+#notification-message {
+    position: fixed;
+    left: 50%;
+    top: 85px;
+    z-index: $notification-message-z-index;
+    display: none;
+
+    .wrapper {
+        position: relative;
+        display: table;
+        left: -50%;
+        color: white;
+        background-color: #57B757;
+        padding: 5px 15px 14px 10px;
+        font-size: 16px;
+
+        .icon {
+            position: relative;
+            display: table-cell;
+            vertical-align: middle;
+            top: 2px;
+
+            &:before {
+                position: relative;
+                @extend %material-icons;
+                content: "check_circle";
+                font-size: 30px;
+                top: 4px;
+                margin-right: 4px;
+                color: white;
+            }
+        }
+
+        .content {
+            display: table-cell;
+            vertical-align: middle;
+            padding: 8px 5px 0px 10px;
+        }
+
+        .close {
+            position: relative;
+            display: table-cell;
+            vertical-align: middle;
+            top: 8px;
+
+            &:after {
+                position: relative;
+                @extend %material-icons;
+                margin-left: 4px;
+                content: "cancel";
+                font-size: 16px;
+                top: -3px;
+                opacity: 0.8;
+            }
+
+            &:hover:after {
+                opacity: 1;
+                cursor: pointer;
+            }
+        }
+    }
+
+    &.warning {
+        .wrapper {
+            background-color: #A1B91C;
+
+            .icon:before {
+                content: "warning";
+            }
+        }
+    }
+
+    &.error {
+        .wrapper {
+            background-color: $error-color;
+
+            .icon:before {
+                content: "error";
+            }
+        }
     }
 }

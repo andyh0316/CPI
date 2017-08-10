@@ -1,4 +1,4 @@
-﻿<div id="expense-list" class="list-container">
+﻿<div id="expense-list" class="container">
     <div ng-show="state.current.name == 'List'" class="secondary-menu">
         <div class="title-container">
             <div class="title">Expenses</div>
@@ -52,59 +52,61 @@
         </div>
     </div>
 
-    <table>
-        <thead>
-            <tr>
-                <th class="date-time"><a ng-class="getSortOrder('CreatedDate')" ng-click="sort('CreatedDate')">Created 生成日期</a></th>
-                <th><a ng-class="getSortOrder('Name')" ng-click="sort('Name')">Name 名</a></th>
-                <th class="right-content"><a ng-class="getSortOrder('Expense')" ng-click="sort('Expense')">Expense 支出</a></th>
-                <th class="action"></th>
-            </tr>
-        </thead>
-        <tbody ng-records="model.Records" ng-total="model.ListLoadCalculator.Total" ng-get-list="getList(true)">
-            <tr ng-repeat="record in model.Records" ng-class="{deleting: record.Deleted}">
-                <td class="date-time">
-                    <dl>
-                        <dd>{{record.CreatedDate | shortDate}}</dd>
-                    </dl>
-                </td>
-                <td>
-                    <dl>
-                        <dd ng-show="!record.isEditing">{{record.Name}}</dd>
-                        <dd ng-show="record.isEditing">
-                            <span field-validation-error ng-show="modelState['[' + getEditingRecordIndex(record) + '].Name']" class="field-validation-error"></span>
-                            <input ng-model="record.Name" />
-                        </dd>
-                    </dl>
-                </td>
-                <td class="right-content">
-                    <dl>
-                        <dd ng-show="!record.isEditing" class="expense">${{record.Expense | number: 2}}</dd>
-                        <dd ng-show="record.isEditing">
-                            <span field-validation-error ng-show="modelState['[' + getEditingRecordIndex(record) + '].Expense']" class="field-validation-error"></span>
-                            <input ng-model="record.Expense" />
-                        </dd>
-                    </dl>
-                </td>
-                <td class="action">
-                    <div ng-show="!record.isEditing" class="edit icon" ng-click="edit(record); $event.stopPropagation();"></div>
-                    <div ng-show="record.isEditing" class="cancel icon" ng-click="cancel(record)" ; $event.stopPropagation();"></div>
-                </td>
-            </tr>
-            <tr>
-                <td class="date-time"></td>
-                <td></td>
-                <td class="right-content">
-                    <dl ng-show="!isEditingAny()">
-                        <dd>
-                            <b>Total:</b> ${{getTotalExpense() | number: 2}}
-                        </dd>
-                    </dl>
-                </td>
-                <td class="action"></td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="list-container">
+        <table>
+            <thead>
+                <tr>
+                    <th class="date-time"><a ng-class="getSortOrder('CreatedDate')" ng-click="sort('CreatedDate')">Created 生成日期</a></th>
+                    <th><a ng-class="getSortOrder('Name')" ng-click="sort('Name')">Name 名</a></th>
+                    <th class="right-content"><a ng-class="getSortOrder('Expense')" ng-click="sort('Expense')">Expense 支出</a></th>
+                    <th class="action"></th>
+                </tr>
+            </thead>
+            <tbody ng-records="model.Records" ng-total="model.ListLoadCalculator.Total" ng-get-list="getList(true)">
+                <tr ng-repeat="record in model.Records" ng-class="{deleting: record.Deleted}">
+                    <td class="date-time">
+                        <dl>
+                            <dd>{{record.CreatedDate | shortDate}}</dd>
+                        </dl>
+                    </td>
+                    <td>
+                        <dl>
+                            <dd ng-show="!record.isEditing">{{record.Name}}</dd>
+                            <dd ng-show="record.isEditing">
+                                <span field-validation-error ng-show="modelState['[' + getEditingRecordIndex(record) + '].Name']" class="field-validation-error"></span>
+                                <input ng-model="record.Name" />
+                            </dd>
+                        </dl>
+                    </td>
+                    <td class="right-content">
+                        <dl>
+                            <dd ng-show="!record.isEditing" class="expense">${{record.Expense | number: 2}}</dd>
+                            <dd ng-show="record.isEditing">
+                                <span field-validation-error ng-show="modelState['[' + getEditingRecordIndex(record) + '].Expense']" class="field-validation-error"></span>
+                                <input ng-model="record.Expense" />
+                            </dd>
+                        </dl>
+                    </td>
+                    <td class="action">
+                        <div ng-show="!record.isEditing" class="edit icon" ng-click="edit(record); $event.stopPropagation();"></div>
+                        <div ng-show="record.isEditing" class="cancel icon" ng-click="cancel(record)" ; $event.stopPropagation();"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="date-time"></td>
+                    <td></td>
+                    <td class="right-content">
+                        <dl ng-show="!isEditingAny()">
+                            <dd>
+                                <b>Total:</b> ${{getTotalExpense() | number: 2}}
+                            </dd>
+                        </dl>
+                    </td>
+                    <td class="action"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
     <div ui-view class="ng-animate-enabled"></div>
 </div>

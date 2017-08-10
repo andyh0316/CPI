@@ -1,4 +1,4 @@
-﻿<div class="list-container">
+﻿<div class="container">
     <div ng-show="state.current.name == 'List'" class="secondary-menu">
         <div class="title-container">
             <div class="title">Staff</div>
@@ -14,44 +14,46 @@
         </div>
 
         <div class="buttons">
-            <button class="button main" ng-click="create()">+ Create</button>
+            <button class="button main" ng-click="createUser()">+ Create</button>
         </div>
     </div>
 
-    <table>
-        <thead>
-            <tr>
-                <th><a ng-class="getSortOrder('Fullname')" ng-click="sort('Fullname')">Fullname 姓名</a></th>
-                <th><a ng-class="getSortOrder('Nickname')" ng-click="sort('Nickname')">Nickname 昵称</a></th>
-                <th><a ng-class="getSortOrder('Username')" ng-click="sort('Username')">Username 账号</a></th>
-                <th><a ng-class="getSortOrder('UserRole')" ng-click="sort('UserRole')">Role</a></th>
-                <th><a ng-class="getSortOrder('UserOccupation')" ng-click="sort('UserOccupation')">Occupation 职业</a></th>
-                <th><a ng-class="getSortOrder('LastLoginDate')" ng-click="sort('LastLoginDate')">Last Login 登录日期</a></th>
-            </tr>
-        </thead>
-        <tbody ng-records="model.Records" ng-total="model.ListLoadCalculator.Total" ng-get-list="getList(true)">
-            <tr ng-repeat="record in model.Records" ng-class="{deleting: record.Deleted}" ng-click="viewUser(record.Id)">
-                <td>
-                    {{record.Fullname}}
-                </td>
-                <td>
-                    {{record.Nickname}}
-                </td>
-                <td>
-                    {{record.Username}}
-                </td>
-                <td>
-                    {{record.UserRole}}
-                </td>
-                <td>
-                    {{record.UserOccupation}}
-                </td>
-                <td>
-                    {{record.LastLoginDate | shortDate}}
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="list-container">
+        <table>
+            <thead>
+                <tr>
+                    <th><a ng-class="getSortOrder('Fullname')" ng-click="sort('Fullname')">Fullname 姓名</a></th>
+                    <th><a ng-class="getSortOrder('Nickname')" ng-click="sort('Nickname')">Nickname 昵称</a></th>
+                    <th><a ng-class="getSortOrder('Username')" ng-click="sort('Username')">Username 账号</a></th>
+                    <th><a ng-class="getSortOrder('UserRole')" ng-click="sort('UserRole')">Role</a></th>
+                    <th><a ng-class="getSortOrder('UserOccupation')" ng-click="sort('UserOccupation')">Occupation 职业</a></th>
+                    <th><a ng-class="getSortOrder('LastLoginDate')" ng-click="sort('LastLoginDate')">Last Login 登录日期</a></th>
+                </tr>
+            </thead>
+            <tbody ng-records="model.Records" ng-total="model.ListLoadCalculator.Total" ng-get-list="getList(true)">
+                <tr ng-repeat="record in model.Records" ng-class="{deleting: record.Deleted}" ng-click="viewUser(record.Id)">
+                    <td>
+                        {{record.Fullname}}
+                    </td>
+                    <td>
+                        {{record.Nickname}}
+                    </td>
+                    <td>
+                        {{record.Username}}
+                    </td>
+                    <td>
+                        {{record.UserRole}}
+                    </td>
+                    <td>
+                        {{record.UserOccupation}}
+                    </td>
+                    <td>
+                        {{record.LastLoginDate | shortDate}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
     <div ui-view class="ng-animate-enabled"></div>
 </div>

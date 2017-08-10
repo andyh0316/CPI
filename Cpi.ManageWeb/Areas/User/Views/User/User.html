@@ -7,15 +7,15 @@
         </div>
         <div class="buttons">
             <button ng-show="isViewMode()" class="button main" ng-click="setMode(editMode)">Edit</button>
-            <button ng-show="isCreateMode() || isEditMode()" class="button main" ng-click="setMode(gEditMode)">Save</button>
-            <button class="button" ng-click="back()">Cancel</button>
+            <button ng-show="isCreateMode() || isEditMode()" class="button main" ng-click="save()">Save</button>
+            <button class="button" ng-click="back()">Back</button>
         </div>
     </div>
 
     <div>
         <section>
             <dl>
-                <dt>Fullname 姓名 {{mode}}</dt>
+                <dt>Fullname 姓名</dt>
                 <dd ng-show="isCreateMode() || isEditMode()">
                     <input ng-model="model.Fullname" />
                 </dd>
@@ -34,17 +34,14 @@
                 </dd>
             </dl>
 
-            <dl>
+            <dl ng-show="isViewMode()">
                 <dt>Username 账号</dt>
-                <dd ng-show="isCreateMode() || isEditMode()">
-                    <input ng-model="model.Username" />
-                </dd>
                 <dd ng-show="isViewMode()">
                     {{model.Username}}
                 </dd>
             </dl>
 
-            <dl>
+            <dl ng-show="isViewMode()">
                 <dt>Role</dt>
                 <dd>
                     {{model.UserRole.Name}}
@@ -53,12 +50,17 @@
 
             <dl>
                 <dt>Occupation</dt>
+                <dd ng-show="isCreateMode() || isEditMode()">
+                    <select ng-model="scopeData.UserOccupationId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.Occupations">
+                        <option></option>
+                    </select>
+                </dd>
                 <dd ng-show="isViewMode()">
                     {{model.UserOccupation.Name}}
                 </dd>
             </dl>
 
-            <dl>
+            <dl ng-show="isViewMode()">
                 <dt>Last Login Date</dt>
                 <dd>
                     {{model.LastLoginDate | shortDate}}
@@ -66,4 +68,6 @@
             </dl>
         </section>
     </div>
+
+    <button ng-show="isViewMode() || isEditMode()" class="button delete" ng-click="remove()">Delete</button>
 </div>

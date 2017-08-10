@@ -367,6 +367,7 @@
     <Content Include="Views\Shared\_AppLayout.cshtml" />
     <Content Include="Views\Public\Login.html" />
     <Content Include="Views\Shared\_MainMenu.cshtml" />
+    <Content Include="Views\Shared\_NotificationMessage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

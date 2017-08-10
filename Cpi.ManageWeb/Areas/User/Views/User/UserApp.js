@@ -33,6 +33,9 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
                 model: ['$stateParams', 'baseBo', function ($stateParams, baseBo) {
                     return baseBo.httpRequest('GET', '/User/User/GetUser', { id: $stateParams.userId });
                 }],
+                modelData: ['$stateParams', 'baseBo', function ($stateParams, baseBo) {
+                    return baseBo.httpRequest('GET', '/User/User/GetUserData');
+                }],
                 mode: ['$stateParams', function ($stateParams) {
                     return $stateParams.mode;
                 }],
@@ -48,7 +51,7 @@ app.controller('ListController', ['$scope', '$controller', '$state', 'baseBo', '
     $scope.model = model.Object;
 
     $scope.createUser = function () {
-        $state.go('List.User', {'mode': $scope.createMode, 'userId': 0 });
+        $state.go('List.User', { 'mode': $scope.createMode, 'userId': 0 });
     };
 
     $scope.viewUser = function (userId) {
@@ -56,11 +59,37 @@ app.controller('ListController', ['$scope', '$controller', '$state', 'baseBo', '
     };
 }]);
 
-app.controller('UserController', ['$scope', '$controller', '$state', 'baseBo', 'mode', 'model', function ($scope, $controller, $state, baseBo, mode, model) {
+app.controller('UserController', ['$scope', '$controller', '$state', 'baseBo', 'mode', 'model', 'modelData', function ($scope, $controller, $state, baseBo, mode, model, modelData) {
     angular.extend(this, $controller('BaseController', { $scope: $scope }));
 
+    $scope.modelData = modelData.Object;
     $scope.model = model.Object;
     $scope.setMode(mode);
+
+    $scope.remove = function () {
+        if (confirm(gConfirmDeleteMsg)) {
+            baseBo.httpRequest('GET', '/User/User/DeleteUser', { id: $scope.model.Id })
+                .then(function (result) {
+                    $scope.$emit('reloadListEvent', {});
+                    $scope.back();
+                    $scope.setNotification();
+                });
+        }
+    };
+
+    $scope.save = function () {
+        baseBo.httpRequest('POST', '/User/User/SaveUser/', $scope.model).then(function (result) {
+            if (result.ModelState) {
+                $scope.ModelState = result.ModelState;
+            }
+            else
+            {
+                $scope.$emit('reloadListEvent', {});
+                $scope.back();
+                $scope.setNotification();
+            }
+        });
+    };
 }]);
 
 

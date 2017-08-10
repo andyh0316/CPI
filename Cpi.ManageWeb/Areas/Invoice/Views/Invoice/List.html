@@ -1,4 +1,4 @@
-﻿<div class="list-container">
+﻿<div class="container">
     <div ng-show="state.current.name == 'List'" class="secondary-menu">
         <div class="title-container">
             <div class="title">Invoices</div>
@@ -75,7 +75,7 @@
                     <th class="date-time"><a ng-class="getSortOrder('CreatedDate')" ng-click="sort('CreatedDate')">Created <br /> 生成日期</a></th>
                     <th>Phone <br /> 顾客电话</th>
                     <th ng-class="{commodities: isEditingAny()}">Product <br /> 产品</th>
-                    <th><a ng-class="getSortOrder('Operator.NickName')" ng-click="sort('Operator.NickName')">Operator <br/> 电话推销员</a></th>
+                    <th><a ng-class="getSortOrder('Operator.NickName')" ng-click="sort('Operator.NickName')">Operator <br /> 电话推销员</a></th>
                     <th><a ng-class="getSortOrder('DeliveryStaff.NickName')" ng-click="sort('DeliveryStaff.NickName')">Deliverer <br /> 递送员</a></th>
                     <th><a ng-class="getSortOrder('Location.Name')" ng-click="sort('Location.Name')">Location <br /> 地点</a></th>
                     <th class="th-S right-content"><a ng-class="getSortOrder('TotalPrice')" ng-click="sort('TotalPrice')">Cost <br /> 总价格</a></th>
@@ -116,9 +116,9 @@
                             <dd ng-if="record.isEditing" class="overflow-visible">
                                 <span field-validation-error ng-show="modelState['[' + getEditingRecordIndex(record) + '].OperatorId']" class="field-validation-error"></span>
                                 <div search-drop-down class="search-drop-down"
-                                     search-object="modelData.Users"
-                                     input-string="{{record.Operator.Nickname}}"
-                                     input-key="record.OperatorId">
+                                        search-object="modelData.Users"
+                                        input-string="{{record.Operator.Nickname}}"
+                                        input-key="record.OperatorId">
                                 </div>
                             </dd>
                         </dl>
@@ -129,9 +129,9 @@
                             <dd ng-if="record.isEditing" class="overflow-visible">
                                 <span field-validation-error ng-show="modelState['[' + getEditingRecordIndex(record) + '].DeliveryStaffId']" class="field-validation-error"></span>
                                 <div search-drop-down class="search-drop-down"
-                                     search-object="modelData.Users"
-                                     input-string="{{record.DeliveryStaff.Nickname}}"
-                                     input-key="record.DeliveryStaffId">
+                                        search-object="modelData.Users"
+                                        input-string="{{record.DeliveryStaff.Nickname}}"
+                                        input-key="record.DeliveryStaffId">
                                 </div>
                             </dd>
                         </dl>
@@ -141,8 +141,7 @@
                             <dd ng-show="!record.isEditing">{{record.Location.Name}}</dd>
                             <dd ng-if="record.isEditing" class="overflow-visible">
                                 <span field-validation-error ng-show="modelState['[' + getEditingRecordIndex(record) + '].LocationId']" class="field-validation-error"></span>
-                                <select ng-model="record.LocationId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.Locations">
-                                </select>
+                                <select ng-model="record.LocationId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.Locations"></select>
                             </dd>
                         </dl>
                     </td>

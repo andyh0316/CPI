@@ -1,4 +1,5 @@
 var gSearchInputDelay = 1000;
+var gConfirmDeleteMsg = "Are you sure you wish to delete this entry? You will not be able to undo this action. Click OK to continue.";
 
 // show string on ellipsis
 $(document).on('mouseenter', 'dd', function (e) {

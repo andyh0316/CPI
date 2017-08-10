@@ -1,4 +1,4 @@
-﻿<div class="list-container">
+﻿<div class="container">
     <div ng-show="state.current.name == 'List'" class="secondary-menu">
         <div class="title-container">
             <div class="title">Calls</div>
@@ -61,54 +61,55 @@
         </div>
     </div>
 
-    <table>
-        <thead>
-            <tr>
-                <th class="date-time"><a ng-class="getSortOrder('CreatedDate')" ng-click="sort('CreatedDate')">Created 生成日期</a></th>
-                <th>Phone 顾客电话</th>
-                <th>Name 顾客姓名</th>
-                <th ng-class="{commodities: isEditingAny()}">Product 产品</th>
-                <th class="center-content"><a ng-class="getSortOrder('Status.Name')" ng-click="sort('Status.Name')">Status </a></th>
-                <th class="action"></th>
-            </tr>
-        </thead>
-        <tbody ng-records="model.Records" ng-total="model.ListLoadCalculator.Total" ng-get-list="getList(true)">
-            <tr ng-repeat="record in model.Records" ng-class="{deleting: record.Deleted}">
-                <td class="date-time">
-                    <dl>
-                        <dd>{{record.CreatedDate | shortDateWithTime}}</dd>
-                    </dl>
-                </td>
-                <td>
-                    <dl>
-                        <dd ng-show="!record.isEditing">{{record.CustomerPhone}}</dd>
-                        <dd ng-show="record.isEditing">
-                            <span field-validation-error ng-show="modelState['[' + getEditingRecordIndex(record) + '].CustomerPhone']" class="field-validation-error"></span>
-                            <input ng-model="record.CustomerPhone" />
-                        </dd>
-                    </dl>
-                </td>
-                <td>
-                    <dl>
-                        <dd ng-show="!record.isEditing">{{record.CustomerName}}</dd>
-                        <dd ng-show="record.isEditing">
-                            <span field-validation-error ng-show="modelState['[' + getEditingRecordIndex(record) + '].CustomerName']" class="field-validation-error"></span>
-                            <input ng-model="record.CustomerName" />
-                        </dd>
-                    </dl>
-                </td>
-                <td ng-class="{commodities: isEditingAny()}">
-                    <dl>
-                        <dd ng-show="!record.isEditing">
-                            {{record.CallCommodities | objectCommodities}}
-                        </dd>
-                        <!--<dd ng-show="record.isEditing" class="overflow-visible">
+    <div class="list-container">
+        <table>
+            <thead>
+                <tr>
+                    <th class="date-time"><a ng-class="getSortOrder('CreatedDate')" ng-click="sort('CreatedDate')">Created 生成日期</a></th>
+                    <th>Phone 顾客电话</th>
+                    <th>Name 顾客姓名</th>
+                    <th ng-class="{commodities: isEditingAny()}">Product 产品</th>
+                    <th class="center-content"><a ng-class="getSortOrder('Status.Name')" ng-click="sort('Status.Name')">Status </a></th>
+                    <th class="action"></th>
+                </tr>
+            </thead>
+            <tbody ng-records="model.Records" ng-total="model.ListLoadCalculator.Total" ng-get-list="getList(true)">
+                <tr ng-repeat="record in model.Records" ng-class="{deleting: record.Deleted}">
+                    <td class="date-time">
+                        <dl>
+                            <dd>{{record.CreatedDate | shortDateWithTime}}</dd>
+                        </dl>
+                    </td>
+                    <td>
+                        <dl>
+                            <dd ng-show="!record.isEditing">{{record.CustomerPhone}}</dd>
+                            <dd ng-show="record.isEditing">
+                                <span field-validation-error ng-show="modelState['[' + getEditingRecordIndex(record) + '].CustomerPhone']" class="field-validation-error"></span>
+                                <input ng-model="record.CustomerPhone" />
+                            </dd>
+                        </dl>
+                    </td>
+                    <td>
+                        <dl>
+                            <dd ng-show="!record.isEditing">{{record.CustomerName}}</dd>
+                            <dd ng-show="record.isEditing">
+                                <span field-validation-error ng-show="modelState['[' + getEditingRecordIndex(record) + '].CustomerName']" class="field-validation-error"></span>
+                                <input ng-model="record.CustomerName" />
+                            </dd>
+                        </dl>
+                    </td>
+                    <td ng-class="{commodities: isEditingAny()}">
+                        <dl>
+                            <dd ng-show="!record.isEditing">
+                                {{record.CallCommodities | objectCommodities}}
+                            </dd>
+                            <!--<dd ng-show="record.isEditing" class="overflow-visible">
                             <span field-validation-error ng-show="modelState['[' + getEditingRecordIndex(record) + '].CallCommodities']" class="field-validation-error"></span>
                             <div commodities-edit ng-model="record.CallCommodities" commodities="modelData.Commodities"></div>
                         </dd>-->
-                    </dl>
-                </td>
-                <!--<td>
+                        </dl>
+                    </td>
+                    <!--<td>
                     <dl>
                         <dd ng-show="!record.isEditing">{{record.DeliveryDate | shortDate}}</dd>
                         <dd ng-show="record.isEditing">
@@ -117,7 +118,7 @@
                         </dd>
                     </dl>
                 </td>-->
-                <!--<td class="address">
+                    <!--<td class="address">
                     <dl>
                         <dd ng-show="!record.isEditing">{{record.AddressString}}</dd>
                         <dd ng-show="record.isEditing">
@@ -125,26 +126,27 @@
                         </dd>
                     </dl>
                 </td>-->
-                <td class="center-content">
-                    <dl>
-                        <dd ng-show="!record.isEditing">
-                            <span ng-show="record.StatusId === modelData.CallStatusIdEnums.SentToCallCenter" class="call-sent-to-call-center icon" title="Sent: Customer phone numbers are sent to the call center. 此电话单以送达电话服务中心"></span>
-                        </dd>
-                        <dd ng-show="record.isEditing">
-                            <select ng-model="record.StatusId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.CallStatuses">
-                                <option></option>
-                            </select>
-                        </dd>
-                    </dl>
-                </td>
-                <td class="action">
-                    <div ng-show="!record.isEditing" class="edit icon" ng-click="edit(record); $event.stopPropagation();"></div>
-                    <!--<div ng-show="record.Id" class="delete icon" ng-click="record.Deleted = true; record.isEditing = true; $event.stopPropagation();"></div>-->
-                    <div ng-show="record.isEditing" class="cancel icon" ng-click="cancel(record)" ; $event.stopPropagation();"></div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+                    <td class="center-content">
+                        <dl>
+                            <dd ng-show="!record.isEditing">
+                                <span ng-show="record.StatusId === modelData.CallStatusIdEnums.SentToCallCenter" class="call-sent-to-call-center icon" title="Sent: Customer phone numbers are sent to the call center. 此电话单以送达电话服务中心"></span>
+                            </dd>
+                            <dd ng-show="record.isEditing">
+                                <select ng-model="record.StatusId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.CallStatuses">
+                                    <option></option>
+                                </select>
+                            </dd>
+                        </dl>
+                    </td>
+                    <td class="action">
+                        <div ng-show="!record.isEditing" class="edit icon" ng-click="edit(record); $event.stopPropagation();"></div>
+                        <!--<div ng-show="record.Id" class="delete icon" ng-click="record.Deleted = true; record.isEditing = true; $event.stopPropagation();"></div>-->
+                        <div ng-show="record.isEditing" class="cancel icon" ng-click="cancel(record)" ; $event.stopPropagation();"></div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
     <div ui-view class="ng-animate-enabled"></div>
 </div>
