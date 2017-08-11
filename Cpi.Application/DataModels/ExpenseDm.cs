@@ -1,4 +1,5 @@
 ﻿using Cpi.Application.DataModels.Base;
+using Cpi.Application.DataModels.LookUp;
 using Cpi.Compass.Application.BusinessRules;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -14,11 +15,8 @@ namespace Cpi.Application.DataModels
         [CpiGreaterThanZero]
         public decimal? Expense { get; set; }
 
-        [NotMapped]
-        public decimal? PeriodBalance { get; set; }
-
-        [NotMapped]
-        public decimal? TotalBalance { get; set; }
+        public int? LocationId { get; set; }
+        public virtual LookUpLocationDm Location { get; set; }
     }
 
     public class ExpenseMap : BaseMap<ExpenseDm>
@@ -26,6 +24,7 @@ namespace Cpi.Application.DataModels
         public ExpenseMap()
         {
             ToTable("Expense");
+            HasOptional(a => a.Location).WithMany().HasForeignKey(a => a.LocationId).WillCascadeOnDelete(false);
         }
     }
 }

@@ -25,10 +25,12 @@ namespace Cpi.ManageWeb.Areas.Expense.Controllers
     {
         private ExpenseBo ExpenseBo;
         private FinanceBo FinanceBo;
-        public ExpenseController(ExpenseBo ExpenseBo, FinanceBo FinanceBo)
+        private LookUpBo LookUpBo;
+        public ExpenseController(ExpenseBo ExpenseBo, FinanceBo FinanceBo, LookUpBo LookUpBo)
         {
             this.ExpenseBo = ExpenseBo;
             this.FinanceBo = FinanceBo;
+            this.LookUpBo = LookUpBo;
         }
 
         public ActionResult Index()
@@ -42,17 +44,6 @@ namespace Cpi.ManageWeb.Areas.Expense.Controllers
             IQueryable<ExpenseDm> query = ExpenseBo.GetListBaseQuery(filter);
             ListLoadCalculator listLoadCalculator = new ListLoadCalculator(filter.Loads, query.Count());
             List<ExpenseDm> records = GetLoadedSortedQuery(query, listLoadCalculator.Skip, listLoadCalculator.Take, filter.SortColumn, filter.SortDesc).ToList();
-
-            filter.AdvancedSearch = (filter.AdvancedSearch) ?? new ListFilter.Expense.AdvancedSearchClass();
-            //decimal periodBalance = FinanceBo.GetRevenue(filter.AdvancedSearch.ReportDateFilter);
-            //decimal totalBalance = FinanceBo.GetRevenue(null);
-            //foreach (ExpenseDm record in records)
-            //{
-            //    periodBalance = periodBalance - record.Expense.Value;
-            //    record.PeriodBalance = periodBalance;
-            //    totalBalance = totalBalance - record.Expense.Value;
-            //    record.TotalBalance = totalBalance;
-            //}
             return JsonModel(new { Records = records, ListLoadCalculator = listLoadCalculator });
         }
 
@@ -62,7 +53,8 @@ namespace Cpi.ManageWeb.Areas.Expense.Controllers
             var model = new
             {
                 ReportDates = ReportDateFilter.GetSelectList(),
-                ReportDateIdEnums = EnumHelper.GetEnumIntList(typeof(ReportDateFilter.ReportDateIdEnums))
+                ReportDateIdEnums = EnumHelper.GetEnumIntList(typeof(ReportDateFilter.ReportDateIdEnums)),
+                Locations = LookUpBo.GetList<LookUpLocationDm>()
             };
 
             return JsonModel(model);

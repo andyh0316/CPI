@@ -80,7 +80,7 @@ app.controller('UserController', ['$scope', '$controller', '$state', 'baseBo', '
     $scope.save = function () {
         baseBo.httpRequest('POST', '/User/User/SaveUser/', $scope.model).then(function (result) {
             if (result.ModelState) {
-                $scope.ModelState = result.ModelState;
+                $scope.modelState = result.ModelState;
             }
             else
             {

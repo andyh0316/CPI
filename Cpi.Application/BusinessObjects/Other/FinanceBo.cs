@@ -90,6 +90,11 @@ namespace Cpi.Application.BusinessObjects.Other
         {
             IQueryable<ExpenseDm> expenseQuery = ExpenseBo.GetListQuery();
 
+            if (filter.LocationId.HasValue)
+            {
+                expenseQuery = expenseQuery.Where(a => a.LocationId == filter.LocationId);
+            }
+
             expenseQuery = ExpenseBo.GetDateFilteredQuery(expenseQuery, filter.ReportDateFilter);
 
             decimal expense = expenseQuery.Select(a => a.Expense.Value).DefaultIfEmpty(0).Sum();

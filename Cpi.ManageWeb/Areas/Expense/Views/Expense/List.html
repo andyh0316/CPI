@@ -58,6 +58,7 @@
                 <tr>
                     <th class="date-time"><a ng-class="getSortOrder('CreatedDate')" ng-click="sort('CreatedDate')">Created 生成日期</a></th>
                     <th><a ng-class="getSortOrder('Name')" ng-click="sort('Name')">Name 名</a></th>
+                    <th><a ng-class="getSortOrder('Location.Name')" ng-click="sort('Location.Name')">Location 地点</a></th>
                     <th class="right-content"><a ng-class="getSortOrder('Expense')" ng-click="sort('Expense')">Expense 支出</a></th>
                     <th class="action"></th>
                 </tr>
@@ -75,6 +76,15 @@
                             <dd ng-show="record.isEditing">
                                 <span field-validation-error ng-show="modelState['[' + getEditingRecordIndex(record) + '].Name']" class="field-validation-error"></span>
                                 <input ng-model="record.Name" />
+                            </dd>
+                        </dl>
+                    </td>
+                    <td>
+                        <dl>
+                            <dd ng-show="!record.isEditing">{{record.Location.Name}}</dd>
+                            <dd ng-if="record.isEditing" class="overflow-visible">
+                                <span field-validation-error ng-show="modelState['[' + getEditingRecordIndex(record) + '].LocationId']" class="field-validation-error"></span>
+                                <select ng-model="record.LocationId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.Locations"></select>
                             </dd>
                         </dl>
                     </td>

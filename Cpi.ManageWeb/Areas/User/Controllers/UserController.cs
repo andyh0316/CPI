@@ -58,7 +58,10 @@ namespace Cpi.ManageWeb.Areas.User.Controllers
             UserDm user;
             if (id == 0)
             {
-                user = new UserDm();
+                user = new UserDm
+                {
+                    UserRoleId = (int)LookUpUserRoleDm.LookUpIds.Staff
+                };
             }
             else
             {
@@ -74,6 +77,7 @@ namespace Cpi.ManageWeb.Areas.User.Controllers
             var model = new
             {
                 Occupations = LookUpBo.GetList<LookUpUserOccupationDm>().ToList(),
+                UserRoles = LookUpBo.GetList<LookUpUserRoleDm>().Where(a => a.Id != (int)LookUpUserRoleDm.LookUpIds.老子).ToList()
             };
 
             return JsonModel(model);

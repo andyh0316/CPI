@@ -17,6 +17,7 @@
             <dl>
                 <dt>Fullname 姓名</dt>
                 <dd ng-show="isCreateMode() || isEditMode()">
+                    <span field-validation-error ng-show="modelState['Fullname']" class="field-validation-error"></span>
                     <input ng-model="model.Fullname" />
                 </dd>
                 <dd ng-show="isViewMode()">
@@ -27,6 +28,7 @@
             <dl>
                 <dt>Nickname 昵称</dt>
                 <dd ng-show="isCreateMode() || isEditMode()">
+                    <span field-validation-error ng-show="modelState['Nickname']" class="field-validation-error"></span>
                     <input ng-model="model.Nickname" />
                 </dd>
                 <dd ng-show="isViewMode()">
@@ -41,17 +43,23 @@
                 </dd>
             </dl>
 
-            <dl ng-show="isViewMode()">
+            <dl>
                 <dt>Role</dt>
-                <dd>
+                <dd ng-show="isCreateMode() || isEditMode()">
+                    <span field-validation-error ng-show="modelState['UserRoleId']" class="field-validation-error"></span>
+                    <select ng-model="model.UserRoleId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.UserRoles">
+                        <option></option>
+                    </select>
+                </dd>
+                <dd ng-show="isViewMode()">
                     {{model.UserRole.Name}}
                 </dd>
             </dl>
-
             <dl>
                 <dt>Occupation</dt>
                 <dd ng-show="isCreateMode() || isEditMode()">
-                    <select ng-model="scopeData.UserOccupationId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.Occupations">
+                    <span field-validation-error ng-show="modelState['UserOccupationId']" class="field-validation-error"></span>
+                    <select ng-model="model.UserOccupationId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.Occupations">
                         <option></option>
                     </select>
                 </dd>
@@ -59,7 +67,6 @@
                     {{model.UserOccupation.Name}}
                 </dd>
             </dl>
-
             <dl ng-show="isViewMode()">
                 <dt>Last Login Date</dt>
                 <dd>
@@ -68,6 +75,5 @@
             </dl>
         </section>
     </div>
-
     <button ng-show="isViewMode() || isEditMode()" class="button delete" ng-click="remove()">Delete</button>
 </div>
