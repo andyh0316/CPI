@@ -101,34 +101,21 @@ namespace Cpi.ManageWeb.Areas.Call.Controllers
                         {
                             CallCommodityBo.Remove(trackedCallCommodity);
                         }
-                        else
-                        {
-                            SetModified(trackedCallCommodity);
-                        }
                     }
                     else
                     {
-                        SetCreated(trackedCallCommodity);
                         trackedCall.CallCommodities.Add(trackedCallCommodity);
                     }
                 }
 
-                if (trackedCall.Id > 0)
+                if (trackedCall.Id == 0)
                 {
-                    SetModified(trackedCall);
-                }
-                else
-                {
-                    SetCreated(trackedCall);
-
                     // once theres commodities enterable from the website to here: we will need to check if thers already commodity, if so add new commodities to existing
                     if (!CallBo.CallWithPhoneExistsToday(trackedCall.CustomerPhone))
                     {
                         CallBo.Add(trackedCall);
                     }
                 }
-
-
             }
 
             CallBo.Commit();

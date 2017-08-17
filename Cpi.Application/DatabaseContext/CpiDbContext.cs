@@ -11,6 +11,7 @@ using System.Data.Entity.Core.Objects;
 using Cpi.Application.Helpers;
 using System.Data.SqlClient;
 using System.Collections.Generic;
+using Cpi.Application.DataModels.Base;
 
 namespace Cpi.Application.DatabaseContext
 {
@@ -50,12 +51,37 @@ namespace Cpi.Application.DatabaseContext
             modelBuilder.Configurations.Add(new LookUpLocationMap());
         }
 
-
         public override int SaveChanges()
         {
-            foreach (var entry in ChangeTracker.Entries()
-                      .Where(p => p.State == EntityState.Deleted))
-                SoftDelete(entry);
+            foreach (var entry in ChangeTracker.Entries())
+            {
+                if (entry.State == EntityState.Deleted)
+                {
+                    SoftDelete(entry);
+                }
+                else
+                {
+                    if (entry.Entity is BaseDm)
+                    {
+                        int? userId = UserHelper.GetUserId();
+                        if (userId.HasValue)
+                        {
+                            BaseDm entity = (BaseDm)entry.Entity;
+                            if (entry.State == EntityState.Added)
+                            {
+                                entity.CreatedById = userId.Value;
+                                entity.CreatedDate = DateTime.Now;
+                            }
+
+                            if (entry.State == EntityState.Modified)
+                            {
+                                entity.ModifiedById = userId.Value;
+                                entity.ModifiedDate = DateTime.Now;
+                            }
+                        }
+                    }
+                }
+            }
 
             return base.SaveChanges();
         }

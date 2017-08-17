@@ -58,20 +58,30 @@ body {
         font-weight: bolder;
         letter-spacing: 1px;
     }*/
-    .material-icons {
+    .shopping-cart,
+    .finish-order {
         position: relative;
+        display: inline-block;
         font-size: 28px;
         color: #ffe6e6;
         color: white;
         height: 100%;
 
-        &.shopping-cart {
-        }
+        @extend %material-icons;
+    }
 
-        &.finish-order {
-            float: right;
-            width: 50px;
-            background-color: gray;
+    .shopping-cart {
+        &:after {
+            content: "shopping_cart";
+        }
+    }
+
+    .finish-order {
+        float: right;
+        width: 50px;
+
+        &:after {
+            content: "shopping_cart";
         }
     }
 }

@@ -76,13 +76,8 @@ namespace Cpi.ManageWeb.Areas.Expense.Controllers
 
                 Mapper.Map(expense, trackedExpense);
 
-                if (trackedExpense.Id > 0)
+                if (trackedExpense.Id == 0)
                 {
-                    SetModified(trackedExpense);
-                }
-                else
-                {
-                    SetCreated(trackedExpense);
                     ExpenseBo.Add(trackedExpense);
                 }
             }

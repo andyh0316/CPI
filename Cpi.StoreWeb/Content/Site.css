@@ -6,7 +6,8 @@
   /* For IE6-8 */
   src: local("Material Icons"), local("MaterialIcons-Regular"), url(MaterialIcons-Regular.woff2) format("woff2"), url(MaterialIcons-Regular.woff) format("woff"), url(MaterialIcons-Regular.ttf) format("truetype"); }
 
-.material-icons {
+.material-icons, #top-menu .shopping-cart,
+#top-menu .finish-order {
   font-family: 'Material Icons';
   font-weight: normal;
   font-style: normal;
@@ -61,16 +62,21 @@ body {
         font-weight: bolder;
         letter-spacing: 1px;
     }*/ }
-  #top-menu .material-icons {
+  #top-menu .shopping-cart,
+  #top-menu .finish-order {
     position: relative;
+    display: inline-block;
     font-size: 28px;
     color: #ffe6e6;
     color: white;
     height: 100%; }
-    #top-menu .material-icons.finish-order {
-      float: right;
-      width: 50px;
-      background-color: gray; }
+  #top-menu .shopping-cart:after {
+    content: "shopping_cart"; }
+  #top-menu .finish-order {
+    float: right;
+    width: 50px; }
+    #top-menu .finish-order:after {
+      content: "shopping_cart"; }
 
 .button {
   position: relative;

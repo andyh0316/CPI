@@ -50,17 +50,5 @@ namespace Cpi.ManageWeb.Controllers.Base
             query = query.Skip(skip).Take(take);
             return query;
         }
-
-        public void SetCreated(BaseDm baseDm)
-        {
-            baseDm.CreatedById = UserHelper.GetUserId();
-            baseDm.CreatedDate = DateTime.Now;
-        }
-
-        public void SetModified(BaseDm baseDm)
-        {
-            baseDm.ModifiedById = UserHelper.GetUserId();
-            baseDm.ModifiedDate = DateTime.Now;
-        }
     }
 }

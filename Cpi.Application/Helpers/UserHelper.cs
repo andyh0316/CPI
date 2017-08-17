@@ -30,9 +30,17 @@ namespace Cpi.Application.Helpers
 
         }
 
-        public static int GetUserId()
+        public static int? GetUserId()
         {
-            return Convert.ToInt32(HttpContext.Current.User.Identity.Name);
+            string userId = HttpContext.Current.User.Identity.Name;
+            if (!string.IsNullOrEmpty(userId))
+            {
+                return Convert.ToInt32(HttpContext.Current.User.Identity.Name);
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public static int GetRoleId()

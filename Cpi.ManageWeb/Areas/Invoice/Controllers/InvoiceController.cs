@@ -105,14 +105,9 @@ namespace Cpi.ManageWeb.Areas.Invoice.Controllers
                         {
                             InvoiceCommodityBo.Remove(trackedInvoiceCommodity);
                         }
-                        else
-                        {
-                            SetModified(trackedInvoiceCommodity);
-                        }
                     }
                     else
                     {
-                        SetCreated(trackedInvoiceCommodity);
                         trackedInvoice.InvoiceCommodities.Add(trackedInvoiceCommodity);
                     }
                 }
@@ -130,8 +125,6 @@ namespace Cpi.ManageWeb.Areas.Invoice.Controllers
 
                 if (trackedInvoice.Id > 0)
                 {
-                    SetModified(trackedInvoice);
-
                     // if the invoice's status is set to something, and the invoice's created date was yesterday or earlier, then we make
                     // the invoice's createdDate to now. The reason for this is sometimes they entered invoices from yesterday night, but the
                     // deliverers take the product and go home and keeps the product to deliver today, in that case, we need to make the invoice
@@ -144,7 +137,6 @@ namespace Cpi.ManageWeb.Areas.Invoice.Controllers
                 else
                 {
                     InvoiceBo.Add(trackedInvoice);
-                    SetCreated(trackedInvoice);
                 }
             }
 
