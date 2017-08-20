@@ -39,6 +39,11 @@ namespace Cpi.Application.BusinessObjects
                 {
                     query = GetDateFilteredQuery(query, filter.AdvancedSearch.ReportDateFilter);
                 }
+
+                if (filter.AdvancedSearch.LocationId.HasValue)
+                {
+                    query = query.Where(a => a.LocationId == filter.AdvancedSearch.LocationId);
+                }
             }
 
             return query;

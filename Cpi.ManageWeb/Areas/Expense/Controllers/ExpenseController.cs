@@ -54,7 +54,7 @@ namespace Cpi.ManageWeb.Areas.Expense.Controllers
             {
                 ReportDates = ReportDateFilter.GetSelectList(),
                 ReportDateIdEnums = EnumHelper.GetEnumIntList(typeof(ReportDateFilter.ReportDateIdEnums)),
-                Locations = LookUpBo.GetList<LookUpLocationDm>()
+                Locations = LookUpBo.GetList<LookUpLocationDm>(),
             };
 
             return JsonModel(model);

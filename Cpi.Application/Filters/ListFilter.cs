@@ -48,6 +48,7 @@ namespace Cpi.Application.Filters
             public class AdvancedSearchClass
             {
                 public ReportDateFilter ReportDateFilter { get; set; }
+                public int? LocationId { get; set; }
             }
         }
 

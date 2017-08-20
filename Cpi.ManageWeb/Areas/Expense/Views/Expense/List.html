@@ -13,6 +13,14 @@
             </button>
             <div advanced-search ng-show="showAdvancedSearch" advanced-search-undo="advancedSearchUndo()" class="advanced-search">
                 <section>
+                    <dl class="dl-S">
+                        <dt>Location</dt>
+                        <dd>
+                            <select ng-model="scopeData.filter.AdvancedSearch.LocationId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.Locations">
+                                <option></option>
+                            </select>
+                        </dd>
+                    </dl>
                     <dl>
                         <dt>Created Date</dt>
                         <dd>
