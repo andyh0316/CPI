@@ -15,8 +15,16 @@ namespace Cpi.Application.DataModels
         [CpiGreaterThanZero]
         public decimal? Expense { get; set; }
 
+        [CpiRequired]
+        public int? Quantity { get; set; }
+
         public int? LocationId { get; set; }
         public virtual LookUpLocationDm Location { get; set; }
+
+        public int? ExpenseTypeId { get; set; }
+        public virtual LookUpExpenseTypeDm ExpenseType { get; set; }
+
+        public string Note { get; set; }
     }
 
     public class ExpenseMap : BaseMap<ExpenseDm>
@@ -25,6 +33,7 @@ namespace Cpi.Application.DataModels
         {
             ToTable("Expense");
             HasOptional(a => a.Location).WithMany().HasForeignKey(a => a.LocationId).WillCascadeOnDelete(false);
+            HasOptional(a => a.ExpenseType).WithMany().HasForeignKey(a => a.ExpenseTypeId).WillCascadeOnDelete(false);
         }
     }
 }

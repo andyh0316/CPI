@@ -78,8 +78,8 @@
                     <th><a ng-class="getSortOrder('Operator.NickName')" ng-click="sort('Operator.NickName')">Operator <br /> 电话推销员</a></th>
                     <th><a ng-class="getSortOrder('DeliveryStaff.NickName')" ng-click="sort('DeliveryStaff.NickName')">Deliverer <br /> 递送员</a></th>
                     <th><a ng-class="getSortOrder('Location.Name')" ng-click="sort('Location.Name')">Location <br /> 地点</a></th>
-                    <th class="th-S right-content"><a ng-class="getSortOrder('TotalPrice')" ng-click="sort('TotalPrice')">Cost <br /> 总价格</a></th>
-                    <th class="th-S center-content"><a ng-class="getSortOrder('Status.Name')" ng-click="sort('Status.Name')">Status</a></th>
+                    <th class="thd-S right-content"><a ng-class="getSortOrder('TotalPrice')" ng-click="sort('TotalPrice')">Cost <br /> 总价格</a></th>
+                    <th class="thd-S center-content"><a ng-class="getSortOrder('Status.Name')" ng-click="sort('Status.Name')">Status</a></th>
                     <th class="action"></th>
                 </tr>
             </thead>
@@ -145,7 +145,7 @@
                             </dd>
                         </dl>
                     </td>
-                    <td class="th-S right-content">
+                    <td class="thd-S right-content">
                         <dl>
                             <dd ng-show="!record.isEditing">
                                 <span ng-show="record.TotalPrice">${{record.TotalPrice | number: 2}}</span>
@@ -155,7 +155,7 @@
                             </dd>
                         </dl>
                     </td>
-                    <td class="th-S center-content">
+                    <td class="thd-S center-content">
                         <dl>
                             <dd ng-show="!record.isEditing">
                                 <span ng-show="record.StatusId === modelData.InvoiceStatusIdEnums.Sold" class="invoice-sold icon" title="Sold: Product(s) delivered to and paid by customer. 以卖出"></span>

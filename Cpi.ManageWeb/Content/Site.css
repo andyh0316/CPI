@@ -336,7 +336,7 @@ body {
       width: 200px; }
     .list-container table td.date-time, .list-container table th.date-time {
       width: 140px; }
-    .list-container table td.th-S, .list-container table th.th-S {
+    .list-container table td.thd-S, .list-container table th.thd-S {
       width: 80px; }
     .list-container table .icon {
       position: relative;

@@ -78,6 +78,7 @@
     <Compile Include="DataModels\ExpenseDm.cs" />
     <Compile Include="DataModels\InvoiceCommodityDm.cs" />
     <Compile Include="DataModels\InvoiceDm.cs" />
+    <Compile Include="DataModels\LookUp\LookUpExpenseTypeDm.cs" />
     <Compile Include="DataModels\LookUp\LookUpCallStatusDm.cs" />
     <Compile Include="DataModels\LookUp\LookUpCommodityDm.cs" />
     <Compile Include="DataModels\LookUp\LookUpInvoiceStatusDm.cs" />

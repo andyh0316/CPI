@@ -38,11 +38,11 @@ app.controller('ListController', ['$scope', '$controller', '$state', 'baseBo', '
         $state.go('List.Import');
     };
 
-    $scope.create = function (phoneNumber, statusId) {
+    $scope.create = function () {
         var newItem = {
             isEditing: true,
-            CustomerPhone: phoneNumber,
-            StatusId: statusId
+            LocationId: 1,
+            Quantity: 1
         };
         $scope.model.Records.unshift(newItem);
     };

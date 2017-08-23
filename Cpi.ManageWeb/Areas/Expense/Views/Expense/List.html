@@ -64,16 +64,20 @@
         <table>
             <thead>
                 <tr>
-                    <th class="date-time"><a ng-class="getSortOrder('CreatedDate')" ng-click="sort('CreatedDate')">Created 生成日期</a></th>
-                    <th><a ng-class="getSortOrder('Name')" ng-click="sort('Name')">Name 名</a></th>
-                    <th><a ng-class="getSortOrder('Location.Name')" ng-click="sort('Location.Name')">Location 地点</a></th>
-                    <th class="right-content"><a ng-class="getSortOrder('Expense')" ng-click="sort('Expense')">Expense 支出</a></th>
+                    <th class="thd-S"><a ng-class="getSortOrder('CreatedDate')" ng-click="sort('CreatedDate')">Created <br /> 生成日期</a></th>
+                    <th><a ng-class="getSortOrder('Name')" ng-click="sort('Name')">Name <br /> 名</a></th>
+                    <th><a ng-class="getSortOrder('Location.Name')" ng-click="sort('Location.Name')">Location <br /> 地点</a></th>
+                    <th><a ng-class="getSortOrder('ExpenseType.Name')" ng-click="sort('ExpenseType.Name')">Type <br /> 类型</a></th>
+                    <th class="right-content thd-S"><a ng-class="getSortOrder('Expense')" ng-click="sort('Expense')">Expense <br /> 支出</a></th>
+                    <th class="right-content thd-S"><a ng-class="getSortOrder('Quantity')" ng-click="sort('Quantity')">Quantity <br /> 数量</a></th>
+                    <th class="right-content thd-S">Total <br /> 总支出</th>
+                    <th>Note <br /> 备注</th>
                     <th class="action"></th>
                 </tr>
             </thead>
             <tbody ng-records="model.Records" ng-total="model.ListLoadCalculator.Total" ng-get-list="getList(true)">
                 <tr ng-repeat="record in model.Records" ng-class="{deleting: record.Deleted}">
-                    <td class="date-time">
+                    <td class="thd-S">
                         <dl>
                             <dd>{{record.CreatedDate | shortDate}}</dd>
                         </dl>
@@ -96,12 +100,49 @@
                             </dd>
                         </dl>
                     </td>
-                    <td class="right-content">
+                    <td>
+                        <dl>
+                            <dd ng-show="!record.isEditing">{{record.ExpenseType.Name}}</dd>
+                            <dd ng-show="record.isEditing">
+                                <span field-validation-error ng-show="modelState['[' + getEditingRecordIndex(record) + '].ExpenseTypeId']" class="field-validation-error"></span>
+                                <select ng-model="record.ExpenseTypeId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.ExpenseTypes">
+                                    <option></option>
+                                </select>
+                            </dd>
+                        </dl>
+                    </td>
+                    <td class="right-content thd-S">
                         <dl>
                             <dd ng-show="!record.isEditing" class="expense">${{record.Expense | number: 2}}</dd>
                             <dd ng-show="record.isEditing">
                                 <span field-validation-error ng-show="modelState['[' + getEditingRecordIndex(record) + '].Expense']" class="field-validation-error"></span>
                                 <input ng-model="record.Expense" />
+                            </dd>
+                        </dl>
+                    </td>
+                    <td class="right-content thd-S">
+                        <dl>
+                            <dd ng-show="!record.isEditing">{{record.Quantity}}</dd>
+                            <dd ng-show="record.isEditing">
+                                <span field-validation-error ng-show="modelState['[' + getEditingRecordIndex(record) + '].Quantity']" class="field-validation-error"></span>
+                                <input ng-model="record.Quantity" />
+                            </dd>
+                        </dl>
+                    </td>
+                    <td class="right-content thd-S">
+                        <dl>
+                            <dd>
+                                <span ng-show="record.Expense * record.Quantity">
+                                    ${{record.Expense * record.Quantity | number: 2}}
+                                </span>
+                            </dd>
+                        </dl>
+                    </td>
+                    <td>
+                        <dl>
+                            <dd ng-show="!record.isEditing">{{record.Note}}</dd>
+                            <dd ng-show="record.isEditing">
+                                <input ng-model="record.Note" />
                             </dd>
                         </dl>
                     </td>
