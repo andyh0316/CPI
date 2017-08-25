@@ -27,6 +27,7 @@
                     <th class="right-content">Invoices Cancelled<br />订单取消量</th>
                     <th class="right-content">Invoices Pending<br />待定订单量</th>
                     <th class="right-content">Invoices Total<br />总订单量</th>
+                    <th class="action"></th>
                 </tr>
             </thead>
             <tbody ng-records="model.Records" ng-total="model.ListLoadCalculator.Total" ng-get-list="getList(true)">
@@ -69,6 +70,9 @@
                     </td>
                     <td class="right-content">
                         {{record.InvoicesTotal}}
+                    </td>
+                    <td class="action">
+                        <div class="finance-daily-form icon" ng-click="viewFinance(record.CreatedDate); $event.stopPropagation();"></div>
                     </td>
                 </tr>
             </tbody>

@@ -358,7 +358,6 @@ $ui-view-top-padding: $main-menu-height + $secondary-menu-height;
             border-bottom: 1px solid $light-border-color;
 
             tr {
-                //border-bottom: 1px solid #CECECE;
                 text-transform: uppercase;
                 font-size: 12px;
 
@@ -378,10 +377,8 @@ $ui-view-top-padding: $main-menu-height + $secondary-menu-height;
                             position: absolute;
                             display: flex;
                             font-size: 26px;
-                            //content: "arrow_drop_down";
                             opacity: 0.15;
                             line-height: 80%;
-                            //margin-left: -10px;
                             margin-right: -5px;
                             right: -18px;
                             top: 0px;
@@ -877,6 +874,10 @@ textarea {
     &.call-sent-to-call-center:before {
         content: "record_voice_over";
         color: #4ab515;
+    }
+
+    &.finance-daily-form:before {
+        content: "receipt";
     }
 }
 

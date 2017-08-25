@@ -314,6 +314,7 @@
     <Content Include="Areas\User\Views\User\Index.cshtml" />
     <Content Include="Areas\User\Views\User\User.html" />
     <Content Include="Areas\Finance\Views\FinanceList\Index.cshtml" />
+    <Content Include="Areas\Finance\Views\FinanceList\Finance.html" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -378,6 +379,7 @@
     <Folder Include="Areas\Call\Views\Shared\" />
     <Folder Include="Areas\Expense\Models\" />
     <Folder Include="Areas\Expense\Views\Shared\" />
+    <Folder Include="Areas\Finance\Models\" />
     <Folder Include="Areas\Invoice\Models\" />
     <Folder Include="Areas\Invoice\Views\Shared\" />
     <Folder Include="Areas\Performance\Models\" />

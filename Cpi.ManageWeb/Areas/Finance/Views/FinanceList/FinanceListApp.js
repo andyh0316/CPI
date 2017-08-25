@@ -24,6 +24,16 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
                 }
             }
         })
+        .state('FinanceList.Finance', {
+            url: '/Finance/:date/',
+            templateUrl: '/Areas/Finance/Views/FinanceList/Finance.html',
+            controller: 'FinanceController',
+            resolve: {
+                model: ['$stateParams', 'baseBo', function ($stateParams, baseBo) {
+                    return baseBo.httpRequest('GET', '/Finance/FinanceList/GetFinance', { date: $stateParams.date });
+                }],
+            }
+        })
 }]);
 
 app.controller('FinanceListController', ['$scope', '$controller', '$state', 'baseBo', 'model', 'scopeData', function ($scope, $controller, $state, baseBo, model, scopeData) {
@@ -31,4 +41,15 @@ app.controller('FinanceListController', ['$scope', '$controller', '$state', 'bas
 
     $scope.scopeData = scopeData;
     $scope.model = model.Object;
+
+    $scope.viewFinance = function (date) {
+        $state.go('FinanceList.Finance', { 'date': date });
+    };
 }]);
+
+app.controller('FinanceController', ['$scope', '$controller', '$state', 'baseBo', 'model', function ($scope, $controller, $state, baseBo, model) {
+    angular.extend(this, $controller('BaseController', { $scope: $scope }));
+
+    $scope.model = model.Object;
+}]);
+

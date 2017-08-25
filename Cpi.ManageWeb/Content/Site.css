@@ -614,6 +614,9 @@ textarea {
   content: "record_voice_over";
   color: #4ab515; }
 
+.icon.finance-daily-form:before {
+  content: "receipt"; }
+
 .search-drop-down {
   position: relative;
   background-color: white; }
