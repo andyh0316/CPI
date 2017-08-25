@@ -43,7 +43,7 @@ namespace Cpi.ManageWeb.Areas.Invoice.Controllers
         {
             IQueryable<InvoiceDm> query = InvoiceBo.GetListBaseQuery(filter).Include(a => a.DeliveryStaff).Include(a => a.Operator).Include(a => a.Status).Include(a => a.Location).Include(a => a.InvoiceCommodities.Select(b => b.Commodity));
             ListLoadCalculator listLoadCalculator = new ListLoadCalculator(filter.Loads, query.Count());
-            List<InvoiceDm> records = GetLoadedSortedQuery(query, listLoadCalculator.Skip, listLoadCalculator.Take, filter.SortColumn, filter.SortDesc).ToList();
+            List<InvoiceDm> records = GetLoadedSortedQuery(query, listLoadCalculator.Skip, listLoadCalculator.Take, filter.SortObjects).ToList();
             return JsonModel(new { Records = records, ListLoadCalculator = listLoadCalculator });
         }
 

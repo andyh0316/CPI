@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Cpi.Application.Filters
 {
@@ -7,9 +8,17 @@ namespace Cpi.Application.Filters
         public class BaseListFilter
         {
             public int Loads { get; set; }
-            public string SortColumn { get; set; }
-            public bool SortDesc { get; set; }
+            //public string SortColumn { get; set; }
+            //public bool SortDesc { get; set; }
             public string SearchString { get; set; }
+
+            public List<SortObject> SortObjects { get; set; }
+        }
+
+        public class SortObject
+        {
+            public string ColumnName { get; set; }
+            public bool IsDescending { get; set; }
         }
 
         public class Call : BaseListFilter

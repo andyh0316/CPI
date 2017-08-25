@@ -44,7 +44,7 @@ namespace Cpi.ManageWeb.Areas.Call.Controllers
         {
             IQueryable<CallDm> query = CallBo.GetListBaseQuery(filter).Include(a => a.Status).Include(a => a.CallCommodities.Select(b => b.Commodity));
             ListLoadCalculator listLoadCalculator = new ListLoadCalculator(filter.Loads, query.Count());
-            List<CallDm> records = GetLoadedSortedQuery(query, listLoadCalculator.Skip, listLoadCalculator.Take, filter.SortColumn, filter.SortDesc).ToList();
+            List<CallDm> records = GetLoadedSortedQuery(query, listLoadCalculator.Skip, listLoadCalculator.Take, filter.SortObjects).ToList();
             return JsonModel(new { Records = records, ListLoadCalculator = listLoadCalculator });
         }
 

@@ -72,14 +72,14 @@
         <table>
             <thead>
                 <tr>
-                    <th class="date-time"><a ng-class="getSortOrder('CreatedDate')" ng-click="sort('CreatedDate')">Created <br /> 生成日期</a></th>
+                    <th class="date-time"><a ng-sort="CreatedDate">Created <br /> 生成日期</a></th>
                     <th>Phone <br /> 顾客电话</th>
                     <th ng-class="{commodities: isEditingAny()}">Product <br /> 产品</th>
-                    <th><a ng-class="getSortOrder('Operator.NickName')" ng-click="sort('Operator.NickName')">Operator <br /> 电话推销员</a></th>
-                    <th><a ng-class="getSortOrder('DeliveryStaff.NickName')" ng-click="sort('DeliveryStaff.NickName')">Deliverer <br /> 递送员</a></th>
-                    <th><a ng-class="getSortOrder('Location.Name')" ng-click="sort('Location.Name')">Location <br /> 地点</a></th>
-                    <th class="thd-S right-content"><a ng-class="getSortOrder('TotalPrice')" ng-click="sort('TotalPrice')">Cost <br /> 总价格</a></th>
-                    <th class="thd-S center-content"><a ng-class="getSortOrder('Status.Name')" ng-click="sort('Status.Name')">Status</a></th>
+                    <th><a ng-sort="Operator.NickName">Operator <br /> 电话推销员</a></th>
+                    <th><a ng-sort="DeliveryStaff.NickName">Deliverer <br /> 递送员</a></th>
+                    <th><a ng-sort="Location.Name">Location <br /> 地点</a></th>
+                    <th class="thd-S right-content"><a ng-sort="TotalPrice">Cost <br /> 总价格</a></th>
+                    <th class="thd-S center-content"><a ng-sort="Status.Name">Status</a></th>
                     <th class="action"></th>
                 </tr>
             </thead>

@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Linq.Dynamic;
 using Cpi.Application.DataModels.Base;
 using Cpi.Application.Helpers;
+using static Cpi.Application.Filters.ListFilter;
 
 namespace Cpi.ManageWeb.Controllers.Base
 {
@@ -43,10 +44,26 @@ namespace Cpi.ManageWeb.Controllers.Base
         }
 
         // takes a query and applies sorting and pagination depending on the parameters passed
-        public IQueryable<T> GetLoadedSortedQuery<T>(IQueryable<T> query, int skip, int take, string sortColumn, bool sortDesc)
+        public IQueryable<T> GetLoadedSortedQuery<T>(IQueryable<T> query, int skip, int take, List<SortObject> sortObjects)
         {
-            string sortDescString = (sortDesc) ? " descending" : "";
-            query = query.OrderBy(sortColumn + sortDescString + ", Id");
+            string sortString = "";
+
+            if (sortObjects != null)
+            {
+                foreach(SortObject sortObject in sortObjects)
+                {
+                    sortString = sortString + sortObject.ColumnName;
+                    if (sortObject.IsDescending)
+                    {
+                        sortString = sortString + " " + "descending";
+                    }
+                    sortString = sortString + ",";
+                }
+            }
+
+            sortString = sortString + "Id";
+
+            query = query.OrderBy(sortString);
             query = query.Skip(skip).Take(take);
             return query;
         }

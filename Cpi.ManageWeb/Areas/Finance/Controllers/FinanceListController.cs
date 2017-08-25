@@ -30,7 +30,7 @@ namespace Cpi.ManageWeb.Areas.Finance.Controllers
         {
             IQueryable<FinanceDto> query = FinanceBo.GetListBaseQuery();
             ListLoadCalculator listLoadCalculator = new ListLoadCalculator(filter.Loads, query.Count());
-            List<FinanceDto> records = GetLoadedSortedQuery(query, listLoadCalculator.Skip, listLoadCalculator.Take, filter.SortColumn, filter.SortDesc).ToList();
+            List<FinanceDto> records = GetLoadedSortedQuery(query, listLoadCalculator.Skip, listLoadCalculator.Take, filter.SortObjects).ToList();
             return JsonModel(new { Records = records, ListLoadCalculator = listLoadCalculator });
         }
     }

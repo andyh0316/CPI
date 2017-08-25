@@ -4,7 +4,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
     $urlRouterProvider.when("", "/List");
 
     var listScopeData = {
-        filter: { Loads: 0, SortColumn: "CreatedDate", SortDesc: true },
+        filter: { Loads: 0, SortObjects: [{ ColumnName: 'CreatedDate', IsDescending: true }]},
         httpRequest: { method: 'POST', url: '/Invoice/Invoice/GetList' }
     };
 

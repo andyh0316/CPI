@@ -6,7 +6,8 @@
   /* For IE6-8 */
   src: local("Material Icons"), local("MaterialIcons-Regular"), url(/Content/MaterialIcons/MaterialIcons-Regular.woff2) format("woff2"), url(/Content/MaterialIcons/MaterialIcons-Regular.woff) format("woff"), url(/Content/MaterialIcons/MaterialIcons-Regular.ttf) format("truetype"); }
 
-.material-icons, .list-container table thead tr th a:after, .icon:before, .search-drop-down .input-container:after, .commodities-edit .edit-container .edit-row .minus:after,
+.material-icons, .list-container table thead tr th a .sort-asc-icon:after,
+.list-container table thead tr th a .sort-desc-icon:after, .icon:before, .search-drop-down .input-container:after, .commodities-edit .edit-container .edit-row .minus:after,
 .commodities-edit .edit-container .edit-row .plus:after,
 .commodities-edit .edit-container .edit-row .plus.minus:after, #notification-message .wrapper .icon:before, #notification-message .wrapper .close:after {
   font-family: 'Material Icons';
@@ -35,7 +36,7 @@
   -moz-box-shadow: 0px 0px 2px #E2E2E2;
   box-shadow: 0px 0px 2px #E2E2E2; }
 
-.commodities-edit .edit-container {
+.list-container table thead tr th a, .commodities-edit .edit-container {
   -webkit-user-select: none;
   /* Chrome all / Safari all */
   -moz-user-select: none;
@@ -263,22 +264,40 @@ body {
           text-align: left;
           padding: 10px 5px; }
           .list-container table thead tr th a {
+            position: relative;
+            display: inline-block;
             margin-right: 15px; }
-            .list-container table thead tr th a:after {
+            .list-container table thead tr th a .sort-asc-icon:after,
+            .list-container table thead tr th a .sort-desc-icon:after {
               position: absolute;
-              display: inline;
-              font-size: 22px;
-              content: "arrow_drop_down";
-              opacity: 0.3;
+              display: flex;
+              font-size: 26px;
+              opacity: 0.15;
               line-height: 80%;
-              margin-left: -3px;
-              margin-right: -3px; }
-            .list-container table thead tr th a.sorted-asc:after {
+              margin-right: -5px;
+              right: -18px;
+              top: 0px;
+              bottom: 0px;
+              align-items: center; }
+            .list-container table thead tr th a .sort-asc-icon:after {
               content: "arrow_drop_up";
-              opacity: 1; }
-            .list-container table thead tr th a.sorted-desc:after {
+              margin-bottom: 6px; }
+            .list-container table thead tr th a .sort-desc-icon:after {
               content: "arrow_drop_down";
-              opacity: 1; }
+              margin-top: 6px; }
+            .list-container table thead tr th a .sort-asc-icon.sorted-asc:after {
+              opacity: 0.8; }
+            .list-container table thead tr th a .sort-desc-icon.sorted-desc:after {
+              opacity: 0.8; }
+            .list-container table thead tr th a .sort-column-order {
+              position: absolute;
+              display: flex;
+              align-items: center;
+              right: -25px;
+              top: 0px;
+              bottom: 0px;
+              font-size: 11px;
+              opacity: 0.25; }
             .list-container table thead tr th a:hover {
               cursor: pointer; }
     .list-container table tbody {
@@ -299,7 +318,8 @@ body {
             margin: 0px; }
             .list-container table tbody tr td dl dd {
               font-size: inherit;
-              min-height: 0px; }
+              min-height: 0px;
+              padding: 0px; }
               .list-container table tbody tr td dl dd input[date-input] {
                 width: 100px !important; }
       .list-container table tbody.empty:after {

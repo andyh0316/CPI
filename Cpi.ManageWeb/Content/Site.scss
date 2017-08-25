@@ -367,28 +367,55 @@ $ui-view-top-padding: $main-menu-height + $secondary-menu-height;
                     padding: 10px 5px;
 
                     a {
+                        position: relative;
+                        display: inline-block;
                         margin-right: 15px;
+                        @extend %prevent-user-select;
 
-                        &:after {
+                        .sort-asc-icon:after,
+                        .sort-desc-icon:after {
                             @extend %material-icons;
                             position: absolute;
-                            display: inline;
-                            font-size: 22px;
-                            content: "arrow_drop_down";
-                            opacity: 0.3;
+                            display: flex;
+                            font-size: 26px;
+                            //content: "arrow_drop_down";
+                            opacity: 0.15;
                             line-height: 80%;
-                            margin-left: -3px;
-                            margin-right: -3px;
+                            //margin-left: -10px;
+                            margin-right: -5px;
+                            right: -18px;
+                            top: 0px;
+                            bottom: 0px;
+                            align-items: center;
                         }
 
-                        &.sorted-asc:after {
+                        .sort-asc-icon:after {
                             content: "arrow_drop_up";
-                            opacity: 1;
+                            margin-bottom: 6px;
                         }
 
-                        &.sorted-desc:after {
+                        .sort-desc-icon:after {
                             content: "arrow_drop_down";
-                            opacity: 1;
+                            margin-top: 6px;
+                        }
+
+                        .sort-asc-icon.sorted-asc:after {
+                            @include opacity(0.8);
+                        }
+
+                        .sort-desc-icon.sorted-desc:after {
+                            @include opacity(0.8);
+                        }
+
+                        .sort-column-order {
+                            position: absolute;
+                            display: flex;
+                            align-items: center;
+                            right: -25px;
+                            top: 0px;
+                            bottom: 0px;
+                            font-size: 11px;
+                            @include opacity(0.25);
                         }
 
                         &:hover {
@@ -421,6 +448,7 @@ $ui-view-top-padding: $main-menu-height + $secondary-menu-height;
                         dd {
                             font-size: inherit;
                             min-height: 0px;
+                            padding: 0px;
 
                             input[date-input] {
                                 width: 100px !important;

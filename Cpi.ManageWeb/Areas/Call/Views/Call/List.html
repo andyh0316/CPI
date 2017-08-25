@@ -65,11 +65,11 @@
         <table>
             <thead>
                 <tr>
-                    <th class="date-time"><a ng-class="getSortOrder('CreatedDate')" ng-click="sort('CreatedDate')">Created 生成日期</a></th>
+                    <th class="date-time"><a ng-sort="CreatedDate">Created 生成日期</a></th>
                     <th>Phone 顾客电话</th>
                     <th>Name 顾客姓名</th>
                     <th ng-class="{commodities: isEditingAny()}">Product 产品</th>
-                    <th class="center-content"><a ng-class="getSortOrder('Status.Name')" ng-click="sort('Status.Name')">Status </a></th>
+                    <th class="center-content"><a ng-sort="Status.Name">Status </a></th>
                     <th class="action"></th>
                 </tr>
             </thead>
@@ -117,15 +117,15 @@
                             <input ng-model="record.DeliveryDate" date-input />
                         </dd>
                     </dl>
-                </td>-->
-                    <!--<td class="address">
-                    <dl>
-                        <dd ng-show="!record.isEditing">{{record.AddressString}}</dd>
-                        <dd ng-show="record.isEditing">
-                            <input ng-model="record.AddressString" />
-                        </dd>
-                    </dl>
-                </td>-->
+                    </td>-->
+                        <!--<td class="address">
+                        <dl>
+                            <dd ng-show="!record.isEditing">{{record.AddressString}}</dd>
+                            <dd ng-show="record.isEditing">
+                                <input ng-model="record.AddressString" />
+                            </dd>
+                        </dl>
+                    </td>-->
                     <td class="center-content">
                         <dl>
                             <dd ng-show="!record.isEditing">

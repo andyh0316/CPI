@@ -64,14 +64,14 @@
         <table>
             <thead>
                 <tr>
-                    <th class="thd-S"><a ng-class="getSortOrder('CreatedDate')" ng-click="sort('CreatedDate')">Created <br /> 生成日期</a></th>
-                    <th><a ng-class="getSortOrder('Name')" ng-click="sort('Name')">Name <br /> 名</a></th>
-                    <th><a ng-class="getSortOrder('Location.Name')" ng-click="sort('Location.Name')">Location <br /> 地点</a></th>
-                    <th><a ng-class="getSortOrder('ExpenseType.Name')" ng-click="sort('ExpenseType.Name')">Type <br /> 类型</a></th>
-                    <th class="right-content thd-S"><a ng-class="getSortOrder('Expense')" ng-click="sort('Expense')">Expense <br /> 支出</a></th>
-                    <th class="right-content thd-S"><a ng-class="getSortOrder('Quantity')" ng-click="sort('Quantity')">Quantity <br /> 数量</a></th>
-                    <th class="right-content thd-S">Total <br /> 总支出</th>
-                    <th>Note <br /> 备注</th>
+                    <th class="thd-S"><a ng-sort="CreatedDate">Created<br />生成日期</a></th>
+                    <th><a ng-sort="Name">Name 名</a></th>
+                    <th><a ng-sort="Location.Name">Location<br />地点</a></th>
+                    <th><a ng-sort="ExpenseType.Name">Type<br />类型</a></th>
+                    <th class="right-content thd-S"><a ng-sort="Expense">Expense<br />支出</a></th>
+                    <th class="right-content thd-S"><a ng-sort="Quantity">Quantity<br />数量</a></th>
+                    <th class="right-content thd-S">Total<br />总支出</th>
+                    <th>Note<br />备注</th>
                     <th class="action"></th>
                 </tr>
             </thead>

@@ -46,43 +46,45 @@ baseModule.controller('ListBaseController', ['$scope', '$controller', 'baseBo', 
     $scope.getList = function (loadMore) {
         $scope.scopeData.filter.Loads = (loadMore) ? $scope.scopeData.filter.Loads + 1 : 0;
 
-        console.time('listLoadTimer');
+        //console.time('listLoadTimer');
         baseBo.httpRequest($scope.scopeData.httpRequest.method, $scope.scopeData.httpRequest.url, $scope.scopeData.filter)
             .then(function (result) {
-                console.timeEnd('listLoadTimer');
+                //console.timeEnd('listLoadTimer');
                 if (loadMore)
                 {
                     $scope.model.Records = $scope.model.Records.concat(result.Object.Records);
                 }
                 else // if we are not loading more but getting a new list instead (etc. sort), then we need to maintain the records from the old list that are being edited and put those on top
                 {
-                    // remove records from not being edited
-                    for (var i = $scope.model.Records.length - 1; i >= 0; i--) 
-                    {
-                        if (!$scope.model.Records[i].isEditing)
-                        {
-                            $scope.model.Records.splice(i, 1);
-                        }
-                    }
+                    $scope.model.Records = result.Object.Records;
 
-                    // append new list: excluding the ones who are already being edited
-                    for (var i in result.Object.Records)
-                    {
-                        var recordExists = false;
-                        for (var j in $scope.model.Records)
-                        {
-                            if (result.Object.Records[i].Id === $scope.model.Records[j].Id)
-                            {
-                                recordExists = true;
-                                break;
-                            }
-                        }
+                    //// remove records from not being edited
+                    //for (var i = $scope.model.Records.length - 1; i >= 0; i--) 
+                    //{
+                    //    if (!$scope.model.Records[i].isEditing)
+                    //    {
+                    //        $scope.model.Records.splice(i, 1);
+                    //    }
+                    //}
 
-                        if (!recordExists)
-                        {
-                            $scope.model.Records.push(result.Object.Records[i]);
-                        }
-                    }
+                    //// append new list: excluding the ones who are already being edited
+                    //for (var i in result.Object.Records)
+                    //{
+                    //    var recordExists = false;
+                    //    for (var j in $scope.model.Records)
+                    //    {
+                    //        if (result.Object.Records[i].Id === $scope.model.Records[j].Id)
+                    //        {
+                    //            recordExists = true;
+                    //            break;
+                    //        }
+                    //    }
+
+                    //    if (!recordExists)
+                    //    {
+                    //        $scope.model.Records.push(result.Object.Records[i]);
+                    //    }
+                    //}
                 }
 
                 $scope.model.ListLoadCalculator = result.Object.ListLoadCalculator;
@@ -170,23 +172,69 @@ baseModule.controller('ListBaseController', ['$scope', '$controller', 'baseBo', 
 
     /**** SORT ****/
     $scope.sort = function (sortColumn) {
-        if ($scope.scopeData.filter.SortColumn == sortColumn) {
-            $scope.scopeData.filter.SortDesc = !$scope.scopeData.filter.SortDesc;
-        } else {
-            $scope.scopeData.filter.SortDesc = false;
+        $scope.scopeData.filter.SortObjects = ($scope.scopeData.filter.SortObjects) ? $scope.scopeData.filter.SortObjects : [];
+        var sortObjects = $scope.scopeData.filter.SortObjects;
+
+        var columnExistsInSortObjects = false;
+        for (var i in sortObjects)
+        {
+            var sortObject = sortObjects[i];
+            if (sortObject.ColumnName === sortColumn)
+            {
+                sortObjects.splice(i, 1);
+
+                if (!sortObject.IsDescending)
+                {
+                    sortObject.IsDescending = true;
+                    sortObjects.push(sortObject);
+                }
+                
+                columnExistsInSortObjects = true;
+                break;
+            }
         }
 
-        $scope.scopeData.filter.SortColumn = sortColumn;
+        if (!columnExistsInSortObjects)
+        {
+            sortObjects.push({ ColumnName: sortColumn, IsDescending: false });
+        }
 
+        //var consoleLogString = '';
+        //for (var i in sortObjects)
+        //{
+        //    consoleLogString = consoleLogString + sortObjects[i].ColumnName + ', ';
+        //}
+
+        //console.log(consoleLogString);
+        
         $scope.getList();
     };
 
-    $scope.getSortOrder = function (sortColumn) {
-        if ($scope.scopeData.filter.SortColumn == sortColumn) {
-            return ($scope.scopeData.filter.SortDesc) ? 'sorted-desc' : 'sorted-asc';
+    $scope.getSortDirection = function (sortColumn) {
+        if ($scope.scopeData.filter.SortObjects)
+        {
+            var sortObjects = $scope.scopeData.filter.SortObjects;
+            for (var i in sortObjects) {
+                if (sortObjects[i].ColumnName === sortColumn) {
+                    return (sortObjects[i].IsDescending) ? "sorted-desc" : "sorted-asc";
+                }
+            }
         }
+    };
 
-        return null;
+    $scope.getSortColumnOrder = function (sortColumn) {
+        if ($scope.scopeData.filter.SortObjects) {
+            var sortObjects = $scope.scopeData.filter.SortObjects;
+            for (var i in sortObjects) {
+                if (sortObjects[i].ColumnName === sortColumn) {
+                    return parseInt(i) + 1;
+                }
+            }
+        }
+    };
+
+    $scope.getSortColumnCount = function () {
+        return ($scope.scopeData.filter.SortObjects) ? $scope.scopeData.filter.SortObjects.length : 0;
     };
 
     /**** SELECTION ****/
@@ -350,7 +398,6 @@ baseModule.controller('ListBaseController', ['$scope', '$controller', 'baseBo', 
                 if (object[property]) {
                     if (typeof object[property] === 'object')
                     {
-                        console.log(1);
                         count = count + $scope.getAdvancedSearchCountRecursionFunction(object[property]);
                     }
                     else
@@ -1468,6 +1515,34 @@ baseModule.directive('fieldValidationError', function () {
         },
         template: '' +
         '{{ngShow}}'
+    };
+});
+
+baseModule.directive('a', function () {
+    return {
+        restrict: 'E',
+        scope: {
+            ngSort: '@',
+        },
+        transclude: true,
+        link: function ($scope, $element, $attrs) {
+            $element.bind('click', function (e) {
+                if ($scope.ngSort && !$scope.$parent.isEditingAny()) {
+                    $scope.$parent.sort($scope.ngSort);
+
+                    $scope.$apply();
+                }
+            });
+        },
+        template: '' +
+        '<ng-transclude></ng-transclude>' +
+        '<span ng-show="ngSort && !$parent.isEditingAny()">' +
+            '<span class="sort-asc-icon" ng-class="$parent.getSortDirection(ngSort)"></span>' +
+            '<span class="sort-desc-icon" ng-class="$parent.getSortDirection(ngSort)"></span>' +
+            '<span ng-show="$parent.getSortColumnCount() > 1" class="sort-column-order">' +
+                '<span class="inner">{{$parent.getSortColumnOrder(ngSort)}}</span>' +
+            '</span>' +
+        '</span>'
     };
 });
 

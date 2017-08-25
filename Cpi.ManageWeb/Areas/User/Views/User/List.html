@@ -22,12 +22,12 @@
         <table>
             <thead>
                 <tr>
-                    <th><a ng-class="getSortOrder('Fullname')" ng-click="sort('Fullname')">Fullname 姓名</a></th>
-                    <th><a ng-class="getSortOrder('Nickname')" ng-click="sort('Nickname')">Nickname 昵称</a></th>
-                    <th><a ng-class="getSortOrder('Username')" ng-click="sort('Username')">Username 账号</a></th>
-                    <th><a ng-class="getSortOrder('UserRole')" ng-click="sort('UserRole')">Role</a></th>
-                    <th><a ng-class="getSortOrder('UserOccupation')" ng-click="sort('UserOccupation')">Occupation 职业</a></th>
-                    <th><a ng-class="getSortOrder('LastLoginDate')" ng-click="sort('LastLoginDate')">Last Login 登录日期</a></th>
+                    <th><a ng-sort="Fullname">Fullname 姓名</a></th>
+                    <th><a ng-sort="Nickname">Nickname 昵称</a></th>
+                    <th><a ng-sort="Username">Username 账号</a></th>
+                    <th><a ng-sort="UserRole">Role</a></th>
+                    <th><a ng-sort="UserOccupation">Occupation 职业</a></th>
+                    <th><a ng-sort="LastLoginDate">Last Login 登录日期</a></th>
                 </tr>
             </thead>
             <tbody ng-records="model.Records" ng-total="model.ListLoadCalculator.Total" ng-get-list="getList(true)">

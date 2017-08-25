@@ -43,7 +43,7 @@ namespace Cpi.ManageWeb.Areas.Expense.Controllers
         {
             IQueryable<ExpenseDm> query = ExpenseBo.GetListBaseQuery(filter);
             ListLoadCalculator listLoadCalculator = new ListLoadCalculator(filter.Loads, query.Count());
-            List<ExpenseDm> records = GetLoadedSortedQuery(query, listLoadCalculator.Skip, listLoadCalculator.Take, filter.SortColumn, filter.SortDesc).ToList();
+            List<ExpenseDm> records = GetLoadedSortedQuery(query, listLoadCalculator.Skip, listLoadCalculator.Take, filter.SortObjects).ToList();
             return JsonModel(new { Records = records, ListLoadCalculator = listLoadCalculator });
         }
 
