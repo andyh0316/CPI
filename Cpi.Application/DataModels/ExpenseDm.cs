@@ -16,6 +16,7 @@ namespace Cpi.Application.DataModels
         public decimal? Expense { get; set; }
 
         [CpiRequired]
+        [CpiGreaterThanZero]
         public int? Quantity { get; set; }
 
         public int? LocationId { get; set; }

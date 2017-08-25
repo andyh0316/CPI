@@ -1580,3 +1580,10 @@ textarea {
         }
     }
 }
+
+.sub-total-row {
+    font-weight: bold;
+    border-top: 1px solid $light-border-color;
+    border-bottom: 1px solid $light-border-color;
+    background-color: whitesmoke;
+}

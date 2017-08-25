@@ -4,7 +4,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
     $urlRouterProvider.when("", "/List");
 
     var listScopeData = {
-        filter: { Loads: 0, SortColumn: "CreatedDate", SortDesc: true },
+        filter: { Loads: 0, SortObjects: [{ ColumnName: 'CreatedDate', IsDescending: true }, { ColumnName: 'ExpenseType.DisplayOrder', IsDescending: false}]},
         httpRequest: { method: 'POST', url: '/Expense/Expense/GetList' }
     };
 
@@ -83,5 +83,55 @@ app.controller('ListController', ['$scope', '$controller', '$state', 'baseBo', '
         }
 
         return total;
+    };
+
+    $scope.showDailyTotalExpense = function (index) {
+        if (!$scope.isEditingAny() && $scope.scopeData.filter.SortObjects.length >= 1 && $scope.scopeData.filter.SortObjects[0].ColumnName === 'CreatedDate') {
+            // determing if record at this index is the last of day
+            var recordDate = $scope.model.Records[index].CreatedDate;
+            recordDate = new Date(recordDate);
+            recordDate = new Date(recordDate.getFullYear(), recordDate.getMonth(), recordDate.getDate());
+
+            var nextRecordDate = null;
+            if (index + 1 < $scope.model.Records.length) {
+                nextRecordDate = $scope.model.Records[index + 1].CreatedDate;
+                nextRecordDate = new Date(nextRecordDate);
+                nextRecordDate = new Date(nextRecordDate.getFullYear(), nextRecordDate.getMonth(), nextRecordDate.getDate());
+                return !(recordDate.getTime() === nextRecordDate.getTime());
+            }
+        }
+            return false;
+    };
+
+    $scope.getDailyTotalExpense = function (index) {
+        var record = $scope.model.Records[index];
+        var recordDate = record.CreatedDate;
+        recordDate = new Date(recordDate);
+        recordDate = new Date(recordDate.getFullYear(), recordDate.getMonth(), recordDate.getDate());
+
+        var totalExpense = record.Expense * record.Quantity;
+
+        while (true) {
+            index--;
+
+            if (index == 0)
+            {
+                break;
+            }
+
+            var currentRecord = $scope.model.Records[index];
+            var currentRecordDate = currentRecord.CreatedDate;
+            currentRecordDate = new Date(currentRecordDate);
+            currentRecordDate = new Date(currentRecordDate.getFullYear(), currentRecordDate.getMonth(), currentRecordDate.getDate());
+
+            if (currentRecordDate.getTime() !== recordDate.getTime())
+            {
+                break;
+            }
+
+            totalExpense = totalExpense + currentRecord.Expense * currentRecord.Quantity;
+        }
+
+        return totalExpense;
     };
 }]);

@@ -16,7 +16,8 @@ namespace Cpi.Compass.Application.BusinessRules
                 return ValidationResult.Success;
             }
 
-            if (((decimal?)value).HasValue && ((decimal?)value) <= 0)
+            if ((value is decimal? && ((decimal?)value) <= 0) ||
+                (value is int? && ((int?)value <= 0)))
             {
                 return new ValidationResult(string.Format("{0} must be greater than 0.", validationContext.DisplayName));
             }
