@@ -30,7 +30,7 @@
                     <th class="action"></th>
                 </tr>
             </thead>
-            <tbody ng-records="model.Records" ng-total="model.ListLoadCalculator.Total" ng-get-list="getList(true)">
+            <tbody>
                 <tr ng-repeat="record in model.Records" ng-class="{deleting: record.Deleted}">
                     <td>
                         {{record.CreatedDate | shortDate}}
@@ -77,7 +77,7 @@
                 </tr>
             </tbody>
         </table>
-
-        <div ui-view class="ng-animate-enabled"></div>
     </div>
+
+    <div ui-view class="ng-animate-enabled"></div>
 </div>

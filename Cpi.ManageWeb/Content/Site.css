@@ -46,7 +46,7 @@
   user-select: none;
   /* Likely future */ }
 
-#main-menu .menu-body .menu-item, .secondary-menu, .secondary-menu .title-container, [ui-view], .container, .list-container, .button,
+#main-menu .menu-body .menu-item, .secondary-menu, .secondary-menu .title-container, [ui-view], .container, .list-container, .list-container table td, .list-container table th, .button,
 .dropdown button, dl dd, .search-drop-down .input-container, .search-drop-down .results-container, .search-drop-down .results-container .result-row, .commodities-edit .edit-container, #import .form, #import .results-container {
   -webkit-box-sizing: border-box;
   /* Chrome all / Safari all */
@@ -245,17 +245,16 @@ body {
 .list-container {
   display: flex;
   flex-flow: column;
-  border: 1px solid #e0e0e0;
   height: 100%; }
   .list-container table {
     display: flex;
     flex-flow: column;
     align-items: stretch;
     border-collapse: collapse;
+    border: 1px solid #e0e0e0;
     height: 100%; }
     .list-container table thead {
       width: calc((100%) - (18px)) !important;
-      width: 100%;
       border-bottom: 1px solid #e0e0e0; }
       .list-container table thead tr {
         text-transform: uppercase;
@@ -302,7 +301,9 @@ body {
               cursor: pointer; }
     .list-container table tbody {
       display: block;
+      position: relative;
       height: 100%;
+      min-height: 80px;
       overflow-y: scroll; }
       .list-container table tbody tr {
         -webkit-transition: background-color 300ms ease-in-out;
@@ -322,11 +323,13 @@ body {
               padding: 0px; }
               .list-container table tbody tr td dl dd input[date-input] {
                 width: 100px !important; }
+        .list-container table tbody tr.total {
+          font-weight: bold; }
       .list-container table tbody.empty:after {
         display: block;
         position: absolute;
         width: 100%;
-        top: 10%;
+        top: 30%;
         content: "NO RESULTS";
         text-align: center;
         color: #BFBFBF;
@@ -356,12 +359,37 @@ body {
       width: 200px; }
     .list-container table td.date-time, .list-container table th.date-time {
       width: 140px; }
+    .list-container table td.thd-XS, .list-container table th.thd-XS {
+      width: 60px; }
     .list-container table td.thd-S, .list-container table th.thd-S {
       width: 80px; }
+    .list-container table td.thd-M, .list-container table th.thd-M {
+      width: 120px; }
+    .list-container table td.thd-L, .list-container table th.thd-L {
+      width: 160px; }
     .list-container table .icon {
       position: relative;
       display: inline-block;
       top: 2px; }
+  .list-container .total {
+    font-weight: bold;
+    text-align: right;
+    padding-right: 6px;
+    font-size: 15px;
+    padding-top: 3px; }
+
+.list-container.grid {
+  display: block;
+  height: auto;
+  margin-bottom: 20px; }
+  .list-container.grid table thead {
+    width: 100% !important; }
+  .list-container.grid table tbody {
+    overflow: auto; }
+    .list-container.grid table tbody tr:not(:last-child) {
+      border-bottom: 1px solid #e0e0e0; }
+  .list-container.grid table th, .list-container.grid table td {
+    border: #e0e0e0; }
 
 .button,
 .dropdown button {
@@ -1076,4 +1104,32 @@ textarea {
   border-top: 1px solid #e0e0e0;
   border-bottom: 1px solid #e0e0e0;
   background-color: whitesmoke; }
+
+#finance-daily-summary .content-container {
+  width: 800px;
+  margin: 0 auto; }
+  #finance-daily-summary .content-container .summary-header {
+    text-align: center;
+    margin-bottom: 20px; }
+    #finance-daily-summary .content-container .summary-header .title {
+      font-size: 24px;
+      font-weight: bold; }
+    #finance-daily-summary .content-container .summary-header .date {
+      font-size: 16px; }
+  #finance-daily-summary .content-container .signatures-container {
+    width: 100%;
+    display: flex; }
+    #finance-daily-summary .content-container .signatures-container .signature {
+      flex-grow: 1;
+      flex-basis: 0; }
+      #finance-daily-summary .content-container .signatures-container .signature .title {
+        float: left;
+        font-size: 16px;
+        margin-bottom: 0px; }
+
+#finance-daily-summary .total.revenue {
+  color: #059811; }
+
+#finance-daily-summary .total.expense {
+  color: #AD0606; }
 

@@ -73,7 +73,7 @@
                     <th class="action"></th>
                 </tr>
             </thead>
-            <tbody ng-records="model.Records" ng-total="model.ListLoadCalculator.Total" ng-get-list="getList(true)">
+            <tbody>
                 <tr ng-repeat="record in model.Records" ng-class="{deleting: record.Deleted}">
                     <td class="date-time">
                         <dl>

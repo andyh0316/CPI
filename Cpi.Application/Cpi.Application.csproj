@@ -78,7 +78,6 @@
     <Compile Include="DataModels\ExpenseDm.cs" />
     <Compile Include="DataModels\InvoiceCommodityDm.cs" />
     <Compile Include="DataModels\InvoiceDm.cs" />
-    <Compile Include="DataModels\LookUp\LookUpExpenseTypeDm.cs" />
     <Compile Include="DataModels\LookUp\LookUpCallStatusDm.cs" />
     <Compile Include="DataModels\LookUp\LookUpCommodityDm.cs" />
     <Compile Include="DataModels\LookUp\LookUpInvoiceStatusDm.cs" />
@@ -91,6 +90,7 @@
     <Compile Include="DataModels\UserSalaryDm.cs" />
     <Compile Include="DataTransferObjects\EmployeePerformanceDto.cs" />
     <Compile Include="DataTransferObjects\FinanceDto.cs" />
+    <Compile Include="DataTransferObjects\InvoiceSummaryDto.cs" />
     <Compile Include="DataTransferObjects\UserDto.cs" />
     <Compile Include="Filters\ClassFilter.cs" />
     <Compile Include="Filters\ReportDateFilter.cs" />

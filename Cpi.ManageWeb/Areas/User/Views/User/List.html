@@ -30,7 +30,7 @@
                     <th><a ng-sort="LastLoginDate">Last Login 登录日期</a></th>
                 </tr>
             </thead>
-            <tbody ng-records="model.Records" ng-total="model.ListLoadCalculator.Total" ng-get-list="getList(true)">
+            <tbody>
                 <tr ng-repeat="record in model.Records" ng-class="{deleting: record.Deleted}" ng-click="viewUser(record.Id)">
                     <td>
                         {{record.Fullname}}

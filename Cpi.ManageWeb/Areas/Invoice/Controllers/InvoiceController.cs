@@ -55,11 +55,7 @@ namespace Cpi.ManageWeb.Areas.Invoice.Controllers
                 Commodities = LookUpBo.GetList<LookUpCommodityDm>().ToList(),
                 InvoiceStatuses = LookUpBo.GetList<LookUpInvoiceStatusDm>().ToList(),
                 Locations = LookUpBo.GetList<LookUpLocationDm>().ToList(),
-                Users = UserBo.GetListQuery().OrderBy(a => a.Nickname).ThenBy(a => a.Fullname).Select(a => new CpiSelectListItem
-                {
-                    Id = a.Id,
-                    Name = a.Nickname + " (" + a.Fullname + ")"
-                }).ToList(),
+                Users = UserBo.GetSearchDropDownList(),
                 ReportDates = ReportDateFilter.GetSelectList(),
                 InvoiceStatusIdEnums = EnumHelper.GetEnumIntList(typeof(LookUpInvoiceStatusDm.LookUpIds)),
                 ReportDateIdEnums = EnumHelper.GetEnumIntList(typeof(ReportDateFilter.ReportDateIdEnums)),

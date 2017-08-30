@@ -83,7 +83,7 @@
                     <th class="action"></th>
                 </tr>
             </thead>
-            <tbody ng-records="model.Records" ng-total="model.ListLoadCalculator.Total" ng-get-list="getList(true)">
+            <tbody>
                 <tr ng-repeat="record in model.Records" ng-class="{deleting: record.Deleted}">
                     <td class="date-time">
                         <dl>
@@ -112,7 +112,7 @@
                     </td>
                     <td>
                         <dl>
-                            <dd ng-show="!record.isEditing">{{record.Operator.Nickname}} <span ng-show="record.Operator.Nickname">({{record.Operator.Fullname}})</span></dd>
+                            <dd ng-show="!record.isEditing">{{record.Operator.Fullname}} <span ng-show="record.Operator.Nickname">({{record.Operator.Nickname}})</span></dd>
                             <dd ng-if="record.isEditing" class="overflow-visible">
                                 <span field-validation-error ng-show="modelState['[' + getEditingRecordIndex(record) + '].OperatorId']" class="field-validation-error"></span>
                                 <div search-drop-down class="search-drop-down"
@@ -125,7 +125,7 @@
                     </td>
                     <td>
                         <dl>
-                            <dd ng-show="!record.isEditing">{{record.DeliveryStaff.Nickname}} <span ng-show="record.DeliveryStaff.Nickname">({{record.DeliveryStaff.Fullname}})</span></dd>
+                            <dd ng-show="!record.isEditing">{{record.DeliveryStaff.Fullname}} <span ng-show="record.DeliveryStaff.Nickname">({{record.DeliveryStaff.Nickname}})</span></dd>
                             <dd ng-if="record.isEditing" class="overflow-visible">
                                 <span field-validation-error ng-show="modelState['[' + getEditingRecordIndex(record) + '].DeliveryStaffId']" class="field-validation-error"></span>
                                 <div search-drop-down class="search-drop-down"

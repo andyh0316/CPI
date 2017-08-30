@@ -53,7 +53,7 @@ namespace Cpi.Application.BusinessObjects.Other
                                                    Id = 1, // placeholder for sort
                                                    CreatedDate = a,
                                                    Revenue = bGroup.Where(_a => _a.StatusId == (int)LookUpInvoiceStatusDm.LookUpIds.Sold).Select(_a => _a.TotalPrice.Value).DefaultIfEmpty(0).Sum(),
-                                                   Expense = cGroup.Select(_a => _a.Expense.Value).DefaultIfEmpty(0).Sum(),
+                                                   Expense = cGroup.Select(_a => _a.Expense.Value * _a.Quantity.Value).DefaultIfEmpty(0).Sum(),
                                                    ProductsSold = bGroup.Where(_a => _a.StatusId == (int)LookUpInvoiceStatusDm.LookUpIds.Sold).SelectMany(_a => _a.InvoiceCommodities.Select(b => b.Quantity.Value)).DefaultIfEmpty(0).Sum(),
                                                    ProductsCancelled = bGroup.Where(_a => _a.StatusId == (int)LookUpInvoiceStatusDm.LookUpIds.Cancelled).SelectMany(_a => _a.InvoiceCommodities.Select(b => b.Quantity.Value)).DefaultIfEmpty(0).Sum(),
                                                    ProductsPending = bGroup.Where(_a => !_a.StatusId.HasValue).SelectMany(_a => _a.InvoiceCommodities.Select(b => b.Quantity.Value)).DefaultIfEmpty(0).Sum(),
@@ -97,7 +97,7 @@ namespace Cpi.Application.BusinessObjects.Other
 
             expenseQuery = ExpenseBo.GetDateFilteredQuery(expenseQuery, filter.ReportDateFilter);
 
-            decimal expense = expenseQuery.Select(a => a.Expense.Value).DefaultIfEmpty(0).Sum();
+            decimal expense = expenseQuery.Select(a => a.Expense.Value * a.Quantity.Value).DefaultIfEmpty(0).Sum();
 
             return expense;
         }

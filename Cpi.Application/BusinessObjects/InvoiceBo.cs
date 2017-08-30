@@ -5,6 +5,8 @@ using System.Linq;
 using System;
 using Cpi.Application.DataModels.LookUp;
 using Cpi.Application.Helpers;
+using System.Collections.Generic;
+using Cpi.Application.DataTransferObjects;
 
 namespace Cpi.Application.BusinessObjects
 {
@@ -55,6 +57,25 @@ namespace Cpi.Application.BusinessObjects
             }
 
             return query;
+        }
+
+        public List<InvoiceSummaryDto> GetDailyInvoiceSummary(DateTime date)
+        {
+            IQueryable<InvoiceDm> invoices = GetQueryByCreateDate(date);
+
+            List<InvoiceSummaryDto> dtos = invoices.SelectMany(a => a.InvoiceCommodities).GroupBy(a => a.Invoice.Location).OrderBy(a => a.Key.DisplayOrder).ToList().Select(a => new InvoiceSummaryDto
+            {
+                Location = a.Key.Name,
+                Commodities = a.GroupBy(b => b.Commodity).Select(b => new Tuple<string, int> 
+                    (
+                        b.Key.Name,
+                        b.Select(c => c.Quantity.Value).DefaultIfEmpty(0).Sum()
+                    )
+                ).ToList(),
+                TotalPrice = a.Select(b => b.Invoice.TotalPrice.Value).DefaultIfEmpty(0).Sum()
+            }).ToList();
+
+            return dtos;
         }
     }
 }

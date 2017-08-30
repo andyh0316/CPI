@@ -1,7 +1,7 @@
-﻿<div class="container">
+﻿<div id="finance-daily-summary" class="container">
     <div ng-show="state.current.name == 'FinanceList.Finance'" class="secondary-menu">
         <div class="title-container">
-            <div class="title">Staff</div>
+            <div class="title">Finance</div>
         </div>
         <div class="filters-container">
         </div>
@@ -10,70 +10,97 @@
         </div>
     </div>
 
-    <table>
-        <thead>
-            <tr>
-                <th><a ng-sort="CreatedDate">Created<br />生成日期</a></th>
-                <th class="right-content">Profit<br />利润</th>
-                <th class="right-content">Expense<br />支出</th>
-                <th class="right-content">Revenue<br />收入</th>
-                <th class="right-content">Calls Received<br />外来电话量</th>
-                <th class="right-content">Products Sold<br />卖出产品量</th>
-                <th class="right-content">Products Cancelled<br />产品取消量</th>
-                <th class="right-content">Products Pending<br />待定产品量</th>
-                <th class="right-content">Products Total<br />总产品量</th>
-                <th class="right-content">Invoices Sold<br />卖出订单量</th>
-                <th class="right-content">Invoices Cancelled<br />订单取消量</th>
-                <th class="right-content">Invoices Pending<br />待定订单量</th>
-                <th class="right-content">Invoices Total<br />总订单量</th>
-                <th class="action"></th>
-            </tr>
-        </thead>
-        <tbody ng-records="model.Records" ng-total="model.ListLoadCalculator.Total" ng-get-list="getList(true)">
-            <tr ng-repeat="record in model.Records" ng-class="{deleting: record.Deleted}">
-                <td>
-                    {{record.CreatedDate | shortDate}}
-                </td>
-                <td class="right-content">
-                    ${{record.Revenue - record.Expense | number: 2}}
-                </td>
-                <td class="right-content">
-                    ${{record.Expense | number: 2}}
-                </td>
-                <td class="right-content">
-                    ${{record.Revenue | number: 2}}
-                </td>
-                <td class="right-content">
-                    {{record.CallsReceived}}
-                </td>
-                <td class="right-content">
-                    {{record.ProductsSold}}
-                </td>
-                <td class="right-content">
-                    {{record.ProductsCancelled}}
-                </td>
-                <td class="right-content">
-                    {{record.ProductsPending}}
-                </td>
-                <td class="right-content">
-                    {{record.ProductsTotal}}
-                </td>
-                <td class="right-content">
-                    {{record.InvoicesSold}}
-                </td>
-                <td class="right-content">
-                    {{record.InvoicesCancelled}}
-                </td>
-                <td class="right-content">
-                    {{record.InvoicesPending}}
-                </td>
-                <td class="right-content">
-                    {{record.InvoicesTotal}}
-                </td>
-                <td class="action">
-                    <div class="finance-daily-form icon" ng-click="viewFinance(record.CreatedDate); $event.stopPropagation();"></div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div id="print-section" class="content-container">
+        <div class="summary-header">
+            <div class="title">
+                CPI Daily Finance Report<br />
+                CPI 公司当日收入支出费用明细清单
+            </div>
+            <div class="date">{{model.Date | shortDate}}</div>
+        </div>
+
+        <div class="list-container grid">
+            <div class="title">Revenue 收入</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th class="thd-L">Location<br />地点</th>
+                        <th>Products <br />产品</th>
+                        <th class="thd-S right-content">Total<br />总金额</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="record in model.InvoiceSummaries" ng-class="{deleting: record.Deleted}">
+                        <td class="thd-L">
+                            {{record.Location}}
+                        </td>
+                        <td>
+                            <span ng-repeat="commodity in record.Commodities">
+                                {{commodity.Item1}} ({{commodity.Item2}})
+                                <span ng-show="$index < record.Commodities.length - 1">, </span>
+                            </span>
+                        </td>
+                        <td class="thd-S right-content">
+                            ${{record.TotalPrice | number: 2}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="total revenue">${{getTotalRevenue() | number: 2}}</div>
+        </div>
+
+        <div class="list-container grid">
+            <div class="title">Expense 支出</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th class="thd-L">Location<br />地点</th>
+                        <th>Name<br />名</th>
+                        <th>Handled By<br />经办人</th>
+                        <th class="thd-S right-content">Expense<br />金额</th>
+                        <th class="thd-S right-content">QTY<br />数量</th>
+                        <th class="thd-S right-content">Total<br />总金额</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="record in model.Expenses" ng-class="{deleting: record.Deleted}">
+                        <td class="thd-L">
+                            {{record.Location.Name}}
+                        </td>
+                        <td>
+                            {{record.Name}}
+                        </td>
+                        <td>
+                            {{record.HandledBy.Fullname}} <span ng-show="record.HandledBy.Nickname">({{record.HandledBy.Nickname}})</span>
+                        </td>
+                        <td class="thd-S right-content">
+                            ${{record.Expense | number: 2}}
+                        </td>
+                        <td class="thd-S right-content">
+                            {{record.Quantity}}
+                        </td>
+                        <td class="thd-S right-content">
+                            ${{record.Expense * record.Quantity | number: 2}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="total expense">${{getTotalExpense() | number: 2}}</div>
+        </div>
+
+        <div class="signatures-container">
+            <div class="signature">
+                <span class="title">统计:</span>
+            </div>
+            <div class="signature">
+                <span class="title">审核:</span>
+            </div>
+            <div class="signature">
+                <span class="title">财务:</span>
+            </div>
+            <div class="signature">
+                <span class="title">出纳:</span>
+            </div>
+        </div>
+    </div>
 </div>

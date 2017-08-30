@@ -26,11 +26,13 @@ namespace Cpi.ManageWeb.Areas.Expense.Controllers
         private ExpenseBo ExpenseBo;
         private FinanceBo FinanceBo;
         private LookUpBo LookUpBo;
-        public ExpenseController(ExpenseBo ExpenseBo, FinanceBo FinanceBo, LookUpBo LookUpBo)
+        private UserBo UserBo;
+        public ExpenseController(ExpenseBo ExpenseBo, FinanceBo FinanceBo, LookUpBo LookUpBo, UserBo UserBo)
         {
             this.ExpenseBo = ExpenseBo;
             this.FinanceBo = FinanceBo;
             this.LookUpBo = LookUpBo;
+            this.UserBo = UserBo;
         }
 
         public ActionResult Index()
@@ -55,7 +57,7 @@ namespace Cpi.ManageWeb.Areas.Expense.Controllers
                 ReportDates = ReportDateFilter.GetSelectList(),
                 ReportDateIdEnums = EnumHelper.GetEnumIntList(typeof(ReportDateFilter.ReportDateIdEnums)),
                 Locations = LookUpBo.GetList<LookUpLocationDm>(),
-                ExpenseTypes = LookUpBo.GetList<LookUpExpenseTypeDm>()
+                Users = UserBo.GetSearchDropDownList(),
             };
 
             return JsonModel(model);

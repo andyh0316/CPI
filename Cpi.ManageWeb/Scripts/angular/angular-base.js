@@ -1436,36 +1436,45 @@ baseModule.directive('fileInput', function () {
 baseModule.directive('tbody', function () {
     return {
         restrict: 'E',
-        scope: {
-            ngRecords: '=',
-            ngTotal: '=',
-            ngGetList: '&',
-        },
+        scope: true, // pass in the entire scope
         link: function ($scope, $element, $attrs) {
             var raw = $element[0];
             var hasMoreRecords = false;
 
             $element.bind('scroll', function () {
-                if (hasMoreRecords && raw.scrollTop + raw.offsetHeight >= raw.scrollHeight) { //at the bottom
-                    $scope.ngGetList();
+                if ($scope.getList)
+                {
+                    if (hasMoreRecords && raw.scrollTop + raw.offsetHeight >= raw.scrollHeight) { //at the bottom
+                        $scope.getList(true);
+                    }
                 }
             });
 
-            $scope.$watch('ngRecords.length', function (newVal, oldVal) { // watch for any scope changes
-                if (!newVal || newVal === 0) {
+            $scope.$watch('model.Records.length', function (newVal, oldVal) { // watch for any scope changes
+                if ($scope.model && $scope.model.Records)
+                {
+                    //if (!newVal || newVal === 0) {
+                    //    $element.addClass('empty');
+                    //} else {
+                    //    $element.removeClass('empty');
+                    //}
+
+                    var recordCount = ($scope.model.Records) ? $scope.model.Records.filter(function (record) { return record.Id > 0 }).length : 0;
+                    if (recordCount < $scope.model.ListLoadCalculator.Total) {
+                        hasMoreRecords = true;
+                        $element.addClass('has-more-records');
+                    } else {
+                        hasMoreRecords = false;
+                        $element.removeClass('has-more-records');
+                    }
+                }
+            });
+
+            $scope.$watch(function () { // watch for any scope changes
+                if ($element.find('tr').length == 0) {
                     $element.addClass('empty');
                 } else {
                     $element.removeClass('empty');
-                }
-
-                var recordCount = ($scope.ngRecords) ? $scope.ngRecords.filter(function (record) { return record.Id > 0 }).length : 0;
-                if (recordCount < $scope.ngTotal)
-                {
-                    hasMoreRecords = true;
-                    $element.addClass('has-more-records');
-                } else {
-                    hasMoreRecords = false;
-                    $element.removeClass('has-more-records');
                 }
             });
         }

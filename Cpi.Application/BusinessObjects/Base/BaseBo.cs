@@ -213,11 +213,11 @@ namespace Cpi.Application.BusinessObjects.Base
             return new Tuple<DateTime, DateTime, bool>(dateFrom, dateTo, splitByMonth);
         }
 
-        public List<T> GetByCreatedDate(DateTime date)
+        public IQueryable<T> GetQueryByCreateDate(DateTime date)
         {
             DateTime startDate = date.Date;
             DateTime endDate = startDate.AddDays(1);
-            return GetListQuery().Where(a => a.CreatedDate >= startDate && a.CreatedDate < endDate).ToList();
+            return GetListQuery().Where(a => a.CreatedDate >= startDate && a.CreatedDate < endDate);
         }
 
         public void Commit()

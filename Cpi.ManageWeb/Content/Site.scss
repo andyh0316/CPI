@@ -340,7 +340,6 @@ $ui-view-top-padding: $main-menu-height + $secondary-menu-height;
     display: flex;
     flex-flow: column;
     //margin-bottom: 20px;
-    border: 1px solid $light-border-color;
     height: 100%;
 
     @extend %border-box;
@@ -350,11 +349,11 @@ $ui-view-top-padding: $main-menu-height + $secondary-menu-height;
         flex-flow: column;
         align-items: stretch;
         border-collapse: collapse;
+        border: 1px solid $light-border-color;
         height: 100%;
 
         thead {
             width: calc((100%) - (18px)) !important; //offset scrollbar
-            width: 100%;
             border-bottom: 1px solid $light-border-color;
 
             tr {
@@ -425,7 +424,9 @@ $ui-view-top-padding: $main-menu-height + $secondary-menu-height;
 
         tbody {
             display: block;
+            position: relative;
             height: 100%;
+            min-height: 80px;
             overflow-y: scroll;
 
             tr {
@@ -453,6 +454,10 @@ $ui-view-top-padding: $main-menu-height + $secondary-menu-height;
                         }
                     }
                 }
+
+                &.total {
+                    font-weight: bold;
+                }
             }
 
             &.empty {
@@ -460,7 +465,7 @@ $ui-view-top-padding: $main-menu-height + $secondary-menu-height;
                     display: block;
                     position: absolute;
                     width: 100%;
-                    top: 10%;
+                    top: 30%;
                     content: "NO RESULTS";
                     text-align: center;
                     color: #BFBFBF;
@@ -490,6 +495,8 @@ $ui-view-top-padding: $main-menu-height + $secondary-menu-height;
         }
 
         td, th {
+            @extend %border-box;
+
             &.number {
                 width: 50px;
             }
@@ -511,8 +518,20 @@ $ui-view-top-padding: $main-menu-height + $secondary-menu-height;
                 width: 140px;
             }
 
+            &.thd-XS {
+                width: 60px;
+            }
+
             &.thd-S {
                 width: 80px;
+            }
+
+            &.thd-M {
+                width: 120px;
+            }
+
+            &.thd-L {
+                width: 160px;
             }
         }
 
@@ -520,6 +539,38 @@ $ui-view-top-padding: $main-menu-height + $secondary-menu-height;
             position: relative;
             display: inline-block;
             top: 2px;
+        }
+    }
+
+    .total {
+        font-weight: bold;
+        text-align: right;
+        padding-right: 6px;
+        font-size: 15px;
+        padding-top: 3px;
+    }
+}
+
+.list-container.grid {
+    display: block;
+    height: auto;
+    margin-bottom: 20px;
+
+    table {
+        thead {
+            width: 100% !important;
+        }
+
+        tbody {
+            overflow: auto;
+
+            tr:not(:last-child) {
+                border-bottom: 1px solid $light-border-color;
+            }
+        }
+
+        th, td {
+            border: $light-border-color;
         }
     }
 }
@@ -1587,4 +1638,52 @@ textarea {
     border-top: 1px solid $light-border-color;
     border-bottom: 1px solid $light-border-color;
     background-color: whitesmoke;
+}
+
+#finance-daily-summary {
+    .content-container {
+        width: 800px;
+        margin: 0 auto;
+
+        .summary-header {
+            text-align: center;
+
+            .title {
+                font-size: 24px;
+                font-weight: bold;
+            }
+
+            .date {
+                font-size: 16px;
+            }
+
+            margin-bottom: 20px;
+        }
+
+        .signatures-container {
+            width: 100%;
+            display: flex;
+
+            .signature {
+                flex-grow: 1;
+                flex-basis: 0;
+
+                .title {
+                    float: left;
+                    font-size: 16px;
+                    margin-bottom: 0px;
+                }
+            }
+        }
+    }
+
+    .total {
+        &.revenue {
+            color: $active-color;
+        }
+
+        &.expense {
+            color: $error-color;
+        }
+    }
 }

@@ -51,5 +51,25 @@ app.controller('FinanceController', ['$scope', '$controller', '$state', 'baseBo'
     angular.extend(this, $controller('BaseController', { $scope: $scope }));
 
     $scope.model = model.Object;
+
+    $scope.getTotalExpense = function () {
+        var sum = 0;
+        for (var i in $scope.model.Expenses) {
+            var expense = $scope.model.Expenses[i];
+            sum = sum + expense.Expense * expense.Quantity;
+        }
+
+        return sum;
+    };
+
+    $scope.getTotalRevenue = function () {
+        var sum = 0;
+        for (var i in $scope.model.InvoiceSummaries) {
+            var invoiceCommodity = $scope.model.InvoiceSummaries[i];
+            sum = sum + invoiceCommodity.TotalPrice;
+        }
+
+        return sum;
+    };
 }]);
 

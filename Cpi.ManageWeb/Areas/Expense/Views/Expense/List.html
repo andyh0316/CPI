@@ -67,15 +67,15 @@
                     <th class="thd-S"><a ng-sort="CreatedDate">Created<br />生成日期</a></th>
                     <th><a ng-sort="Name">Name 名</a></th>
                     <th><a ng-sort="Location.Name">Location<br />地点</a></th>
-                    <th><a ng-sort="ExpenseType.DisplayOrder">Type<br />类型</a></th>
-                    <th class="right-content thd-S"><a ng-sort="Expense">Expense<br />支出</a></th>
+                    <th>Handled By<br />经办人</th>
+                    <th>Note<br />备注</th>
+                    <th class="right-content thd-S"><a ng-sort="Expense * Quantity">Expense<br />支出</a></th>
                     <th class="right-content thd-S"><a ng-sort="Quantity">Quantity<br />数量</a></th>
                     <th class="right-content thd-S">Total<br />总支出</th>
-                    <th>Note<br />备注</th>
                     <th class="action"></th>
                 </tr>
             </thead>
-            <tbody ng-records="model.Records" ng-total="model.ListLoadCalculator.Total" ng-get-list="getList(true)">
+            <tbody>
                 <tr ng-repeat-start="record in model.Records" ng-class="{deleting: record.Deleted}">
                     <td class="thd-S">
                         <dl>
@@ -102,12 +102,22 @@
                     </td>
                     <td>
                         <dl>
-                            <dd ng-show="!record.isEditing">{{record.ExpenseType.Name}}</dd>
+                            <dd ng-show="!record.isEditing">{{record.HandledBy.Fullname}} <span ng-show="record.HandledBy.Nickname">({{record.HandledBy.Nickname}})</span></dd>
+                            <dd ng-if="record.isEditing" class="overflow-visible">
+                                <span field-validation-error ng-show="modelState['[' + getEditingRecordIndex(record) + '].HandledById']" class="field-validation-error"></span>
+                                <div search-drop-down class="search-drop-down"
+                                     search-object="modelData.Users"
+                                     input-string="{{record.HandledBy.Nickname}}"
+                                     input-key="record.HandledById">
+                                </div>
+                            </dd>
+                        </dl>
+                    </td>
+                    <td>
+                        <dl>
+                            <dd ng-show="!record.isEditing">{{record.Note}}</dd>
                             <dd ng-show="record.isEditing">
-                                <span field-validation-error ng-show="modelState['[' + getEditingRecordIndex(record) + '].ExpenseTypeId']" class="field-validation-error"></span>
-                                <select ng-model="record.ExpenseTypeId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.ExpenseTypes">
-                                    <option></option>
-                                </select>
+                                <input ng-model="record.Note" />
                             </dd>
                         </dl>
                     </td>
@@ -138,14 +148,6 @@
                             </dd>
                         </dl>
                     </td>
-                    <td>
-                        <dl>
-                            <dd ng-show="!record.isEditing">{{record.Note}}</dd>
-                            <dd ng-show="record.isEditing">
-                                <input ng-model="record.Note" />
-                            </dd>
-                        </dl>
-                    </td>
                     <td class="action">
                         <div ng-show="!record.isEditing" class="edit icon" ng-click="edit(record); $event.stopPropagation();"></div>
                         <div ng-show="record.isEditing" class="cancel icon" ng-click="cancel(record)" ; $event.stopPropagation();"></div>
@@ -156,10 +158,10 @@
                     <td></td>
                     <td></td>
                     <td></td>
+                    <td></td>
                     <td class="right-content thd-S"></td>
                     <td class="right-content thd-S"></td>
                     <td class="right-content thd-S">${{getDailyTotalExpense($index) | number: 2}}</td>
-                    <td></td>
                     <td class="action"></td>
                 </tr>
                 <!--<tr>

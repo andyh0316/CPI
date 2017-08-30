@@ -4,7 +4,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
     $urlRouterProvider.when("", "/List");
 
     var listScopeData = {
-        filter: { Loads: 0, SortObjects: [{ ColumnName: 'CreatedDate', IsDescending: true }, { ColumnName: 'ExpenseType.DisplayOrder', IsDescending: false}]},
+        filter: { Loads: 0, SortObjects: [{ ColumnName: 'CreatedDate', IsDescending: true }]},
         httpRequest: { method: 'POST', url: '/Expense/Expense/GetList' }
     };
 
@@ -106,6 +106,7 @@ app.controller('ListController', ['$scope', '$controller', '$state', 'baseBo', '
     $scope.getDailyTotalExpense = function (index) {
         var record = $scope.model.Records[index];
         var recordDate = record.CreatedDate;
+        console.log(index);
         recordDate = new Date(recordDate);
         recordDate = new Date(recordDate.getFullYear(), recordDate.getMonth(), recordDate.getDate());
 
@@ -114,7 +115,7 @@ app.controller('ListController', ['$scope', '$controller', '$state', 'baseBo', '
         while (true) {
             index--;
 
-            if (index == 0)
+            if (index < 0)
             {
                 break;
             }

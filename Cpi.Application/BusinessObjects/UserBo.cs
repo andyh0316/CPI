@@ -4,7 +4,9 @@ using Cpi.Application.DataModels.LookUp;
 using Cpi.Application.DataTransferObjects;
 using Cpi.Application.Filters;
 using Cpi.Application.Helpers;
+using Cpi.Application.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Cpi.Application.BusinessObjects
@@ -56,6 +58,15 @@ namespace Cpi.Application.BusinessObjects
         public UserDm GetByUsername(string username)
         {
             return GetListQuery().Where(a => a.Username == username).SingleOrDefault();
+        }
+
+        public List<CpiSelectListItem> GetSearchDropDownList()
+        {
+            return GetListQuery().OrderBy(a => a.Nickname).ThenBy(a => a.Fullname).Select(a => new CpiSelectListItem
+            {
+                Id = a.Id,
+                Name = a.Nickname + " (" + a.Fullname + ")"
+            }).ToList();
         }
     }
 }

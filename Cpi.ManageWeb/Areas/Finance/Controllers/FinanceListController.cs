@@ -44,17 +44,17 @@ namespace Cpi.ManageWeb.Areas.Finance.Controllers
         [HttpGet]
         public ContentResult GetFinance(DateTime? date)
         {
-            List<InvoiceDm> invoices = InvoiceBo.GetByCreatedDate(date.Value);
-            List<ExpenseDm> expenses = ExpenseBo.GetByCreatedDate(date.Value);
+            List<InvoiceSummaryDto> invoiceSummaries = InvoiceBo.GetDailyInvoiceSummary(date.Value);
+            List<ExpenseDm> expenses = ExpenseBo.GetQueryByCreateDate(date.Value).ToList();
 
             var model = new
             {
-                Date = date.Value.Date,
-                Invoices = invoices,
-                Expenses = expenses
+                Date = DateTime.Today,
+                InvoiceSummaries = invoiceSummaries,
+                Expenses = expenses.OrderBy(a => a.Location.DisplayOrder).ThenByDescending(a => a.Expense * a.Quantity),
             };
 
-            return JsonModel(null);
+            return JsonModel(model);
         }
     }
 }
