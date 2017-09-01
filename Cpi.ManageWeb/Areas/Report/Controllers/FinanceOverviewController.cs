@@ -12,15 +12,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 
-namespace Cpi.ManageWeb.Areas.Finance.Controllers
+namespace Cpi.ManageWeb.Areas.Report.Controllers
 {
     [CpiAuthenticate((int)LookUpUserRoleDm.LookUpIds.老子, (int)LookUpUserRoleDm.LookUpIds.Admin)]
-    public class FinanceController : BaseController
+    public class FinanceOverviewController : BaseController
     {
         private InvoiceBo InvoiceBo;
         private FinanceBo FinanceBo;
         private LookUpBo LookUpBo;
-        public FinanceController(InvoiceBo InvoiceBo, FinanceBo FinanceBo, LookUpBo LookUpBo)
+        public FinanceOverviewController(InvoiceBo InvoiceBo, FinanceBo FinanceBo, LookUpBo LookUpBo)
         {
             this.InvoiceBo = InvoiceBo;
             this.FinanceBo = FinanceBo;
@@ -33,7 +33,7 @@ namespace Cpi.ManageWeb.Areas.Finance.Controllers
         }
 
         [HttpPost]
-        public ContentResult GetFinance(ClassFilter.Finance filter)
+        public ContentResult GetFinanceOverview(ClassFilter.Finance filter)
         {
             var model = new
             {
@@ -59,7 +59,7 @@ namespace Cpi.ManageWeb.Areas.Finance.Controllers
         } 
 
         [HttpGet]
-        public ContentResult GetFinanceData()
+        public ContentResult GetFinanceOverviewData()
         {
             var model = new
             {

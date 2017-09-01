@@ -7,13 +7,13 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
         filter: {
             Loads: 0, SortObjects: [{ ColumnName: 'CreatedDate', IsDescending: true }]
         },
-        httpRequest: { method: 'POST', url: '/Finance/FinanceList/GetFinanceList' }
+        httpRequest: { method: 'POST', url: '/Report/FinanceList/GetFinanceList' }
     };
 
     $stateProvider
         .state('FinanceList', {
             url: '/FinanceList',
-            templateUrl: '/Areas/Finance/Views/FinanceList/List.html',
+            templateUrl: '/Areas/Report/Views/FinanceList/List.html',
             controller: 'FinanceListController',
             resolve: {
                 model: ['$stateParams', 'baseBo', function ($stateParams, baseBo) {
@@ -26,11 +26,11 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
         })
         .state('FinanceList.Finance', {
             url: '/Finance/:date/',
-            templateUrl: '/Areas/Finance/Views/FinanceList/Finance.html',
+            templateUrl: '/Areas/Report/Views/FinanceList/Finance.html',
             controller: 'FinanceController',
             resolve: {
                 model: ['$stateParams', 'baseBo', function ($stateParams, baseBo) {
-                    return baseBo.httpRequest('GET', '/Finance/FinanceList/GetFinance', { date: $stateParams.date });
+                    return baseBo.httpRequest('GET', '/Report/FinanceList/GetFinance', { date: $stateParams.date });
                 }],
             }
         })

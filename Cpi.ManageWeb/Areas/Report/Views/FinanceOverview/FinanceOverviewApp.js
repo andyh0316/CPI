@@ -1,24 +1,24 @@
-﻿var app = angular.module('FinanceApp', ['AngularBaseModule', 'chart.js', 'ui.router']);
+﻿var app = angular.module('FinanceOverviewApp', ['AngularBaseModule', 'chart.js', 'ui.router']);
 
 app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
-    $urlRouterProvider.when("", "/Finance");
+    $urlRouterProvider.when("", "/FinanceOverview");
 
     var financeScopeData = {
         filter: { LocationId: 1, ReportDateFilter: { ReportDateId: 1 }},
-        httpRequest: { method: 'POST', url: '/Finance/Finance/GetFinance' }
+        httpRequest: { method: 'POST', url: '/Report/FinanceOverview/GetFinanceOverview' }
     };
 
     $stateProvider
-        .state('Finance', {
-            url: '/Finance',
-            templateUrl: '/Areas/Finance/Views/Finance/Finance.html',
-            controller: 'FinanceController',
+        .state('FinanceOverview', {
+            url: '/FinanceOverview',
+            templateUrl: '/Areas/Report/Views/FinanceOverview/FinanceOverview.html',
+            controller: 'FinanceOverviewController',
             resolve: {
                 model: ['$stateParams', 'baseBo', function ($stateParams, baseBo) {
                     return baseBo.httpRequest(financeScopeData.httpRequest.method, financeScopeData.httpRequest.url, financeScopeData.filter);
                 }],
                 modelData: ['$stateParams', 'baseBo', function ($stateParams, baseBo) {
-                    return baseBo.httpRequest('GET', '/Finance/Finance/GetFinanceData');
+                    return baseBo.httpRequest('GET', '/Report/FinanceOverview/GetFinanceOverviewData');
                 }],
                 scopeData: function () {
                     return financeScopeData;
@@ -27,7 +27,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
         })
 }]);
 
-app.controller('FinanceController', ['$scope', '$controller', '$state', 'baseBo', 'model', 'scopeData', 'modelData', function ($scope, $controller, $state, baseBo, model, scopeData, modelData) {
+app.controller('FinanceOverviewController', ['$scope', '$controller', '$state', 'baseBo', 'model', 'scopeData', 'modelData', function ($scope, $controller, $state, baseBo, model, scopeData, modelData) {
     angular.extend(this, $controller('BaseController', { $scope: $scope }));
     
     $scope.scopeData = scopeData;
@@ -88,11 +88,4 @@ app.controller('FinanceController', ['$scope', '$controller', '$state', 'baseBo'
     }
 
     $scope.setGraphData();
-}]);
-
-app.controller('ListController', ['$scope', '$controller', '$state', 'baseBo', 'model', 'scopeData', function ($scope, $controller, $state, baseBo, model, scopeData) {
-    angular.extend(this, $controller('ListBaseController', { $scope: $scope }));
-
-    $scope.scopeData = scopeData;
-    $scope.model = model.Object;
 }]);

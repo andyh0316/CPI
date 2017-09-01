@@ -5,20 +5,20 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
 
     var listScopeData = {
         filter: { ReportDateId: 1 },
-        httpRequest: { method: 'GET', url: '/Performance/Performance/GetPerformance' }
+        httpRequest: { method: 'GET', url: '/Report/Performance/GetPerformance' }
     };
 
     $stateProvider
         .state('Performance', {
             url: '/Performance',
-            templateUrl: '/Areas/Performance/Views/Performance/Performance.html',
+            templateUrl: '/Areas/Report/Views/Performance/Performance.html',
             controller: 'PerformanceController',
             resolve: {
                 model: ['$stateParams', 'baseBo', function ($stateParams, baseBo) {
                     return baseBo.httpRequest(listScopeData.httpRequest.method, listScopeData.httpRequest.url, listScopeData.filter);
                 }],
                 modelData: ['$stateParams', 'baseBo', function ($stateParams, baseBo) {
-                    return baseBo.httpRequest('GET', '/Performance/Performance/GetPerformanceData');
+                    return baseBo.httpRequest('GET', '/Report/Performance/GetPerformanceData');
                 }],
                 scopeData: function () {
                     return listScopeData;

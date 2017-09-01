@@ -217,11 +217,10 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Expense\ExpenseAreaRegistration.cs" />
     <Compile Include="Areas\Expense\Controllers\ExpenseController.cs" />
-    <Compile Include="Areas\Finance\Controllers\FinanceController.cs" />
-    <Compile Include="Areas\Finance\Controllers\FinanceListController.cs" />
-    <Compile Include="Areas\Finance\FinanceAreaRegistration.cs" />
-    <Compile Include="Areas\Performance\Controllers\PerformanceController.cs" />
-    <Compile Include="Areas\Performance\PerformanceAreaRegistration.cs" />
+    <Compile Include="Areas\Report\Controllers\FinanceOverviewController.cs" />
+    <Compile Include="Areas\Report\Controllers\FinanceListController.cs" />
+    <Compile Include="Areas\Report\ReportAreaRegistration.cs" />
+    <Compile Include="Areas\Report\Controllers\PerformanceController.cs" />
     <Compile Include="Areas\Invoice\InvoiceAreaRegistration.cs" />
     <Compile Include="Areas\Invoice\Controllers\InvoiceController.cs" />
     <Compile Include="Areas\Call\Controllers\CallController.cs" />
@@ -243,11 +242,11 @@
   <ItemGroup>
     <Content Include="Areas\Expense\Views\Expense\ExpenseApp.js" />
     <Content Include="Areas\Expense\Views\Expense\List.html" />
-    <Content Include="Areas\Finance\Views\FinanceList\FinanceListApp.js" />
-    <Content Include="Areas\Finance\Views\Finance\Finance.html" />
-    <Content Include="Areas\Finance\Views\Finance\FinanceApp.js" />
-    <Content Include="Areas\Finance\Views\FinanceList\List.html" />
-    <Content Include="Areas\Performance\Views\Performance\PerformanceApp.js" />
+    <Content Include="Areas\Report\Views\FinanceList\FinanceListApp.js" />
+    <Content Include="Areas\Report\Views\FinanceOverview\FinanceOverview.html" />
+    <Content Include="Areas\Report\Views\FinanceOverview\FinanceOverviewApp.js" />
+    <Content Include="Areas\Report\Views\FinanceList\List.html" />
+    <Content Include="Areas\Report\Views\Performance\PerformanceApp.js" />
     <Content Include="Areas\Invoice\Views\Invoice\InvoiceApp.js" />
     <Content Include="Areas\Invoice\Views\Invoice\List.html" />
     <Content Include="Areas\User\Views\User\List.html" />
@@ -303,18 +302,17 @@
     <Content Include="Areas\Call\Views\Call\Import.html" />
     <Content Include="Areas\Invoice\Views\Invoice\Index.cshtml" />
     <Content Include="Areas\Invoice\Views\Web.config" />
-    <Content Include="Areas\Performance\Views\Performance\Index.cshtml" />
-    <Content Include="Areas\Performance\Views\Web.config" />
-    <Content Include="Areas\Performance\Views\Performance\Performance.html" />
-    <Content Include="Areas\Finance\Views\Finance\Index.cshtml" />
-    <Content Include="Areas\Finance\Views\Web.config" />
+    <Content Include="Areas\Report\Views\Performance\Index.cshtml" />
+    <Content Include="Areas\Report\Views\Performance\Performance.html" />
+    <Content Include="Areas\Report\Views\FinanceOverview\Index.cshtml" />
+    <Content Include="Areas\Report\Views\Web.config" />
     <Content Include="Areas\Expense\Views\Expense\Index.cshtml" />
     <Content Include="Areas\Expense\Views\Web.config" />
     <Content Include="Areas\User\Views\Web.config" />
     <Content Include="Areas\User\Views\User\Index.cshtml" />
     <Content Include="Areas\User\Views\User\User.html" />
-    <Content Include="Areas\Finance\Views\FinanceList\Index.cshtml" />
-    <Content Include="Areas\Finance\Views\FinanceList\Finance.html" />
+    <Content Include="Areas\Report\Views\FinanceList\Index.cshtml" />
+    <Content Include="Areas\Report\Views\FinanceList\Finance.html" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -379,11 +377,9 @@
     <Folder Include="Areas\Call\Views\Shared\" />
     <Folder Include="Areas\Expense\Models\" />
     <Folder Include="Areas\Expense\Views\Shared\" />
-    <Folder Include="Areas\Finance\Models\" />
     <Folder Include="Areas\Invoice\Models\" />
     <Folder Include="Areas\Invoice\Views\Shared\" />
-    <Folder Include="Areas\Performance\Models\" />
-    <Folder Include="Areas\Performance\Views\Shared\" />
+    <Folder Include="Areas\Report\Models\" />
     <Folder Include="Filters\" />
     <Folder Include="node_modules\" />
   </ItemGroup>

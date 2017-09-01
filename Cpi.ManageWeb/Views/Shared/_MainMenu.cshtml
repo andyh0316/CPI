@@ -51,37 +51,28 @@
                 </div>
             </div>
 
-            <div class="menu-item @(currentArea == "Finance" ? "selected" : "")">
+            <div class="menu-item @(currentArea == "Report" ? "selected" : "")">
                 <div class="menu-item-inner">
-                    <i class="material-icons">monetization_on</i>
-                    <span class="text">Finance 财务</span>
+                    <i class="material-icons">assignment</i>
+                    <span class="text">Report 分析报告</span>
                 </div>
 
                 <div class="sub-menu">
                     <div class="sub-menu-body">
-                        <a href="/Finance/Finance/" class="sub-menu-item">
-                            <span class="text">Overview</span>
+                        <a href="/Report/FinanceOverview/" class="sub-menu-item @(currentController == "FinanceOverview" ? "selected" : "")">
+                            <i class="material-icons">monetization_on</i>
+                            <span class="text">Finance Overview 财务概况</span>
                         </a>
 
-                        <a href="/Finance/FinanceList/" class="sub-menu-item">
-                            <span class="text">List</span>
+                        <a href="/Report/FinanceList/" class="sub-menu-item @(currentController == "FinanceList" ? "selected" : "")">
+                            <i class="material-icons">monetization_on</i>
+                            <span class="text">Finance Details 财务细节</span>
                         </a>
-                    </div>
-                </div>
-            </div>
-        }
-        
-        @if (roleId == (int)LookUpUserRoleDm.LookUpIds.老子 || roleId == (int)LookUpUserRoleDm.LookUpIds.Admin || roleId == (int)LookUpUserRoleDm.LookUpIds.DataSpecialist)
-        {
-            <div class="menu-item @(currentArea == "Performance" ? "selected" : "")">
-                <div class="menu-item-inner">
-                    <i class="material-icons">local_library</i>
-                    <span class="text">Performance 员工评估</span>
-                </div>
 
-                <div class="sub-menu">
-                    <div class="sub-menu-body">
-                        <a href="/Performance/Performance/" class="sub-menu-item"></a>
+                        <a href="/Report/Performance/" class="sub-menu-item @(currentController == "Performance" ? "selected" : "")">
+                            <i class="material-icons">local_library</i>
+                            <span class="text">Performance 员工评估</span>
+                        </a>
                     </div>
                 </div>
             </div>

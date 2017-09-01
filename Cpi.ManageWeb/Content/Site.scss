@@ -179,6 +179,7 @@ $main-menu-height: 50px;
                     //box-shadow: inset 0px 0px 50px #11506F;
                     padding: 15px 15px 15px 15px;
                     text-align: left;
+                    white-space: nowrap;
 
                     .sub-menu-item {
                         display: block;
@@ -199,6 +200,19 @@ $main-menu-height: 50px;
 
                 &:hover {
                     cursor: auto;
+                }
+
+                &:before {
+                    position: relative;
+                    top: 1px;
+                    left: 40%;
+                    display: block;
+                    height: 10px;
+                    width: 1px;
+                    content: "";
+                    border-left: 7px solid transparent;
+                    border-right: 7px solid transparent;
+                    border-bottom: 7px solid $main-color;
                 }
             }
         }
@@ -227,7 +241,7 @@ $secondary-menu-height: 42px;
     .title-container {
         background-color: #efefef;
         float: left;
-        width: $title-container-width;
+        //width: $title-container-width;
         height: 100%;
         @extend %border-box;
         padding: $padding;

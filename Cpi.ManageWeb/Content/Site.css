@@ -144,7 +144,8 @@ body {
         #main-menu .menu-body .menu-item .sub-menu .sub-menu-body {
           background-color: #2d4756;
           padding: 15px 15px 15px 15px;
-          text-align: left; }
+          text-align: left;
+          white-space: nowrap; }
           #main-menu .menu-body .menu-item .sub-menu .sub-menu-body .sub-menu-item {
             display: block;
             opacity: 0.75;
@@ -157,6 +158,17 @@ body {
               opacity: 1; }
         #main-menu .menu-body .menu-item .sub-menu:hover {
           cursor: auto; }
+        #main-menu .menu-body .menu-item .sub-menu:before {
+          position: relative;
+          top: 1px;
+          left: 40%;
+          display: block;
+          height: 10px;
+          width: 1px;
+          content: "";
+          border-left: 7px solid transparent;
+          border-right: 7px solid transparent;
+          border-bottom: 7px solid #2d4756; }
 
 .secondary-menu {
   position: fixed;
@@ -170,7 +182,6 @@ body {
   .secondary-menu .title-container {
     background-color: #efefef;
     float: left;
-    width: 150px;
     height: 100%;
     padding: 8px 10px 0px 10px; }
     .secondary-menu .title-container .title {
