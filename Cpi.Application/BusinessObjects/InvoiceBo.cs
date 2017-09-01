@@ -63,7 +63,7 @@ namespace Cpi.Application.BusinessObjects
         {
             IQueryable<InvoiceDm> invoices = GetQueryByCreateDate(date);
 
-            List<InvoiceSummaryDto> dtos = invoices.SelectMany(a => a.InvoiceCommodities).GroupBy(a => a.Invoice.Location).OrderBy(a => a.Key.DisplayOrder).ToList().Select(a => new InvoiceSummaryDto
+            List<InvoiceSummaryDto> dtos = invoices.Where(a => a.StatusId == (int)LookUpInvoiceStatusDm.LookUpIds.Sold).SelectMany(a => a.InvoiceCommodities).GroupBy(a => a.Invoice.Location).OrderBy(a => a.Key.DisplayOrder).ToList().Select(a => new InvoiceSummaryDto
             {
                 Location = a.Key.Name,
                 Commodities = a.GroupBy(b => b.Commodity).Select(b => new Tuple<string, int> 

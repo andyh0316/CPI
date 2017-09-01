@@ -49,7 +49,7 @@ namespace Cpi.ManageWeb.Areas.Finance.Controllers
 
             var model = new
             {
-                Date = DateTime.Today,
+                Date = date.Value,
                 InvoiceSummaries = invoiceSummaries,
                 Expenses = expenses.OrderBy(a => a.Location.DisplayOrder).ThenByDescending(a => a.Expense * a.Quantity),
             };
