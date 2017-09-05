@@ -1,0 +1,70 @@
+﻿<div id="expense-list" class="container">
+    <div ng-show="state.current.name == 'List'" class="secondary-menu">
+        <div class="title-container">
+            <div class="title">Products</div>
+            <div class="list-total">{{model.ListLoadCalculator.Total}}</div>
+        </div>
+
+        <div class="buttons">
+            <button ng-show="isEditingAny()" class="button" ng-click="cancelAll()">Cancel</button>
+            <button ng-show="isEditingAny()" class="button main" ng-click="save()">Save</button>
+            <button class="button main" ng-click="create()">+ Create</button>
+        </div>
+    </div>
+
+    <div class="list-container">
+        <table>
+            <thead>
+                <tr>
+                    <th><a ng-sort="CreatedDate">Created 生成日期</a></th>
+                    <th><a ng-sort="Name">Name 明细</a></th>
+                    <th class="center-content"><a ng-sort="Inactive">Deactivated 停用</a></th>
+                    <th class="right-content">Price 价格</th>
+                    <th class="action"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="record in model.Records" ng-class="{deleting: record.Deleted}">
+                    <td>
+                        <dl>
+                            <dd>{{record.CreatedDate | shortDate}}</dd>
+                        </dl>
+                    </td>
+                    <td>
+                        <dl>
+                            <dd ng-show="!record.isEditing">{{record.Name}}</dd>
+                            <dd ng-show="record.isEditing">
+                                <span field-validation-error ng-show="modelState['[' + getEditingRecordIndex(record) + '].Name']" class="field-validation-error"></span>
+                                <input ng-model="record.Name" />
+                            </dd>
+                        </dl>
+                    </td>
+                    <td class="center-content">
+                        <dl>
+                            <dd ng-show="!record.isEditing">{{record.Inactive | bool}}</dd>
+                            <dd ng-show="record.isEditing">
+                                <span field-validation-error ng-show="modelState['[' + getEditingRecordIndex(record) + '].Inactive']" class="field-validation-error"></span>
+                                <input type="checkbox" ng-model="record.Inactive" />
+                            </dd>
+                        </dl>
+                    </td>
+                    <td class="right-content">
+                        <dl>
+                            <dd ng-show="!record.isEditing">${{record.Price | number: 2}}</dd>
+                            <dd ng-show="record.isEditing">
+                                <span field-validation-error ng-show="modelState['[' + getEditingRecordIndex(record) + '].Price']" class="field-validation-error"></span>
+                                <input ng-model="record.Price" />
+                            </dd>
+                        </dl>
+                    </td>
+                    <td class="action">
+                        <div ng-show="!record.isEditing" class="edit icon" ng-click="edit(record); $event.stopPropagation();"></div>
+                        <div ng-show="record.isEditing" class="cancel icon" ng-click="cancel(record)" ; $event.stopPropagation();"></div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div ui-view class="ng-animate-enabled"></div>
+</div>

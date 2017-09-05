@@ -70,8 +70,11 @@ namespace Cpi.ManageWeb
             bundles.Add(new ScriptBundle("~/bundles/expense/expense").Include(
                         "~/Areas/Expense/Views/Expense/ExpenseApp.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/user/user").Include(
-                        "~/Areas/User/Views/User/UserApp.js"));
+            bundles.Add(new ScriptBundle("~/bundles/manage/user").Include(
+                        "~/Areas/Manage/Views/User/UserApp.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/manage/commodity").Include(
+                        "~/Areas/Manage/Views/Commodity/CommodityApp.js"));
         }
     }
 }

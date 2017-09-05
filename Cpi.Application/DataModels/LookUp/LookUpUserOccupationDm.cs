@@ -2,20 +2,16 @@
 
 namespace Cpi.Application.DataModels.LookUp
 {
-    public class LookUpUserOccupationDm : LookUpBaseDm
+    public class LookUpPermissionDm : LookUpBaseDm
     {
-        public enum LookUpIds
-        {
-            Operator = 1,
-            Delivery = 2
-        }
+        
     }
 
-    public class LookUpUserOccupationMap : BaseMap<LookUpUserOccupationDm>
+    public class LookUpPermissionMap : BaseMap<LookUpPermissionDm>
     {
-        public LookUpUserOccupationMap()
+        public LookUpPermissionMap()
         {
-            ToTable("LookUp.UserOccupation");
+            ToTable("LookUp.LookUpPermission");
         }
     }
 }

@@ -26,12 +26,14 @@ namespace Cpi.ManageWeb.Areas.Call.Controllers
         private CallCommodityBo CallCommodityBo;
         private LookUpBo LookUpBo;
         private UserBo UserBo;
-        public CallController(CallBo CallBo, CallCommodityBo CallCommodityBo, LookUpBo LookUpBo, UserBo UserBo)
+        private CommodityBo CommodityBo;
+        public CallController(CallBo CallBo, CallCommodityBo CallCommodityBo, LookUpBo LookUpBo, UserBo UserBo, CommodityBo CommodityBo)
         {
             this.CallBo = CallBo;
             this.CallCommodityBo = CallCommodityBo;
             this.LookUpBo = LookUpBo;
             this.UserBo = UserBo;
+            this.CommodityBo = CommodityBo;
         }
 
         public ActionResult Index()
@@ -42,7 +44,7 @@ namespace Cpi.ManageWeb.Areas.Call.Controllers
         [HttpPost]
         public ContentResult GetList(ListFilter.Call filter)
         {
-            IQueryable<CallDm> query = CallBo.GetListBaseQuery(filter).Include(a => a.Status).Include(a => a.CallCommodities.Select(b => b.Commodity));
+            IQueryable<CallDm> query = CallBo.GetListBaseQuery(filter).Include(a => a.Status);
             ListLoadCalculator listLoadCalculator = new ListLoadCalculator(filter.Loads, query.Count());
             List<CallDm> records = GetLoadedSortedQuery(query, listLoadCalculator.Skip, listLoadCalculator.Take, filter.SortObjects).ToList();
             return JsonModel(new { Records = records, ListLoadCalculator = listLoadCalculator });
@@ -53,7 +55,7 @@ namespace Cpi.ManageWeb.Areas.Call.Controllers
         {
             var model = new
             {
-                Commodities = LookUpBo.GetList<LookUpCommodityDm>().ToList(),
+                Commodities = CommodityBo.GetList(),
                 CallStatuses = LookUpBo.GetList<LookUpCallStatusDm>().ToList(),
                 Users = UserBo.GetListQuery().OrderBy(a => a.Nickname).ThenBy(a => a.Fullname).Select(a => new CpiSelectListItem
                 {
@@ -77,7 +79,7 @@ namespace Cpi.ManageWeb.Areas.Call.Controllers
             }
 
             List<CallDm> trackedCalls = CallBo.GetListByIds(calls.Where(a => a.Id > 0).Select(a => a.Id).ToList(), true).ToList();
-            List<LookUpCommodityDm> allCommodities = LookUpBo.GetList<LookUpCommodityDm>();
+            List<CommodityDm> allCommodities = CommodityBo.GetList();
 
             foreach (CallDm call in calls)
             {
@@ -85,28 +87,28 @@ namespace Cpi.ManageWeb.Areas.Call.Controllers
 
                 Mapper.Map(call, trackedCall);
 
-                call.CallCommodities = (call.CallCommodities) ?? new List<CallCommodityDm>();
-                trackedCall.CallCommodities = (trackedCall.CallCommodities) ?? new List<CallCommodityDm>();
+                //call.CallCommodities = (call.CallCommodities) ?? new List<CallCommodityDm>();
+                //trackedCall.CallCommodities = (trackedCall.CallCommodities) ?? new List<CallCommodityDm>();
 
                 // save each callCommodity
-                foreach (CallCommodityDm callCommodity in call.CallCommodities)
-                {
-                    CallCommodityDm trackedCallCommodity = (callCommodity.Id > 0) ? trackedCall.CallCommodities.Find(a => a.Id == callCommodity.Id) : new CallCommodityDm();
+                //foreach (CallCommodityDm callCommodity in call.CallCommodities)
+                //{
+                //    CallCommodityDm trackedCallCommodity = (callCommodity.Id > 0) ? trackedCall.CallCommodities.Find(a => a.Id == callCommodity.Id) : new CallCommodityDm();
 
-                    Mapper.Map(callCommodity, trackedCallCommodity);
+                //    Mapper.Map(callCommodity, trackedCallCommodity);
 
-                    if (trackedCallCommodity.Id > 0)
-                    {
-                        if (trackedCallCommodity.Quantity == 0) // deleting
-                        {
-                            CallCommodityBo.Remove(trackedCallCommodity);
-                        }
-                    }
-                    else
-                    {
-                        trackedCall.CallCommodities.Add(trackedCallCommodity);
-                    }
-                }
+                //    if (trackedCallCommodity.Id > 0)
+                //    {
+                //        if (trackedCallCommodity.Quantity == 0) // deleting
+                //        {
+                //            CallCommodityBo.Remove(trackedCallCommodity);
+                //        }
+                //    }
+                //    else
+                //    {
+                //        trackedCall.CallCommodities.Add(trackedCallCommodity);
+                //    }
+                //}
 
                 if (trackedCall.Id == 0)
                 {

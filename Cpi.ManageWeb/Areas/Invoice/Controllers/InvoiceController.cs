@@ -25,12 +25,14 @@ namespace Cpi.ManageWeb.Areas.Invoice.Controllers
         private InvoiceCommodityBo InvoiceCommodityBo;
         private LookUpBo LookUpBo;
         private UserBo UserBo;
-        public InvoiceController(InvoiceBo InvoiceBo, InvoiceCommodityBo InvoiceCommodityBo, LookUpBo LookUpBo, UserBo UserBo)
+        private CommodityBo CommodityBo;
+        public InvoiceController(InvoiceBo InvoiceBo, InvoiceCommodityBo InvoiceCommodityBo, LookUpBo LookUpBo, UserBo UserBo, CommodityBo CommodityBo)
         {
             this.InvoiceBo = InvoiceBo;
             this.InvoiceCommodityBo = InvoiceCommodityBo;
             this.LookUpBo = LookUpBo;
             this.UserBo = UserBo;
+            this.CommodityBo = CommodityBo;
         }
 
         public ActionResult Index()
@@ -52,7 +54,7 @@ namespace Cpi.ManageWeb.Areas.Invoice.Controllers
         {
             var model = new
             {
-                Commodities = LookUpBo.GetList<LookUpCommodityDm>().ToList(),
+                Commodities = CommodityBo.GetList(),
                 InvoiceStatuses = LookUpBo.GetList<LookUpInvoiceStatusDm>().ToList(),
                 Locations = LookUpBo.GetList<LookUpLocationDm>().ToList(),
                 Users = UserBo.GetSearchDropDownList(),
@@ -73,7 +75,7 @@ namespace Cpi.ManageWeb.Areas.Invoice.Controllers
             }
 
             List<InvoiceDm> trackedInvoices = InvoiceBo.GetListByIds(Invoices.Where(a => a.Id > 0).Select(a => a.Id).ToList(), true).ToList();
-            List<LookUpCommodityDm> allCommodities = LookUpBo.GetList<LookUpCommodityDm>();
+            List<CommodityDm> allCommodities = CommodityBo.GetList();
 
             foreach (InvoiceDm invoice in Invoices)
             {

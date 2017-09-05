@@ -4,21 +4,21 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
     $urlRouterProvider.when("", "/List");
 
     var listScopeData = {
-        filter: { Loads: 0, SortObjects: [{ ColumnName: 'CreatedDate', IsDescending: true }]},
-        httpRequest: { method: 'POST', url: '/User/User/GetList' }
+        filter: { Loads: 0, SortObjects: [{ ColumnName: 'Fullname', IsDescending: false }]},
+        httpRequest: { method: 'POST', url: '/Manage/User/GetList' }
     };
 
     $stateProvider
         .state('List', {
             url: '/List',
-            templateUrl: '/Areas/User/Views/User/List.html',
+            templateUrl: '/Areas/Manage/Views/User/List.html',
             controller: 'ListController',
             resolve: {
                 model: ['$stateParams', 'baseBo', function ($stateParams, baseBo) {
                     return baseBo.httpRequest(listScopeData.httpRequest.method, listScopeData.httpRequest.url, listScopeData.filter);
                 }],
                 modelData: ['$stateParams', 'baseBo', function ($stateParams, baseBo) {
-                    return baseBo.httpRequest('GET', '/User/User/GetListData');
+                    return baseBo.httpRequest('GET', '/Manage/User/GetListData');
                 }],
                 scopeData: function () {
                     return listScopeData;
@@ -27,14 +27,14 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
         })
         .state('List.User', {
             url: '/User/:mode/:userId/',
-            templateUrl: '/Areas/User/Views/User/User.html',
+            templateUrl: '/Areas/Manage/Views/User/User.html',
             controller: 'UserController',
             resolve: {
                 model: ['$stateParams', 'baseBo', function ($stateParams, baseBo) {
-                    return baseBo.httpRequest('GET', '/User/User/GetUser', { id: $stateParams.userId });
+                    return baseBo.httpRequest('GET', '/Manage/User/GetUser', { id: $stateParams.userId });
                 }],
                 modelData: ['$stateParams', 'baseBo', function ($stateParams, baseBo) {
-                    return baseBo.httpRequest('GET', '/User/User/GetUserData');
+                    return baseBo.httpRequest('GET', '/Manage/User/GetUserData');
                 }],
                 mode: ['$stateParams', function ($stateParams) {
                     return $stateParams.mode;
@@ -68,7 +68,7 @@ app.controller('UserController', ['$scope', '$controller', '$state', 'baseBo', '
 
     $scope.remove = function () {
         if (confirm(gConfirmDeleteMsg)) {
-            baseBo.httpRequest('GET', '/User/User/DeleteUser', { id: $scope.model.Id })
+            baseBo.httpRequest('GET', '/Manage/User/DeleteUser', { id: $scope.model.Id })
                 .then(function (result) {
                     $scope.$emit('reloadListEvent', {});
                     $scope.back();
@@ -78,7 +78,7 @@ app.controller('UserController', ['$scope', '$controller', '$state', 'baseBo', '
     };
 
     $scope.save = function () {
-        baseBo.httpRequest('POST', '/User/User/SaveUser/', $scope.model).then(function (result) {
+        baseBo.httpRequest('POST', '/Manage/User/SaveUser/', $scope.model).then(function (result) {
             if (result.ModelState) {
                 $scope.modelState = result.ModelState;
             }

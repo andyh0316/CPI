@@ -91,6 +91,13 @@ baseModule.controller('ListBaseController', ['$scope', '$controller', 'baseBo', 
             });
     };
 
+    $scope.create = function () {
+        var newItem = {
+            isEditing: true,
+        };
+        $scope.model.Records.unshift(newItem);
+    };
+
     $scope.edit = function (record) {
         record.isEditing = true;
         record.originalObject = angular.copy(record);
@@ -1275,8 +1282,8 @@ baseModule.directive('commoditiesEdit', function () {
             });
 
             $element.find('input').focus(function () {
-                    $scope.showEditContainer = true;
-                    $scope.$apply();
+                $scope.showEditContainer = true;
+                $scope.$apply();
             });
 
             $element.find('input').focusout(function () {
@@ -1288,7 +1295,7 @@ baseModule.directive('commoditiesEdit', function () {
 
                 $scope.justClickedInsideContainer = false;
             });
-
+            
             $scope.getCommodityQuantityFor = function (item) {
                 for (var i in $scope.ngModel)
                 {

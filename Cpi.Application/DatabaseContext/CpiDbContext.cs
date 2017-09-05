@@ -42,12 +42,12 @@ namespace Cpi.Application.DatabaseContext
             modelBuilder.Configurations.Add(new InvoiceMap());
             modelBuilder.Configurations.Add(new InvoiceCommodityMap());
             modelBuilder.Configurations.Add(new ExpenseMap());
+            modelBuilder.Configurations.Add(new CommodityMap());
 
             modelBuilder.Configurations.Add(new LookUpUserRoleMap());
             modelBuilder.Configurations.Add(new LookUpUserOccupationMap());
             modelBuilder.Configurations.Add(new LookUpCallStatusMap());
             modelBuilder.Configurations.Add(new LookUpInvoiceStatusMap());
-            modelBuilder.Configurations.Add(new LookUpCommodityMap());
             modelBuilder.Configurations.Add(new LookUpLocationMap());
         }
 

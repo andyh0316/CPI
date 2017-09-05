@@ -12,7 +12,7 @@ namespace Cpi.Application.DataModels
         public virtual InvoiceDm Invoice { get; set; }
 
         public int CommodityId { get; set; }
-        public virtual LookUpCommodityDm Commodity { get; set; }
+        public virtual CommodityDm Commodity { get; set; }
 
         [CpiRequired]
         public int? Quantity { get; set; }

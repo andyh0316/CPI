@@ -17,12 +17,14 @@ namespace Cpi.Application.BusinessObjects.Other
         private CallBo CallBo;
         private LookUpBo LookUpBo;
         private ExpenseBo ExpenseBo;
-        public FinanceBo(InvoiceBo InvoiceBo, CallBo CallBo, LookUpBo LookUpBo, ExpenseBo ExpenseBo)
+        private CommodityBo CommodityBo;
+        public FinanceBo(InvoiceBo InvoiceBo, CallBo CallBo, LookUpBo LookUpBo, ExpenseBo ExpenseBo, CommodityBo CommodityBo)
         {
             this.InvoiceBo = InvoiceBo;
             this.CallBo = CallBo;
             this.LookUpBo = LookUpBo;
             this.ExpenseBo = ExpenseBo;
+            this.CommodityBo = CommodityBo;
         }
 
         public IQueryable<FinanceDto> GetListBaseQuery()
@@ -334,7 +336,7 @@ namespace Cpi.Application.BusinessObjects.Other
 
             invoiceQuery = InvoiceBo.GetDateFilteredQuery(invoiceQuery, filter.ReportDateFilter);
 
-            IQueryable<LookUpCommodityDm> commodityQuery = LookUpBo.GetListQuery<LookUpCommodityDm>();
+            IQueryable<CommodityDm> commodityQuery = CommodityBo.GetListQuery();
 
             List<Tuple<string, int, int>> dtos = (from a in commodityQuery
                                                   join b in invoiceQuery.SelectMany(a => a.InvoiceCommodities).GroupBy(a => a.CommodityId).Select(a => new

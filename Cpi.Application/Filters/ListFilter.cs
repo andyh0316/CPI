@@ -42,6 +42,14 @@ namespace Cpi.Application.Filters
             }
         }
 
+        public class Commodity : BaseListFilter
+        {
+            public AdvancedSearchClass AdvancedSearch { get; set; }
+            public class AdvancedSearchClass
+            {
+            }
+        }
+
         public class User : BaseListFilter
         {
             public AdvancedSearchClass AdvancedSearch { get; set; }

@@ -217,6 +217,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Expense\ExpenseAreaRegistration.cs" />
     <Compile Include="Areas\Expense\Controllers\ExpenseController.cs" />
+    <Compile Include="Areas\Manage\Controllers\CommodityController.cs" />
     <Compile Include="Areas\Report\Controllers\FinanceOverviewController.cs" />
     <Compile Include="Areas\Report\Controllers\FinanceListController.cs" />
     <Compile Include="Areas\Report\ReportAreaRegistration.cs" />
@@ -225,8 +226,8 @@
     <Compile Include="Areas\Invoice\Controllers\InvoiceController.cs" />
     <Compile Include="Areas\Call\Controllers\CallController.cs" />
     <Compile Include="Areas\Call\CallAreaRegistration.cs" />
-    <Compile Include="Areas\User\Controllers\UserController.cs" />
-    <Compile Include="Areas\User\UserAreaRegistration.cs" />
+    <Compile Include="Areas\Manage\Controllers\UserController.cs" />
+    <Compile Include="Areas\Manage\ManageAreaRegistration.cs" />
     <Compile Include="Attributes\CpiAuthenticateAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Base\BaseController.cs" />
@@ -242,6 +243,8 @@
   <ItemGroup>
     <Content Include="Areas\Expense\Views\Expense\ExpenseApp.js" />
     <Content Include="Areas\Expense\Views\Expense\List.html" />
+    <Content Include="Areas\Manage\Views\Commodity\CommodityApp.js" />
+    <Content Include="Areas\Manage\Views\Commodity\List.html" />
     <Content Include="Areas\Report\Views\FinanceList\FinanceListApp.js" />
     <Content Include="Areas\Report\Views\FinanceOverview\FinanceOverview.html" />
     <Content Include="Areas\Report\Views\FinanceOverview\FinanceOverviewApp.js" />
@@ -249,8 +252,8 @@
     <Content Include="Areas\Report\Views\Performance\PerformanceApp.js" />
     <Content Include="Areas\Invoice\Views\Invoice\InvoiceApp.js" />
     <Content Include="Areas\Invoice\Views\Invoice\List.html" />
-    <Content Include="Areas\User\Views\User\List.html" />
-    <Content Include="Areas\User\Views\User\UserApp.js" />
+    <Content Include="Areas\Manage\Views\User\List.html" />
+    <Content Include="Areas\Manage\Views\User\UserApp.js" />
     <Content Include="Content\Fonts\Fonts.css">
       <DependentUpon>Fonts.scss</DependentUpon>
     </Content>
@@ -308,11 +311,12 @@
     <Content Include="Areas\Report\Views\Web.config" />
     <Content Include="Areas\Expense\Views\Expense\Index.cshtml" />
     <Content Include="Areas\Expense\Views\Web.config" />
-    <Content Include="Areas\User\Views\Web.config" />
-    <Content Include="Areas\User\Views\User\Index.cshtml" />
-    <Content Include="Areas\User\Views\User\User.html" />
+    <Content Include="Areas\Manage\Views\Web.config" />
+    <Content Include="Areas\Manage\Views\User\Index.cshtml" />
+    <Content Include="Areas\Manage\Views\User\User.html" />
     <Content Include="Areas\Report\Views\FinanceList\Index.cshtml" />
     <Content Include="Areas\Report\Views\FinanceList\Finance.html" />
+    <Content Include="Areas\Manage\Views\Commodity\Index.cshtml" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>

@@ -14,7 +14,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace Cpi.ManageWeb.Areas.User.Controllers
+namespace Cpi.ManageWeb.Areas.Manage.Controllers
 {
     [CpiAuthenticate((int)LookUpUserRoleDm.LookUpIds.老子, (int)LookUpUserRoleDm.LookUpIds.Admin)]
     public class UserController : BaseController

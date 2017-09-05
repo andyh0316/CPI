@@ -1,22 +1,22 @@
 ﻿using System.Web.Mvc;
 
-namespace Cpi.ManageWeb.Areas.User
+namespace Cpi.ManageWeb.Areas.Manage
 {
-    public class UserAreaRegistration : AreaRegistration
+    public class ManageAreaRegistration : AreaRegistration
     {
         public override string AreaName
         {
             get
             {
-                return "User";
+                return "Manage";
             }
         }
 
         public override void RegisterArea(AreaRegistrationContext context)
         {
             context.MapRoute(
-                "User_default",
-                "User/{controller}/{action}/{id}",
+                "Manage_default",
+                "Manage/{controller}/{action}/{id}",
                 new { action = "Index", id = UrlParameter.Optional }
             );
         }

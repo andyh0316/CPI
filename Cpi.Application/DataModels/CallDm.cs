@@ -17,9 +17,6 @@ namespace Cpi.Application.DataModels
 
         public DateTime? DeliveryDate { get; set; }
 
-        //[CpiRequiredOnCallStatus]
-        public virtual List<CallCommodityDm> CallCommodities { get; set; }
-
         [CpiMaxLength(300)]
         public string AddressString { get; set; }
 
@@ -33,8 +30,6 @@ namespace Cpi.Application.DataModels
         public CallMap()
         {
             ToTable("Call");
-
-            HasMany(a => a.CallCommodities).WithRequired(a => a.Call).HasForeignKey(a => a.CallId).WillCascadeOnDelete(false);
             HasOptional(a => a.Status).WithMany().HasForeignKey(a => a.StatusId).WillCascadeOnDelete(false);
         }
     }

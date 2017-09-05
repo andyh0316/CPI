@@ -80,15 +80,23 @@
 
         @if (roleId == (int)LookUpUserRoleDm.LookUpIds.老子 || roleId == (int)LookUpUserRoleDm.LookUpIds.Admin)
         {
-            <div class="menu-item @(currentArea == "User" ? "selected" : "")">
+            <div class="menu-item @(currentArea == "Manage" ? "selected" : "")">
                 <div class="menu-item-inner">
-                    <i class="material-icons">people</i>
-                    <span class="text">Staff 员工</span>
+                    <i class="material-icons">business</i>
+                    <span class="text">Manage 管理</span>
                 </div>
 
                 <div class="sub-menu">
                     <div class="sub-menu-body">
-                        <a href="/User/User/" class="sub-menu-item"></a>
+                        <a href="/Manage/User/" class="sub-menu-item @(currentController == "User" ? "selected" : "")">
+                            <i class="material-icons">people</i>
+                            <span class="text">Staff 员工</span>
+                        </a>
+
+                        <a href="/Manage/Commodity/" class="sub-menu-item @(currentController == "Commodity" ? "selected" : "")">
+                            <i class="material-icons">local_grocery_store</i>
+                            <span class="text">Product 产品</span>
+                        </a>
                     </div>
                 </div>
             </div>

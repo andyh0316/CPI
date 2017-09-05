@@ -38,7 +38,7 @@ namespace Cpi.Application.DataModels.Base
         public BaseMap()
         {
             HasKey(m => m.Id);
-            Map(m => m.Requires("Deleted").HasValue(false)).Ignore(m => m.Deleted);
+            //Map(m => m.Requires("Deleted").HasValue(false)).Ignore(m => m.Deleted);
             HasOptional(m => m.CreatedBy).WithMany().HasForeignKey(m => m.CreatedById).WillCascadeOnDelete(false);
             HasOptional(m => m.ModifiedBy).WithMany().HasForeignKey(m => m.ModifiedById).WillCascadeOnDelete(false);
         }
