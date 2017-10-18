@@ -1,7 +1,11 @@
 ﻿using Cpi.Application.DataModels;
+using Cpi.Application.DataTransferObjects;
 using System;
+using System.Collections.Generic;
 using System.Web;
 using System.Web.Security;
+using System.Linq;
+using Cpi.Application.DataModels.LookUp;
 
 namespace Cpi.Application.Helpers
 {
@@ -28,6 +32,44 @@ namespace Cpi.Application.Helpers
             // store all permissions in session for user (for performance)
             //StorePermissions(user);
 
+        }
+
+        public static void StorePermissions(UserDm user)
+        {
+            List<PermissionDto> permissions = user.UserPermissions.Select(m => new PermissionDto
+            {
+                Id = m.Id,
+                Name = m.Permission.Name
+            }).ToList();
+
+            HttpContext.Current.Session[ALL_PERMISSIONS] = permissions;
+        }
+
+        public static List<PermissionDto> GetPermissions()
+        {
+            return (List<PermissionDto>)HttpContext.Current.Session[ALL_PERMISSIONS];
+        }
+
+        public static bool CheckPermission(int permissionId)
+        {
+            int roleId = GetRoleId();
+
+            if (roleId == (int)LookUpUserRoleDm.LookUpIds.老子 || roleId == (int)LookUpUserRoleDm.LookUpIds.Admin)
+            {
+                return true;
+            }
+            else
+            {
+                List<PermissionDto> permissions = GetPermissions();
+                if (permissions.Any(a => a.Id == permissionId))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
         }
 
         public static int? GetUserId()

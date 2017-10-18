@@ -1443,7 +1443,6 @@ baseModule.directive('fileInput', function () {
 baseModule.directive('tbody', function () {
     return {
         restrict: 'E',
-        scope: true, // pass in the entire scope
         link: function ($scope, $element, $attrs) {
             var raw = $element[0];
             var hasMoreRecords = false;

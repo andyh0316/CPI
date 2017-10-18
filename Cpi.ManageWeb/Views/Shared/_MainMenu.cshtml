@@ -15,11 +15,14 @@
                 <span class="text">Calls 外来电话</span>
             </div>
 
-            <div class="sub-menu">
-                <div class="sub-menu-body">
-                    <a href="/Call/Call/" class="sub-menu-item"></a>
+            @if (UserHelper.CheckPermission((int)LookUpPermissionDm.LookUpIds.Call))
+            {
+                <div class="sub-menu">
+                    <div class="sub-menu-body">
+                        <a href="/Call/Call/" class="sub-menu-item"></a>
+                    </div>
                 </div>
-            </div>
+            }
         </div>
 
         @if (roleId == (int)LookUpUserRoleDm.LookUpIds.老子 || roleId == (int)LookUpUserRoleDm.LookUpIds.Admin)

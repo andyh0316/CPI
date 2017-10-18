@@ -1,25 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Cpi.Application.DataModels.Base;
 
 namespace Cpi.Application.DataModels.LookUp
 {
-    public class LookUpInvoiceStatusDm : LookUpBaseDm
+    public class LookUpPermissionDm : LookUpBaseDm
     {
         public enum LookUpIds
         {
-            Sold = 1,
-            Cancelled = 2
+            Call = 1,
+            Invoice = 2,
+            Expense = 3,
+            FinanceOverview = 4,
+            FinanceList = 5,
+            Performance = 6,
+            User = 7,
+            Commodity = 8
         }
     }
 
-    public class LookUpInvoiceStatusMap : BaseMap<LookUpInvoiceStatusDm>
+    public class LookUpPermissionMap : BaseMap<LookUpPermissionDm>
     {
-        public LookUpInvoiceStatusMap()
+        public LookUpPermissionMap()
         {
-            ToTable("LookUp.InvoiceStatus");
+            ToTable("LookUp.Permission");
         }
     }
 }

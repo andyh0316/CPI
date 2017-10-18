@@ -1,44 +1,29 @@
-﻿using Cpi.Application.Helpers;
+﻿using Cpi.Application.DataModels.LookUp;
+using Cpi.Application.DataTransferObjects;
+using Cpi.Application.Helpers;
 using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using System.Linq;
 
 namespace Cobro.Compass.Web.Attributes
 {
-    // Where to use this: controller level. we are only checking if the user is logged in.
     public class CpiAuthenticateAttribute : AuthorizeAttribute
     {
-        private int[] RoleIds { get; set; }
-        private bool ValidateRole { get; set; }
-
-        public CpiAuthenticateAttribute()
+        public int? PermissionId { get; set; }
+        public CpiAuthenticateAttribute(int permissionId)
         {
-            ValidateRole = false;
-        }
-
-        public CpiAuthenticateAttribute(params int[] roleIds)
-        {
-            RoleIds = roleIds;
-            ValidateRole = true;
+            PermissionId = permissionId;
         }
 
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
             bool isAuthorized = base.AuthorizeCore(httpContext);
 
-            if (isAuthorized && ValidateRole) // if user is authorized and role validation is needed, we check if the role has access to this controller
+            if (isAuthorized && PermissionId.HasValue)
             {
-                int userRoleId = UserHelper.GetRoleId();
-                isAuthorized = false;
-                foreach (int roleId in RoleIds)
-                {
-                    if (roleId == userRoleId)
-                    {
-                        isAuthorized = true;
-                        break;
-                    }
-                }
+                UserHelper.CheckPermission(PermissionId.Value);
             }
 
             return isAuthorized;

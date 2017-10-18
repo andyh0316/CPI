@@ -19,7 +19,7 @@ using Cpi.Application.Helpers;
 
 namespace Cpi.ManageWeb.Areas.Call.Controllers
 {
-    [CpiAuthenticate]
+    [CpiAuthenticate((int)LookUpPermissionDm.LookUpIds.Call)]
     public class CallController : BaseController
     {
         private CallBo CallBo;

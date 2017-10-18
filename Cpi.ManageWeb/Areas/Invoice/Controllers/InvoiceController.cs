@@ -18,7 +18,7 @@ using System;
 
 namespace Cpi.ManageWeb.Areas.Invoice.Controllers
 {
-    [CpiAuthenticate((int)LookUpUserRoleDm.LookUpIds.老子, (int)LookUpUserRoleDm.LookUpIds.Admin)]
+    [CpiAuthenticate((int)LookUpPermissionDm.LookUpIds.Invoice)]
     public class InvoiceController : BaseController
     {
         private InvoiceBo InvoiceBo;

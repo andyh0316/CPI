@@ -14,7 +14,7 @@ using System.Web.Mvc;
 
 namespace Cpi.ManageWeb.Areas.Report.Controllers
 {
-    [CpiAuthenticate((int)LookUpUserRoleDm.LookUpIds.老子, (int)LookUpUserRoleDm.LookUpIds.Admin)]
+    [CpiAuthenticate((int)LookUpPermissionDm.LookUpIds.FinanceList)]
     public class FinanceListController : BaseController
     {
         private FinanceBo FinanceBo;

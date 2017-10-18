@@ -16,7 +16,7 @@ using System.Web.Mvc;
 
 namespace Cpi.ManageWeb.Areas.Manage.Controllers
 {
-    [CpiAuthenticate((int)LookUpUserRoleDm.LookUpIds.老子, (int)LookUpUserRoleDm.LookUpIds.Admin)]
+    [CpiAuthenticate((int)LookUpPermissionDm.LookUpIds.User)]
     public class UserController : BaseController
     {
         private UserBo UserBo;
@@ -47,6 +47,7 @@ namespace Cpi.ManageWeb.Areas.Manage.Controllers
             var model = new
             {
                 Occupations = LookUpBo.GetList<LookUpUserOccupationDm>().ToList(),
+                Permissions = LookUpBo.GetList<LookUpPermissionDm>().ToList()
             };
 
             return JsonModel(model);

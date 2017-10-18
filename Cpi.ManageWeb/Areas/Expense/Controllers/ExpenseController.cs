@@ -20,7 +20,7 @@ using Cpi.Application.BusinessObjects.Other;
 
 namespace Cpi.ManageWeb.Areas.Expense.Controllers
 {
-    [CpiAuthenticate((int)LookUpUserRoleDm.LookUpIds.老子, (int)LookUpUserRoleDm.LookUpIds.Admin)]
+    [CpiAuthenticate((int)LookUpPermissionDm.LookUpIds.Expense)]
     public class ExpenseController : BaseController
     {
         private ExpenseBo ExpenseBo;
