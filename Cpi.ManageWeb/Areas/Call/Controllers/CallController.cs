@@ -32,7 +32,7 @@ namespace Cpi.ManageWeb.Areas.Call.Controllers
             this.CallBo = CallBo;
             this.CallCommodityBo = CallCommodityBo;
             this.LookUpBo = LookUpBo;
-            this.UserBo = UserBo;
+            this.UserBo = UserBo; 
             this.CommodityBo = CommodityBo;
         }
 
@@ -77,6 +77,8 @@ namespace Cpi.ManageWeb.Areas.Call.Controllers
             {
                 return JsonModelState(ModelState);
             }
+
+            UserHelper.CheckPermissionForEntities(calls, (int)LookUpPermissionDm.LookUpIds.Call);
 
             List<CallDm> trackedCalls = CallBo.GetListByIds(calls.Where(a => a.Id > 0).Select(a => a.Id).ToList(), true).ToList();
             List<CommodityDm> allCommodities = CommodityBo.GetList();

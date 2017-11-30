@@ -71,6 +71,8 @@ namespace Cpi.ManageWeb.Areas.Expense.Controllers
                 return JsonModelState(ModelState);
             }
 
+            UserHelper.CheckPermissionForEntities(expenses, (int)LookUpPermissionDm.LookUpIds.Expense);
+
             List<ExpenseDm> trackedExpenses = ExpenseBo.GetListByIds(expenses.Where(a => a.Id > 0).Select(a => a.Id).ToList(), true).ToList();
 
             foreach (ExpenseDm expense in expenses)

@@ -603,7 +603,7 @@ baseModule.factory('baseBo', ['$http', '$window', '$q', function ($http, $window
             .success(function (result) {
 
                 if (result.IsSessionExpired) {
-                    location.href = '/Public/Login/';
+                    location.href = '/Public/';
                     return;
                 };
 

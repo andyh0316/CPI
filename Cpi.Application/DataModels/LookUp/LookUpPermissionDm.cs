@@ -15,6 +15,13 @@ namespace Cpi.Application.DataModels.LookUp
             User = 7,
             Commodity = 8
         }
+
+        public enum ActionIds
+        {
+            Create = 1,
+            Edit = 2,
+            Delete = 3
+        }
     }
 
     public class LookUpPermissionMap : BaseMap<LookUpPermissionDm>

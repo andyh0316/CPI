@@ -215,6 +215,28 @@ body {
 .buttons {
   float: right; }
 
+@keyframes ui-view-in {
+  from {
+    transform: translateX(300px); }
+  to {
+    transform: translateX(0px); }
+  0% {
+    opacity: 0; }
+  20% {
+    opacity: 1; } }
+
+@keyframes ui-view-out {
+  from {
+    transform: translateX(0px); }
+  to {
+    transform: translateX(300px); }
+  30% {
+    opacity: 1; }
+  80% {
+    opacity: 0; }
+  100% {
+    opacity: 0; } }
+
 [ui-view] {
   position: fixed;
   width: 100%;
@@ -223,24 +245,12 @@ body {
   height: 100%;
   padding-top: calc(92px);
   background-color: white; }
-  [ui-view] [ui-view] {
-    -webkit-transition: all 400ms linear;
-    -moz-transition: all 400ms linear;
-    -o-transition: all 400ms linear;
-    transition: all 400ms linear;
-    -webkit-box-shadow: -10px 0px 150px 5px #aab7bf;
-    -moz-box-shadow: -10px 0px 150px 5px #aab7bf;
-    box-shadow: -10px 0px 150px 5px #aab7bf; }
-    [ui-view] [ui-view].ng-enter {
-      left: 100%; }
-    [ui-view] [ui-view].ng-enter-active {
-      left: 0px; }
-    [ui-view] [ui-view].ng-leave {
-      left: 0%; }
-    [ui-view] [ui-view].ng-leave-active {
-      left: 100%; }
-    [ui-view] [ui-view]:empty {
-      display: none; }
+  [ui-view] [ui-view].ng-enter {
+    animation: 400ms ui-view-in ease-in-out; }
+  [ui-view] [ui-view].ng-leave {
+    animation: 300ms ui-view-out ease-out; }
+  [ui-view] [ui-view]:empty {
+    display: none; }
 
 .container {
   position: relative;

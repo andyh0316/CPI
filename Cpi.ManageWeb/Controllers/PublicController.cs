@@ -25,7 +25,7 @@ namespace Cpi.ManageWeb.Controllers
         public ContentResult Login(Login login)
         {
             UserDm trackedUser = (!string.IsNullOrEmpty(login.Username)) ? UserBo.GetByUsername(login.Username) : null;
-
+            
             // no such username
             if (trackedUser == null)
             {

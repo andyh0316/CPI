@@ -6,6 +6,7 @@ using Cpi.Application.DataModels;
 using Cpi.Application.DataModels.LookUp;
 using Cpi.Application.DataTransferObjects;
 using Cpi.Application.Filters;
+using Cpi.Application.Helpers;
 using Cpi.ManageWeb.Controllers.Base;
 using Cpi.ManageWeb.Models;
 using System;
@@ -92,6 +93,8 @@ namespace Cpi.ManageWeb.Areas.Manage.Controllers
                 return JsonModelState(ModelState);
             }
 
+            UserHelper.CheckPermissionForEntity(user, (int)LookUpPermissionDm.LookUpIds.User);
+
             UserDm trackedUser = (user.Id == 0) ? new UserDm() : UserBo.GetById(user.Id);
             Mapper.Map(user, trackedUser);
 
@@ -105,6 +108,7 @@ namespace Cpi.ManageWeb.Areas.Manage.Controllers
             return JsonModel(null);
         }
 
+        [CpiAuthenticate((int)LookUpPermissionDm.LookUpIds.User, (int)LookUpPermissionDm.ActionIds.Delete)]
         [HttpGet]
         public ContentResult DeleteUser(int id)
         {

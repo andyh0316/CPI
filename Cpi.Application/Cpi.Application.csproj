@@ -89,7 +89,7 @@
     <Compile Include="DataModels\UserDm.cs" />
     <Compile Include="DataModels\CallDm.cs" />
     <Compile Include="DataModels\Interface\ISoftDeleteDm.cs" />
-    <Compile Include="DataModels\UserPermissionDm.cs" />
+    <Compile Include="DataModels\UserRolePermissionDm.cs" />
     <Compile Include="DataModels\UserSalaryDm.cs" />
     <Compile Include="DataTransferObjects\EmployeePerformanceDto.cs" />
     <Compile Include="DataTransferObjects\FinanceDto.cs" />

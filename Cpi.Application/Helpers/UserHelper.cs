@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Security;
 using System.Linq;
 using Cpi.Application.DataModels.LookUp;
+using Cpi.Application.DataModels.Base;
 
 namespace Cpi.Application.Helpers
 {
@@ -30,16 +31,18 @@ namespace Cpi.Application.Helpers
             // REMEMBER: to clear them when the user logs out
 
             // store all permissions in session for user (for performance)
-            //StorePermissions(user);
-
+            StorePermissions(user);
         }
 
         public static void StorePermissions(UserDm user)
         {
-            List<PermissionDto> permissions = user.UserPermissions.Select(m => new PermissionDto
+            List<PermissionDto> permissions = user.UserRole.UserRolePermissions.Select(m => new PermissionDto
             {
-                Id = m.Id,
-                Name = m.Permission.Name
+                Id = m.Permission.Id,
+                Name = m.Permission.Name,
+                Create = m.Create,
+                Edit = m.Edit,
+                Delete = m.Delete
             }).ToList();
 
             HttpContext.Current.Session[ALL_PERMISSIONS] = permissions;
@@ -50,7 +53,7 @@ namespace Cpi.Application.Helpers
             return (List<PermissionDto>)HttpContext.Current.Session[ALL_PERMISSIONS];
         }
 
-        public static bool CheckPermission(int permissionId)
+        public static bool CheckPermission(int permissionId, int? actionId = null)
         {
             int roleId = GetRoleId();
 
@@ -61,14 +64,66 @@ namespace Cpi.Application.Helpers
             else
             {
                 List<PermissionDto> permissions = GetPermissions();
-                if (permissions.Any(a => a.Id == permissionId))
+                if (actionId.HasValue)
                 {
-                    return true;
+                    if (permissions.Any(a => a.Id == permissionId &&
+                                            (
+                                                (actionId == (int)LookUpPermissionDm.ActionIds.Create && a.Create) ||
+                                                (actionId == (int)LookUpPermissionDm.ActionIds.Edit && a.Edit) ||
+                                                (actionId == (int)LookUpPermissionDm.ActionIds.Delete && a.Delete)
+                                            )
+                                       )
+                       )
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
                 else
                 {
-                    return false;
+                    if (permissions.Any(a => a.Id == permissionId))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
+            }
+        }
+
+        public static void CheckPermissionForEntities(IEnumerable<BaseDm> entities, int permissionId)
+        {
+            bool canCreate = CheckPermission(permissionId, (int)LookUpPermissionDm.ActionIds.Create);
+            bool canEdit = CheckPermission(permissionId, (int)LookUpPermissionDm.ActionIds.Edit);
+            bool canDelete = CheckPermission(permissionId, (int)LookUpPermissionDm.ActionIds.Delete);
+
+            foreach (BaseDm entity in entities)
+            {
+                if ((entity.Id == 0 && !canCreate) ||
+                    (entity.Id > 0 && !entity.Deleted && !canEdit) ||
+                    (entity.Id > 0 && entity.Deleted && !canDelete))
+                {
+                    throw new Exception("Unauthorized");
+                }
+            }
+        }
+
+        public static void CheckPermissionForEntity(BaseDm entity, int permissionId)
+        {
+            bool canCreate = CheckPermission(permissionId, (int)LookUpPermissionDm.ActionIds.Create);
+            bool canEdit = CheckPermission(permissionId, (int)LookUpPermissionDm.ActionIds.Edit);
+            bool canDelete = CheckPermission(permissionId, (int)LookUpPermissionDm.ActionIds.Delete);
+
+            if ((entity.Id == 0 && !canCreate) ||
+                (entity.Id > 0 && !entity.Deleted && !canEdit) ||
+                (entity.Id > 0 && entity.Deleted && !canDelete))
+            {
+                throw new Exception("Unauthorized");
             }
         }
 

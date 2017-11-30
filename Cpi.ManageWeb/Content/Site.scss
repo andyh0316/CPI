@@ -92,6 +92,7 @@ body {
 }
 
 $main-menu-height: 50px;
+
 #main-menu {
     position: fixed;
     background-color: $main-color;
@@ -220,6 +221,7 @@ $main-menu-height: 50px;
 }
 
 $secondary-menu-height: 42px;
+
 .secondary-menu {
     position: fixed;
     width: 100%;
@@ -292,7 +294,50 @@ $secondary-menu-height: 42px;
     float: right;
 }
 
+@keyframes ui-view-in {
+    from {
+        transform: translateX(300px);
+        //opacity: 0.8;
+    }
+
+    to {
+        transform: translateX(0px);
+        //opacity: 1;
+    }
+
+    0% {
+        opacity: 0;
+    }
+
+    20% {
+        opacity: 1;
+    }
+}
+
+@keyframes ui-view-out {
+    from {
+        transform: translateX(0px);
+    }
+
+    to {
+        transform: translateX(300px);
+    }
+
+    30% {
+        opacity: 1;
+    }
+
+    80% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
 $ui-view-top-padding: $main-menu-height + $secondary-menu-height;
+
 [ui-view] {
     position: fixed;
     width: 100%;
@@ -310,23 +355,12 @@ $ui-view-top-padding: $main-menu-height + $secondary-menu-height;
     @extend %border-box;
 
     [ui-view] { // only children ui-view will get animated
-        @include transition(all 400ms linear);
-        @include box-shadow(-10px 0px 150px 5px #aab7bf);
-
         &.ng-enter {
-            left: 100%;
-        }
-
-        &.ng-enter-active {
-            left: 0px;
+            animation: 400ms ui-view-in ease-in-out;
         }
 
         &.ng-leave {
-            left: 0%;
-        }
-
-        &.ng-leave-active {
-            left: 100%;
+            animation: 300ms ui-view-out ease-out;
         }
 
         &:empty {
@@ -348,7 +382,6 @@ $ui-view-top-padding: $main-menu-height + $secondary-menu-height;
         bottom: 20px;
     }
 }
-
 /**** LIST AND TABLE ****/
 .list-container {
     display: flex;
@@ -647,7 +680,6 @@ $ui-view-top-padding: $main-menu-height + $secondary-menu-height;
 .open > .dropdown-menu {
     display: block;
 }
-
 /**** DL DT DD ****/
 dl {
     position: relative;
@@ -655,7 +687,6 @@ dl {
     padding: 0px;
     margin: 0px 0px 8px 0px;
     //min-height: 48px;
-
     dt {
         position: relative;
         width: 100%;
@@ -820,8 +851,6 @@ input.search-box {
         //width: 300px;
     }
 }
-
-
 /**** INPUTS ****/
 input:not([type=checkbox]):not([type="radio"]),
 select,
@@ -889,7 +918,6 @@ textarea {
     box-shadow: 0px 0px 5px #D2D2D2;
     word-wrap: break-word;
 }
-
 /**** Icon ****/
 .icon {
     &[ng-click] {
@@ -1078,7 +1106,6 @@ textarea {
         position: absolute;
         top: 45%;
         left: 50%;
-
         /*box-shadow: 0 0 15px #E8E7E7;
         border: 1px solid #D8D8D8;*/
         .loading-bar {
@@ -1336,7 +1363,6 @@ textarea {
 .left-content {
     text-align: left !important;
 }
-
 /**** VALIDATIONS ****/
 .field-validation-error {
     display: none;

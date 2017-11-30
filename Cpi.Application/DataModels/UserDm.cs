@@ -37,8 +37,6 @@ namespace Cpi.Application.DataModels
         public virtual List<UserSalaryDm> UserSalaries { get; set; }
 
         public DateTime? LastLoginDate { get; set; }
-
-        public virtual List<UserPermissionDm> UserPermissions { get; set; }
     }
 
     public class UserMap : BaseMap<UserDm>
@@ -48,7 +46,6 @@ namespace Cpi.Application.DataModels
             ToTable("User");
 
             HasMany(a => a.UserSalaries).WithRequired(a => a.User).HasForeignKey(a => a.UserId).WillCascadeOnDelete(false);
-            HasMany(a => a.UserPermissions).WithRequired(a => a.User).HasForeignKey(a => a.UserId).WillCascadeOnDelete(false);
             HasRequired(a => a.UserRole).WithMany().HasForeignKey(a => a.UserRoleId).WillCascadeOnDelete(false);
             HasOptional(a => a.UserOccupation).WithMany().HasForeignKey(a => a.UserOccupationId).WillCascadeOnDelete(false);
         }

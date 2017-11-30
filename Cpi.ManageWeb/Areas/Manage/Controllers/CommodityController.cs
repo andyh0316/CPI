@@ -4,6 +4,7 @@ using Cpi.Application.BusinessObjects;
 using Cpi.Application.DataModels;
 using Cpi.Application.DataModels.LookUp;
 using Cpi.Application.Filters;
+using Cpi.Application.Helpers;
 using Cpi.ManageWeb.Controllers.Base;
 using Cpi.ManageWeb.Models;
 using System;
@@ -30,7 +31,7 @@ namespace Cpi.ManageWeb.Areas.Manage.Controllers
 
         [HttpPost]
         public ContentResult GetList(ListFilter.Commodity filter)
-        {
+        { 
             IQueryable<CommodityDm> query = CommodityBo.GetListBaseQuery();
             ListLoadCalculator listLoadCalculator = new ListLoadCalculator(filter.Loads, query.Count());
             List<CommodityDm> records = GetLoadedSortedQuery(query, listLoadCalculator.Skip, listLoadCalculator.Take, filter.SortObjects).ToList();
@@ -38,16 +39,18 @@ namespace Cpi.ManageWeb.Areas.Manage.Controllers
         }
 
         [HttpPost]
-        public ContentResult SaveList(List<CommodityDm> Commodities)
+        public ContentResult SaveList(List<CommodityDm> commodities)
         {
             if (!ModelState.IsValid)
             {
                 return JsonModelState(ModelState);
             }
 
-            List<CommodityDm> trackedCommodities = CommodityBo.GetListByIds(Commodities.Where(a => a.Id > 0).Select(a => a.Id).ToList(), true).ToList();
+            UserHelper.CheckPermissionForEntities(commodities, (int)LookUpPermissionDm.LookUpIds.Commodity);
 
-            foreach (CommodityDm commodity in Commodities)
+            List<CommodityDm> trackedCommodities = CommodityBo.GetListByIds(commodities.Where(a => a.Id > 0).Select(a => a.Id).ToList(), true).ToList();
+
+            foreach (CommodityDm commodity in commodities)
             {
                 CommodityDm trackedCommodity = (commodity.Id > 0) ? trackedCommodities.Find(a => a.Id == commodity.Id) : new CommodityDm();
                 Mapper.Map(commodity, trackedCommodity);

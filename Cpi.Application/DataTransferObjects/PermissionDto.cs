@@ -10,5 +10,8 @@ namespace Cpi.Application.DataTransferObjects
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public bool Create { get; set; }
+        public bool Edit { get; set; }
+        public bool Delete { get; set; }
     }
 }

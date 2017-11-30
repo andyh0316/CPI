@@ -1,4 +1,5 @@
 ﻿using Cpi.Application.DataModels.Base;
+using System.Collections.Generic;
 
 namespace Cpi.Application.DataModels.LookUp
 {
@@ -11,6 +12,8 @@ namespace Cpi.Application.DataModels.LookUp
             Staff = 3,
             老子 = 4
         }
+
+        public virtual List<UserRolePermissionDm> UserRolePermissions { get; set; }
     }
 
     public class LookUpUserRoleMap : BaseMap<LookUpUserRoleDm>
@@ -18,6 +21,7 @@ namespace Cpi.Application.DataModels.LookUp
         public LookUpUserRoleMap()
         {
             ToTable("LookUp.UserRole");
+            HasMany(m => m.UserRolePermissions).WithRequired(m => m.UserRole).HasForeignKey(m => m.UserRoleId).WillCascadeOnDelete(false);
         }
     }
 }

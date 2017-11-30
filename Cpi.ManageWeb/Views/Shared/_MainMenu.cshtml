@@ -9,23 +9,29 @@
 
 <div id="main-menu">
     <div class="menu-body">
-        <div class="menu-item @(currentArea == "Call" ? "selected" : "")">
-            <div class="menu-item-inner">
-                <i class="material-icons">call</i>
-                <span class="text">Calls 外来电话</span>
-            </div>
+        @if (UserHelper.CheckPermission((int)LookUpPermissionDm.LookUpIds.Call))
+        {
+            <div class="menu-item @(currentArea == "Call" ? "selected" : "")">
+                <div class="menu-item-inner">
+                    <i class="material-icons">call</i>
+                    <span class="text">Calls 外来电话</span>
+                </div>
 
-            @if (UserHelper.CheckPermission((int)LookUpPermissionDm.LookUpIds.Call))
-            {
                 <div class="sub-menu">
                     <div class="sub-menu-body">
-                        <a href="/Call/Call/" class="sub-menu-item"></a>
+                        @if (UserHelper.CheckPermission((int)LookUpPermissionDm.LookUpIds.Call))
+                        {
+                            <a href="/Call/Call/" class="sub-menu-item @(currentController == "Call" ? "selected" : "")">
+                                <i class="material-icons">call</i>
+                                <span class="text">Calls 外来电话</span>
+                            </a>
+                        }
                     </div>
                 </div>
-            }
-        </div>
+            </div>
+        }
 
-        @if (roleId == (int)LookUpUserRoleDm.LookUpIds.老子 || roleId == (int)LookUpUserRoleDm.LookUpIds.Admin)
+        @if (UserHelper.CheckPermission((int)LookUpPermissionDm.LookUpIds.Invoice))
         {
             <div class="menu-item @(currentArea == "Invoice" ? "selected" : "")">
                 <div class="menu-item-inner">
@@ -35,12 +41,20 @@
 
                 <div class="sub-menu">
                     <div class="sub-menu-body">
-                        <a href="/Invoice/Invoice" class="sub-menu-item @(currentController == "Invoice" ? "selected" : "")">
-                        </a>
+                        @if (UserHelper.CheckPermission((int)LookUpPermissionDm.LookUpIds.Invoice))
+                        {
+                            <a href="/Invoice/Invoice" class="sub-menu-item @(currentController == "Invoice" ? "selected" : "")">
+                                <i class="material-icons">storage</i>
+                                <span class="text">Invoices 订单</span>
+                            </a>
+                        }
                     </div>
                 </div>
             </div>
+        }
 
+        @if (UserHelper.CheckPermission((int)LookUpPermissionDm.LookUpIds.Expense))
+        {
             <div class="menu-item @(currentArea == "Expense" ? "selected" : "")">
                 <div class="menu-item-inner">
                     <i class="material-icons">insert_photo</i>
@@ -49,11 +63,22 @@
 
                 <div class="sub-menu">
                     <div class="sub-menu-body">
-                        <a href="/Expense/Expense/" class="sub-menu-item"></a>
+                        @if (UserHelper.CheckPermission((int)LookUpPermissionDm.LookUpIds.Expense))
+                        {
+                            <a href="/Expense/Expense/" class="sub-menu-item">
+                                <i class="material-icons">insert_photo</i>
+                                <span class="text">Expenses 支出</span>
+                            </a>
+                        }
                     </div>
                 </div>
             </div>
+        }
 
+        @if (UserHelper.CheckPermission((int)LookUpPermissionDm.LookUpIds.FinanceOverview) ||
+                        UserHelper.CheckPermission((int)LookUpPermissionDm.LookUpIds.FinanceList) ||
+                        UserHelper.CheckPermission((int)LookUpPermissionDm.LookUpIds.Performance))
+        {
             <div class="menu-item @(currentArea == "Report" ? "selected" : "")">
                 <div class="menu-item-inner">
                     <i class="material-icons">assignment</i>
@@ -62,26 +87,36 @@
 
                 <div class="sub-menu">
                     <div class="sub-menu-body">
-                        <a href="/Report/FinanceOverview/" class="sub-menu-item @(currentController == "FinanceOverview" ? "selected" : "")">
-                            <i class="material-icons">monetization_on</i>
-                            <span class="text">Finance Overview 财务概况</span>
-                        </a>
+                        @if (UserHelper.CheckPermission((int)LookUpPermissionDm.LookUpIds.FinanceOverview))
+                        {
+                            <a href="/Report/FinanceOverview/" class="sub-menu-item @(currentController == "FinanceOverview" ? "selected" : "")">
+                                <i class="material-icons">monetization_on</i>
+                                <span class="text">Finance Overview 财务概况</span>
+                            </a>
+                        }
 
-                        <a href="/Report/FinanceList/" class="sub-menu-item @(currentController == "FinanceList" ? "selected" : "")">
-                            <i class="material-icons">monetization_on</i>
-                            <span class="text">Finance Details 财务细节</span>
-                        </a>
+                        @if (UserHelper.CheckPermission((int)LookUpPermissionDm.LookUpIds.FinanceList))
+                        {
+                            <a href="/Report/FinanceList/" class="sub-menu-item @(currentController == "FinanceList" ? "selected" : "")">
+                                <i class="material-icons">monetization_on</i>
+                                <span class="text">Finance Details 财务细节</span>
+                            </a>
+                        }
 
-                        <a href="/Report/Performance/" class="sub-menu-item @(currentController == "Performance" ? "selected" : "")">
-                            <i class="material-icons">local_library</i>
-                            <span class="text">Performance 员工评估</span>
-                        </a>
+                        @if (UserHelper.CheckPermission((int)LookUpPermissionDm.LookUpIds.Performance))
+                        {
+                            <a href="/Report/Performance/" class="sub-menu-item @(currentController == "Performance" ? "selected" : "")">
+                                <i class="material-icons">local_library</i>
+                                <span class="text">Performance 员工评估</span>
+                            </a>
+                        }
                     </div>
                 </div>
             </div>
         }
 
-        @if (roleId == (int)LookUpUserRoleDm.LookUpIds.老子 || roleId == (int)LookUpUserRoleDm.LookUpIds.Admin)
+        @if (UserHelper.CheckPermission((int)LookUpPermissionDm.LookUpIds.User) ||
+                 UserHelper.CheckPermission((int)LookUpPermissionDm.LookUpIds.Commodity))
         {
             <div class="menu-item @(currentArea == "Manage" ? "selected" : "")">
                 <div class="menu-item-inner">
@@ -91,15 +126,21 @@
 
                 <div class="sub-menu">
                     <div class="sub-menu-body">
-                        <a href="/Manage/User/" class="sub-menu-item @(currentController == "User" ? "selected" : "")">
-                            <i class="material-icons">people</i>
-                            <span class="text">Staff 员工</span>
-                        </a>
+                        @if (UserHelper.CheckPermission((int)LookUpPermissionDm.LookUpIds.User))
+                        {
+                            <a href="/Manage/User/" class="sub-menu-item @(currentController == "User" ? "selected" : "")">
+                                <i class="material-icons">people</i>
+                                <span class="text">Staff 员工</span>
+                            </a>
+                        }
 
-                        <a href="/Manage/Commodity/" class="sub-menu-item @(currentController == "Commodity" ? "selected" : "")">
-                            <i class="material-icons">local_grocery_store</i>
-                            <span class="text">Product 产品</span>
-                        </a>
+                        @if (UserHelper.CheckPermission((int)LookUpPermissionDm.LookUpIds.Commodity))
+                        {
+                            <a href="/Manage/Commodity/" class="sub-menu-item @(currentController == "Commodity" ? "selected" : "")">
+                                <i class="material-icons">local_grocery_store</i>
+                                <span class="text">Product 产品</span>
+                            </a>
+                        }
                     </div>
                 </div>
             </div>
@@ -114,8 +155,9 @@
 
     $(document).ready(function () {
         $('.menu-item').each(function (index) {
-            if ($(this).find('.sub-menu .sub-menu-item').length < 2)
-            {
+            var subMenuCount = $(this).find('.sub-menu .sub-menu-item').length;
+
+            if (subMenuCount === 1) {
                 $(this).find('.sub-menu').css('visibility', 'hidden');
             }
         });

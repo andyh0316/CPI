@@ -11,19 +11,37 @@ namespace Cobro.Compass.Web.Attributes
 {
     public class CpiAuthenticateAttribute : AuthorizeAttribute
     {
-        public int? PermissionId { get; set; }
-        public CpiAuthenticateAttribute(int permissionId)
+        public int PermissionId { get; set; }
+        public int[] ActionIds { get; set; }
+
+        public CpiAuthenticateAttribute(int permissionId, params int[] actionIds)
         {
             PermissionId = permissionId;
+            ActionIds = actionIds;
         }
 
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
             bool isAuthorized = base.AuthorizeCore(httpContext);
 
-            if (isAuthorized && PermissionId.HasValue)
+            if (isAuthorized)
             {
-                UserHelper.CheckPermission(PermissionId.Value);
+                if (ActionIds != null && ActionIds.Length > 0)
+                {
+                    foreach (int actionId in ActionIds)
+                    {
+                        if (UserHelper.CheckPermission(PermissionId, actionId))
+                        {
+                            return true;
+                        }
+                    }
+
+                    return false;
+                }
+                else
+                {
+                    return UserHelper.CheckPermission(PermissionId);
+                }
             }
 
             return isAuthorized;
