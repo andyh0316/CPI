@@ -27,6 +27,27 @@ SET IDENTITY_INSERT [LookUp].[UserRole] OFF
 
 GO
 
+SET IDENTITY_INSERT [LookUp].[CallStatus] ON
+INSERT INTO [LookUp].[CallStatus] (Id, Name, DisplayOrder, Deleted) VALUES (1, 'Sent To Call Center', 1, 0)
+SET IDENTITY_INSERT [LookUp].[CallStatus] OFF
+
+GO
+
+
+SET IDENTITY_INSERT [LookUp].[InvoiceStatus] ON
+INSERT INTO [LookUp].[InvoiceStatus] (Id, Name, DisplayOrder, Deleted) VALUES (1, 'Sold', 1, 0)
+INSERT INTO [LookUp].[InvoiceStatus] (Id, Name, DisplayOrder, Deleted) VALUES (2, 'Cancelled', 2, 0)
+SET IDENTITY_INSERT [LookUp].[InvoiceStatus] OFF
+
+GO
+
+SET IDENTITY_INSERT [LookUp].[UserOccupation] ON
+INSERT INTO [LookUp].[UserOccupation] (Id, Name, DisplayOrder, Deleted) VALUES (1, 'Operator', 1, 0)
+INSERT INTO [LookUp].[UserOccupation] (Id, Name, DisplayOrder, Deleted) VALUES (2, 'Delivery', 2, 0)
+SET IDENTITY_INSERT [LookUp].[UserOccupation] OFF
+
+GO
+
 -- Data Specialist																						    
 INSERT INTO [UserRolePermission] (UserRoleId, PermissionId, [Create], [Edit], [Delete], Deleted) VALUES (3, 1, 1, 1, 1, 0)
 INSERT INTO [UserRolePermission] (UserRoleId, PermissionId, [Create], [Edit], [Delete], Deleted) VALUES (3, 2, 1, 1, 1, 0)
