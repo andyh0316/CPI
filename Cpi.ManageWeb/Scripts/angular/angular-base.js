@@ -42,71 +42,119 @@ baseModule.controller('BaseController', ['$scope', '$state', function ($scope, $
 baseModule.controller('ListBaseController', ['$scope', '$controller', 'baseBo', function ($scope, $controller, baseBo) {
     angular.extend(this, $controller('BaseController', { $scope: $scope }));
 
-    // this is expected to be inherited in the child list controllers
-    $scope.getList = function (loadMore) {
-        $scope.scopeData.filter.Loads = (loadMore) ? $scope.scopeData.filter.Loads + 1 : 0;
+    $scope.scopeData = {
+        filter: {
+            SortObjects: [],
+            AdvancedSearch: {}
+        }
+    };
 
-        //console.time('listLoadTimer');
+    $scope.listItems = [];
+    $scope.listLoadCalculator = {};
+
+    // this is expected to be inherited in the child list controllers
+    // We don't want to ever directly assign a new list to $scope.listItems because that would change the referece, instead we manually empty the list, maintaining the reference
+    // default: empty old items, set load to 0, concat with new items
+    // sorting: empty old items, set load to 0, concat with new items
+    // savedList: empty old items, maintain load, concat with new items
+    // loadMore: maintain old items, concat with new items
+    $scope.getList = function (mode) {
+        if (!$scope.scopeData.filter) {
+            $scope.scopeData.filter = {};
+        }
+
+        if (!$scope.scopeData.filter.Loads) // if loads was not assigned
+        {
+            $scope.scopeData.filter.Loads = 0;
+        }
+
+        $scope.scopeData.filter.LoadMore = false;
+        $scope.scopeData.filter.scrollTop = false;
+
+        if (!mode) {
+            $scope.scopeData.filter.Loads = 0;
+            $scope.scopeData.filter.scrollTop = true;
+        }
+
+        if (mode === 'sorting') {
+            $scope.scopeData.filter.Loads = 0;
+            $scope.scopeData.filter.scrollTop = true;
+        }
+
+        if (mode === 'loadMore') {
+            $scope.scopeData.filter.Loads++;
+            $scope.scopeData.filter.LoadMore = true;
+        }
+
         baseBo.httpRequest($scope.scopeData.httpRequest.method, $scope.scopeData.httpRequest.url, $scope.scopeData.filter)
             .then(function (result) {
-                //console.timeEnd('listLoadTimer');
-                if (loadMore)
-                {
-                    $scope.model.Records = $scope.model.Records.concat(result.Object.Records);
-                }
-                else // if we are not loading more but getting a new list instead (etc. sort), then we need to maintain the records from the old list that are being edited and put those on top
-                {
-                    $scope.model.Records = result.Object.Records;
-
-                    //// remove records from not being edited
-                    //for (var i = $scope.model.Records.length - 1; i >= 0; i--) 
-                    //{
-                    //    if (!$scope.model.Records[i].isEditing)
-                    //    {
-                    //        $scope.model.Records.splice(i, 1);
-                    //    }
-                    //}
-
-                    //// append new list: excluding the ones who are already being edited
-                    //for (var i in result.Object.Records)
-                    //{
-                    //    var recordExists = false;
-                    //    for (var j in $scope.model.Records)
-                    //    {
-                    //        if (result.Object.Records[i].Id === $scope.model.Records[j].Id)
-                    //        {
-                    //            recordExists = true;
-                    //            break;
-                    //        }
-                    //    }
-
-                    //    if (!recordExists)
-                    //    {
-                    //        $scope.model.Records.push(result.Object.Records[i]);
-                    //    }
-                    //}
+                // remove records not being touched
+                if (!mode || mode === 'sorting') {
+                    for (var i = $scope.listItems.length - 1; i >= 0; i--) {
+                        if (!$scope.listItems[i].touched) {
+                            $scope.listItems.splice(i, 1);
+                        }
+                    }
                 }
 
-                $scope.model.ListLoadCalculator = result.Object.ListLoadCalculator;
+                if (mode === 'savedList') // if we just finished saving the list, we want to also remove all old list items (including touched), and replace with new ones
+                {
+                    for (var i = $scope.listItems.length - 1; i >= 0; i--) {
+                        $scope.listItems.splice(i, 1);
+                    }
+                }
+
+                // append new list: excluding the ones who are already being touched
+                for (var i in result.Object.ListItems) {
+                    var recordExists = false;
+                    for (var j in $scope.listItems) {
+                        if (result.Object.ListItems[i].Id === $scope.listItems[j].Id) {
+                            recordExists = true;
+                            break;
+                        }
+                    }
+
+                    if (!recordExists) {
+                        $scope.listItems.push(result.Object.ListItems[i]);
+                    }
+                }
+
+                $scope.listLoadCalculator = result.Object.ListLoadCalculator;
             });
     };
 
-    $scope.create = function () {
-        var newItem = {
-            isEditing: true,
-        };
-        $scope.model.Records.unshift(newItem);
+    $scope.createListItem = function (item) {
+        if (item) {
+            newItem = item;
+        }
+        else {
+            newItem = {};
+        }
+
+        if (!newItem.Id) {
+            newItem.Id = 0;
+        }
+
+        newItem.touched = true;
+
+        $scope.listItems.unshift(newItem);
+        $scope.modelState = null;
     };
 
-    $scope.edit = function (record) {
-        record.isEditing = true;
-        record.originalObject = angular.copy(record);
+    $scope.editListItem = function (item) {
+        item.touched = true;
+        item.originalObject = angular.copy(item);
     };
 
-    $scope.isEditingAny = function () {
-        for (var i in $scope.model.Records)
+    $scope.deleteListItem = function (item) {
+        item.touched = true;
+        item.Deleted = true;
+    }
+
+    $scope.isAnyListItemTouched = function () {
+        for (var i in $scope.listItems)
         {
-            if ($scope.model.Records[i].isEditing) {
+            if ($scope.listItems[i].touched) {
                 return true;
             }
         }
@@ -114,41 +162,50 @@ baseModule.controller('ListBaseController', ['$scope', '$controller', 'baseBo', 
         return false;
     };
 
-    $scope.cancel = function (record) {
-        if (record.Id > 0) { // if existing record
-            var originalObject = angular.copy(record.originalObject);
-            record.originalObject = null;
-            for (var i in originalObject) {
-                record[i] = originalObject[i];
-            }
-            record.isEditing = false;
-        }
-        else { // if new record
-            for (var i in $scope.model.Records) {
-                if (record === $scope.model.Records[i]) {
-                    $scope.model.Records.splice(i, 1);
+    $scope.cancelListItem = function (item) {
+        var list = $scope.listItems;
+
+        for (var i in list) {
+            if (item === list[i]) {
+                if (item.Id > 0) {
+                    if (item.originalObject) {
+                        var originalObject = angular.copy(item.originalObject);
+                        list[i] = originalObject;
+                    }
+                    list[i].Deleted = false;
+                    list[i].touched = false;
+                }
+                else // if it is creating new, just take it out of the list
+                {
+                    list.splice(i, 1);
                 }
             }
         }
+
+        $scope.modelState = null;
     };
 
-    $scope.cancelAll = function () {
-        for (var i = $scope.model.Records.length - 1; i >= 0; i--) {
-            var record = $scope.model.Records[i];
+    $scope.cancelListItems = function () {
+        if (confirm("Are you sure you want to cancel? Press OK to continue.")) {
+            for (var i = $scope.listItems.length - 1; i >= 0; i--) {
+                var item = $scope.listItems[i];
 
-            if (record.isEditing) {
-                $scope.cancel(record);
+                if (item.touched) {
+                    $scope.cancelListItem(item);
+                }
             }
+
+            $scope.modelState = null;
         }
     };
 
-    $scope.getEditingRecordIndex = function (record) {
+    $scope.getTouchedListItemIndex = function (item) {
         var index = 0;
-        for (var i in $scope.model.Records)
+        for (var i in $scope.listItems)
         {
-            if ($scope.model.Records[i].isEditing)
+            if ($scope.listItems[i].touched)
             {
-                if ($scope.model.Records[i] === record) {
+                if ($scope.listItems[i] === item) {
                     return index;
                 }
                 index++;
@@ -156,305 +213,9 @@ baseModule.controller('ListBaseController', ['$scope', '$controller', 'baseBo', 
         }
     }
 
-    $scope.$watch('model.Records', function (oldVal, newVal) {
-        if (oldVal.filter(function (record) { return record.isEditing === true; }).length !== newVal.filter(function (record) { return record.isEditing === true; }).length)
-        {
-            $scope.modelState = null;
-        }
-    }, true);
-
-    //$scope.filter = {
-    //    Loads: 0,
-    //    SortColumn: null, // needs to be defined in every child list controller
-    //    SortDesc: false,
-    //    SearchString: null,
-    //    AdvancedSearch: {}
-    //};
-
-    // this is called when the child wants to reload the parent list.. for example, when done saving a student, the list will get the updated
-    // entries
-    $scope.$on('reloadListEvent', function () {
-        $scope.getList();
-    });
-
-    /**** SORT ****/
-    $scope.sort = function (sortColumn) {
-        $scope.scopeData.filter.SortObjects = ($scope.scopeData.filter.SortObjects) ? $scope.scopeData.filter.SortObjects : [];
-        var sortObjects = $scope.scopeData.filter.SortObjects;
-
-        var columnExistsInSortObjects = false;
-        for (var i in sortObjects)
-        {
-            var sortObject = sortObjects[i];
-            if (sortObject.ColumnName === sortColumn)
-            {
-                sortObjects.splice(i, 1);
-
-                if (!sortObject.IsDescending)
-                {
-                    sortObject.IsDescending = true;
-                    sortObjects.push(sortObject);
-                }
-                
-                columnExistsInSortObjects = true;
-                break;
-            }
-        }
-
-        if (!columnExistsInSortObjects)
-        {
-            sortObjects.push({ ColumnName: sortColumn, IsDescending: false });
-        }
-
-        //var consoleLogString = '';
-        //for (var i in sortObjects)
-        //{
-        //    consoleLogString = consoleLogString + sortObjects[i].ColumnName + ', ';
-        //}
-
-        //console.log(consoleLogString);
-        
-        $scope.getList();
+    $scope.showListItemInput = function (item) {
+        return (item.touched && !item.Deleted);
     };
-
-    $scope.getSortDirection = function (sortColumn) {
-        if ($scope.scopeData.filter.SortObjects)
-        {
-            var sortObjects = $scope.scopeData.filter.SortObjects;
-            for (var i in sortObjects) {
-                if (sortObjects[i].ColumnName === sortColumn) {
-                    return (sortObjects[i].IsDescending) ? "sorted-desc" : "sorted-asc";
-                }
-            }
-        }
-    };
-
-    $scope.getSortColumnOrder = function (sortColumn) {
-        if ($scope.scopeData.filter.SortObjects) {
-            var sortObjects = $scope.scopeData.filter.SortObjects;
-            for (var i in sortObjects) {
-                if (sortObjects[i].ColumnName === sortColumn) {
-                    return parseInt(i) + 1;
-                }
-            }
-        }
-    };
-
-    $scope.getSortColumnCount = function () {
-        return ($scope.scopeData.filter.SortObjects) ? $scope.scopeData.filter.SortObjects.length : 0;
-    };
-
-    /**** SELECTION ****/
-    $scope.selectedIds = [];
-    $scope.maxSelectedIds = 500;
-    $scope.updateSelectedId = function (id) {
-        var index = $scope.getIndexOfSelectedId(id);
-        if (index == -1) {
-            if ($scope.isMaxSelectedIds([id])) {
-                return;
-            };
-
-            $scope.selectedIds.push(id);
-        } else {
-            $scope.selectedIds.splice(index, 1);
-        }
-    };
-
-    $scope.clearSelectedIds = function () {
-        $scope.selectedIds = [];
-    };
-
-    $scope.isIdSelected = function (id) {
-        if ($scope.getIndexOfSelectedId(id) == -1) {
-            return false;
-        } else {
-            return true;
-        }
-    };
-
-    $scope.updateSelectAllOnPage = function (items) {
-        if ($scope.areSelectedAllOnPage(items)) {
-            items.forEach(function (item) {
-                var index = $scope.getIndexOfSelectedId(item.Id);
-                if (index > -1) {
-                    $scope.selectedIds.splice(index, 1);
-                }
-            });
-        } else {
-            if ($scope.isMaxSelectedIds(items.map(function (item) { item.Id }))) {
-                return;
-            }
-
-            items.forEach(function (item) {
-                if (!$scope.isIdSelected(item.Id)) {
-                    $scope.selectedIds.push(item.Id);
-                }
-            });
-        }
-    };
-
-    $scope.areSelectedAllOnPage = function (items) {
-        if (!items || items.length == 0) {
-            return false;
-        };
-
-        var flag = true;
-        for (var i = 0; i < items.length; i++) {
-            if (!$scope.isIdSelected(items[i].Id)) {
-                flag = false;
-                break;
-            }
-        }
-
-        return flag;
-    };
-
-    $scope.getIndexOfSelectedId = function (id) {
-        var index = -1;
-        for (var i = 0; i < $scope.selectedIds.length; i++) {
-            if (id == $scope.selectedIds[i]) {
-                index = i;
-                return index;
-            }
-        }
-
-        return index;
-    };
-
-    $scope.tryAddToSelected = function (ids) {
-        if ($scope.isMaxSelectedIds(ids)) {
-            return;
-        }
-
-        for (var i in ids) {
-            if (!$scope.isIdSelected(ids[i])) {
-                $scope.selectedIds.push(ids[i]);
-            }
-        }
-    };
-
-    // first check if adding the ids will exceed maximum, and prevent it
-    $scope.isMaxSelectedIds = function (ids) {
-        var finalSelectedIdsLength = $scope.selectedIds.length;
-        for (var i in ids) {
-            if (!$scope.isIdSelected(ids[i])) {
-                finalSelectedIdsLength++;
-            }
-        }
-
-        if (finalSelectedIdsLength > $scope.maxSelectedIds) {
-            $scope.setNotification('warning', 'You cannot select more than ' + $scope.maxSelectedIds + ' results.');
-            return true; 
-        }
-
-        return false;
-    };
-
-    /**** SIMPLE SEARCH ****/
-    $scope.searchStringTimeout = null;
-    $scope.$watch('scopeData.filter.SearchString', function (newVal, oldVal) {
-        if (!newVal && !oldVal) {
-            return;
-        }
-
-        clearTimeout($scope.searchStringTimeout);
-        $scope.searchStringTimeout = setTimeout(function () {
-            if ($scope.doNotTriggerSearchString) {
-                $scope.doNotTriggerSearchString = false;
-                return;
-            }
-
-            $scope.getList();
-        }, gSearchInputDelay); // wait for user to finish typing input: how many ms to wait
-    });
-
-    $scope.searchStringGo = function () {
-        $scope.doNotTriggerSearchString = true;
-        $scope.getList();
-    };
-
-    /**** ADVANCED SEARCH ****/
-    $scope.advancedSearchGo = function () {
-        $scope.advancedSearchPrevious = angular.copy($scope.scopeData.filter.AdvancedSearch);
-        $scope.getList();
-        $scope.showAdvancedSearch = false;
-    };
-
-    $scope.advancedSearchReset = function () {
-        $scope.advancedSearchPrevious = {};
-        $scope.scopeData.filter.AdvancedSearch = {};
-        $scope.getList();
-    };
-
-    $scope.advancedSearchUndo = function () {
-        $scope.scopeData.filter.AdvancedSearch = angular.copy($scope.advancedSearchPrevious);
-    };
-
-    $scope.getAdvancedSearchCount = function () {
-        if ($scope.scopeData.filter.AdvancedSearch) {
-            var count = 0;
-            var object = $scope.scopeData.filter.AdvancedSearch;
-            return $scope.getAdvancedSearchCountRecursionFunction(object);
-        }
-    };
-
-    $scope.getAdvancedSearchCountRecursionFunction = function (object) {
-        var count = 0;
-        for (var property in object) {
-            if (object.hasOwnProperty(property)) {
-                if (object[property]) {
-                    if (typeof object[property] === 'object')
-                    {
-                        count = count + $scope.getAdvancedSearchCountRecursionFunction(object[property]);
-                    }
-                    else
-                    {
-                        count++;
-                    }
-                }
-            }
-        }
-        return count;
-    };
-
-    $scope.$watch('showAdvancedSearch', function () {
-        if ($scope.showAdvancedSearch === true) {
-            $scope.scopeData.filter.AdvancedSearch = ($scope.scopeData.filter.AdvancedSearch) ? $scope.scopeData.filter.AdvancedSearch : {};
-            $scope.advancedSearchPrevious = angular.copy($scope.scopeData.filter.AdvancedSearch);
-        }
-    })
-
-    //if (typeof gShowAdvancedSearch !== 'undefined') {
-    //    $scope.showAdvancedSearch = gShowAdvancedSearch;
-    //} else {
-    //    $scope.showAdvancedSearch = false;
-    //}
-
-    //$scope.doNotTriggerAdvancedSearch = false;
-    //$scope.advancedSearchTimeout = null;
-    //$scope.$watch('filter.AdvancedSearch', function (newVal, oldVal) {
-    //    if ($scope.doNotTriggerAdvancedSearch) {
-    //        $scope.doNotTriggerAdvancedSearch = false;
-    //        return;
-    //    }
-
-    //    if (newVal == oldVal)
-    //        return;
-
-    //    var advancedSearchDelay = 0;
-    //    if ($scope.delayAdvancedSearch) {
-    //        $scope.delayAdvancedSearch = false;
-    //        advancedSearchDelay = 700;
-    //    }
-
-    //    $scope.page = 1;
-
-    //    clearTimeout($scope.advancedSearchTimeout);
-    //    $scope.advancedSearchTimeout = setTimeout(function () {
-    //        $scope.getList();
-    //    }, advancedSearchDelay);
-    //}, true);
-
 }]);
 
 baseModule.run(['$rootScope', '$state', function ($rootScope, $state) {
@@ -1385,7 +1146,7 @@ baseModule.directive('commoditiesEdit', function () {
 //        restrict: 'A',
 //        scope: {
 //            ngModel: '=',
-//            isEditing: '='
+//            touched: '='
 //        },
 //        link: function ($scope, $element, $attrs) {
 //            $scope.ngModel = ($scope.ngModel) ? $scope.ngModel : [];
@@ -1393,7 +1154,7 @@ baseModule.directive('commoditiesEdit', function () {
 //        template:
 //        '' +
 //        '<div class="address-view-edit">' +
-//            '<div class="view-container" ng-click="showEditContainer = (isEditing) ? true : false" ng-class="{\'input-container\': isEditing}">' +
+//            '<div class="view-container" ng-click="showEditContainer = (touched) ? true : false" ng-class="{\'input-container\': touched}">' +
 //            '</div>' +
 //            '<div ng-show="showEditContainer" class="edit-container">' +
 //                '<input ng-model="ngModel.Street" placeholder="Street" />' +
@@ -1440,85 +1201,52 @@ baseModule.directive('fileInput', function () {
     };
 });
 
-baseModule.directive('tbody', function () {
+listBodyDirectiveFunction = ['$timeout', function ($timeout) {
     return {
-        restrict: 'E',
+        restrict: 'AEC',
+        transclude: true,
         link: function ($scope, $element, $attrs) {
             var raw = $element[0];
-            var hasMoreRecords = false;
+            $scope.hasMoreListItems = false;
+            $scope.empty = false;
+
+            $scope.$watch('listLoadCalculator.LoadGuid', function (newVal, oldVal) { // watch for when a getList is finished
+                var listItemCount = ($scope.listItems) ? $scope.listItems.filter(function (item) { return item.Id > 0 }).length : 0; // excluding creating new
+                if ($scope.listLoadCalculator && listItemCount < $scope.listLoadCalculator.Total) {
+                    $scope.hasMoreListItems = true;
+                } else {
+                    $scope.hasMoreListItems = false;
+                }
+
+                if ($scope.scopeData.filter.scrollTop) {
+                    $element.scrollTop(0);
+                }
+            });
 
             $element.bind('scroll', function () {
-                if ($scope.getList)
-                {
-                    if (hasMoreRecords && raw.scrollTop + raw.offsetHeight >= raw.scrollHeight) { //at the bottom
-                        $scope.getList(true);
+                if ($scope.getList) {
+                    if ($scope.hasMoreListItems && raw.scrollTop + raw.offsetHeight >= raw.scrollHeight) { //at the bottom
+                        $scope.getList('loadMore');
+                        console.log(2);
                     }
                 }
             });
 
-            $scope.$watch('model.Records.length', function (newVal, oldVal) { // watch for any scope changes
-                if ($scope.model && $scope.model.Records)
-                {
-                    //if (!newVal || newVal === 0) {
-                    //    $element.addClass('empty');
-                    //} else {
-                    //    $element.removeClass('empty');
-                    //}
-
-                    var recordCount = ($scope.model.Records) ? $scope.model.Records.filter(function (record) { return record.Id > 0 }).length : 0;
-                    if (recordCount < $scope.model.ListLoadCalculator.Total) {
-                        hasMoreRecords = true;
-                        $element.addClass('has-more-records');
-                    } else {
-                        hasMoreRecords = false;
-                        $element.removeClass('has-more-records');
+            $scope.hoverForMoreData = function () {
+                if ($scope.getList) {
+                    if ($scope.hasMoreListItems) { //at the bottom
+                        $scope.getList('loadMore');
                     }
                 }
-            });
-
-            $scope.$watch(function () { // watch for any scope changes
-                if ($element.find('tr').length == 0) {
-                    $element.addClass('empty');
-                } else {
-                    $element.removeClass('empty');
-                }
-            });
-        }
-    };
-});
-
-baseModule.directive('searchBox', function () {
-    return {
-        restrict: 'A',
-        link: function ($scope, $element, $attrs) {
-            $element.on('keydown', function (e) {
-                if (e.keyCode == '13') // enter
-                {
-                    $scope.getList();
-                }
-            });
-        }
-    };
-});
-
-baseModule.directive('advancedSearch', function () {
-    return {
-        restrict: 'A',
-        scope: {
-            ngShow: '=',
-            advancedSearchUndo: '&'
+            };
         },
-        link: function ($scope, $element, $attrs) {
-            $(document).on('mousedown', function (e) {
-                if ($scope.ngShow === true && !$element.is(e.target) && $element.has(e.target).length === 0) {
-                    $scope.advancedSearchUndo();
-                    $scope.ngShow = false;
-                    $scope.$apply();
-                }
-            });
-        },
-    };
-});
+        template:
+        '<ng-transclude></ng-transclude> \
+        <div ng-show="hasMoreListItems" ng-click="hoverForMoreData()" class="has-more-items">Scroll or Click for More Data</div>'
+    }
+}];
+
+baseModule.directive('tbody', listBodyDirectiveFunction);
 
 baseModule.directive('fieldValidationError', function () {
     return {
@@ -1533,33 +1261,263 @@ baseModule.directive('fieldValidationError', function () {
     };
 });
 
-baseModule.directive('a', function () {
+baseModule.directive('advancedSearch', ['$timeout', function ($timeout) {
     return {
-        restrict: 'E',
-        scope: {
-            ngSort: '@',
-        },
+        restrict: 'A',
+        scope: true,
         transclude: true,
         link: function ($scope, $element, $attrs) {
-            $element.bind('click', function (e) {
-                if ($scope.ngSort && !$scope.$parent.isEditingAny()) {
-                    $scope.$parent.sort($scope.ngSort);
+            $scope.autoTrigger = ($attrs.autoTrigger === 'true') ? true : false;
 
-                    $scope.$apply();
+            /**** ADVANCED SEARCH ****/
+            $scope.advancedSearchGo = function () {
+                $scope.advancedSearchPrevious = angular.copy($scope.scopeData.filter.AdvancedSearch);
+                $scope.getList();
+                $scope.showAdvancedSearch = false;
+            };
+
+            $scope.advancedSearchReset = function () {
+                $scope.advancedSearchPrevious = {};
+                $scope.scopeData.filter.AdvancedSearch = {};
+                $scope.getList();
+            };
+
+            $scope.advancedSearchUndo = function () {
+                $scope.scopeData.filter.AdvancedSearch = angular.copy($scope.advancedSearchPrevious);
+            };
+
+            $scope.getAdvancedSearchCount = function () {
+                if ($scope.scopeData.filter.AdvancedSearch) {
+                    var count = 0;
+                    var object = $scope.scopeData.filter.AdvancedSearch;
+                    return $scope.getAdvancedSearchCountRecursionFunction(object);
                 }
+            };
+
+            $scope.getAdvancedSearchCountRecursionFunction = function (object) {
+                var count = 0;
+                for (var property in object) {
+                    if (object.hasOwnProperty(property)) {
+                        if (object[property]) {
+                            if (typeof object[property] === 'object') {
+                                count = count + $scope.getAdvancedSearchCountRecursionFunction(object[property]);
+                            }
+                            else {
+                                count++;
+                            }
+                        }
+                    }
+                }
+                return count;
+            };
+
+            $scope.$watch('showAdvancedSearch', function () {
+                if ($scope.showAdvancedSearch === true) {
+                    $scope.scopeData.filter.AdvancedSearch = ($scope.scopeData.filter.AdvancedSearch) ? $scope.scopeData.filter.AdvancedSearch : {};
+                    $scope.advancedSearchPrevious = angular.copy($scope.scopeData.filter.AdvancedSearch);
+                }
+            });
+
+            $scope.$watch('scopeData.filter.AdvancedSearch', function (newVal, oldVal) {
+                if (newVal !== oldVal) {
+                    if ($scope.autoTrigger) {
+                        $scope.searchDelay = 0;
+                        if ($scope.delaySearch) {
+                            $scope.delaySearch = false;
+                            $scope.searchDelay = $scope.searchDelayMs;
+                        }
+
+                        $timeout.cancel($scope.timeoutId);
+                        $scope.timeoutId = $timeout(function () {
+                            $scope.getList();
+                        }, $scope.searchDelay);
+                    }
+                }
+            }, true);
+
+            //$(document).on('mousedown', function (e) {
+            //    $criteriaContainer = $element.find('.criteria-container');
+            //    if ($scope.showAdvancedSearch === true && !$criteriaContainer.is(e.target) && $criteriaContainer.has(e.target).length === 0) {
+            //        $scope.advancedSearchUndo();
+            //        $scope.showAdvancedSearch = false;
+            //        $scope.$apply();
+            //    }
+            //});
+        },
+        template:
+        '<ng-form name="form"> \
+            <button ng-show="!showAdvancedSearch && !autoTrigger" ng-click="showAdvancedSearch = true" class="button"> \
+                Advanced \
+                <span ng-show="getAdvancedSearchCount() > 0"> ({{getAdvancedSearchCount()}})</span> \
+            </button> \
+            <div ng-show="showAdvancedSearch && !autoTrigger" class="criteria-container"> \
+                <ng-transclude></ng-transclude> \
+                <div class="buttons-container"> \
+                    <button class="button main" type="submit" ng-click="advancedSearchGo()">Search</button> \
+                    <button class="button main" ng-click="advancedSearchReset()">Reset</button> \
+                    <button class="button" ng-click="showAdvancedSearch = false; advancedSearchUndo();">Close</button> \
+                </div> \
+            </div> \
+            <div ng-show="autoTrigger"> \
+                <ng-transclude></ng-transclude> \
+            </div> \
+        </ng-form>'
+    };
+}]);
+
+baseModule.directive('simpleSearch', function () {
+    return {
+        restrict: 'A',
+        scope: true,
+        link: function ($scope, $element, $attrs) {
+            $element.on('keydown', function (e) {
+                if (e.keyCode == '13') // enter
+                {
+                    $scope.getList();
+                }
+            });
+
+            $scope.searchStringTimeout = null;
+            $scope.$watch('scopeData.filter.SearchString', function (newVal, oldVal) {
+                if (!newVal && !oldVal) {
+                    return;
+                }
+
+                clearTimeout($scope.searchStringTimeout);
+                $scope.searchStringTimeout = setTimeout(function () {
+                    if ($scope.doNotTriggerSearchString) {
+                        $scope.doNotTriggerSearchString = false;
+                        return;
+                    }
+
+                    $scope.getList();
+                }, 500); // wait for user to finish typing input: how many ms to wait
             });
         },
         template: '' +
-        '<ng-transclude></ng-transclude>' +
-        '<span ng-show="ngSort && !$parent.isEditingAny()">' +
-            '<span class="sort-asc-icon" ng-class="$parent.getSortDirection(ngSort)"></span>' +
-            '<span class="sort-desc-icon" ng-class="$parent.getSortDirection(ngSort)"></span>' +
-            '<span ng-show="$parent.getSortColumnCount() > 1" class="sort-column-order">' +
-                '<span class="inner">{{$parent.getSortColumnOrder(ngSort)}}</span>' +
-            '</span>' +
-        '</span>'
+        '<input ng-model="scopeData.filter.SearchString" placeholder="Search">'
     };
 });
+
+baseModule.directive('ngSort', function () {
+    return {
+        restrict: 'A',
+        scope: {
+            ngSort: '@'
+        },
+        transclude: true,
+        link: function ($scope, $element, $attrs) {
+            /**** SORT ****/
+            $scope.sort = function (sortColumn) {
+                $scope.$parent.scopeData.filter.SortObjects = ($scope.$parent.scopeData.filter.SortObjects) ? $scope.$parent.scopeData.filter.SortObjects : [];
+                var sortObjects = $scope.$parent.scopeData.filter.SortObjects;
+
+                var columnExistsInSortObjects = false;
+                for (var i in sortObjects) {
+                    var sortObject = sortObjects[i];
+                    if (sortObject.ColumnName === sortColumn) {
+                        sortObjects.splice(i, 1);
+
+                        if (!sortObject.IsDescending) {
+                            sortObject.IsDescending = true;
+                            sortObjects.push(sortObject);
+                        }
+
+                        columnExistsInSortObjects = true;
+                        break;
+                    }
+                }
+
+                if (!columnExistsInSortObjects) {
+                    sortObjects.push({ ColumnName: sortColumn, IsDescending: false });
+                }
+
+                // this will make the sort singular: if there's 2 or more sortObjects, pop until it has only one
+                for (var i = sortObjects.length - 2; i >= 0; i--)
+                {
+                    sortObjects.splice(i, 1);
+                }
+
+                $scope.$parent.getList('sorting');
+            };
+
+            $scope.getSortDirection = function (sortColumn) {
+                if ($scope.$parent.scopeData.filter.SortObjects) {
+                    var sortObjects = $scope.$parent.scopeData.filter.SortObjects;
+                    for (var i in sortObjects) {
+                        if (sortObjects[i].ColumnName === sortColumn) {
+                            return (sortObjects[i].IsDescending) ? "sorted-desc" : "sorted-asc";
+                        }
+                    }
+                }
+            };
+
+            $scope.getSortColumnOrder = function (sortColumn) {
+                if ($scope.$parent.scopeData.filter.SortObjects) {
+                    var sortObjects = $scope.$parent.scopeData.filter.SortObjects;
+                    for (var i in sortObjects) {
+                        if (sortObjects[i].ColumnName === sortColumn) {
+                            return parseInt(i) + 1;
+                        }
+                    }
+                }
+            };
+
+            $scope.getSortColumnCount = function () {
+                return ($scope.$parent.scopeData.filter.SortObjects) ? $scope.$parent.scopeData.filter.SortObjects.length : 0;
+            };
+
+            $element.bind('click', function (e) {
+                $scope.sort($scope.ngSort);
+
+                $scope.$apply();
+
+                //if ($scope.ngSort && !$scope.$parent.isEditingAny()) {
+                //    $scope.$parent.sort($scope.ngSort);
+
+                //    $scope.$apply();
+                //}
+            });
+        },
+        template:
+        '<ng-transclude></ng-transclude> \
+         <span ng-show="ngSort && !$parent.isEditingAny()"> \
+             <span class="sort-asc-icon" ng-class="getSortDirection(ngSort)"></span> \
+             <span class="sort-desc-icon" ng-class="getSortDirection(ngSort)"></span> \
+             <span ng-show="getSortColumnCount() > 1" class="sort-column-order"> \
+                <span class="inner">{{getSortColumnOrder(ngSort)}}</span> \
+             </span> \
+         </span>'
+    };
+});
+
+//baseModule.directive('a', function () {
+//    return {
+//        restrict: 'E',
+//        scope: {
+//            ngSort: '@',
+//        },
+//        transclude: true,
+//        link: function ($scope, $element, $attrs) {
+//            $element.bind('click', function (e) {
+//                if ($scope.ngSort && !$scope.$parent.isAnyListItemTouched()) {
+//                    $scope.$parent.sort($scope.ngSort);
+
+//                    $scope.$apply();
+//                }
+//            });
+//        },
+//        template: '' +
+//        '<ng-transclude></ng-transclude>' +
+//        '<span ng-show="ngSort && !$parent.isAnyListItemTouched()">' +
+//            '<span class="sort-asc-icon" ng-class="$parent.getSortDirection(ngSort)"></span>' +
+//            '<span class="sort-desc-icon" ng-class="$parent.getSortDirection(ngSort)"></span>' +
+//            '<span ng-show="$parent.getSortColumnCount() > 1" class="sort-column-order">' +
+//                '<span class="inner">{{$parent.getSortColumnOrder(ngSort)}}</span>' +
+//            '</span>' +
+//        '</span>'
+//    };
+//});
 
 //baseModule.directive('tr', ['$timeout', function ($timeout) {
 //    return {

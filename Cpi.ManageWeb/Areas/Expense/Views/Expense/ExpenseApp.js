@@ -34,22 +34,25 @@ app.controller('ListController', ['$scope', '$controller', '$state', 'baseBo', '
     $scope.modelData = modelData.Object;
     $scope.model = model.Object;
 
+    $scope.listItems = $scope.model.ListItems;
+    $scope.listLoadCalculator = $scope.model.ListLoadCalculator;
+
     $scope.import = function () {
         $state.go('List.Import');
     };
 
     $scope.create = function () {
         var newItem = {
-            isEditing: true,
+            touched: true,
             LocationId: 1,
             Quantity: 1
         };
-        $scope.model.Records.unshift(newItem);
+        $scope.listItems.unshift(newItem);
     };
 
     $scope.save = function () {
-        var savingRecords = $scope.model.Records.filter(function (item) { return item.isEditing === true });
-        baseBo.httpRequest('POST', '/Expense/Expense/SaveList', savingRecords)
+        var savingListItems = $scope.listItems.filter(function (item) { return item.touched === true });
+        baseBo.httpRequest('POST', '/Expense/Expense/SaveList', savingListItems)
             .then(function (result) {
                 if (result.ModelState)
                 {
@@ -57,8 +60,7 @@ app.controller('ListController', ['$scope', '$controller', '$state', 'baseBo', '
                 }
                 else
                 {
-                    $scope.cancelAll();
-                    $scope.getList();
+                    $scope.getList('savedList');
                 }
             });
     };
@@ -73,9 +75,9 @@ app.controller('ListController', ['$scope', '$controller', '$state', 'baseBo', '
 
     $scope.getTotalExpense = function () {
         var total = 0;
-        for (var i in $scope.model.Records)
+        for (var i in $scope.listItems)
         {
-            var record = $scope.model.Records[i];
+            var record = $scope.listItems[i];
             if (record.Expense)
             {
                 total = total + record.Expense;
@@ -86,15 +88,15 @@ app.controller('ListController', ['$scope', '$controller', '$state', 'baseBo', '
     };
 
     $scope.showDailyTotalExpense = function (index) {
-        if (!$scope.isEditingAny() && $scope.scopeData.filter.SortObjects.length >= 1 && $scope.scopeData.filter.SortObjects[0].ColumnName === 'CreatedDate') {
+        if (!$scope.isAnyListItemTouched() && $scope.scopeData.filter.SortObjects.length >= 1 && $scope.scopeData.filter.SortObjects[0].ColumnName === 'CreatedDate') {
             // determing if record at this index is the last of day
-            var recordDate = $scope.model.Records[index].CreatedDate;
+            var recordDate = $scope.listItems[index].CreatedDate;
             recordDate = new Date(recordDate);
             recordDate = new Date(recordDate.getFullYear(), recordDate.getMonth(), recordDate.getDate());
 
             var nextRecordDate = null;
-            if (index + 1 < $scope.model.Records.length) {
-                nextRecordDate = $scope.model.Records[index + 1].CreatedDate;
+            if (index + 1 < $scope.listItems.length) {
+                nextRecordDate = $scope.listItems[index + 1].CreatedDate;
                 nextRecordDate = new Date(nextRecordDate);
                 nextRecordDate = new Date(nextRecordDate.getFullYear(), nextRecordDate.getMonth(), nextRecordDate.getDate());
                 return !(recordDate.getTime() === nextRecordDate.getTime());
@@ -104,7 +106,7 @@ app.controller('ListController', ['$scope', '$controller', '$state', 'baseBo', '
     };
 
     $scope.getDailyTotalExpense = function (index) {
-        var record = $scope.model.Records[index];
+        var record = $scope.listItems[index];
         var recordDate = record.CreatedDate;
         console.log(index);
         recordDate = new Date(recordDate);
@@ -120,7 +122,7 @@ app.controller('ListController', ['$scope', '$controller', '$state', 'baseBo', '
                 break;
             }
 
-            var currentRecord = $scope.model.Records[index];
+            var currentRecord = $scope.listItems[index];
             var currentRecordDate = currentRecord.CreatedDate;
             currentRecordDate = new Date(currentRecordDate);
             currentRecordDate = new Date(currentRecordDate.getFullYear(), currentRecordDate.getMonth(), currentRecordDate.getDate());

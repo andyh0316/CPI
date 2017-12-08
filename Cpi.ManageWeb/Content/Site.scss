@@ -5,6 +5,7 @@ $main-font-color: black;
 $light-font-color: #b9b9b9;
 $main-color: #2d4756;
 
+$advanced-search-z-index: 300;
 $search-drop-down-z-index: 350;
 $notification-message-z-index: 450;
 $main-menu-z-index: 1000;
@@ -270,13 +271,62 @@ $secondary-menu-height: 42px;
             display: inline-block;
         }
 
-        .advanced-search {
-            position: absolute;
-            padding: 25px 30px;
-            margin-top: 4px;
-            @include box-shadow(0px 0px 5px #e0dfdf);
-            background-color: white;
-            border: 1px solid #d0d0d0;
+        [advanced-search] {
+            position: relative;
+            display: inline-block;
+            vertical-align: top;
+
+            .criteria-container {
+                position: fixed;
+                padding: 25px 30px;
+                max-width: 1100px;
+                left: 20px;
+                margin-top: 30px;
+                @include box-shadow(0px 0px 5px #e0dfdf);
+                background-color: white;
+                border: 1px solid #d0d0d0;
+                z-index: $advanced-search-z-index;
+
+                .buttons-container {
+                    min-width: 300px;
+                    margin-top: 30px;
+                    text-align: right;
+                }
+
+                &:before {
+                    display: block;
+                    position: fixed;
+                    left: 0;
+                    right: 0;
+                    top: 0;
+                    bottom: 0;
+                    content: "";
+                }
+            }
+        }
+
+        [simple-search] {
+            position: relative;
+            display: inline-block;
+            vertical-align: top;
+            margin-right: 3px;
+
+            input {
+                width: 200px;
+                padding-left: 30px !important;
+                padding-right: 0;
+                margin-right: -4px !important;
+                background-image: url('/Images/Icons/search-box-icon.png');
+                background-size: 16px 16px;
+                background-repeat: no-repeat;
+                background-position: 8px center;
+                transition: width 300ms ease-in-out;
+            }
+
+            button {
+                min-width: 0px !important;
+                border-left: none;
+            }
         }
 
         input,
@@ -388,8 +438,11 @@ $ui-view-top-padding: $main-menu-height + $secondary-menu-height;
     flex-flow: column;
     //margin-bottom: 20px;
     height: 100%;
-
     @extend %border-box;
+
+    ng-transclude {
+        width: 100%;
+    }
 
     table {
         display: flex;
@@ -398,6 +451,7 @@ $ui-view-top-padding: $main-menu-height + $secondary-menu-height;
         border-collapse: collapse;
         border: 1px solid $light-border-color;
         height: 100%;
+        width: 100%;
 
         thead {
             width: calc((100%) - (18px)) !important; //offset scrollbar
@@ -413,7 +467,7 @@ $ui-view-top-padding: $main-menu-height + $secondary-menu-height;
 
                     a {
                         position: relative;
-                        display: inl ine-block;
+                        display: inline-block;
                         margin-right: 15px;
                         @extend %prevent-user-select;
 
@@ -478,17 +532,23 @@ $ui-view-top-padding: $main-menu-height + $secondary-menu-height;
 
             tr {
                 @include transition(background-color 300ms ease-in-out);
+                height: 34px;
 
                 &:hover {
                     background-color: whitesmoke;
                 }
 
                 td {
-                    padding: 3px 5px;
+                    padding: 0px 5px;
+                    font-size: 100%;
+                    vertical-align: middle;
 
                     dl {
-                        width: 100%;
                         margin: 0px;
+                        padding: 0px;
+                        display: inline-block;
+                        vertical-align: middle;
+                        width: 100%;
 
                         dd {
                             font-size: inherit;
@@ -507,31 +567,30 @@ $ui-view-top-padding: $main-menu-height + $secondary-menu-height;
                 }
             }
 
-            &.empty {
-                &:after {
-                    display: block;
-                    position: absolute;
-                    width: 100%;
-                    top: 30%;
-                    content: "NO RESULTS";
-                    text-align: center;
-                    color: #BFBFBF;
-                    font-size: 24px;
+            .has-more-items {
+                display: block;
+                position: relative;
+                width: 100%;
+                padding-top: 50px;
+                height: 150px;
+                text-align: center;
+                color: #BFBFBF;
+                font-size: 24px;
+
+                &:hover {
+                    cursor: pointer;
                 }
             }
 
-            &.has-more-records {
-                &:after {
-                    display: block;
-                    position: relative;
-                    width: 100%;
-                    padding-top: 50px;
-                    height: 150px;
-                    content: "Scroll Down For More Records";
-                    text-align: center;
-                    color: #BFBFBF;
-                    font-size: 24px;
-                }
+            .empty-info {
+                display: block;
+                position: relative;
+                width: 100%;
+                padding-top: 50px;
+                height: 150px;
+                text-align: center;
+                color: #BFBFBF;
+                font-size: 24px;
             }
         }
 
@@ -585,7 +644,7 @@ $ui-view-top-padding: $main-menu-height + $secondary-menu-height;
         .icon {
             position: relative;
             display: inline-block;
-            top: 2px;
+            //top: 4px;
         }
     }
 
@@ -619,6 +678,14 @@ $ui-view-top-padding: $main-menu-height + $secondary-menu-height;
         th, td {
             border: $light-border-color;
         }
+    }
+}
+
+.deletingEntry {
+    background-color: #FFE8E8 !important;
+
+    > :not(.action):not(.action-buttons):not(.icon) {
+        opacity: 0.4;
     }
 }
 

@@ -36,9 +36,9 @@ namespace Cpi.ManageWeb.Areas.Report.Controllers
         public ContentResult GetFinanceList(ListFilter.Finance filter)
         {
             IQueryable<FinanceDto> query = FinanceBo.GetListBaseQuery();
-            ListLoadCalculator listLoadCalculator = new ListLoadCalculator(filter.Loads, query.Count());
-            List<FinanceDto> records = GetLoadedSortedQuery(query, listLoadCalculator.Skip, listLoadCalculator.Take, filter.SortObjects).ToList();
-            return JsonModel(new { Records = records, ListLoadCalculator = listLoadCalculator });
+            ListLoadCalculator listLoadCalculator = new ListLoadCalculator(filter, query.Count());
+            List<FinanceDto> listItems = GetLoadedSortedQuery(query, listLoadCalculator.Skip, listLoadCalculator.Take, filter.SortObjects).ToList();
+            return JsonModel(new { ListItems = listItems, ListLoadCalculator = listLoadCalculator });
         }
 
         [HttpGet]

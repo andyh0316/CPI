@@ -2,16 +2,12 @@
     <div ng-show="state.current.name == 'List'" class="secondary-menu">
         <div class="title-container">
             <div class="title">Calls</div>
-            <div class="list-total">{{model.ListLoadCalculator.Total}}</div>
+            <div class="list-total">{{listLoadCalculator.Total}}</div>
         </div>
 
         <div class="filters-container">
-            <input search-box type="text" class="search-box" ng-model="scopeData.filter.SearchString" placeholder="Search" />
-            <button ng-show="!showAdvancedSearch" ng-click="showAdvancedSearch = true" class="button">
-                Advanced
-                <span ng-show="getAdvancedSearchCount() > 0"> ({{getAdvancedSearchCount()}})</span>
-            </button>
-            <div advanced-search ng-show="showAdvancedSearch" advanced-search-undo="advancedSearchUndo()" class="advanced-search">
+            <div simple-search></div>
+            <div advanced-search>
                 <section>
                     <dl class="dl-S">
                         <dt>Status</dt>
@@ -44,20 +40,14 @@
                         </dd>
                     </dl>
                 </section>
-
-                <div class="buttons">
-                    <button class="button" ng-click="showAdvancedSearch = false; advancedSearchUndo();">Close</button>
-                    <button class="button main" ng-click="advancedSearchReset()">Reset</button>
-                    <button class="button main" ng-click="advancedSearchGo()">Search</button>
-                </div>
             </div>
         </div>
 
         <div class="buttons">
-            <button ng-show="isEditingAny()" class="button" ng-click="cancelAll()">Cancel</button>
-            <button ng-show="isEditingAny()" class="button main" ng-click="save()">Save</button>
-            <button ng-show="!isEditingAny()" class="button main" ng-click="import()">Import</button>
-            <button class="button main" ng-click="create()">+ Create</button>
+            <button ng-show="isAnyListItemTouched()" class="button" ng-click="cancelListItems()">Cancel</button>
+            <button ng-show="isAnyListItemTouched()" class="button main" ng-click="save()">Save</button>
+            <button ng-show="!isAnyListItemTouched()" class="button main" ng-click="import()">Import</button>
+            <button class="button main" ng-click="createListItem()">+ Create</button>
         </div>
     </div>
 
@@ -68,80 +58,59 @@
                     <th class="date-time"><a ng-sort="CreatedDate">Created 生成日期</a></th>
                     <th>Phone 顾客电话</th>
                     <th>Name 顾客姓名</th>
-                    <th ng-class="{commodities: isEditingAny()}">Product 产品</th>
+                    <th ng-class="{commodities: isAnyListItemTouched()}">Product 产品</th>
                     <th class="center-content"><a ng-sort="Status.Name">Status </a></th>
                     <th class="action"></th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="record in model.Records" ng-class="{deleting: record.Deleted}">
+                <tr ng-repeat="listItem in listItems" ng-class="{deletingEntry: listItem.Deleted}">
                     <td class="date-time">
                         <dl>
-                            <dd>{{record.CreatedDate | shortDateWithTime}}</dd>
+                            <dd>{{listItem.CreatedDate | shortDateWithTime}}</dd>
                         </dl>
                     </td>
                     <td>
                         <dl>
-                            <dd ng-show="!record.isEditing">{{record.CustomerPhone}}</dd>
-                            <dd ng-show="record.isEditing">
-                                <span field-validation-error ng-show="modelState['[' + getEditingRecordIndex(record) + '].CustomerPhone']" class="field-validation-error"></span>
-                                <input ng-model="record.CustomerPhone" />
+                            <dd ng-show="!showListItemInput(listItem)">{{listItem.CustomerPhone}}</dd>
+                            <dd ng-show="showListItemInput(listItem)">
+                                <span field-validation-error ng-show="modelState['[' + getTouchedListItemIndex(listItem) + '].CustomerPhone']" class="field-validation-error"></span>
+                                <input ng-model="listItem.CustomerPhone" />
                             </dd>
                         </dl>
                     </td>
                     <td>
                         <dl>
-                            <dd ng-show="!record.isEditing">{{record.CustomerName}}</dd>
-                            <dd ng-show="record.isEditing">
-                                <span field-validation-error ng-show="modelState['[' + getEditingRecordIndex(record) + '].CustomerName']" class="field-validation-error"></span>
-                                <input ng-model="record.CustomerName" />
+                            <dd ng-show="!showListItemInput(listItem)">{{listItem.CustomerName}}</dd>
+                            <dd ng-show="showListItemInput(listItem)">
+                                <span field-validation-error ng-show="modelState['[' + getTouchedListItemIndex(listItem) + '].CustomerName']" class="field-validation-error"></span>
+                                <input ng-model="listItem.CustomerName" />
                             </dd>
                         </dl>
                     </td>
-                    <td ng-class="{commodities: isEditingAny()}">
+                    <td ng-class="{commodities: isAnyListItemTouched()}">
                         <dl>
-                            <dd ng-show="!record.isEditing">
-                                {{record.CallCommodities | objectCommodities}}
+                            <dd ng-show="!showListItemInput(listItem)">
+                                {{listItem.CallCommodities | objectCommodities}}
                             </dd>
-                            <!--<dd ng-show="record.isEditing" class="overflow-visible">
-                            <span field-validation-error ng-show="modelState['[' + getEditingRecordIndex(record) + '].CallCommodities']" class="field-validation-error"></span>
-                            <div commodities-edit ng-model="record.CallCommodities" commodities="modelData.Commodities"></div>
-                        </dd>-->
                         </dl>
                     </td>
-                    <!--<td>
-                    <dl>
-                        <dd ng-show="!record.isEditing">{{record.DeliveryDate | shortDate}}</dd>
-                        <dd ng-show="record.isEditing">
-                            <span field-validation-error ng-show="modelState['[' + getEditingRecordIndex(record) + '].DeliveryDate']" class="field-validation-error"></span>
-                            <input ng-model="record.DeliveryDate" date-input />
-                        </dd>
-                    </dl>
-                    </td>-->
-                        <!--<td class="address">
-                        <dl>
-                            <dd ng-show="!record.isEditing">{{record.AddressString}}</dd>
-                            <dd ng-show="record.isEditing">
-                                <input ng-model="record.AddressString" />
-                            </dd>
-                        </dl>
-                    </td>-->
                     <td class="center-content">
                         <dl>
-                            <dd ng-show="!record.isEditing">
-                                <span ng-show="record.StatusId === modelData.CallStatusIdEnums.SentToCallCenter" class="call-sent-to-call-center icon" title="Sent: Customer phone numbers are sent to the call center. 此电话单以送达电话服务中心"></span>
+                            <dd ng-show="!showListItemInput(listItem)">
+                                <span ng-show="listItem.StatusId === modelData.CallStatusIdEnums.SentToCallCenter" class="call-sent-to-call-center icon" title="Sent: Customer phone numbers are sent to the call center. 此电话单以送达电话服务中心"></span>
                             </dd>
-                            <dd ng-show="record.isEditing">
-                                <select ng-model="record.StatusId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.CallStatuses">
+                            <dd ng-show="showListItemInput(listItem)">
+                                <select ng-model="listItem.StatusId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.CallStatuses">
                                     <option></option>
                                 </select>
                             </dd>
                         </dl>
                     </td>
                     <td class="action">
-                        <button ng-show="!record.isEditing" class="edit icon" ng-click="edit(record); $event.stopPropagation();"></button>
-                        <!--<div ng-show="record.Id" class="delete icon" ng-click="record.Deleted = true; record.isEditing = true; $event.stopPropagation();"></div>-->
-                        <button ng-show="record.isEditing" class="cancel icon" ng-click="cancel(record)" ; $event.stopPropagation();"></button>
+                        <button ng-show="!listItem.touched" class="edit icon" ng-click="editListItem(listItem); $event.stopPropagation();"></button>
+                        <!--<div ng-show="listItem.Id" class="delete icon" ng-click="listItem.Deleted = true; listItem.touched = true; $event.stopPropagation();"></div>-->
+                        <button ng-show="listItem.touched" class="cancel icon" ng-click="cancelListItem(listItem)" ; $event.stopPropagation();"></button>
                     </td>
                 </tr>
             </tbody>

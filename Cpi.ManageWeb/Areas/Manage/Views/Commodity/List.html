@@ -2,13 +2,13 @@
     <div ng-show="state.current.name == 'List'" class="secondary-menu">
         <div class="title-container">
             <div class="title">Products</div>
-            <div class="list-total">{{model.ListLoadCalculator.Total}}</div>
+            <div class="list-total">{{listLoadCalculator.Total}}</div>
         </div>
 
         <div class="buttons">
-            <button ng-show="isEditingAny()" class="button" ng-click="cancelAll()">Cancel</button>
-            <button ng-show="isEditingAny()" class="button main" ng-click="save()">Save</button>
-            <button class="button main" ng-click="create()">+ Create</button>
+            <button ng-show="isAnyListItemTouched()" class="button" ng-click="cancelListItems()">Cancel</button>
+            <button ng-show="isAnyListItemTouched()" class="button main" ng-click="save()">Save</button>
+            <button class="button main" ng-click="createListItem()">+ Create</button>
         </div>
     </div>
 
@@ -24,42 +24,42 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="record in model.Records" ng-class="{deleting: record.Deleted}">
+                <tr ng-repeat="listItem in listItems" ng-class="{deletingEntry: listItem.Deleted}">
                     <td>
                         <dl>
-                            <dd>{{record.CreatedDate | shortDate}}</dd>
+                            <dd>{{listItem.CreatedDate | shortDate}}</dd>
                         </dl>
                     </td>
                     <td>
                         <dl>
-                            <dd ng-show="!record.isEditing">{{record.Name}}</dd>
-                            <dd ng-show="record.isEditing">
-                                <span field-validation-error ng-show="modelState['[' + getEditingRecordIndex(record) + '].Name']" class="field-validation-error"></span>
-                                <input ng-model="record.Name" />
+                            <dd ng-show="!showListItemInput(listItem)">{{listItem.Name}}</dd>
+                            <dd ng-show="showListItemInput(listItem)">
+                                <span field-validation-error ng-show="modelState['[' + getTouchedListItemIndex(listItem) + '].Name']" class="field-validation-error"></span>
+                                <input ng-model="listItem.Name" />
                             </dd>
                         </dl>
                     </td>
                     <td class="center-content">
                         <dl>
-                            <dd ng-show="!record.isEditing">{{record.Inactive | bool}}</dd>
-                            <dd ng-show="record.isEditing">
-                                <span field-validation-error ng-show="modelState['[' + getEditingRecordIndex(record) + '].Inactive']" class="field-validation-error"></span>
-                                <input type="checkbox" ng-model="record.Inactive" />
+                            <dd ng-show="!showListItemInput(listItem)">{{listItem.Inactive | bool}}</dd>
+                            <dd ng-show="showListItemInput(listItem)">
+                                <span field-validation-error ng-show="modelState['[' + getTouchedListItemIndex(listItem) + '].Inactive']" class="field-validation-error"></span>
+                                <input type="checkbox" ng-model="listItem.Inactive" />
                             </dd>
                         </dl>
                     </td>
                     <td class="right-content">
                         <dl>
-                            <dd ng-show="!record.isEditing">${{record.Price | number: 2}}</dd>
-                            <dd ng-show="record.isEditing">
-                                <span field-validation-error ng-show="modelState['[' + getEditingRecordIndex(record) + '].Price']" class="field-validation-error"></span>
-                                <input ng-model="record.Price" />
+                            <dd ng-show="!showListItemInput(listItem)">${{listItem.Price | number: 2}}</dd>
+                            <dd ng-show="showListItemInput(listItem)">
+                                <span field-validation-error ng-show="modelState['[' + getTouchedListItemIndex(listItem) + '].Price']" class="field-validation-error"></span>
+                                <input ng-model="listItem.Price" />
                             </dd>
                         </dl>
                     </td>
                     <td class="action">
-                        <button ng-show="!record.isEditing" class="edit icon" ng-click="edit(record); $event.stopPropagation();"></button>
-                        <button ng-show="record.isEditing" class="cancel icon" ng-click="cancel(record)" ; $event.stopPropagation();"></button>
+                        <button ng-show="!listItem.touched" class="edit icon" ng-click="editListItem(listItem); $event.stopPropagation();"></button>
+                        <button ng-show="listItem.touched" class="cancel icon" ng-click="cancelListItem(listItem); $event.stopPropagation();"></button>
                     </td>
                 </tr>
             </tbody>

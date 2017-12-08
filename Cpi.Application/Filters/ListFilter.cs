@@ -11,6 +11,7 @@ namespace Cpi.Application.Filters
             //public string SortColumn { get; set; }
             //public bool SortDesc { get; set; }
             public string SearchString { get; set; }
+            public bool LoadMore { get; set; }
 
             public List<SortObject> SortObjects { get; set; }
         }

@@ -197,15 +197,52 @@ body {
     padding: 8px 10px 0px 10px; }
     .secondary-menu .filters-container .search {
       display: inline-block; }
-    .secondary-menu .filters-container .advanced-search {
-      position: absolute;
-      padding: 25px 30px;
-      margin-top: 4px;
-      -webkit-box-shadow: 0px 0px 5px #e0dfdf;
-      -moz-box-shadow: 0px 0px 5px #e0dfdf;
-      box-shadow: 0px 0px 5px #e0dfdf;
-      background-color: white;
-      border: 1px solid #d0d0d0; }
+    .secondary-menu .filters-container [advanced-search] {
+      position: relative;
+      display: inline-block;
+      vertical-align: top; }
+      .secondary-menu .filters-container [advanced-search] .criteria-container {
+        position: fixed;
+        padding: 25px 30px;
+        max-width: 1100px;
+        left: 20px;
+        margin-top: 30px;
+        -webkit-box-shadow: 0px 0px 5px #e0dfdf;
+        -moz-box-shadow: 0px 0px 5px #e0dfdf;
+        box-shadow: 0px 0px 5px #e0dfdf;
+        background-color: white;
+        border: 1px solid #d0d0d0;
+        z-index: 300; }
+        .secondary-menu .filters-container [advanced-search] .criteria-container .buttons-container {
+          min-width: 300px;
+          margin-top: 30px;
+          text-align: right; }
+        .secondary-menu .filters-container [advanced-search] .criteria-container:before {
+          display: block;
+          position: fixed;
+          left: 0;
+          right: 0;
+          top: 0;
+          bottom: 0;
+          content: ""; }
+    .secondary-menu .filters-container [simple-search] {
+      position: relative;
+      display: inline-block;
+      vertical-align: top;
+      margin-right: 3px; }
+      .secondary-menu .filters-container [simple-search] input {
+        width: 200px;
+        padding-left: 30px !important;
+        padding-right: 0;
+        margin-right: -4px !important;
+        background-image: url("/Images/Icons/search-box-icon.png");
+        background-size: 16px 16px;
+        background-repeat: no-repeat;
+        background-position: 8px center;
+        transition: width 300ms ease-in-out; }
+      .secondary-menu .filters-container [simple-search] button {
+        min-width: 0px !important;
+        border-left: none; }
     .secondary-menu .filters-container input,
     .secondary-menu .filters-container select {
       height: 28px !important; }
@@ -267,13 +304,16 @@ body {
   display: flex;
   flex-flow: column;
   height: 100%; }
+  .list-container ng-transclude {
+    width: 100%; }
   .list-container table {
     display: flex;
     flex-flow: column;
     align-items: stretch;
     border-collapse: collapse;
     border: 1px solid #e0e0e0;
-    height: 100%; }
+    height: 100%;
+    width: 100%; }
     .list-container table thead {
       width: calc((100%) - (18px)) !important;
       border-bottom: 1px solid #e0e0e0; }
@@ -285,7 +325,7 @@ body {
           padding: 10px 5px; }
           .list-container table thead tr th a {
             position: relative;
-            display: inl ine-block;
+            display: inline-block;
             margin-right: 15px; }
             .list-container table thead tr th a .sort-asc-icon:after,
             .list-container table thead tr th a .sort-desc-icon:after {
@@ -330,14 +370,20 @@ body {
         -webkit-transition: background-color 300ms ease-in-out;
         -moz-transition: background-color 300ms ease-in-out;
         -o-transition: background-color 300ms ease-in-out;
-        transition: background-color 300ms ease-in-out; }
+        transition: background-color 300ms ease-in-out;
+        height: 34px; }
         .list-container table tbody tr:hover {
           background-color: whitesmoke; }
         .list-container table tbody tr td {
-          padding: 3px 5px; }
+          padding: 0px 5px;
+          font-size: 100%;
+          vertical-align: middle; }
           .list-container table tbody tr td dl {
-            width: 100%;
-            margin: 0px; }
+            margin: 0px;
+            padding: 0px;
+            display: inline-block;
+            vertical-align: middle;
+            width: 100%; }
             .list-container table tbody tr td dl dd {
               font-size: inherit;
               min-height: 0px;
@@ -346,22 +392,23 @@ body {
                 width: 100px !important; }
         .list-container table tbody tr.total {
           font-weight: bold; }
-      .list-container table tbody.empty:after {
-        display: block;
-        position: absolute;
-        width: 100%;
-        top: 30%;
-        content: "NO RESULTS";
-        text-align: center;
-        color: #BFBFBF;
-        font-size: 24px; }
-      .list-container table tbody.has-more-records:after {
+      .list-container table tbody .has-more-items {
         display: block;
         position: relative;
         width: 100%;
         padding-top: 50px;
         height: 150px;
-        content: "Scroll Down For More Records";
+        text-align: center;
+        color: #BFBFBF;
+        font-size: 24px; }
+        .list-container table tbody .has-more-items:hover {
+          cursor: pointer; }
+      .list-container table tbody .empty-info {
+        display: block;
+        position: relative;
+        width: 100%;
+        padding-top: 50px;
+        height: 150px;
         text-align: center;
         color: #BFBFBF;
         font-size: 24px; }
@@ -390,8 +437,7 @@ body {
       width: 160px; }
     .list-container table .icon {
       position: relative;
-      display: inline-block;
-      top: 2px; }
+      display: inline-block; }
   .list-container .total {
     font-weight: bold;
     text-align: right;
@@ -411,6 +457,11 @@ body {
       border-bottom: 1px solid #e0e0e0; }
   .list-container.grid table th, .list-container.grid table td {
     border: #e0e0e0; }
+
+.deletingEntry {
+  background-color: #FFE8E8 !important; }
+  .deletingEntry > :not(.action):not(.action-buttons):not(.icon) {
+    opacity: 0.4; }
 
 .button,
 .dropdown button {

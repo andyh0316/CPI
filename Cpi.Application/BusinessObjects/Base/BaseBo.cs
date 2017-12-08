@@ -38,8 +38,8 @@ namespace Cpi.Application.BusinessObjects.Base
 
         // CAREFUL: all queries should call this first instead of GetList(), for example, if a UserBo has a getByUsername method,
         // then the method will call GetListQuery().Where(m => m.Username == username).
-        // Calling GetList() then applying filters to it means that the database will return all records, then starts to filter
-        // from those records, instead of filtering the query, then querying the database for the subsets. (BIG performance difference)
+        // Calling GetList() then applying filters to it means that the database will return all listItems, then starts to filter
+        // from those listItems, instead of filtering the query, then querying the database for the subsets. (BIG performance difference)
         public IQueryable<T> GetListQuery()
         {
             return DbSet;

@@ -44,9 +44,9 @@ namespace Cpi.ManageWeb.Areas.Invoice.Controllers
         public ContentResult GetList(ListFilter.Invoice filter)
         {
             IQueryable<InvoiceDm> query = InvoiceBo.GetListBaseQuery(filter).Include(a => a.DeliveryStaff).Include(a => a.Operator).Include(a => a.Status).Include(a => a.Location).Include(a => a.InvoiceCommodities.Select(b => b.Commodity));
-            ListLoadCalculator listLoadCalculator = new ListLoadCalculator(filter.Loads, query.Count());
-            List<InvoiceDm> records = GetLoadedSortedQuery(query, listLoadCalculator.Skip, listLoadCalculator.Take, filter.SortObjects).ToList();
-            return JsonModel(new { Records = records, ListLoadCalculator = listLoadCalculator });
+            ListLoadCalculator listLoadCalculator = new ListLoadCalculator(filter, query.Count());
+            List<InvoiceDm> listItems = GetLoadedSortedQuery(query, listLoadCalculator.Skip, listLoadCalculator.Take, filter.SortObjects).ToList();
+            return JsonModel(new { ListItems = listItems, ListLoadCalculator = listLoadCalculator });
         }
 
         [HttpGet]

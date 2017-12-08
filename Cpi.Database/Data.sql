@@ -52,4 +52,3 @@ GO
 INSERT INTO [UserRolePermission] (UserRoleId, PermissionId, [Create], [Edit], [Delete], Deleted) VALUES (3, 1, 1, 1, 1, 0)
 INSERT INTO [UserRolePermission] (UserRoleId, PermissionId, [Create], [Edit], [Delete], Deleted) VALUES (3, 2, 1, 1, 1, 0)
 INSERT INTO [UserRolePermission] (UserRoleId, PermissionId, [Create], [Edit], [Delete], Deleted) VALUES (3, 3, 1, 1, 1, 0)
-

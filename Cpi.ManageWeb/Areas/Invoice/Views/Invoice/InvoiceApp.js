@@ -34,18 +34,21 @@ app.controller('ListController', ['$scope', '$controller', '$state', 'baseBo', '
     $scope.modelData = modelData.Object;
     $scope.model = model.Object;
 
+    $scope.listItems = $scope.model.ListItems;
+    $scope.listLoadCalculator = $scope.model.ListLoadCalculator;
+
     $scope.create = function (phoneNumber) {
         var newItem = {
-            isEditing: true,
+            touched: true,
             CustomerPhone: phoneNumber,
             LocationId: 1
         };
-        $scope.model.Records.unshift(newItem);
+        $scope.listItems.unshift(newItem);
     };
 
     $scope.save = function () {
-        var savingRecords = $scope.model.Records.filter(function (item) { return item.isEditing === true });
-        baseBo.httpRequest('POST', '/Invoice/Invoice/SaveList', savingRecords)
+        var savingListItems = $scope.listItems.filter(function (item) { return item.touched === true });
+        baseBo.httpRequest('POST', '/Invoice/Invoice/SaveList', savingListItems)
             .then(function (result) {
                 if (result.ModelState)
                 {
@@ -53,8 +56,7 @@ app.controller('ListController', ['$scope', '$controller', '$state', 'baseBo', '
                 }
                 else
                 {
-                    $scope.cancelAll();
-                    $scope.getList();
+                    $scope.getList('savedList');
                 }
             });
     };

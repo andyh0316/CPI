@@ -50,6 +50,9 @@ app.controller('ListController', ['$scope', '$controller', '$state', 'baseBo', '
     $scope.modelData = modelData.Object;
     $scope.model = model.Object;
 
+    $scope.listItems = $scope.model.ListItems;
+    $scope.listLoadCalculator = $scope.model.ListLoadCalculator;
+
     $scope.createUser = function () {
         $state.go('List.User', { 'mode': $scope.createMode, 'userId': 0 });
     };
@@ -70,7 +73,7 @@ app.controller('UserController', ['$scope', '$controller', '$state', 'baseBo', '
         if (confirm(gConfirmDeleteMsg)) {
             baseBo.httpRequest('GET', '/Manage/User/DeleteUser', { id: $scope.model.Id })
                 .then(function (result) {
-                    $scope.$emit('reloadListEvent', {});
+                    $scope.$parent.getList('savedList');
                     $scope.back();
                     $scope.setNotification();
                 });
@@ -84,7 +87,7 @@ app.controller('UserController', ['$scope', '$controller', '$state', 'baseBo', '
             }
             else
             {
-                $scope.$emit('reloadListEvent', {});
+                $scope.$parent.getList('savedList');
                 $scope.back();
                 $scope.setNotification();
             }

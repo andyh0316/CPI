@@ -33,9 +33,9 @@ namespace Cpi.ManageWeb.Areas.Manage.Controllers
         public ContentResult GetList(ListFilter.Commodity filter)
         { 
             IQueryable<CommodityDm> query = CommodityBo.GetListBaseQuery();
-            ListLoadCalculator listLoadCalculator = new ListLoadCalculator(filter.Loads, query.Count());
-            List<CommodityDm> records = GetLoadedSortedQuery(query, listLoadCalculator.Skip, listLoadCalculator.Take, filter.SortObjects).ToList();
-            return JsonModel(new { Records = records, ListLoadCalculator = listLoadCalculator });
+            ListLoadCalculator listLoadCalculator = new ListLoadCalculator(filter, query.Count());
+            List<CommodityDm> listItems = GetLoadedSortedQuery(query, listLoadCalculator.Skip, listLoadCalculator.Take, filter.SortObjects).ToList();
+            return JsonModel(new { ListItems = listItems, ListLoadCalculator = listLoadCalculator });
         }
 
         [HttpPost]

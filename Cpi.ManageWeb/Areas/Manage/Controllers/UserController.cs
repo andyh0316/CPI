@@ -37,9 +37,9 @@ namespace Cpi.ManageWeb.Areas.Manage.Controllers
         public ContentResult GetList(ListFilter.User filter)
         {
             IQueryable<UserDto> query = UserBo.GetListBaseQuery(filter);
-            ListLoadCalculator listLoadCalculator = new ListLoadCalculator(filter.Loads, query.Count());
-            List<UserDto> records = GetLoadedSortedQuery(query, listLoadCalculator.Skip, listLoadCalculator.Take, filter.SortObjects).ToList();
-            return JsonModel(new { Records = records, ListLoadCalculator = listLoadCalculator });
+            ListLoadCalculator listLoadCalculator = new ListLoadCalculator(filter, query.Count());
+            List<UserDto> listItems = GetLoadedSortedQuery(query, listLoadCalculator.Skip, listLoadCalculator.Take, filter.SortObjects).ToList();
+            return JsonModel(new { ListItems = listItems, ListLoadCalculator = listLoadCalculator });
         }
 
         [HttpGet]

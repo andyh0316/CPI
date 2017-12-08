@@ -39,22 +39,16 @@ app.controller('ListController', ['$scope', '$controller', '$state', 'baseBo', '
     $scope.modelData = modelData.Object;
     $scope.model = model.Object;
 
+    $scope.listItems = $scope.model.ListItems;
+    $scope.listLoadCalculator = $scope.model.ListLoadCalculator;
+
     $scope.import = function () {
         $state.go('List.Import');
     };
 
-    $scope.create = function (phoneNumber, statusId) {
-        var newItem = {
-            isEditing: true,
-            CustomerPhone: phoneNumber,
-            StatusId: statusId
-        };
-        $scope.model.Records.unshift(newItem);
-    };
-
     $scope.save = function () {
-        var savingRecords = $scope.model.Records.filter(function (item) { return item.isEditing === true });
-        baseBo.httpRequest('POST', '/Call/Call/SaveList', savingRecords)
+        var savingListItems = $scope.listItems.filter(function (item) { return item.touched === true });
+        baseBo.httpRequest('POST', '/Call/Call/SaveList', savingListItems)
             .then(function (result) {
                 if (result.ModelState)
                 {
@@ -62,8 +56,7 @@ app.controller('ListController', ['$scope', '$controller', '$state', 'baseBo', '
                 }
                 else
                 {
-                    $scope.cancelAll();
-                    $scope.getList();
+                    $scope.getList('savedList');
                 }
             });
     };
@@ -92,7 +85,13 @@ app.controller('ImportController', ['$scope', '$controller', '$state', 'baseBo',
             .then(function (result) {
                 for (var i in result.Object.PhoneNumbers)
                 {
-                    $scope.$parent.create(result.Object.PhoneNumbers[i], $scope.modelData.CallStatusIdEnums.SentToCallCenter);
+                    var newItem = {
+                        touched: true,
+                        CustomerPhone: result.Object.PhoneNumbers[i],
+                        StatusId: $scope.modelData.CallStatusIdEnums.SentToCallCenter
+                    };
+
+                    $scope.$parent.createListItem(newItem);
                 }
 
                 $scope.back();

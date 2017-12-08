@@ -44,9 +44,9 @@ namespace Cpi.ManageWeb.Areas.Expense.Controllers
         public ContentResult GetList(ListFilter.Expense filter)
         {
             IQueryable<ExpenseDm> query = ExpenseBo.GetListBaseQuery(filter);
-            ListLoadCalculator listLoadCalculator = new ListLoadCalculator(filter.Loads, query.Count());
-            List<ExpenseDm> records = GetLoadedSortedQuery(query, listLoadCalculator.Skip, listLoadCalculator.Take, filter.SortObjects).ToList();
-            return JsonModel(new { Records = records, ListLoadCalculator = listLoadCalculator });
+            ListLoadCalculator listLoadCalculator = new ListLoadCalculator(filter, query.Count());
+            List<ExpenseDm> listItems = GetLoadedSortedQuery(query, listLoadCalculator.Skip, listLoadCalculator.Take, filter.SortObjects).ToList();
+            return JsonModel(new { ListItems = listItems, ListLoadCalculator = listLoadCalculator });
         }
 
         [HttpGet]
@@ -81,9 +81,13 @@ namespace Cpi.ManageWeb.Areas.Expense.Controllers
 
                 Mapper.Map(expense, trackedExpense);
 
-                if (trackedExpense.Id == 0)
+                if (expense.Id == 0)
                 {
                     ExpenseBo.Add(trackedExpense);
+                }
+                else if (expense.Deleted)
+                {
+                    ExpenseBo.Remove(trackedExpense);
                 }
             }
 

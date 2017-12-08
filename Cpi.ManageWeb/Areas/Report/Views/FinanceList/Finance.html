@@ -30,18 +30,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="record in model.InvoiceSummaries" ng-class="{deleting: record.Deleted}">
+                    <tr ng-repeat="listItem in model.InvoiceSummaries" ng-class="{deletingEntry: listItem.Deleted}">
                         <td class="thd-L">
-                            {{record.Location}}
+                            {{listItem.Location}}
                         </td>
                         <td>
-                            <span ng-repeat="commodity in record.Commodities">
+                            <span ng-repeat="commodity in listItem.Commodities">
                                 {{commodity.Item1}} ({{commodity.Item2}})
-                                <span ng-show="$index < record.Commodities.length - 1">, </span>
+                                <span ng-show="$index < listItem.Commodities.length - 1">, </span>
                             </span>
                         </td>
                         <td class="thd-S right-content">
-                            ${{record.TotalPrice | number: 2}}
+                            ${{listItem.TotalPrice | number: 2}}
                         </td>
                     </tr>
                 </tbody>
@@ -63,24 +63,24 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="record in model.Expenses" ng-class="{deleting: record.Deleted}">
+                    <tr ng-repeat="listItem in model.Expenses" ng-class="{deletingEntry: listItem.Deleted}">
                         <td class="thd-L">
-                            {{record.Location.Name}}
+                            {{listItem.Location.Name}}
                         </td>
                         <td>
-                            {{record.Name}}
+                            {{listItem.Name}}
                         </td>
                         <td>
-                            {{record.HandledBy.Fullname}} <span ng-show="record.HandledBy.Nickname">({{record.HandledBy.Nickname}})</span>
+                            {{listItem.HandledBy.Fullname}} <span ng-show="listItem.HandledBy.Nickname">({{listItem.HandledBy.Nickname}})</span>
                         </td>
                         <td class="thd-S right-content">
-                            ${{record.Expense | number: 2}}
+                            ${{listItem.Expense | number: 2}}
                         </td>
                         <td class="thd-S right-content">
-                            {{record.Quantity}}
+                            {{listItem.Quantity}}
                         </td>
                         <td class="thd-S right-content">
-                            ${{record.Expense * record.Quantity | number: 2}}
+                            ${{listItem.Expense * listItem.Quantity | number: 2}}
                         </td>
                     </tr>
                 </tbody>

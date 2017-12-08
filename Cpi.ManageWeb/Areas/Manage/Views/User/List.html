@@ -2,15 +2,11 @@
     <div ng-show="state.current.name == 'List'" class="secondary-menu">
         <div class="title-container">
             <div class="title">Staff</div>
-            <div class="list-total">{{model.ListLoadCalculator.Total}}</div>
+            <div class="list-total">{{listLoadCalculator.Total}}</div>
         </div>
 
         <div class="filters-container">
-            <input search-box type="text" class="search-box" ng-model="scopeData.filter.SearchString" placeholder="Search" />
-            <button ng-show="!showAdvancedSearch" ng-click="showAdvancedSearch = true" class="button">
-                Advanced
-                <span ng-show="getAdvancedSearchCount() > 0"> ({{getAdvancedSearchCount()}})</span>
-            </button>
+            <div simple-search></div>
         </div>
 
         <div class="buttons">
@@ -31,24 +27,24 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="record in model.Records" ng-class="{deleting: record.Deleted}" ng-click="viewUser(record.Id)">
+                <tr ng-repeat="listItem in listItems" ng-class="{deletingEntry: listItem.Deleted}" ng-click="viewUser(listItem.Id)">
                     <td>
-                        {{record.Fullname}}
+                        {{listItem.Fullname}}
                     </td>
                     <td>
-                        {{record.Nickname}}
+                        {{listItem.Nickname}}
                     </td>
                     <td>
-                        {{record.Username}}
+                        {{listItem.Username}}
                     </td>
                     <td>
-                        {{record.UserRole}}
+                        {{listItem.UserRole}}
                     </td>
                     <td>
-                        {{record.UserOccupation}}
+                        {{listItem.UserOccupation}}
                     </td>
                     <td>
-                        {{record.LastLoginDate | shortDate}}
+                        {{listItem.LastLoginDate | shortDate}}
                     </td>
                 </tr>
             </tbody>

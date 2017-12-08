@@ -2,7 +2,7 @@
     <div ng-show="state.current.name == 'FinanceList'" class="secondary-menu">
         <div class="title-container">
             <div class="title">Finance Details</div>
-            <div class="list-total">{{model.ListLoadCalculator.Total}}</div>
+            <div class="list-total">{{listLoadCalculator.Total}}</div>
         </div>
 
         <div class="buttons">
@@ -31,48 +31,48 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="record in model.Records" ng-class="{deleting: record.Deleted}">
+                <tr ng-repeat="listItem in listItems" ng-class="{deletingEntry: listItem.Deleted}">
                     <td>
-                        {{record.CreatedDate | shortDate}}
+                        {{listItem.CreatedDate | shortDate}}
                     </td>
                     <td class="right-content">
-                        ${{record.Revenue - record.Expense | number: 2}}
+                        ${{listItem.Revenue - listItem.Expense | number: 2}}
                     </td>
                     <td class="right-content">
-                        ${{record.Expense | number: 2}}
+                        ${{listItem.Expense | number: 2}}
                     </td>
                     <td class="right-content">
-                        ${{record.Revenue | number: 2}}
+                        ${{listItem.Revenue | number: 2}}
                     </td>
                     <td class="right-content">
-                        {{record.CallsReceived}}
+                        {{listItem.CallsReceived}}
                     </td>
                     <td class="right-content">
-                        {{record.ProductsSold}}
+                        {{listItem.ProductsSold}}
                     </td>
                     <td class="right-content">
-                        {{record.ProductsCancelled}}
+                        {{listItem.ProductsCancelled}}
                     </td>
                     <td class="right-content">
-                        {{record.ProductsPending}}
+                        {{listItem.ProductsPending}}
                     </td>
                     <td class="right-content">
-                        {{record.ProductsTotal}}
+                        {{listItem.ProductsTotal}}
                     </td>
                     <td class="right-content">
-                        {{record.InvoicesSold}}
+                        {{listItem.InvoicesSold}}
                     </td>
                     <td class="right-content">
-                        {{record.InvoicesCancelled}}
+                        {{listItem.InvoicesCancelled}}
                     </td>
                     <td class="right-content">
-                        {{record.InvoicesPending}}
+                        {{listItem.InvoicesPending}}
                     </td>
                     <td class="right-content">
-                        {{record.InvoicesTotal}}
+                        {{listItem.InvoicesTotal}}
                     </td>
                     <td class="action">
-                        <button class="finance-daily-form icon" ng-click="viewFinance(record.CreatedDate); $event.stopPropagation();"></button>
+                        <button class="finance-daily-form icon" ng-click="viewFinance(listItem.CreatedDate); $event.stopPropagation();"></button>
                     </td>
                 </tr>
             </tbody>
