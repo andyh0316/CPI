@@ -29,8 +29,8 @@ namespace Cpi.Application.BusinessObjects
 
             if (!string.IsNullOrEmpty(filter.SearchString))
             {
-                query = query.Where(a => a.CustomerName.StartsWith(filter.SearchString) ||
-                                         a.CustomerPhone.StartsWith(filter.SearchString));
+                query = query.Where(a => a.CustomerName.Contains(filter.SearchString) ||
+                                         a.CustomerPhone.Contains(filter.SearchString));
             }
 
             if (filter.AdvancedSearch != null)

@@ -285,7 +285,7 @@ body {
           padding: 10px 5px; }
           .list-container table thead tr th a {
             position: relative;
-            display: inline-block;
+            display: inl ine-block;
             margin-right: 15px; }
             .list-container table thead tr th a .sort-asc-icon:after,
             .list-container table thead tr th a .sort-desc-icon:after {
@@ -665,6 +665,21 @@ textarea {
 
 .icon.finance-daily-form:before {
   content: "receipt"; }
+
+button.icon {
+  background-color: white;
+  border: 1px solid #C5C5C5;
+  outline: none;
+  height: 22px;
+  top: -1px; }
+  button.icon:not(:disabled):hover {
+    background-color: whitesmoke;
+    border: 1px solid #BDBDBD;
+    cursor: pointer; }
+  button.icon:disabled:hover {
+    cursor: default; }
+  button.icon.icon:before {
+    font-size: 18px; }
 
 .search-drop-down {
   position: relative;

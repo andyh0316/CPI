@@ -139,9 +139,9 @@
                         </dl>
                     </td>
                     <td class="action">
-                        <div ng-show="!record.isEditing" class="edit icon" ng-click="edit(record); $event.stopPropagation();"></div>
+                        <button ng-show="!record.isEditing" class="edit icon" ng-click="edit(record); $event.stopPropagation();"></button>
                         <!--<div ng-show="record.Id" class="delete icon" ng-click="record.Deleted = true; record.isEditing = true; $event.stopPropagation();"></div>-->
-                        <div ng-show="record.isEditing" class="cancel icon" ng-click="cancel(record)" ; $event.stopPropagation();"></div>
+                        <button ng-show="record.isEditing" class="cancel icon" ng-click="cancel(record)" ; $event.stopPropagation();"></button>
                     </td>
                 </tr>
             </tbody>

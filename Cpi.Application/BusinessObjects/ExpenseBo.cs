@@ -29,7 +29,7 @@ namespace Cpi.Application.BusinessObjects
 
             if (!string.IsNullOrEmpty(filter.SearchString))
             {
-                query = query.Where(a => a.Name.StartsWith(filter.SearchString) ||
+                query = query.Where(a => a.Name.Contains(filter.SearchString) ||
                                          a.Expense.ToString().StartsWith(filter.SearchString));
             }
 
