@@ -1353,9 +1353,9 @@ baseModule.directive('advancedSearch', ['$timeout', function ($timeout) {
             <div ng-show="showAdvancedSearch && !autoTrigger" class="criteria-container"> \
                 <ng-transclude></ng-transclude> \
                 <div class="buttons-container"> \
-                    <button class="button main" type="submit" ng-click="advancedSearchGo()">Search</button> \
-                    <button class="button main" ng-click="advancedSearchReset()">Reset</button> \
                     <button class="button" ng-click="showAdvancedSearch = false; advancedSearchUndo();">Close</button> \
+                    <button class="button main" ng-click="advancedSearchReset()">Reset</button> \
+                    <button class="button main" type="submit" ng-click="advancedSearchGo()">Search</button> \
                 </div> \
             </div> \
             <div ng-show="autoTrigger"> \

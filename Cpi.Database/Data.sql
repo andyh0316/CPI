@@ -52,3 +52,12 @@ GO
 INSERT INTO [UserRolePermission] (UserRoleId, PermissionId, [Create], [Edit], [Delete], Deleted) VALUES (3, 1, 1, 1, 1, 0)
 INSERT INTO [UserRolePermission] (UserRoleId, PermissionId, [Create], [Edit], [Delete], Deleted) VALUES (3, 2, 1, 1, 1, 0)
 INSERT INTO [UserRolePermission] (UserRoleId, PermissionId, [Create], [Edit], [Delete], Deleted) VALUES (3, 3, 1, 1, 1, 0)
+
+-- Call Specialist Role
+SET IDENTITY_INSERT [LookUp].[UserRole] ON
+INSERT INTO [LookUp].[UserRole] (Id, Name, DisplayOrder, Deleted) VALUES (5, 'Call Specialist', 5, 0)
+SET IDENTITY_INSERT [LookUp].[UserRole] OFF
+
+INSERT INTO [UserRolePermission] (UserRoleId, PermissionId, [Create], [Edit], [Delete], Deleted) VALUES (5, 1, 1, 1, 1, 0)
+
+UPDATE [UserRolePermission] SET UserRoleId = 2 WHERE UserRoleId = 3
