@@ -61,6 +61,7 @@ namespace Cpi.ManageWeb.Areas.Invoice.Controllers
                 ReportDates = ReportDateFilter.GetSelectList(),
                 InvoiceStatusIdEnums = EnumHelper.GetEnumIntList(typeof(LookUpInvoiceStatusDm.LookUpIds)),
                 ReportDateIdEnums = EnumHelper.GetEnumIntList(typeof(ReportDateFilter.ReportDateIdEnums)),
+                LocationEnums = EnumHelper.GetEnumIntList(typeof(LookUpLocationDm.LookUpIds)),
             };
 
             return JsonModel(model);

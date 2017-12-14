@@ -37,15 +37,6 @@ app.controller('ListController', ['$scope', '$controller', '$state', 'baseBo', '
     $scope.listItems = $scope.model.ListItems;
     $scope.listLoadCalculator = $scope.model.ListLoadCalculator;
 
-    $scope.create = function (phoneNumber) {
-        var newItem = {
-            touched: true,
-            CustomerPhone: phoneNumber,
-            LocationId: 1
-        };
-        $scope.listItems.unshift(newItem);
-    };
-
     $scope.save = function () {
         var savingListItems = $scope.listItems.filter(function (item) { return item.touched === true });
         baseBo.httpRequest('POST', '/Invoice/Invoice/SaveList', savingListItems)

@@ -41,15 +41,6 @@ app.controller('ListController', ['$scope', '$controller', '$state', 'baseBo', '
         $state.go('List.Import');
     };
 
-    $scope.create = function () {
-        var newItem = {
-            touched: true,
-            LocationId: 1,
-            Quantity: 1
-        };
-        $scope.listItems.unshift(newItem);
-    };
-
     $scope.save = function () {
         var savingListItems = $scope.listItems.filter(function (item) { return item.touched === true });
         baseBo.httpRequest('POST', '/Expense/Expense/SaveList', savingListItems)

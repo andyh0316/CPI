@@ -46,7 +46,7 @@
         <div class="buttons">
             <button ng-show="isAnyListItemTouched()" class="button" ng-click="cancelListItems()">Cancel</button>
             <button ng-show="isAnyListItemTouched()" class="button main" ng-click="save()">Save</button>
-            <button class="button main" ng-click="createListItem()">+ Create</button>
+            <button class="button main" ng-click="createListItem({ LocationId: modelData.LocationEnums.PhnomPenh, Quantity: 1 })">+ Create</button>
         </div>
     </div>
 

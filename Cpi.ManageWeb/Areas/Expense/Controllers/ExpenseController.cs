@@ -57,6 +57,7 @@ namespace Cpi.ManageWeb.Areas.Expense.Controllers
                 ReportDates = ReportDateFilter.GetSelectList(),
                 ReportDateIdEnums = EnumHelper.GetEnumIntList(typeof(ReportDateFilter.ReportDateIdEnums)),
                 Locations = LookUpBo.GetList<LookUpLocationDm>(),
+                LocationEnums = EnumHelper.GetEnumIntList(typeof(LookUpLocationDm.LookUpIds)),
                 Users = UserBo.GetSearchDropDownList(),
             };
 
