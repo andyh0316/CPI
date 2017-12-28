@@ -537,10 +537,6 @@ baseModule.directive('dateInput', ['$filter', function ($filter) {
                 {
                     dateArray = modelValue.split("/");
                 }
-                else if (modelValue.split(".").length === 3) // also user wants to type period instead of backslash that's fine too
-                {
-                    dateArray = modelValue.split(".");
-                }
                 else
                 {
                     return modelValue;

@@ -62,7 +62,7 @@ namespace Cpi.ManageWeb.Areas.Invoice.Controllers
                 InvoiceStatusIdEnums = EnumHelper.GetEnumIntList(typeof(LookUpInvoiceStatusDm.LookUpIds)),
                 ReportDateIdEnums = EnumHelper.GetEnumIntList(typeof(ReportDateFilter.ReportDateIdEnums)),
                 LocationEnums = EnumHelper.GetEnumIntList(typeof(LookUpLocationDm.LookUpIds)),
-                TodayDate = DateTime.Now.Date,
+                TodayDate = new DateTime(DateTime.Now.Date.Ticks),
             };
 
             return JsonModel(model);

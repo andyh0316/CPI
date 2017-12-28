@@ -56,7 +56,7 @@ namespace Cpi.ManageWeb.Areas.Expense.Controllers
                 Locations = LookUpBo.GetList<LookUpLocationDm>(),
                 LocationEnums = EnumHelper.GetEnumIntList(typeof(LookUpLocationDm.LookUpIds)),
                 Users = UserBo.GetSearchDropDownList(),
-                TodayDate = DateTime.Now.Date,
+                TodayDate = new DateTime(DateTime.Now.Date.Ticks),
             };
 
             return JsonModel(model);

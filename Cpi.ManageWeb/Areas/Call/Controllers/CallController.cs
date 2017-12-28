@@ -65,7 +65,7 @@ namespace Cpi.ManageWeb.Areas.Call.Controllers
                 ReportDates = ReportDateFilter.GetSelectList(),
                 CallStatusIdEnums = EnumHelper.GetEnumIntList(typeof(LookUpCallStatusDm.LookUpIds)),
                 ReportDateIdEnums = EnumHelper.GetEnumIntList(typeof(ReportDateFilter.ReportDateIdEnums)),
-                TodayDate = DateTime.Now,
+                TodayDate = new DateTime(DateTime.Now.Ticks), 
             };
 
             return JsonModel(model);
