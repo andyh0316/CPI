@@ -9,7 +9,7 @@ namespace Cpi.Application.DataTransferObjects
     public class FinanceDto
     {
         public int Id { get; set; }
-        public DateTime CreatedDate { get; set; }
+        public DateTime Date { get; set; }
         //public decimal Profit { get; set; }
         public decimal Revenue { get; set; }
         public decimal Expense { get; set; }

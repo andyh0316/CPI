@@ -1,22 +1,19 @@
 ﻿using AutoMapper;
 using Cobro.Compass.Web.Attributes;
 using Cpi.Application.BusinessObjects;
+using Cpi.Application.BusinessObjects.LookUp;
+using Cpi.Application.BusinessObjects.Other;
 using Cpi.Application.DataModels;
+using Cpi.Application.DataModels.LookUp;
 using Cpi.Application.Filters;
+using Cpi.Application.Helpers;
 using Cpi.ManageWeb.Controllers.Base;
 using Cpi.ManageWeb.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web.Mvc;
-using System.Data.Entity;
-using Cpi.Application.BusinessObjects.LookUp;
-using Cpi.Application.DataModels.LookUp;
-using System.IO;
-using System.Data;
-using Cpi.Application.Models;
-using Cpi.Application.Helpers;
-using Cpi.Application.BusinessObjects.Other;
 
 namespace Cpi.ManageWeb.Areas.Expense.Controllers
 {
@@ -59,6 +56,7 @@ namespace Cpi.ManageWeb.Areas.Expense.Controllers
                 Locations = LookUpBo.GetList<LookUpLocationDm>(),
                 LocationEnums = EnumHelper.GetEnumIntList(typeof(LookUpLocationDm.LookUpIds)),
                 Users = UserBo.GetSearchDropDownList(),
+                TodayDate = DateTime.Now.Date,
             };
 
             return JsonModel(model);

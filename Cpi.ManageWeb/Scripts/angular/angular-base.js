@@ -38,6 +38,116 @@ baseModule.controller('BaseController', ['$scope', '$state', function ($scope, $
     };
 }]);
 
+
+baseModule.run(['$rootScope', '$state', function ($rootScope, $state) {
+    $rootScope.state = $state;
+
+    $rootScope.back = function () {
+        $state.go('^');
+    };
+
+    $rootScope.checkPermission = function (permission, action) {
+        for (var i in $rootScope.permissions) {
+            var permissionDto = $rootScope.permissions[i];
+            if (permissionDto.Name === permission) {
+                if (action == "View") {
+                    if (permissionDto.View) {
+                        return true;
+                    }
+                }
+                else if (action == "Create") {
+                    if (permissionDto.Create) {
+                        return true;
+                    }
+                }
+                else if (action == "Edit") {
+                    if (permissionDto.Edit) {
+                        return true;
+                    }
+                }
+                else if (action == "Delete") {
+                    if (permissionDto.Delete) {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+        }
+
+        return false;
+    };
+
+    $rootScope.setNotification = function (type, msg) {
+        var notificationSelector = $('#notification-message');
+        var notificationMsgSelector = $('#notification-message .content');
+        if (type == 'warning') {
+            notificationSelector.attr("class", "warning");
+            notificationMsgSelector.html(msg);
+        }
+        else if (type == 'error') {
+            notificationSelector.attr("class", "error");
+            if (msg) {
+                notificationMsgSelector.html(msg);
+            } else {
+                notificationMsgSelector.html('An Error Has Occurred');
+            }
+        }
+        else {
+            notificationSelector.attr("class", "");
+            if (msg) {
+                notificationMsgSelector.html(msg);
+            } else {
+                notificationMsgSelector.html('Action Successful');
+            }
+
+            notificationSelector.stop().hide().fadeIn(75).delay(2000).fadeOut(500);
+            return;
+        }
+
+        notificationSelector.stop().hide().fadeIn(75);
+    }
+
+    $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+
+    });
+
+    $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
+
+    });
+
+    $rootScope.$on('$viewContentLoaded', function (event, view) {
+        // show only the most nested buttons
+        //debugger;
+        //var levels = 0;
+        //var deepest;
+
+        //$('.secondary-menu-buttons').hide();
+        //$('body').find('.secondary-menu-buttons').each(function () {
+        //    if (!this.firstChild || this.firstChild.nodeType !== 1) {
+        //        var levelsFromThis = $(this).parentsUntil('body').length;
+        //        if (levelsFromThis > levels) {
+        //            levels = levelsFromThis;
+        //            deepest = this;
+        //        }
+        //    }
+        //});
+
+        //$(deepest).show();
+    });
+
+    $rootScope.generalChartOptions = {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    };
+}]);
+
+
 /* provides server/backend sorting, paging and searching. For client side sorting and paging */
 baseModule.controller('ListBaseController', ['$scope', '$controller', 'baseBo', function ($scope, $controller, baseBo) {
     angular.extend(this, $controller('BaseController', { $scope: $scope }));
@@ -218,114 +328,6 @@ baseModule.controller('ListBaseController', ['$scope', '$controller', 'baseBo', 
     };
 }]);
 
-baseModule.run(['$rootScope', '$state', function ($rootScope, $state) {
-    $rootScope.state = $state;
-
-    $rootScope.back = function () {
-        $state.go('^');
-    };
-
-    $rootScope.checkPermission = function (permission, action) {
-        for (var i in $rootScope.permissions) {
-            var permissionDto = $rootScope.permissions[i];
-            if (permissionDto.Name === permission) {
-                if (action == "View") {
-                    if (permissionDto.View) {
-                        return true;
-                    }
-                }
-                else if (action == "Create") {
-                    if (permissionDto.Create) {
-                        return true;
-                    }
-                }
-                else if (action == "Edit") {
-                    if (permissionDto.Edit) {
-                        return true;
-                    }
-                }
-                else if (action == "Delete") {
-                    if (permissionDto.Delete) {
-                        return true;
-                    }
-                }
-
-                return false;
-            }
-        }
-
-        return false;
-    };
-
-    $rootScope.setNotification = function (type, msg) {
-        var notificationSelector = $('#notification-message');
-        var notificationMsgSelector = $('#notification-message .content');
-        if (type == 'warning') {
-            notificationSelector.attr("class", "warning");
-            notificationMsgSelector.html(msg);
-        }
-        else if (type == 'error') {
-            notificationSelector.attr("class", "error");
-            if (msg) {
-                notificationMsgSelector.html(msg);
-            } else {
-                notificationMsgSelector.html('An Error Has Occurred');
-            }
-        }
-        else {
-            notificationSelector.attr("class", "");
-            if (msg) {
-                notificationMsgSelector.html(msg);
-            } else {
-                notificationMsgSelector.html('Action Successful');
-            }
-
-            notificationSelector.stop().hide().fadeIn(75).delay(2000).fadeOut(500);
-            return;
-        }
-
-        notificationSelector.stop().hide().fadeIn(75);
-    }
-
-    $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
-
-    });
-
-    $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
-
-    });
-
-    $rootScope.$on('$viewContentLoaded', function (event, view) {
-        // show only the most nested buttons
-        //debugger;
-        //var levels = 0;
-        //var deepest;
-
-        //$('.secondary-menu-buttons').hide();
-        //$('body').find('.secondary-menu-buttons').each(function () {
-        //    if (!this.firstChild || this.firstChild.nodeType !== 1) {
-        //        var levelsFromThis = $(this).parentsUntil('body').length;
-        //        if (levelsFromThis > levels) {
-        //            levels = levelsFromThis;
-        //            deepest = this;
-        //        }
-        //    }
-        //});
-
-        //$(deepest).show();
-    });
-
-    $rootScope.generalChartOptions = {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true
-                }
-            }]
-        }
-    };
-}]);
-
 baseModule.factory('baseBo', ['$http', '$window', '$q', function ($http, $window, $q) {
     var instance = {};
 
@@ -401,7 +403,7 @@ baseModule.factory('baseBo', ['$http', '$window', '$q', function ($http, $window
 baseModule.filter('shortDate', ['$filter', function ($filter) {
     var angularDateFilter = $filter('date');
     return function (date) {
-        return angularDateFilter(date, 'dd.MM.yyyy');
+        return angularDateFilter(date, 'dd/MM/yyyy');
     }
 }]);
 

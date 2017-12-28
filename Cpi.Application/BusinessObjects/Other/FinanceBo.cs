@@ -29,7 +29,7 @@ namespace Cpi.Application.BusinessObjects.Other
 
         public IQueryable<FinanceDto> GetListBaseQuery()
         {
-            DateTime earliestDate = InvoiceBo.GetListQuery().Where(a => a.CreatedDate.HasValue).OrderBy(a => a.CreatedDate).Select(a => a.CreatedDate.Value).FirstOrDefault();
+            DateTime earliestDate = InvoiceBo.GetListQuery().Where(a => a.Date.HasValue).OrderBy(a => a.Date).Select(a => a.Date.Value).FirstOrDefault();
 
             List<DateTime> dates = new List<DateTime>();
             DateTime currentDate = earliestDate.Date;
@@ -39,21 +39,21 @@ namespace Cpi.Application.BusinessObjects.Other
                 currentDate = currentDate.AddDays(1);
             }
 
-            var invoices = InvoiceBo.GetListQuery().Where(a => a.CreatedDate.HasValue).ToList();
-            var expenses = ExpenseBo.GetListQuery().Where(a => a.CreatedDate.HasValue).ToList();
-            var calls = CallBo.GetListQuery().Where(a => a.CreatedDate.HasValue).ToList();
+            var invoices = InvoiceBo.GetListQuery().Where(a => a.Date.HasValue).ToList();
+            var expenses = ExpenseBo.GetListQuery().Where(a => a.Date.HasValue).ToList();
+            var calls = CallBo.GetListQuery().Where(a => a.Date.HasValue).ToList();
 
             IQueryable<FinanceDto> dtoQuery = (from a in dates
                                                join b in invoices
-                                               on a equals b.CreatedDate.Value.Date into bGroup
+                                               on a equals b.Date.Value.Date into bGroup
                                                join c in expenses
-                                               on a equals c.CreatedDate.Value.Date into cGroup
+                                               on a equals c.Date.Value.Date into cGroup
                                                join d in calls
-                                               on a equals d.CreatedDate.Value.Date into dGroup
+                                               on a equals d.Date.Value.Date into dGroup
                                                select new FinanceDto
                                                {
-                                                   Id = 1, // placeholder for sort
-                                                   CreatedDate = a,
+                                                   Id = bGroup.Select(a => a.Id).FirstOrDefault(), // frontend expects Id to be unique: fix this
+                                                   Date = a,
                                                    Revenue = bGroup.Where(_a => _a.StatusId == (int)LookUpInvoiceStatusDm.LookUpIds.Sold).Select(_a => _a.TotalPrice.Value).DefaultIfEmpty(0).Sum(),
                                                    Expense = cGroup.Select(_a => _a.Expense.Value * _a.Quantity.Value).DefaultIfEmpty(0).Sum(),
                                                    ProductsSold = bGroup.Where(_a => _a.StatusId == (int)LookUpInvoiceStatusDm.LookUpIds.Sold).SelectMany(_a => _a.InvoiceCommodities.Select(b => b.Quantity.Value)).DefaultIfEmpty(0).Sum(),
@@ -265,7 +265,7 @@ namespace Cpi.Application.BusinessObjects.Other
                     DateTime dateAfter = (splitByMonth) ? dateFrom.AddMonths(1) : dateFrom.AddDays(1);
                     string dateDisplayFormat = (splitByMonth) ? "MM.yyyy" : "dd.MM.yyyy";
 
-                    decimal finance = invoiceQuery.Where(a => a.CreatedDate >= dateFrom && a.CreatedDate < dateAfter)
+                    decimal finance = invoiceQuery.Where(a => a.Date >= dateFrom && a.Date < dateAfter)
                                                       .Select(a => a.TotalPrice.Value).DefaultIfEmpty(0).Sum();
                     finances.Add(new Tuple<string, decimal>(dateFrom.ToString(dateDisplayFormat), finance));
 
@@ -308,10 +308,10 @@ namespace Cpi.Application.BusinessObjects.Other
                     DateTime dateAfter = (splitByMonth) ? dateFrom.AddMonths(1) : dateFrom.AddDays(1);
                     string dateDisplayFormat = (splitByMonth) ? "MM.yyyy" : "dd.MM.yyyy";
 
-                    int callCount = callQuery.Where(a => a.CreatedDate >= dateFrom && a.CreatedDate < dateAfter)
+                    int callCount = callQuery.Where(a => a.Date >= dateFrom && a.Date < dateAfter)
                                              .Count();
 
-                    int callSuceededCount = invoiceQuery.Where(a => a.CreatedDate >= dateFrom && a.CreatedDate < dateAfter)
+                    int callSuceededCount = invoiceQuery.Where(a => a.Date >= dateFrom && a.Date < dateAfter)
                                                       .Count();
 
                     calls.Add(new Tuple<string, int, int>(dateFrom.ToString(dateDisplayFormat), callCount, callSuceededCount));

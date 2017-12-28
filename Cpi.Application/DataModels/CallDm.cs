@@ -8,6 +8,9 @@ namespace Cpi.Application.DataModels
 {
     public class CallDm : BaseDm
     {
+        [CpiRequired]
+        public DateTime? Date { get; set; }
+
         [CpiMaxLength(200)]
         public string CustomerName { get; set; }
 

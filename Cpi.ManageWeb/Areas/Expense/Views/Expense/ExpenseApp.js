@@ -4,7 +4,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
     $urlRouterProvider.when("", "/List");
 
     var listScopeData = {
-        filter: { Loads: 0, SortObjects: [{ ColumnName: 'CreatedDate', IsDescending: true }]},
+        filter: { Loads: 0, SortObjects: [{ ColumnName: 'Date', IsDescending: true }]},
         httpRequest: { method: 'POST', url: '/Expense/Expense/GetList' }
     };
 
@@ -56,11 +56,11 @@ app.controller('ListController', ['$scope', '$controller', '$state', 'baseBo', '
             });
     };
 
-    $scope.$watch('scopeData.filter.AdvancedSearch.CreatedTodayOnly', function (newVal, oldVal) {
+    $scope.$watch('scopeData.filter.AdvancedSearch.TodayOnly', function (newVal, oldVal) {
         if (newVal)
         {
-            $scope.scopeData.filter.AdvancedSearch.CreatedDateFrom = null;
-            $scope.scopeData.filter.AdvancedSearch.CreatedDateTo = null;
+            $scope.scopeData.filter.AdvancedSearch.DateFrom = null;
+            $scope.scopeData.filter.AdvancedSearch.DateTo = null;
         }
     });
 
@@ -79,15 +79,15 @@ app.controller('ListController', ['$scope', '$controller', '$state', 'baseBo', '
     };
 
     $scope.showDailyTotalExpense = function (index) {
-        if (!$scope.isAnyListItemTouched() && $scope.scopeData.filter.SortObjects.length >= 1 && $scope.scopeData.filter.SortObjects[0].ColumnName === 'CreatedDate') {
+        if (!$scope.isAnyListItemTouched() && $scope.scopeData.filter.SortObjects.length >= 1 && $scope.scopeData.filter.SortObjects[0].ColumnName === 'Date') {
             // determing if record at this index is the last of day
-            var recordDate = $scope.listItems[index].CreatedDate;
+            var recordDate = $scope.listItems[index].Date;
             recordDate = new Date(recordDate);
             recordDate = new Date(recordDate.getFullYear(), recordDate.getMonth(), recordDate.getDate());
 
             var nextRecordDate = null;
             if (index + 1 < $scope.listItems.length) {
-                nextRecordDate = $scope.listItems[index + 1].CreatedDate;
+                nextRecordDate = $scope.listItems[index + 1].Date;
                 nextRecordDate = new Date(nextRecordDate);
                 nextRecordDate = new Date(nextRecordDate.getFullYear(), nextRecordDate.getMonth(), nextRecordDate.getDate());
                 return !(recordDate.getTime() === nextRecordDate.getTime());
@@ -98,7 +98,7 @@ app.controller('ListController', ['$scope', '$controller', '$state', 'baseBo', '
 
     $scope.getDailyTotalExpense = function (index) {
         var record = $scope.listItems[index];
-        var recordDate = record.CreatedDate;
+        var recordDate = record.Date;
         console.log(index);
         recordDate = new Date(recordDate);
         recordDate = new Date(recordDate.getFullYear(), recordDate.getMonth(), recordDate.getDate());
@@ -114,7 +114,7 @@ app.controller('ListController', ['$scope', '$controller', '$state', 'baseBo', '
             }
 
             var currentRecord = $scope.listItems[index];
-            var currentRecordDate = currentRecord.CreatedDate;
+            var currentRecordDate = currentRecord.Date;
             currentRecordDate = new Date(currentRecordDate);
             currentRecordDate = new Date(currentRecordDate.getFullYear(), currentRecordDate.getMonth(), currentRecordDate.getDate());
 

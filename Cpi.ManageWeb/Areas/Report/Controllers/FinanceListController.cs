@@ -45,7 +45,7 @@ namespace Cpi.ManageWeb.Areas.Report.Controllers
         public ContentResult GetFinance(DateTime? date)
         {
             List<InvoiceSummaryDto> invoiceSummaries = InvoiceBo.GetDailyInvoiceSummary(date.Value);
-            List<ExpenseDm> expenses = ExpenseBo.GetQueryByCreateDate(date.Value).ToList();
+            List<ExpenseDm> expenses = ExpenseBo.GetQueryByDate(date.Value).ToList();
 
             var model = new
             {

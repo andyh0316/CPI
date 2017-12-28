@@ -62,6 +62,7 @@ namespace Cpi.ManageWeb.Areas.Invoice.Controllers
                 InvoiceStatusIdEnums = EnumHelper.GetEnumIntList(typeof(LookUpInvoiceStatusDm.LookUpIds)),
                 ReportDateIdEnums = EnumHelper.GetEnumIntList(typeof(ReportDateFilter.ReportDateIdEnums)),
                 LocationEnums = EnumHelper.GetEnumIntList(typeof(LookUpLocationDm.LookUpIds)),
+                TodayDate = DateTime.Now.Date,
             };
 
             return JsonModel(model);
@@ -128,9 +129,9 @@ namespace Cpi.ManageWeb.Areas.Invoice.Controllers
                     // the invoice's createdDate to now. The reason for this is sometimes they entered invoices from yesterday night, but the
                     // deliverers take the product and go home and keeps the product to deliver today, in that case, we need to make the invoice
                     // today to reflect proper finance analysis
-                    if (isUpdatingStatusWithValue && DateTime.Now.Date > trackedInvoice.CreatedDate.Value.Date)
+                    if (isUpdatingStatusWithValue && DateTime.Now.Date > trackedInvoice.Date.Value.Date)
                     {
-                        trackedInvoice.CreatedDate = DateTime.Now;
+                        trackedInvoice.Date = DateTime.Now;
                     }
                 }
                 else

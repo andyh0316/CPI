@@ -10,6 +10,9 @@ namespace Cpi.Application.DataModels
     public class InvoiceDm : BaseDm
     {
         [CpiRequired]
+        public DateTime? Date { get; set; }
+
+        [CpiRequired]
         [CpiMaxLength(100)]
         public string CustomerPhone { get; set; }
 

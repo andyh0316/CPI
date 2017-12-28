@@ -46,7 +46,7 @@
         <div class="buttons">
             <button ng-show="isAnyListItemTouched()" class="button" ng-click="cancelListItems()">Cancel</button>
             <button ng-show="isAnyListItemTouched()" class="button main" ng-click="save()">Save</button>
-            <button class="button main" ng-click="createListItem({ LocationId: modelData.LocationEnums.PhnomPenh, Quantity: 1 })">+ Create</button>
+            <button class="button main" ng-click="createListItem({ LocationId: modelData.LocationEnums.PhnomPenh, Quantity: 1, Date: modelData.TodayDate })">+ Create</button>
         </div>
     </div>
 
@@ -54,7 +54,7 @@
         <table>
             <thead>
                 <tr>
-                    <th class="thd-S"><a ng-sort="CreatedDate">Created<br />生成日期</a></th>
+                    <th class="date-time"><a ng-sort="Date">Created<br />生成日期</a></th>
                     <th><a ng-sort="Name">Name 名</a></th>
                     <th><a ng-sort="Location.Name">Location<br />地点</a></th>
                     <th>Handled By<br />经办人</th>
@@ -67,9 +67,13 @@
             </thead>
             <tbody>
                 <tr ng-repeat-start="listItem in listItems" ng-class="{deletingEntry: listItem.Deleted}">
-                    <td class="thd-S">
+                    <td class="date-time">
                         <dl>
-                            <dd>{{listItem.CreatedDate | shortDate}}</dd>
+                            <dd ng-show="!showListItemInput(listItem)">{{listItem.Date | shortDate}}</dd>
+                            <dd ng-show="showListItemInput(listItem)">
+                                <span field-validation-error ng-show="modelState['[' + getTouchedListItemIndex(listItem) + '].Date']" class="field-validation-error"></span>
+                                <input ng-model="listItem.Date" date-input />
+                            </dd>
                         </dl>
                     </td>
                     <td>

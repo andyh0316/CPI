@@ -14,7 +14,7 @@
         <table>
             <thead>
                 <tr>
-                    <th><a ng-sort="CreatedDate">Created<br />生成日期</a></th>
+                    <th><a ng-sort="Date">Created<br />生成日期</a></th>
                     <th class="right-content">Profit<br />利润</th>
                     <th class="right-content">Expense<br />支出</th>
                     <th class="right-content">Revenue<br />收入</th>
@@ -33,7 +33,7 @@
             <tbody>
                 <tr ng-repeat="listItem in listItems" ng-class="{deletingEntry: listItem.Deleted}">
                     <td>
-                        {{listItem.CreatedDate | shortDate}}
+                        {{listItem.Date | shortDate}}
                     </td>
                     <td class="right-content">
                         ${{listItem.Revenue - listItem.Expense | number: 2}}
@@ -72,7 +72,7 @@
                         {{listItem.InvoicesTotal}}
                     </td>
                     <td class="action">
-                        <button class="finance-daily-form icon" ng-click="viewFinance(listItem.CreatedDate); $event.stopPropagation();"></button>
+                        <button class="finance-daily-form icon" ng-click="viewFinance(listItem.Date); $event.stopPropagation();"></button>
                     </td>
                 </tr>
             </tbody>

@@ -47,7 +47,7 @@
             <button ng-show="isAnyListItemTouched()" class="button" ng-click="cancelListItems()">Cancel</button>
             <button ng-show="isAnyListItemTouched()" class="button main" ng-click="save()">Save</button>
             <button ng-show="!isAnyListItemTouched()" class="button main" ng-click="import()">Import</button>
-            <button class="button main" ng-click="createListItem()">+ Create</button>
+            <button class="button main" ng-click="createListItem({Date: modelData.TodayDate})">+ Create</button>
         </div>
     </div>
 
@@ -55,7 +55,7 @@
         <table>
             <thead>
                 <tr>
-                    <th class="date-time"><a ng-sort="CreatedDate">Created 生成日期</a></th>
+                    <th class="date-time"><a ng-sort="Date">Created 生成日期</a></th>
                     <th>Phone 顾客电话</th>
                     <th>Name 顾客姓名</th>
                     <th ng-class="{commodities: isAnyListItemTouched()}">Product 产品</th>
@@ -67,7 +67,7 @@
                 <tr ng-repeat="listItem in listItems" ng-class="{deletingEntry: listItem.Deleted}">
                     <td class="date-time">
                         <dl>
-                            <dd>{{listItem.CreatedDate | shortDateWithTime}}</dd>
+                            <dd>{{listItem.Date | shortDateWithTime}}</dd>
                         </dl>
                     </td>
                     <td>

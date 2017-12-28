@@ -5,7 +5,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
 
     var listScopeData = {
         filter: {
-            Loads: 0, SortObjects: [{ ColumnName: 'CreatedDate', IsDescending: true }]
+            Loads: 0, SortObjects: [{ ColumnName: 'Date', IsDescending: true }]
         },
         httpRequest: { method: 'POST', url: '/Report/FinanceList/GetFinanceList' }
     };
@@ -41,6 +41,9 @@ app.controller('FinanceListController', ['$scope', '$controller', '$state', 'bas
 
     $scope.scopeData = scopeData;
     $scope.model = model.Object;
+
+    $scope.listItems = $scope.model.ListItems;
+    $scope.listLoadCalculator = $scope.model.ListLoadCalculator;
 
     $scope.viewFinance = function (date) {
         $state.go('FinanceList.Finance', { 'date': date });

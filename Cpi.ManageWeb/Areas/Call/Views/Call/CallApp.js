@@ -4,7 +4,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
     $urlRouterProvider.when("", "/List");
 
     var listScopeData = {
-        filter: { Loads: 0, SortObjects: [{ ColumnName: 'CreatedDate', IsDescending: true }]},
+        filter: { Loads: 0, SortObjects: [{ ColumnName: 'Date', IsDescending: true }]},
         httpRequest: { method: 'POST', url: '/Call/Call/GetList' }
     };
 
@@ -61,11 +61,11 @@ app.controller('ListController', ['$scope', '$controller', '$state', 'baseBo', '
             });
     };
 
-    $scope.$watch('scopeData.filter.AdvancedSearch.CreatedTodayOnly', function (newVal, oldVal) {
+    $scope.$watch('scopeData.filter.AdvancedSearch.TodayOnly', function (newVal, oldVal) {
         if (newVal)
         {
-            $scope.scopeData.filter.AdvancedSearch.CreatedDateFrom = null;
-            $scope.scopeData.filter.AdvancedSearch.CreatedDateTo = null;
+            $scope.scopeData.filter.AdvancedSearch.DateFrom = null;
+            $scope.scopeData.filter.AdvancedSearch.DateTo = null;
         }
     });
 }]);
@@ -88,7 +88,8 @@ app.controller('ImportController', ['$scope', '$controller', '$state', 'baseBo',
                     var newItem = {
                         touched: true,
                         CustomerPhone: result.Object.PhoneNumbers[i],
-                        StatusId: $scope.modelData.CallStatusIdEnums.SentToCallCenter
+                        StatusId: $scope.modelData.CallStatusIdEnums.SentToCallCenter,
+                        Date: $scope.modelData.TodayDate
                     };
 
                     $scope.$parent.createListItem(newItem);

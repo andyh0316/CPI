@@ -1,12 +1,16 @@
 ﻿using Cpi.Application.DataModels.Base;
 using Cpi.Application.DataModels.LookUp;
 using Cpi.Compass.Application.BusinessRules;
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Cpi.Application.DataModels
 {
     public class ExpenseDm : BaseDm
     {
+        [CpiRequired]
+        public DateTime? Date { get; set; }
+
         [CpiRequired]
         [CpiMaxLength(100)]
         public string Name { get; set; }
