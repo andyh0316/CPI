@@ -144,5 +144,17 @@ namespace Cpi.Application.Helpers
         {
             return (int)HttpContext.Current.Session[ROLE_ID];
         }
+
+        public static int GetSessionTimeLeft()
+        {
+            if (HttpContext.Current.Request.Cookies[FormsAuthentication.FormsCookieName] == null)
+            {
+                return -1;
+            }
+
+            DateTime timeout = FormsAuthentication.Decrypt(HttpContext.Current.Request.Cookies[FormsAuthentication.FormsCookieName].Value).Expiration;
+            int miliseconds = Convert.ToInt32((timeout - DateTime.Now).TotalMilliseconds);
+            return miliseconds;
+        }
     }
 }

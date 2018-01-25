@@ -6,11 +6,13 @@ $light-font-color: #b9b9b9;
 $main-color: #2d4756;
 
 $advanced-search-z-index: 300;
+$dialog-z-index: 300;
 $search-drop-down-z-index: 350;
 $notification-message-z-index: 450;
 $main-menu-z-index: 1000;
 $secondary-menu-z-index: 1000;
-$tooltip-box-z-index: 2000;
+$tooltip-box-z-index: 1800;
+$session-warning-z-index: 2000;
 
 $main-border-color: #BDBDBD;
 $main-border-hover-color: #b5b5b5;
@@ -432,6 +434,114 @@ $ui-view-top-padding: $main-menu-height + $secondary-menu-height;
         bottom: 20px;
     }
 }
+
+/**** DIALOG ****/
+[dialog] {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    display: block;
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+    z-index: $dialog-z-index;
+    text-align: center;
+    background-color: rgba(0, 21, 31, 0.7);
+    overflow: auto;
+
+    .outer {
+        display: table;
+        width: 100%;
+        height: 100%;
+
+        .inner {
+            display: table-cell;
+            vertical-align: middle;
+
+            .box {
+                display: inline-block;
+                //max-width: 1000px;
+                padding: 0px;
+                border-radius: 0px;
+                //border: 1px solid #93999C;
+                background: white;
+                text-align: left;
+                max-width: 1280px;
+                //margin: 0px 20px 0px 20px;
+                .dialog-title {
+                    background-color: $main-color;
+                    border-radius: 0px;
+                    border: 0px;
+                    color: white;
+                    padding: 7px 10px 7px 10px;
+                    font-size: 15px;
+                    font-weight: bold;
+                    text-transform: uppercase;
+
+                    .ui-dialog-titlebar-close {
+                        display: none;
+                    }
+                }
+
+                .dialog-content {
+                    position: relative;
+                    padding: 12px 25px 12px 25px !important;
+                    max-height: 480px;
+                    overflow: auto;
+                }
+
+                .dialog-footer {
+                    padding: 10px 25px 10px 25px;
+                    border-top: 1px solid #DADADA;
+                    background-color: whitesmoke;
+                    text-align: right;
+
+                    .message {
+                        margin-right: 15px;
+                    }
+
+                    .saving-error.icon {
+                        top: 3px;
+                        right: 4px;
+                    }
+                }
+            }
+        }
+    }
+
+    &.fixed-width {
+        .box {
+            width: 1000px;
+        }
+    }
+}
+
+/**** SESSION WARNING ****/
+#session-warning {
+    display: none;
+    z-index: $session-warning-z-index;
+
+    .inner {
+        position: relative;
+        vertical-align: top;
+
+        .box {
+            margin-top: 100px;
+
+            .time-left-wrapper {
+                margin: 5px 0px 8px 0px;
+
+                .time-left {
+                    font-size: 14px;
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+}
+
+
 /**** LIST AND TABLE ****/
 .list-container {
     display: flex;
@@ -1818,4 +1928,8 @@ button.icon {
             color: $error-color;
         }
     }
+}
+
+.buttons-container {
+    text-align: right;
 }

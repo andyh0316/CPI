@@ -299,6 +299,78 @@ body {
     right: 10px;
     bottom: 20px; }
 
+/**** DIALOG ****/
+[dialog] {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  display: block;
+  top: 0px;
+  left: 0px;
+  bottom: 0px;
+  right: 0px;
+  z-index: 300;
+  text-align: center;
+  background-color: rgba(0, 21, 31, 0.7);
+  overflow: auto; }
+  [dialog] .outer {
+    display: table;
+    width: 100%;
+    height: 100%; }
+    [dialog] .outer .inner {
+      display: table-cell;
+      vertical-align: middle; }
+      [dialog] .outer .inner .box {
+        display: inline-block;
+        padding: 0px;
+        border-radius: 0px;
+        background: white;
+        text-align: left;
+        max-width: 1280px; }
+        [dialog] .outer .inner .box .dialog-title {
+          background-color: #2d4756;
+          border-radius: 0px;
+          border: 0px;
+          color: white;
+          padding: 7px 10px 7px 10px;
+          font-size: 15px;
+          font-weight: bold;
+          text-transform: uppercase; }
+          [dialog] .outer .inner .box .dialog-title .ui-dialog-titlebar-close {
+            display: none; }
+        [dialog] .outer .inner .box .dialog-content {
+          position: relative;
+          padding: 12px 25px 12px 25px !important;
+          max-height: 480px;
+          overflow: auto; }
+        [dialog] .outer .inner .box .dialog-footer {
+          padding: 10px 25px 10px 25px;
+          border-top: 1px solid #DADADA;
+          background-color: whitesmoke;
+          text-align: right; }
+          [dialog] .outer .inner .box .dialog-footer .message {
+            margin-right: 15px; }
+          [dialog] .outer .inner .box .dialog-footer .saving-error.icon {
+            top: 3px;
+            right: 4px; }
+  [dialog].fixed-width .box {
+    width: 1000px; }
+
+/**** SESSION WARNING ****/
+#session-warning {
+  display: none;
+  z-index: 2000; }
+  #session-warning .inner {
+    position: relative;
+    vertical-align: top; }
+    #session-warning .inner .box {
+      margin-top: 100px; }
+      #session-warning .inner .box .time-left-wrapper {
+        margin: 5px 0px 8px 0px; }
+        #session-warning .inner .box .time-left-wrapper .time-left {
+          font-size: 14px;
+          font-weight: bold; }
+
 /**** LIST AND TABLE ****/
 .list-container {
   display: flex;
@@ -668,7 +740,7 @@ textarea {
 #help-tooltip {
   position: absolute;
   background-color: white;
-  z-index: 2000;
+  z-index: 1800;
   padding: 7px 9px 7px 9px;
   border: 1px solid #D5D5D5;
   display: none;
@@ -1022,7 +1094,7 @@ button.icon {
   font-weight: 400;
   text-align: left;
   max-width: 200px;
-  z-index: 2000;
+  z-index: 1800;
   word-wrap: break-word;
   display: none; }
   #validation-tooltip:before {
@@ -1219,4 +1291,7 @@ button.icon {
 
 #finance-daily-summary .total.expense {
   color: #AD0606; }
+
+.buttons-container {
+  text-align: right; }
 

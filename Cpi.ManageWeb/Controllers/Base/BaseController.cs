@@ -17,7 +17,7 @@ namespace Cpi.ManageWeb.Controllers.Base
             var model = new
             {
                 Object = _object,
-                //SessionTimeLeft = UserHelper.GetSessionTimeLeft()
+                SessionTimeLeft = UserHelper.GetSessionTimeLeft()
             };
 
             return Content(JsonConvert.SerializeObject(model, Formatting.None, new JsonSerializerSettings { }));
