@@ -29,6 +29,9 @@ namespace Cpi.Application.Helpers
             // No expiration needed, when browser closes or when FormsAuthentication expires the user
             // will need to relog which means these fields will get reset anyways
             // REMEMBER: to clear them when the user logs out
+            // Full Name
+            HttpCookie cookie = new HttpCookie(FULL_NAME, string.Format("{0}", user.Fullname));
+            System.Web.HttpContext.Current.Response.Cookies.Add(cookie);
 
             // store all permissions in session for user (for performance)
             StorePermissions(user);
@@ -145,6 +148,17 @@ namespace Cpi.Application.Helpers
             return (int)HttpContext.Current.Session[ROLE_ID];
         }
 
+        public static string GetUserFullName()
+        {
+            if (HttpContext.Current.Request.Cookies.AllKeys.Contains(FULL_NAME) &&
+                !String.IsNullOrWhiteSpace(HttpContext.Current.Request.Cookies[FULL_NAME].Value))
+            {
+                return HttpContext.Current.Request.Cookies[FULL_NAME].Value;
+            }
+
+            return null;
+        }
+
         public static int GetSessionTimeLeft()
         {
             if (HttpContext.Current.Request.Cookies[FormsAuthentication.FormsCookieName] == null)
@@ -155,6 +169,19 @@ namespace Cpi.Application.Helpers
             DateTime timeout = FormsAuthentication.Decrypt(HttpContext.Current.Request.Cookies[FormsAuthentication.FormsCookieName].Value).Expiration;
             int miliseconds = Convert.ToInt32((timeout - DateTime.Now).TotalMilliseconds);
             return miliseconds;
+        }
+
+        public static void Logout()
+        {
+            if (HttpContext.Current.Request.Cookies[FULL_NAME] != null)
+            {
+                HttpContext.Current.Response.Cookies[FULL_NAME].Expires = DateTime.Now.AddDays(-1);
+            }
+
+            HttpContext.Current.Session[ALL_PERMISSIONS] = null;
+            HttpContext.Current.Session[ROLE_ID] = null;
+
+            FormsAuthentication.SignOut();
         }
     }
 }

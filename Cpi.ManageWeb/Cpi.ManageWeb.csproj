@@ -327,6 +327,7 @@
     <Content Include="Images\Icons\date-input.png" />
     <Content Include="Images\Icons\master-loader.gif" />
     <Content Include="Images\Icons\search-box-icon.png" />
+    <Content Include="Images\select_button_arrow.png" />
     <Content Include="Scripts\angular\angular-chart.js" />
     <Content Include="Scripts\angular\ng-infinite-scroll.js" />
     <Content Include="Scripts\angular\scrollglue.js" />

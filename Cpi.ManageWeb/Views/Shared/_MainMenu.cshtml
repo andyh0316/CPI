@@ -14,7 +14,7 @@
             <div class="menu-item @(currentArea == "Call" ? "selected" : "")">
                 <div class="menu-item-inner">
                     <i class="material-icons">call</i>
-                    <span class="text">Calls 外来电话</span>
+                    <span class="text">Calls</span>
                 </div>
 
                 <div class="sub-menu">
@@ -23,7 +23,7 @@
                         {
                             <a href="/Call/Call/" class="sub-menu-item @(currentController == "Call" ? "selected" : "")">
                                 <i class="material-icons">call</i>
-                                <span class="text">Calls 外来电话</span>
+                                <span class="text">Calls</span>
                             </a>
                         }
                     </div>
@@ -36,7 +36,7 @@
             <div class="menu-item @(currentArea == "Invoice" ? "selected" : "")">
                 <div class="menu-item-inner">
                     <i class="material-icons">storage</i>
-                    <span class="text">Invoices 订单</span>
+                    <span class="text">Invoices</span>
                 </div>
 
                 <div class="sub-menu">
@@ -45,7 +45,7 @@
                         {
                             <a href="/Invoice/Invoice" class="sub-menu-item @(currentController == "Invoice" ? "selected" : "")">
                                 <i class="material-icons">storage</i>
-                                <span class="text">Invoices 订单</span>
+                                <span class="text">Invoices</span>
                             </a>
                         }
                     </div>
@@ -58,7 +58,7 @@
             <div class="menu-item @(currentArea == "Expense" ? "selected" : "")">
                 <div class="menu-item-inner">
                     <i class="material-icons">insert_photo</i>
-                    <span class="text">Expenses 支出</span>
+                    <span class="text">Expenses</span>
                 </div>
 
                 <div class="sub-menu">
@@ -67,7 +67,7 @@
                         {
                             <a href="/Expense/Expense/" class="sub-menu-item">
                                 <i class="material-icons">insert_photo</i>
-                                <span class="text">Expenses 支出</span>
+                                <span class="text">Expenses</span>
                             </a>
                         }
                     </div>
@@ -82,7 +82,7 @@
             <div class="menu-item @(currentArea == "Report" ? "selected" : "")">
                 <div class="menu-item-inner">
                     <i class="material-icons">assignment</i>
-                    <span class="text">Report 分析报告</span>
+                    <span class="text">Report</span>
                 </div>
 
                 <div class="sub-menu">
@@ -91,7 +91,7 @@
                         {
                             <a href="/Report/FinanceOverview/" class="sub-menu-item @(currentController == "FinanceOverview" ? "selected" : "")">
                                 <i class="material-icons">monetization_on</i>
-                                <span class="text">Finance Overview 财务概况</span>
+                                <span class="text">Finance Overview</span>
                             </a>
                         }
 
@@ -99,7 +99,7 @@
                         {
                             <a href="/Report/FinanceList/" class="sub-menu-item @(currentController == "FinanceList" ? "selected" : "")">
                                 <i class="material-icons">monetization_on</i>
-                                <span class="text">Finance Details 财务细节</span>
+                                <span class="text">Finance Details</span>
                             </a>
                         }
 
@@ -107,7 +107,7 @@
                         {
                             <a href="/Report/Performance/" class="sub-menu-item @(currentController == "Performance" ? "selected" : "")">
                                 <i class="material-icons">local_library</i>
-                                <span class="text">Performance 员工评估</span>
+                                <span class="text">Performance</span>
                             </a>
                         }
                     </div>
@@ -121,7 +121,7 @@
             <div class="menu-item @(currentArea == "Manage" ? "selected" : "")">
                 <div class="menu-item-inner">
                     <i class="material-icons">business</i>
-                    <span class="text">Manage 管理</span>
+                    <span class="text">Manage</span>
                 </div>
 
                 <div class="sub-menu">
@@ -130,7 +130,7 @@
                         {
                             <a href="/Manage/User/" class="sub-menu-item @(currentController == "User" ? "selected" : "")">
                                 <i class="material-icons">people</i>
-                                <span class="text">Staff 员工</span>
+                                <span class="text">Staff</span>
                             </a>
                         }
 
@@ -138,13 +138,28 @@
                         {
                             <a href="/Manage/Commodity/" class="sub-menu-item @(currentController == "Commodity" ? "selected" : "")">
                                 <i class="material-icons">local_grocery_store</i>
-                                <span class="text">Product 产品</span>
+                                <span class="text">Product</span>
                             </a>
                         }
                     </div>
                 </div>
             </div>
         }
+    </div>
+
+    <div class="user-container">
+        <div class="dropdown">
+            <button class="dropdown-toggle main" type="button" data-toggle="dropdown">
+                <span class="name">@UserHelper.GetUserFullName()</span>
+            </button>
+            <ul class="dropdown-menu">
+                <li>
+                    <a href="/Account/Logoff">Sign Out</a>
+                </li>
+            </ul>
+        </div>
+
+        @*@Session["Auth_UserFirstName"]*@
     </div>
 </div>
 

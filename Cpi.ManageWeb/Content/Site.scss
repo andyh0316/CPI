@@ -1,4 +1,4 @@
-@import "MaterialIcons/material-icons.scss";
+﻿@import "MaterialIcons/material-icons.scss";
 
 $main-font: 'Open Sans', sans-serif;
 $main-font-color: black;
@@ -10,6 +10,7 @@ $dialog-z-index: 300;
 $search-drop-down-z-index: 350;
 $notification-message-z-index: 450;
 $main-menu-z-index: 1000;
+$dropdown-menu-z-index: 1001;
 $secondary-menu-z-index: 1000;
 $tooltip-box-z-index: 1800;
 $session-warning-z-index: 2000;
@@ -109,6 +110,7 @@ $main-menu-height: 50px;
 
     .menu-body {
         position: relative;
+        background-color: $main-color;
         width: 100%;
         height: 100%;
         /*border-bottom: 1px solid #385a6d;
@@ -218,6 +220,73 @@ $main-menu-height: 50px;
                     border-left: 7px solid transparent;
                     border-right: 7px solid transparent;
                     border-bottom: 7px solid $main-color;
+                }
+            }
+        }
+    }
+
+    .user-container {
+        position: absolute;
+        background-color: $main-color;
+        right: 0;
+        top: 0;
+        height: 100%;
+        //padding: 18px 15px 10px 10px;
+        box-sizing: border-box;
+        text-transform: capitalize;
+
+        .dropdown {
+            height: 100%;
+
+            button {
+                font-family: $main-font !important;
+                border: none;
+                font-size: 14px;
+                height: 100%;
+                padding-left: 20px;
+                padding-right: 20px;
+                opacity: 0.75;
+
+                .name {
+                    display: inline-block;
+                    width: 90px;
+                    vertical-align: top;
+                    text-align: right;
+
+                    @extend %ellipsis;
+                }
+
+                &:after {
+                    width: 10px;
+                    height: 10px;
+                    left: 4px;
+                }
+
+                &:hover {
+                    opacity: 1;
+                }
+            }
+
+            .dropdown-menu {
+                text-align: right;
+                font-size: 14px;
+
+                li {
+                    padding-right: 5px;
+                    opacity: 0.75;
+
+                    a {
+                        .material-icons {
+                            position: relative;
+                            font-size: 15px;
+                            margin-right: 3px;
+                            top: -2px;
+                        }
+                    }
+
+                    &:hover {
+                        opacity: 1;
+                    }
                 }
             }
         }
@@ -860,9 +929,85 @@ $ui-view-top-padding: $main-menu-height + $secondary-menu-height;
     }
 }
 
+.dropdown {
+    position: relative;
+    display: inline-block;
+
+    button {
+        position: relative;
+        display: inline-block;
+        @extend %prevent-user-select;
+
+        &:after {
+            position: relative;
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-size: cover;
+            left: 2px;
+            content: "";
+            background-image: url('/Images/select_button_arrow.png');
+        }
+
+        &[aria-expanded=true] {
+            background-color: $main-color;
+        }
+    }
+
+    .dropdown-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        display: none;
+        float: left;
+        min-width: 100%;
+        z-index: $dropdown-menu-z-index;
+        background-color: $main-color;
+        //border: 1px solid $main-border-color;
+        text-align: left;
+        text-transform: uppercase;
+        font-weight: bold;
+        list-style-type: none;
+        padding-left: 0;
+        margin: 0;
+        color: white;
+        opacity: 0.96;
+        box-sizing: border-box;
+        font-size: 12px;
+
+        li {
+            a {
+                display: block;
+                width: 100%;
+                padding: 7px 15px 7px 12px;
+                white-space: nowrap;
+                text-decoration: none;
+                color: inherit;
+                @extend %border-box;
+            }
+
+            /*&:first-child {
+                border-bottom: 1px solid $main-border-color;
+            }
+
+            &:not(:first-child) {
+                border-top: 1px solid $main-border-color;
+                border-bottom: 1px solid $main-border-color;
+            }*/
+
+            &:hover {
+                cursor: pointer;
+                background-color: $main-color;
+                color: white;
+            }
+        }
+    }
+}
+
 .open > .dropdown-menu {
     display: block;
 }
+
 /**** DL DT DD ****/
 dl {
     position: relative;
@@ -1367,126 +1512,188 @@ button.icon {
     }
 }
 
-#login {
-    height: 100%;
+.form-box {
+    position: relative;
+    display: inline-block;
+    box-sizing: border-box;
+    padding: 10px;
+    background-color: #d2d2d2;
+    //border: 3px solid #F0F7F9;
+    .form-box-padder {
+        border: 1px solid #8a9398;
+    }
 
-    [ui-view] {
-        //position: relative;
-        display: block;
-        margin-left: 0px;
+    .form-box-header {
         width: 100%;
-        background-color: none;
-        margin-top: 0px;
-        height: 100%;
-        background-color: $main-color; /* fallback for old browsers */
-    }
-
-    .error-message {
-        color: $error-color;
-        margin-bottom: 10px;
-    }
-
-    .login-page {
-        width: 400px;
-        padding: 8% 0 0;
-        margin: auto;
-    }
-
-    .form {
-        position: relative;
-        z-index: 1;
-        background: #FFFFFF;
-        max-width: 360px;
-        margin: 0 auto 100px;
-        padding: 45px;
-        text-align: center;
-        box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
-    }
-
-    .form input {
-        font-family: "Roboto", sans-serif;
-        outline: 0;
-        background: #f2f2f2;
-        width: 100%;
-        border: 0;
-        margin: 0 0 15px;
-        padding: 15px;
-        box-sizing: border-box;
-        font-size: 14px;
-    }
-
-    .form button {
-        font-family: "Roboto", sans-serif;
-        text-transform: uppercase;
-        outline: 0;
         background-color: $main-color;
+        color: white;
+        padding: 15px 25px 20px 25px;
+        box-sizing: border-box;
+        text-align: left;
+
+        .logo {
+            position: relative;
+            width: 37px;
+            height: 37px;
+            background-image: url('/Images/logo-white.png');
+            background-size: cover;
+            display: inline-block;
+            opacity: 0.85;
+        }
+
+        .text-container {
+            display: inline-block;
+            margin-left: 3px;
+
+            .text1 {
+                font-size: 22px;
+                font-weight: 600;
+            }
+
+            .text2 {
+                position: relative;
+                top: -3px;
+                font-size: 13px;
+                line-height: 100%;
+                opacity: 0.8;
+            }
+        }
+    }
+
+    .form-box-body {
+        padding: 45px 40px 30px 40px;
+        background-color: #FBFEFF;
+
+        .error-message {
+            padding-top: 10px;
+            text-align: center;
+        }
+    }
+
+    .form-box-footer {
+        overflow: hidden;
         width: 100%;
-        border: 0;
-        padding: 15px;
-        color: #FFFFFF;
-        font-size: 14px;
-        -webkit-transition: all 0.3 ease;
-        transition: all 0.3 ease;
-        cursor: pointer;
+        box-sizing: border-box;
+        //border-top: 2px solid #D7F6FF;
+        padding: 15px 30px 25px 30px;
+        background-color: #c1ccd2;
+
+        .remember-me {
+            position: relative;
+            top: 8px;
+        }
+
+        .link {
+            top: 8px;
+        }
     }
 
-    .form button:hover, .form button:active, .form button:focus {
-        background: black;
+    .button.blue {
+        height: 35px;
     }
 
-    .form .message {
-        margin: 15px 0 0;
-        color: #b3b3b3;
-        font-size: 12px;
-    }
-
-    .form .message a {
-        color: #4CAF50;
+    .link {
+        font-size: 13px;
+        font-weight: bold;
         text-decoration: none;
+        color: #025973;
+        opacity: 0.70;
+    }
+}
+
+#login-screen {
+    display: table;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+
+    .form-box {
+        width: 410px;
     }
 
-    .form .register-form {
-        display: none;
+    .inner-container {
+        display: table-cell;
+        vertical-align: middle;
     }
 
-    .container {
-        position: relative;
-        z-index: 1;
-        max-width: 300px;
-        margin: 0 auto;
+    $input-box-border: 1px solid #7192a5;
+
+    dl {
+        display: block;
+        width: 100%;
+        height: 42px;
+        margin-bottom: 20px;
+        border: $input-box-border;
+        background-color: white;
+        box-sizing: border-box;
+        padding: 0px 0px;
+
+        dt {
+            display: block;
+            width: 42px;
+            height: 100%;
+            float: left;
+
+            &:before {
+                @extend %material-icons;
+                font-size: 22px;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+        }
+
+        dd {
+            height: 100%;
+            width: auto;
+            border-left: $input-box-border;
+            overflow: hidden;
+            padding: 0px;
+
+            input[type=text],
+            input[type=password],
+            input[type=number] {
+                height: 100%;
+                width: 100%;
+                padding-left: 10px;
+                padding-right: 10px;
+                font-size: 14px;
+                border: none;
+            }
+        }
+
+        &.username-input-box dt {
+            &:before {
+                content: "person";
+                font-size: 26px;
+            }
+        }
+
+        &.password-input-box dt {
+            &:before {
+                content: "lock";
+            }
+        }
     }
 
-    .container:before, .container:after {
+    &:before {
         content: "";
         display: block;
-        clear: both;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-size: cover;
+        width: 100%;
+        height: 100%;
+        opacity: 0.7;
     }
+}
 
-    .container .info {
-        margin: 50px auto;
-        text-align: center;
-    }
-
-    .container .info h1 {
-        margin: 0 0 15px;
-        padding: 0;
-        font-size: 36px;
-        font-weight: 300;
-        color: #1a1a1a;
-    }
-
-    .container .info span {
-        color: #4d4d4d;
-        font-size: 12px;
-    }
-
-    .container .info span a {
-        color: #000000;
-        text-decoration: none;
-    }
-
-    .container .info span .fa {
-        color: #EF3B3A;
+#public {
+    [ui-view] {
+        padding-top: 0px;
     }
 }
 
@@ -1974,4 +2181,8 @@ button.icon {
             color: white;
         }
     }
+}
+
+.error-message {
+    color: $error-color;
 }

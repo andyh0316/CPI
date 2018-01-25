@@ -1,4 +1,4 @@
-﻿<div>
+﻿<!--<div>
     <div class="login-page">
         <div class="form">
             <form class="login-form">
@@ -14,4 +14,65 @@
             </form>
         </div>
     </div>
+</div>-->
+
+<div id="login-screen">
+    <div class="inner-container">
+        <div class="form-box">
+            <div class="form-box-padder">
+                <ng-form name="form">
+                    <div class="form-box-header">
+                        <!--<div class="logo"></div>-->
+                        <div class="text-container">
+                            <div class="text1">Welcome to CPI</div>
+                            <div class="text2"></div>
+                        </div>
+                    </div>
+                    <div class="form-box-body">
+                        <dl class="username-input-box">
+                            <dt></dt>
+                            <dd>
+                                <span ng-show="ModelState['Username']" field-validation-error></span>
+                                <input ng-model="model.Username" type="text" name="username" placeholder="Username" autocomplete="on" />
+                            </dd>
+                        </dl>
+                        <dl class="password-input-box">
+                            <dt></dt>
+                            <dd>
+                                <span ng-show="ModelState['Password']" field-validation-error></span>
+                                <input ng-model="model.Password" type="password" name="password" placeholder="Password" autocomplete="on" />
+                            </dd>
+                        </dl>
+
+                        <dl ng-show="model.IsUpdatingPassword" class="password-input-box">
+                            <dt></dt>
+                            <dd>
+                                <span ng-show="ModelState['NewPassword']" field-validation-error></span>
+                                <input ng-model="model.NewPassword" type="password" class="password-meter" placeholder="New Password" />
+                            </dd>
+                        </dl>
+
+                        <dl ng-show="model.IsUpdatingPassword" class="password-input-box">
+                            <dt></dt>
+                            <dd>
+                                <span ng-show="ModelState['ConfirmNewPassword']" field-validation-error></span>
+                                <input ng-model="model.ConfirmNewPassword" type="password" placeholder="Confirm New Password" />
+                            </dd>
+                        </dl>
+
+                        <div class="error-message">
+                            {{modelState['ErrorMessage']}}
+                            {{modelState['Username']}}
+                        </div>
+                    </div>
+                    <div class="form-box-footer">
+                        <button ng-click="login()" class="button main right" type="submit">Sign In</button>
+                    </div>
+                </ng-form>
+            </div>
+        </div>
+    </div>
 </div>
+
+
+

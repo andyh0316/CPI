@@ -33,7 +33,7 @@
         </div>
         <div class="buttons">
             <!--<button class="button main" ng-click="goListView()">List View 表格</button>-->
-            <button class="button main" ng-click="getFinance()">Refresh 刷新</button>
+            <button class="button main" ng-click="getFinance()">Refresh</button>
         </div>
     </div>
 
@@ -42,71 +42,59 @@
         <div class="panel profit">
             <div class="content">${{model.Profit | number: 2}}</div>
             <div class="text">Profit</div>
-            <div class="text">利润</div>
         </div>
         <div class="panel expense">
             <div class="content">${{model.Expense | number: 2}}</div>
             <div class="text">Expense</div>
-            <div class="text">支出</div>
         </div>
         <div class="panel">
             <div class="content">${{model.Revenue | number: 2}}</div>
             <div class="text">Revenue</div>
-            <div class="text">收入</div>
         </div>
         <div class="panel">
             <div class="content">{{model.ReceivedCallCount | number: 0}}</div>
             <div class="text">Calls Received</div>
-            <div class="text">外来电话量</div>
         </div>
     </div>
     <div class="panels">
         <div class="panel">
             <div class="content">{{model.ProductSoldCount | number: 0}}</div>
             <div class="text">Products Sold</div>
-            <div class="text">卖出产品量</div>
         </div>
         <div class="panel">
             <div class="content">{{model.ProductCancelledCount | number: 0}}</div>
             <div class="text">Products Cancelled</div>
-            <div class="text">产品取消量</div>
         </div>
         <div class="panel">
             <div class="content">{{model.ProductPendingCount | number: 0}}</div>
             <div class="text">Products Pending</div>
-            <div class="text">待定产品量</div>
         </div>
         <div class="panel">
             <div class="content">{{model.ProductTotalCount | number: 0}}</div>
             <div class="text">Products Total</div>
-            <div class="text">总产品量</div>
         </div>
     </div>
     <div class="panels">
         <div class="panel">
             <div class="content">{{model.InvoiceSoldCount | number: 0}}</div>
             <div class="text">Invoices Sold</div>
-            <div class="text">卖出订单量</div>
         </div>
         <div class="panel">
             <div class="content">{{model.InvoiceCancelledCount | number: 0}}</div>
             <div class="text">Invoices Cancelled</div>
-            <div class="text">订单取消量</div>
         </div>
         <div class="panel">
             <div class="content">{{model.InvoicePendingCount | number: 0}}</div>
             <div class="text">Invoices Pending</div>
-            <div class="text">待定订单量</div>
         </div>
         <div class="panel">
             <div class="content">{{model.InvoiceTotalCount | number: 0}}</div>
             <div class="text">Invoices Total</div>
-            <div class="text">总订单量</div>
         </div>
     </div>
 
     <div ng-show="model.Revenues.length > 0" class="chart">
-        <div class="title">Revenue 收入</div>
+        <div class="title">Revenue</div>
 
         <div class="chart-wrapper">
             <canvas class="chart chart-bar" chart-data="revenueNumbers" chart-labels="revenueDates" height="70" chart-options="generalChartOptions"></canvas>
@@ -114,7 +102,7 @@
     </div>
 
     <div ng-show="model.Calls.length > 0" class="chart">
-        <div class="title">Calls vs Sold Invoices 外来电话与卖出订单量</div>
+        <div class="title">Calls vs Sold Invoices</div>
 
         <div class="chart-wrapper">
             <canvas class="chart chart-bar" chart-data="callCounts" chart-labels="callDates" height="70" chart-options="generalChartOptions"></canvas>
@@ -122,7 +110,7 @@
     </div>
 
     <div ng-show="model.Products.length > 0" class="chart">
-        <div class="title">Sold vs Cancelled Products 卖出产品与产品取消量</div>
+        <div class="title">Sold vs Cancelled Products</div>
 
         <div class="chart-wrapper">
             <canvas class="chart chart-bar" chart-data="productCounts" chart-labels="productNames" height="70" chart-options="generalChartOptions"></canvas>

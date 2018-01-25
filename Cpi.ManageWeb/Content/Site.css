@@ -7,7 +7,7 @@
   src: local("Material Icons"), local("MaterialIcons-Regular"), url(/Content/MaterialIcons/MaterialIcons-Regular.woff2) format("woff2"), url(/Content/MaterialIcons/MaterialIcons-Regular.woff) format("woff"), url(/Content/MaterialIcons/MaterialIcons-Regular.ttf) format("truetype"); }
 
 .material-icons, .list-container table thead tr th a .sort-asc-icon:after,
-.list-container table thead tr th a .sort-desc-icon:after, .icon:before, .search-drop-down .input-container:after, .commodities-edit .edit-container .edit-row .minus:after,
+.list-container table thead tr th a .sort-desc-icon:after, .icon:before, .search-drop-down .input-container:after, #login-screen dl dt:before, .commodities-edit .edit-container .edit-row .minus:after,
 .commodities-edit .edit-container .edit-row .plus:after,
 .commodities-edit .edit-container .edit-row .plus.minus:after, #notification-message .wrapper .icon:before, #notification-message .wrapper .close:after {
   font-family: 'Material Icons';
@@ -36,7 +36,7 @@
   -moz-box-shadow: 0px 0px 2px #E2E2E2;
   box-shadow: 0px 0px 2px #E2E2E2; }
 
-.list-container table thead tr th a, .commodities-edit .edit-container {
+.list-container table thead tr th a, .dropdown button, .commodities-edit .edit-container {
   -webkit-user-select: none;
   /* Chrome all / Safari all */
   -moz-user-select: none;
@@ -47,7 +47,7 @@
   /* Likely future */ }
 
 #main-menu .menu-body .menu-item, .secondary-menu, .secondary-menu .title-container, [ui-view], .container, .list-container, .list-container table td, .list-container table th, .button,
-.dropdown button, dl dd, .search-drop-down .input-container, .search-drop-down .results-container, .search-drop-down .results-container .result-row, .commodities-edit .edit-container, #import .form, #import .results-container {
+.dropdown button, .dropdown .dropdown-menu li a, dl dd, .search-drop-down .input-container, .search-drop-down .results-container, .search-drop-down .results-container .result-row, .commodities-edit .edit-container, #import .form, #import .results-container {
   -webkit-box-sizing: border-box;
   /* Chrome all / Safari all */
   -moz-box-sizing: border-box;
@@ -62,7 +62,7 @@
   display: table;
   clear: both; }
 
-.ellipsis, dl dt, dl dd {
+.ellipsis, #main-menu .user-container .dropdown button .name, dl dt, dl dd {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden; }
@@ -90,6 +90,7 @@ body {
   z-index: 1000; }
   #main-menu .menu-body {
     position: relative;
+    background-color: #2d4756;
     width: 100%;
     height: 100%;
     /*border-bottom: 1px solid #385a6d;
@@ -169,6 +170,48 @@ body {
           border-left: 7px solid transparent;
           border-right: 7px solid transparent;
           border-bottom: 7px solid #2d4756; }
+  #main-menu .user-container {
+    position: absolute;
+    background-color: #2d4756;
+    right: 0;
+    top: 0;
+    height: 100%;
+    box-sizing: border-box;
+    text-transform: capitalize; }
+    #main-menu .user-container .dropdown {
+      height: 100%; }
+      #main-menu .user-container .dropdown button {
+        font-family: "Open Sans", sans-serif !important;
+        border: none;
+        font-size: 14px;
+        height: 100%;
+        padding-left: 20px;
+        padding-right: 20px;
+        opacity: 0.75; }
+        #main-menu .user-container .dropdown button .name {
+          display: inline-block;
+          width: 90px;
+          vertical-align: top;
+          text-align: right; }
+        #main-menu .user-container .dropdown button:after {
+          width: 10px;
+          height: 10px;
+          left: 4px; }
+        #main-menu .user-container .dropdown button:hover {
+          opacity: 1; }
+      #main-menu .user-container .dropdown .dropdown-menu {
+        text-align: right;
+        font-size: 14px; }
+        #main-menu .user-container .dropdown .dropdown-menu li {
+          padding-right: 5px;
+          opacity: 0.75; }
+          #main-menu .user-container .dropdown .dropdown-menu li a .material-icons {
+            position: relative;
+            font-size: 15px;
+            margin-right: 3px;
+            top: -2px; }
+          #main-menu .user-container .dropdown .dropdown-menu li:hover {
+            opacity: 1; }
 
 .secondary-menu {
   position: fixed;
@@ -585,6 +628,63 @@ body {
     background-color: whitesmoke;
     cursor: pointer; }
 
+.dropdown {
+  position: relative;
+  display: inline-block; }
+  .dropdown button {
+    position: relative;
+    display: inline-block; }
+    .dropdown button:after {
+      position: relative;
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background-size: cover;
+      left: 2px;
+      content: "";
+      background-image: url("/Images/select_button_arrow.png"); }
+    .dropdown button[aria-expanded=true] {
+      background-color: #2d4756; }
+  .dropdown .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    display: none;
+    float: left;
+    min-width: 100%;
+    z-index: 1001;
+    background-color: #2d4756;
+    text-align: left;
+    text-transform: uppercase;
+    font-weight: bold;
+    list-style-type: none;
+    padding-left: 0;
+    margin: 0;
+    color: white;
+    opacity: 0.96;
+    box-sizing: border-box;
+    font-size: 12px; }
+    .dropdown .dropdown-menu li {
+      /*&:first-child {
+                border-bottom: 1px solid $main-border-color;
+            }
+
+            &:not(:first-child) {
+                border-top: 1px solid $main-border-color;
+                border-bottom: 1px solid $main-border-color;
+            }*/ }
+      .dropdown .dropdown-menu li a {
+        display: block;
+        width: 100%;
+        padding: 7px 15px 7px 12px;
+        white-space: nowrap;
+        text-decoration: none;
+        color: inherit; }
+      .dropdown .dropdown-menu li:hover {
+        cursor: pointer;
+        background-color: #2d4756;
+        color: white; }
+
 .open > .dropdown-menu {
   display: block; }
 
@@ -932,93 +1032,131 @@ button.icon {
   40% {
     transform: scale(1); } }
 
-#login {
-  height: 100%; }
-  #login [ui-view] {
-    display: block;
-    margin-left: 0px;
+.form-box {
+  position: relative;
+  display: inline-block;
+  box-sizing: border-box;
+  padding: 10px;
+  background-color: #d2d2d2; }
+  .form-box .form-box-padder {
+    border: 1px solid #8a9398; }
+  .form-box .form-box-header {
     width: 100%;
-    background-color: none;
-    margin-top: 0px;
-    height: 100%;
     background-color: #2d4756;
-    /* fallback for old browsers */ }
-  #login .error-message {
-    color: #AD0606;
-    margin-bottom: 10px; }
-  #login .login-page {
-    width: 400px;
-    padding: 8% 0 0;
-    margin: auto; }
-  #login .form {
-    position: relative;
-    z-index: 1;
-    background: #FFFFFF;
-    max-width: 360px;
-    margin: 0 auto 100px;
-    padding: 45px;
-    text-align: center;
-    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24); }
-  #login .form input {
-    font-family: "Roboto", sans-serif;
-    outline: 0;
-    background: #f2f2f2;
-    width: 100%;
-    border: 0;
-    margin: 0 0 15px;
-    padding: 15px;
+    color: white;
+    padding: 15px 25px 20px 25px;
     box-sizing: border-box;
-    font-size: 14px; }
-  #login .form button {
-    font-family: "Roboto", sans-serif;
-    text-transform: uppercase;
-    outline: 0;
-    background-color: #2d4756;
+    text-align: left; }
+    .form-box .form-box-header .logo {
+      position: relative;
+      width: 37px;
+      height: 37px;
+      background-image: url("/Images/logo-white.png");
+      background-size: cover;
+      display: inline-block;
+      opacity: 0.85; }
+    .form-box .form-box-header .text-container {
+      display: inline-block;
+      margin-left: 3px; }
+      .form-box .form-box-header .text-container .text1 {
+        font-size: 22px;
+        font-weight: 600; }
+      .form-box .form-box-header .text-container .text2 {
+        position: relative;
+        top: -3px;
+        font-size: 13px;
+        line-height: 100%;
+        opacity: 0.8; }
+  .form-box .form-box-body {
+    padding: 45px 40px 30px 40px;
+    background-color: #FBFEFF; }
+    .form-box .form-box-body .error-message {
+      padding-top: 10px;
+      text-align: center; }
+  .form-box .form-box-footer {
+    overflow: hidden;
     width: 100%;
-    border: 0;
-    padding: 15px;
-    color: #FFFFFF;
-    font-size: 14px;
-    -webkit-transition: all 0.3 ease;
-    transition: all 0.3 ease;
-    cursor: pointer; }
-  #login .form button:hover, #login .form button:active, #login .form button:focus {
-    background: black; }
-  #login .form .message {
-    margin: 15px 0 0;
-    color: #b3b3b3;
-    font-size: 12px; }
-  #login .form .message a {
-    color: #4CAF50;
-    text-decoration: none; }
-  #login .form .register-form {
-    display: none; }
-  #login .container {
-    position: relative;
-    z-index: 1;
-    max-width: 300px;
-    margin: 0 auto; }
-  #login .container:before, #login .container:after {
+    box-sizing: border-box;
+    padding: 15px 30px 25px 30px;
+    background-color: #c1ccd2; }
+    .form-box .form-box-footer .remember-me {
+      position: relative;
+      top: 8px; }
+    .form-box .form-box-footer .link {
+      top: 8px; }
+  .form-box .button.blue {
+    height: 35px; }
+  .form-box .link {
+    font-size: 13px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #025973;
+    opacity: 0.70; }
+
+#login-screen {
+  display: table;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center; }
+  #login-screen .form-box {
+    width: 410px; }
+  #login-screen .inner-container {
+    display: table-cell;
+    vertical-align: middle; }
+  #login-screen dl {
+    display: block;
+    width: 100%;
+    height: 42px;
+    margin-bottom: 20px;
+    border: 1px solid #7192a5;
+    background-color: white;
+    box-sizing: border-box;
+    padding: 0px 0px; }
+    #login-screen dl dt {
+      display: block;
+      width: 42px;
+      height: 100%;
+      float: left; }
+      #login-screen dl dt:before {
+        font-size: 22px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%); }
+    #login-screen dl dd {
+      height: 100%;
+      width: auto;
+      border-left: 1px solid #7192a5;
+      overflow: hidden;
+      padding: 0px; }
+      #login-screen dl dd input[type=text],
+      #login-screen dl dd input[type=password],
+      #login-screen dl dd input[type=number] {
+        height: 100%;
+        width: 100%;
+        padding-left: 10px;
+        padding-right: 10px;
+        font-size: 14px;
+        border: none; }
+    #login-screen dl.username-input-box dt:before {
+      content: "person";
+      font-size: 26px; }
+    #login-screen dl.password-input-box dt:before {
+      content: "lock"; }
+  #login-screen:before {
     content: "";
     display: block;
-    clear: both; }
-  #login .container .info {
-    margin: 50px auto;
-    text-align: center; }
-  #login .container .info h1 {
-    margin: 0 0 15px;
-    padding: 0;
-    font-size: 36px;
-    font-weight: 300;
-    color: #1a1a1a; }
-  #login .container .info span {
-    color: #4d4d4d;
-    font-size: 12px; }
-  #login .container .info span a {
-    color: #000000;
-    text-decoration: none; }
-  #login .container .info span .fa {
-    color: #EF3B3A; }
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    opacity: 0.7; }
+
+#public [ui-view] {
+  padding-top: 0px; }
 
 .overflow-visible {
   overflow: visible !important; }
@@ -1323,4 +1461,7 @@ button.icon {
     [phone-company-tag] .inner.cellCard {
       background-color: #ff6501;
       color: white; }
+
+.error-message {
+  color: #AD0606; }
 

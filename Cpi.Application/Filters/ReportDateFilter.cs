@@ -20,12 +20,12 @@ namespace Cpi.Application.Filters
         {
             List<CpiSelectListItem> reportDates = new List<CpiSelectListItem>
             {
-                new CpiSelectListItem { Id = (int)ReportDateIdEnums.Today, Name = "Today 今天" },
-                new CpiSelectListItem { Id = (int)ReportDateIdEnums.Yesterday, Name = "Yesterday 昨天" },
-                new CpiSelectListItem { Id = (int)ReportDateIdEnums.Past7Days, Name = "Past 7 Days 近七天" },
-                new CpiSelectListItem { Id = (int)ReportDateIdEnums.Past30Days, Name = "Past 30 Days 近三十天" },
-                new CpiSelectListItem { Id = (int)ReportDateIdEnums.PastYear, Name = "Past Year 近一年" },
-                new CpiSelectListItem { Id = (int)ReportDateIdEnums.AllTimeOrSelectDateRange, Name = "All Time/Select Date Range 所有/自定期间" },
+                new CpiSelectListItem { Id = (int)ReportDateIdEnums.Today, Name = "Today" },
+                new CpiSelectListItem { Id = (int)ReportDateIdEnums.Yesterday, Name = "Yesterday" },
+                new CpiSelectListItem { Id = (int)ReportDateIdEnums.Past7Days, Name = "Past 7 Days" },
+                new CpiSelectListItem { Id = (int)ReportDateIdEnums.Past30Days, Name = "Past 30 Days" },
+                new CpiSelectListItem { Id = (int)ReportDateIdEnums.PastYear, Name = "Past Year" },
+                new CpiSelectListItem { Id = (int)ReportDateIdEnums.AllTimeOrSelectDateRange, Name = "All Time/Select Date Range" },
             };
 
             return reportDates;
