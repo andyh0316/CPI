@@ -133,9 +133,9 @@ namespace Cpi.ManageWeb.Areas.Call.Controllers
         {
             List<string> phoneNumbersList = ParsePhoneNumbersMethod(phoneNumbers);
 
-            List<string> smartPrefixes = new List<string> { "10", "15", "16", "69", "70", "81", "86", "87", "93", "98", "96" };
-            List<string> metFonePrefixes = new List<string> { "88", "97", "71", "60", "66", "67", "68", "90", "31", "91" };
-            List<string> cellCardPrefixes = new List<string> { "11", "12", "14", "17", "61", "76", "77", "78", "85", "89", "92", "95", "99" };
+            List<string> smartPrefixes = CommonHelper.SmartPrefixes;
+            List<string> metFonePrefixes = CommonHelper.MetFonePrefixes;
+            List<string> cellCardPrefixes = CommonHelper.CellCardPrefixes;
 
             List<string> smartPhoneNumbers = new List<string>();
             List<string> metFonePhoneNumbers = new List<string>();

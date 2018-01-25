@@ -90,7 +90,10 @@
                     </td>
                     <td>
                         <dl>
-                            <dd ng-show="!showListItemInput(listItem)">{{listItem.CustomerPhone}}</dd>
+                            <dd ng-show="!showListItemInput(listItem)">
+                                {{listItem.CustomerPhone}}
+                                <span phone-company-tag ng-model="listItem.CustomerPhone"></span>
+                            </dd>
                             <dd ng-show="showListItemInput(listItem)">
                                 <span field-validation-error ng-show="modelState['[' + getTouchedListItemIndex(listItem) + '].CustomerPhone']" class="field-validation-error"></span>
                                 <input ng-model="listItem.CustomerPhone" />

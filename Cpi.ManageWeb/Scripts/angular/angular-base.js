@@ -145,6 +145,10 @@ baseModule.run(['$rootScope', '$state', function ($rootScope, $state) {
             }]
         }
     };
+
+    $rootScope.smartPrefixes = gSmartPrefixes;
+    $rootScope.metFonePrefixes = gMetFonePrefixes;
+    $rootScope.cellCardPrefixes = gCellCardPrefixes;
 }]);
 
 
@@ -1464,43 +1468,45 @@ baseModule.directive('ngSort', function () {
     };
 });
 
-//baseModule.directive('a', function () {
-//    return {
-//        restrict: 'E',
-//        scope: {
-//            ngSort: '@',
-//        },
-//        transclude: true,
-//        link: function ($scope, $element, $attrs) {
-//            $element.bind('click', function (e) {
-//                if ($scope.ngSort && !$scope.$parent.isAnyListItemTouched()) {
-//                    $scope.$parent.sort($scope.ngSort);
+baseModule.directive('phoneCompanyTag', ['$rootScope', function ($rootScope) {
+    return {
+        restrict: 'A',
+        scope: {
+            ngModel: '='
+        },
+        link: function ($scope, $element, $attrs) {
+            $scope.phoneCompany = 'Wrong Number!';
+            $scope.$watch('ngModel', function (newVal, oldVal) {
+                if (newVal && newVal.length >= 2) {
+                    var phonePrefix = newVal.substring(0, 2);
 
-//                    $scope.$apply();
-//                }
-//            });
-//        },
-//        template: '' +
-//        '<ng-transclude></ng-transclude>' +
-//        '<span ng-show="ngSort && !$parent.isAnyListItemTouched()">' +
-//            '<span class="sort-asc-icon" ng-class="$parent.getSortDirection(ngSort)"></span>' +
-//            '<span class="sort-desc-icon" ng-class="$parent.getSortDirection(ngSort)"></span>' +
-//            '<span ng-show="$parent.getSortColumnCount() > 1" class="sort-column-order">' +
-//                '<span class="inner">{{$parent.getSortColumnOrder(ngSort)}}</span>' +
-//            '</span>' +
-//        '</span>'
-//    };
-//});
+                    for (var i in $rootScope.smartPrefixes) {
+                        if (phonePrefix === $rootScope.smartPrefixes[i])
+                        {
+                            $scope.phoneCompany = 'Smart';
+                            return;
+                        }
+                    }
 
-//baseModule.directive('tr', ['$timeout', function ($timeout) {
-//    return {
-//        restrict: 'E',
-//        link: function ($scope, $element, $attrs) {
-//            if ($scope.$index < 50)
-//            {
-//                $element.css('opacity', 0);
-//                $element.delay(15 * $scope.$index).fadeTo(200, 1);
-//            }
-//        }
-//    };
-//}]);
+                    for (var i in $rootScope.metFonePrefixes) {
+                        if (phonePrefix === $rootScope.metFonePrefixes[i]) {
+                            $scope.phoneCompany = 'metfone';
+                            return;
+                        }
+                    }
+
+                    for (var i in $rootScope.cellCardPrefixes) {
+                        if (phonePrefix === $rootScope.cellCardPrefixes[i]) {
+                            $scope.phoneCompany = 'cellcard';
+                            return;
+                        }
+                    }
+
+                    $scope.phoneCompany = 'Wrong Number!';
+                }
+            });
+        },
+        template:
+        '<span ng-class="{smart: phoneCompany === \'Smart\', metFone: phoneCompany === \'metfone\', cellCard: phoneCompany === \'cellcard\'}" class="inner">{{phoneCompany}}<span>'
+    };
+}]);

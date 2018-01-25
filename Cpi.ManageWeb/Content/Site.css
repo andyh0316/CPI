@@ -462,6 +462,9 @@ body {
               padding: 0px; }
               .list-container table tbody tr td dl dd input[date-input] {
                 width: 100px !important; }
+          .list-container table tbody tr td [phone-company-tag] {
+            top: -1px;
+            margin-left: 4px; }
         .list-container table tbody tr.total {
           font-weight: bold; }
       .list-container table tbody .has-more-items {
@@ -888,31 +891,37 @@ button.icon {
   z-index: 9999;
   height: 100%;
   width: 100%;
-  display: none; }
+  display: none;
+  text-align: center; }
   #wait-mask .loading {
-    position: absolute;
+    position: relative;
     top: 45%;
-    left: 50%;
+    padding: 20px 22px;
+    background-color: white;
+    margin: 0 auto;
+    box-shadow: 0 0 15px #E8E7E7;
+    border: 1px solid #D8D8D8;
+    display: inline-block;
     /*box-shadow: 0 0 15px #E8E7E7;
         border: 1px solid #D8D8D8;*/ }
     #wait-mask .loading .loading-bar {
+      position: relative;
       display: inline-block;
-      width: 5px;
+      width: 6px;
       margin-right: 2px;
-      height: 24px;
-      border-radius: 4px;
+      height: 21px;
       animation: loading 1s ease-in-out infinite; }
     #wait-mask .loading .loading-bar:nth-child(1) {
-      background-color: #3498db;
+      background-color: #68abcc;
       animation-delay: 0; }
     #wait-mask .loading .loading-bar:nth-child(2) {
-      background-color: #c0392b;
+      background-color: #3a9ac7;
       animation-delay: 0.09s; }
     #wait-mask .loading .loading-bar:nth-child(3) {
-      background-color: #f1c40f;
+      background-color: #2d7fa7;
       animation-delay: .18s; }
     #wait-mask .loading .loading-bar:nth-child(4) {
-      background-color: #27ae60;
+      background-color: #07618c;
       animation-delay: .27s; }
 
 @keyframes loading {
@@ -1294,4 +1303,24 @@ button.icon {
 
 .buttons-container {
   text-align: right; }
+
+[phone-company-tag] {
+  position: relative;
+  margin-left: 2px;
+  opacity: 0.85; }
+  [phone-company-tag] .inner {
+    padding: 1px 4px;
+    background-color: lightgray;
+    font-size: 10px;
+    font-weight: bold;
+    border-radius: 4px; }
+    [phone-company-tag] .inner.smart {
+      background-color: #009432;
+      color: white; }
+    [phone-company-tag] .inner.metFone {
+      background-color: #088e75;
+      color: white; }
+    [phone-company-tag] .inner.cellCard {
+      background-color: #ff6501;
+      color: white; }
 

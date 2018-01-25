@@ -13,6 +13,7 @@ $main-menu-z-index: 1000;
 $secondary-menu-z-index: 1000;
 $tooltip-box-z-index: 1800;
 $session-warning-z-index: 2000;
+$wait-mask-z-index: 9999;
 
 $main-border-color: #BDBDBD;
 $main-border-hover-color: #b5b5b5;
@@ -670,6 +671,11 @@ $ui-view-top-padding: $main-menu-height + $secondary-menu-height;
                             }
                         }
                     }
+
+                    [phone-company-tag] {
+                        top: -1px;
+                        margin-left: 4px;
+                    }
                 }
 
                 &.total {
@@ -1297,45 +1303,51 @@ button.icon {
 
 #wait-mask {
     position: fixed;
-    z-index: 9999;
+    z-index: $wait-mask-z-index;
     height: 100%;
     width: 100%;
     //cursor: wait;
     display: none;
-
+    text-align: center;
 
     .loading {
-        position: absolute;
+        position: relative;
         top: 45%;
-        left: 50%;
+        padding: 20px 22px;
+        background-color: white;
+        margin: 0 auto;
+        box-shadow: 0 0 15px #E8E7E7;
+        border: 1px solid #D8D8D8;
+        display: inline-block;
         /*box-shadow: 0 0 15px #E8E7E7;
         border: 1px solid #D8D8D8;*/
         .loading-bar {
+            position: relative;
             display: inline-block;
-            width: 5px;
+            width: 6px;
             margin-right: 2px;
-            height: 24px;
-            border-radius: 4px;
+            height: 21px;
+            //border-radius: 4px;
             animation: loading 1s ease-in-out infinite;
         }
 
         .loading-bar:nth-child(1) {
-            background-color: #3498db;
+            background-color: #68abcc;
             animation-delay: 0;
         }
 
         .loading-bar:nth-child(2) {
-            background-color: #c0392b;
+            background-color: #3a9ac7;
             animation-delay: 0.09s;
         }
 
         .loading-bar:nth-child(3) {
-            background-color: #f1c40f;
+            background-color: #2d7fa7;
             animation-delay: .18s;
         }
 
         .loading-bar:nth-child(4) {
-            background-color: #27ae60;
+            background-color: #07618c;
             animation-delay: .27s;
         }
 
@@ -1932,4 +1944,34 @@ button.icon {
 
 .buttons-container {
     text-align: right;
+}
+
+[phone-company-tag] {
+    position: relative;
+    margin-left: 2px;
+    @include opacity(0.85);
+
+    .inner {
+        //border: 1px solid $light-border-color;
+        padding: 1px 4px;
+        background-color: lightgray;
+        font-size: 10px;
+        font-weight: bold;
+        border-radius: 4px;
+
+        &.smart {
+            background-color: #009432;
+            color: white;
+        }
+
+        &.metFone {
+            background-color: #088e75;
+            color: white;
+        }
+
+        &.cellCard {
+            background-color: #ff6501;
+            color: white;
+        }
+    }
 }
