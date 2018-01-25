@@ -28,6 +28,7 @@
         @RenderBody()
 
         <script type="text/javascript">
+            var gShowSessionWarningTime = parseInt('@System.Web.Configuration.WebConfigurationManager.AppSettings["ShowSessionWarningTime"]') * 60000;
         </script>
     </body>
 </html>
