@@ -1024,6 +1024,7 @@ baseModule.directive('commoditiesEdit', function () {
         },
         link: function ($scope, $element, $attrs) {
             $scope.ngModel = ($scope.ngModel) ? $scope.ngModel : [];
+            $scope.activeCommodities = $scope.commodities.filter(function (item) { return !item.Inactive });
 
             $scope.$watch('ngModel', function (newVal, oldVal) {
                 if (newVal !== oldVal)
@@ -1128,7 +1129,7 @@ baseModule.directive('commoditiesEdit', function () {
             '</div>' +
             '<input/>' + // this input is always invisible: it helps to include this editor in tab order and when focused through tab it will show edit container 
             '<div ng-show="showEditContainer" class="edit-container">' +
-                '<div ng-repeat="item in commodities" class="edit-row">' +
+                '<div ng-repeat="item in activeCommodities" class="edit-row">' +
                     '<span class="item-name">{{item.Name}}</span>' +
                     '<span class="minus" ng-click="subtractQuantity(item)"></span>' +
                     '<span class="quantity">{{getCommodityQuantityFor(item)}}</span>' +
@@ -1138,32 +1139,6 @@ baseModule.directive('commoditiesEdit', function () {
         '</div>'
     };
 });
-
-//baseModule.directive('addressViewEdit', function () {
-//    return {
-//        restrict: 'A',
-//        scope: {
-//            ngModel: '=',
-//            touched: '='
-//        },
-//        link: function ($scope, $element, $attrs) {
-//            $scope.ngModel = ($scope.ngModel) ? $scope.ngModel : [];
-//        },
-//        template:
-//        '' +
-//        '<div class="address-view-edit">' +
-//            '<div class="view-container" ng-click="showEditContainer = (touched) ? true : false" ng-class="{\'input-container\': touched}">' +
-//            '</div>' +
-//            '<div ng-show="showEditContainer" class="edit-container">' +
-//                '<input ng-model="ngModel.Street" placeholder="Street" />' +
-//                '<input ng-model="ngModel.Vilas" placeholder="Vilas" />' +
-//                '<input ng-model="ngModel.Sonka" placeholder="Sonka" />' +
-//                '<input ng-model="ngModel.District" placeholder="District" />' +
-//                '<input ng-model="ngModel.City" placeholder="City" />' +
-//            '</div>' +
-//        '</div>'
-//    };
-//});
 
 baseModule.directive('fileInput', function () {
     return {
