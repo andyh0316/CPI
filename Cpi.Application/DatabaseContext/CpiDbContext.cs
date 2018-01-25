@@ -44,7 +44,6 @@ namespace Cpi.Application.DatabaseContext
             modelBuilder.Configurations.Add(new ExpenseMap());
             modelBuilder.Configurations.Add(new CommodityMap());
             modelBuilder.Configurations.Add(new UserRolePermissionMap());
-            modelBuilder.Configurations.Add(new UserSalaryMap());
 
             modelBuilder.Configurations.Add(new LookUpUserRoleMap());
             modelBuilder.Configurations.Add(new LookUpUserOccupationMap());

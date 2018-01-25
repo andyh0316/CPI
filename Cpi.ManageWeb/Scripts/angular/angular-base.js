@@ -1510,3 +1510,19 @@ baseModule.directive('phoneCompanyTag', ['$rootScope', function ($rootScope) {
         '<span ng-class="{smart: phoneCompany === \'Smart\', metFone: phoneCompany === \'metfone\', cellCard: phoneCompany === \'cellcard\'}" class="inner">{{phoneCompany}}<span>'
     };
 }]);
+
+baseModule.directive('dd', function () {
+    return {
+        restrict: 'E',
+        link: function ($scope, $element, $attrs) {
+            $scope.$watch(function () { // watch for any scope changes
+                if (!$element.find('input, select, textarea').length && !$element.text().trim().length) {
+                    $element.addClass('empty');
+                }
+                else {
+                    $element.removeClass('empty');
+                }
+            });
+        }
+    }
+});

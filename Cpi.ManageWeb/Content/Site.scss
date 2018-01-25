@@ -738,6 +738,10 @@ $ui-view-top-padding: $main-menu-height + $secondary-menu-height;
                             input[date-input] {
                                 width: 100px !important;
                             }
+
+                            &.empty:after {
+                                content: "";
+                            }
                         }
                     }
 
@@ -1080,7 +1084,7 @@ dl {
             font-size: 15px;
         }
 
-        &:blank:after {
+        &.empty:after {
             content: "--";
         }
     }

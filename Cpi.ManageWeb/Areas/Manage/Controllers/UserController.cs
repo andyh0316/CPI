@@ -62,6 +62,9 @@ namespace Cpi.ManageWeb.Areas.Manage.Controllers
             {
                 user = new UserDm
                 {
+                    Salary = 0,
+                    VacationDaysTaken = 0,
+                    StartDate = new DateTime(DateTime.Now.Ticks).Date,
                     UserRoleId = (int)LookUpUserRoleDm.LookUpIds.Staff
                 };
             }
@@ -70,14 +73,9 @@ namespace Cpi.ManageWeb.Areas.Manage.Controllers
                 user = UserBo.GetById(id);
             }
 
-            return JsonModel(user);
-        }
-
-        [HttpGet]
-        public ContentResult GetUserData()
-        {
             var model = new
             {
+                User = user,
                 Occupations = LookUpBo.GetList<LookUpUserOccupationDm>().ToList(),
                 UserRoles = LookUpBo.GetList<LookUpUserRoleDm>().Where(a => a.Id != (int)LookUpUserRoleDm.LookUpIds.老子).ToList()
             };

@@ -15,5 +15,8 @@ namespace Cpi.Application.DataTransferObjects
         public string UserRole { get; set; }
         public string UserOccupation { get; set; }
         public DateTime? LastLoginDate { get; set; }
+        public decimal? Salary { get; set; }
+        public int? VacationDaysTaken { get; set; }
+        public DateTime? StartDate { get; set; }
     }
 }

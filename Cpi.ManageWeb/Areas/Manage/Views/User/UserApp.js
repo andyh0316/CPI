@@ -33,9 +33,6 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
                 model: ['$stateParams', 'baseBo', function ($stateParams, baseBo) {
                     return baseBo.httpRequest('GET', '/Manage/User/GetUser', { id: $stateParams.userId });
                 }],
-                modelData: ['$stateParams', 'baseBo', function ($stateParams, baseBo) {
-                    return baseBo.httpRequest('GET', '/Manage/User/GetUserData');
-                }],
                 mode: ['$stateParams', function ($stateParams) {
                     return $stateParams.mode;
                 }],
@@ -62,16 +59,15 @@ app.controller('ListController', ['$scope', '$controller', '$state', 'baseBo', '
     };
 }]);
 
-app.controller('UserController', ['$scope', '$controller', '$state', 'baseBo', 'mode', 'model', 'modelData', function ($scope, $controller, $state, baseBo, mode, model, modelData) {
+app.controller('UserController', ['$scope', '$controller', '$state', 'baseBo', 'mode', 'model', function ($scope, $controller, $state, baseBo, mode, model) {
     angular.extend(this, $controller('BaseController', { $scope: $scope }));
 
-    $scope.modelData = modelData.Object;
     $scope.model = model.Object;
     $scope.setMode(mode);
 
     $scope.remove = function () {
         if (confirm(gConfirmDeleteMsg)) {
-            baseBo.httpRequest('GET', '/Manage/User/DeleteUser', { id: $scope.model.Id })
+            baseBo.httpRequest('GET', '/Manage/User/DeleteUser', { id: $scope.model.User.Id })
                 .then(function (result) {
                     $scope.$parent.getList('savedList');
                     $scope.back();
@@ -81,7 +77,7 @@ app.controller('UserController', ['$scope', '$controller', '$state', 'baseBo', '
     };
 
     $scope.save = function () {
-        baseBo.httpRequest('POST', '/Manage/User/SaveUser/', $scope.model).then(function (result) {
+        baseBo.httpRequest('POST', '/Manage/User/SaveUser/', $scope.model.User).then(function (result) {
             if (result.ModelState) {
                 $scope.modelState = result.ModelState;
             }

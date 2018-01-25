@@ -505,6 +505,8 @@ body {
               padding: 0px; }
               .list-container table tbody tr td dl dd input[date-input] {
                 width: 100px !important; }
+              .list-container table tbody tr td dl dd.empty:after {
+                content: ""; }
           .list-container table tbody tr td [phone-company-tag] {
             top: -1px;
             margin-left: 4px; }
@@ -737,7 +739,7 @@ dl {
     dl dd input[type=radio] + label {
       font-weight: 100;
       font-size: 15px; }
-    dl dd:blank:after {
+    dl dd.empty:after {
       content: "--"; }
   dl.flat {
     margin: 0px; }

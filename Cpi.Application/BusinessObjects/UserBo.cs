@@ -49,7 +49,10 @@ namespace Cpi.Application.BusinessObjects
                 Nickname = a.Nickname,
                 UserRole = a.UserRole.Name,
                 UserOccupation = a.UserOccupation.Name,
-                LastLoginDate = a.LastLoginDate
+                LastLoginDate = a.LastLoginDate,
+                Salary = a.Salary,
+                StartDate = a.StartDate,
+                VacationDaysTaken = a.VacationDaysTaken
             });
 
             return dtoQuery;
