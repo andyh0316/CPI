@@ -1,6 +1,4 @@
-﻿@using Cpi.Application.Helpers;
-
-@{
+﻿@{
     Layout = "/Views/Shared/_Layout.cshtml";
 }
 
@@ -8,9 +6,3 @@
 @Html.Partial("/Views/Shared/_SessionWarning.cshtml")
 
 @RenderBody()
-
-<script type="text/javascript">
-    var gSmartPrefixes =  @Html.Raw(Json.Encode(((List<string>)CommonHelper.SmartPrefixes)));
-    var gMetFonePrefixes =  @Html.Raw(Json.Encode(((List<string>)CommonHelper.MetFonePrefixes)));
-    var gCellCardPrefixes =  @Html.Raw(Json.Encode(((List<string>)CommonHelper.CellCardPrefixes)));
-</script>

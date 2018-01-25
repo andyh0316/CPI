@@ -1,34 +1,39 @@
-﻿<!DOCTYPE html>
+﻿@using Cpi.Application.Helpers;
+
+<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <title>CPI Management</title>
-        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        @Styles.Render("~/Content/css")
-        @Scripts.Render("~/bundles/modernizr")
-        @Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/angular")
-        @Scripts.Render("~/bundles/javascript")
-    </head>
-    <body>
-        <div id="help-tooltip"></div>
-        <div id="validation-tooltip"></div>
-        @Html.Partial("/Views/Shared/_NotificationMessage.cshtml")
+<head>
+    <meta charset="utf-8" />
+    <title>CPI Management</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/angular")
+    @Scripts.Render("~/bundles/javascript")
+</head>
+<body>
+    <div id="help-tooltip"></div>
+    <div id="validation-tooltip"></div>
+    @Html.Partial("/Views/Shared/_NotificationMessage.cshtml")
 
-        <div id="wait-mask">
-            <div class="loading">
-                <div class="loading-bar"></div>
-                <div class="loading-bar"></div>
-                <div class="loading-bar"></div>
-                <div class="loading-bar"></div>
-            </div>
+    <div id="wait-mask">
+        <div class="loading">
+            <div class="loading-bar"></div>
+            <div class="loading-bar"></div>
+            <div class="loading-bar"></div>
+            <div class="loading-bar"></div>
         </div>
+    </div>
 
-        @RenderBody()
+    @RenderBody()
 
-        <script type="text/javascript">
-            var gShowSessionWarningTime = parseInt('@System.Web.Configuration.WebConfigurationManager.AppSettings["ShowSessionWarningTime"]') * 60000;
-        </script>
-    </body>
+    <script type="text/javascript">
+        var gShowSessionWarningTime = parseInt('@System.Web.Configuration.WebConfigurationManager.AppSettings["ShowSessionWarningTime"]') * 60000;
+        var gSmartPrefixes =  @Html.Raw(Json.Encode(((List<string>)CommonHelper.SmartPrefixes)));
+        var gMetFonePrefixes =  @Html.Raw(Json.Encode(((List<string>)CommonHelper.MetFonePrefixes)));
+        var gCellCardPrefixes =  @Html.Raw(Json.Encode(((List<string>)CommonHelper.CellCardPrefixes)));
+    </script>
+</body>
 </html>
