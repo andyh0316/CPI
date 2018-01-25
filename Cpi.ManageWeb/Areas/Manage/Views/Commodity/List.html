@@ -16,7 +16,7 @@
         <table>
             <thead>
                 <tr>
-                    <th><a ng-sort="Date">Created 生成日期</a></th>
+                    <th><a ng-sort="CreatedDate">Created 生成日期</a></th>
                     <th><a ng-sort="Name">Name 明细</a></th>
                     <th class="center-content"><a ng-sort="Inactive">Deactivated 停用</a></th>
                     <th class="right-content">Price 价格</th>
@@ -27,7 +27,7 @@
                 <tr ng-repeat="listItem in listItems" ng-class="{deletingEntry: listItem.Deleted}">
                     <td>
                         <dl>
-                            <dd>{{listItem.Date | shortDate}}</dd>
+                            <dd>{{listItem.CreatedDate | shortDate}}</dd>
                         </dl>
                     </td>
                     <td>
