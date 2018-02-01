@@ -44,7 +44,7 @@
                             <dd ng-show="!showListItemInput(listItem)">{{listItem.Inactive | bool}}</dd>
                             <dd ng-show="showListItemInput(listItem)">
                                 <span field-validation-error ng-show="modelState['[' + getTouchedListItemIndex(listItem) + '].Inactive']" class="field-validation-error"></span>
-                                <input type="checkbox" ng-model="listItem.Inactive" />
+                                <span model-checkbox ng-model="listItem.Inactive"></span>
                             </dd>
                         </dl>
                     </td>

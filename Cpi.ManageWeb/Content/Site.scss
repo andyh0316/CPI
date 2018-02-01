@@ -1233,6 +1233,98 @@ textarea,
     }
 }
 
+input[type=checkbox] {
+    display: none;
+
+    &:disabled + label:before {
+        opacity: 0.5;
+    }
+}
+
+input[type=checkbox] + label, .checkbox {
+    font-weight: 400;
+    text-transform: none;
+    font-size: 13px;
+
+    &:before {
+        position: relative;
+        margin-right: 2px;
+        @extend %material-icons;
+        font-size: 18px;
+        color: #ABABAB;
+        content: "check_box_outline_blank";
+        vertical-align: bottom;
+    }
+
+    &:hover:before {
+        color: $active-color;
+    }
+}
+
+input[type=checkbox]:checked + label, .checkbox.checked {
+    &:before {
+        @extend %material-icons;
+        font-size: 18px;
+        content: "check_box";
+        color: $active-color;
+    }
+}
+
+.checkbox-wrapper {
+    padding-right: 10px !important;
+
+    &:hover {
+        .checkbox:before {
+            color: $active-color;
+        }
+    }
+}
+
+input[type=radio] {
+    display: none;
+
+    & + label {
+        //font-weight: 100;
+        padding-right: 15px;
+        font-size: 13px;
+        text-transform: none;
+
+        &:before {
+            position: relative;
+            margin-right: 2px;
+            @extend %material-icons;
+            font-size: 18px;
+            color: #ABABAB;
+            content: "radio_button_unchecked";
+            vertical-align: bottom;
+        }
+
+        &:hover:before {
+            color: $active-color;
+        }
+    }
+
+    &:checked + label {
+        &:before {
+            @extend %material-icons;
+            font-size: 18px;
+            content: "radio_button_checked";
+            color: $active-color;
+        }
+    }
+
+    &:disabled + label {
+        &:before {
+            opacity: 0.5;
+        }
+    }
+}
+
+span[checkbox]:disabled {
+    opacity: 0.5;
+}
+
+
 textarea {
     height: 100px;
     //max-height: 500px;

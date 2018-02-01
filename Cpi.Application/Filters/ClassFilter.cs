@@ -13,5 +13,11 @@ namespace Cpi.Application.Filters
             public int? LocationId { get; set; }
             public ReportDateFilter ReportDateFilter { get; set; }
         }
+
+        public class Performance
+        {
+            public bool AveragePerDay { get; set; }
+            public ReportDateFilter ReportDateFilter { get; set; }
+        }
     }
 }

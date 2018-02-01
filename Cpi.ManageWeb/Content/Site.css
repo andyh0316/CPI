@@ -7,7 +7,7 @@
   src: local("Material Icons"), local("MaterialIcons-Regular"), url(/Content/MaterialIcons/MaterialIcons-Regular.woff2) format("woff2"), url(/Content/MaterialIcons/MaterialIcons-Regular.woff) format("woff"), url(/Content/MaterialIcons/MaterialIcons-Regular.ttf) format("truetype"); }
 
 .material-icons, .list-container table thead tr th a .sort-asc-icon:after,
-.list-container table thead tr th a .sort-desc-icon:after, .icon:before, .search-drop-down .input-container:after, #login-screen dl dt:before, .commodities-edit .edit-container .edit-row .minus:after,
+.list-container table thead tr th a .sort-desc-icon:after, input[type=checkbox] + label:before, .checkbox:before, input[type=checkbox]:checked + label:before, .checkbox.checked:before, input[type=radio] + label:before, input[type=radio]:checked + label:before, .icon:before, .search-drop-down .input-container:after, #login-screen dl dt:before, .commodities-edit .edit-container .edit-row .minus:after,
 .commodities-edit .edit-container .edit-row .plus:after,
 .commodities-edit .edit-container .edit-row .plus.minus:after, #notification-message .wrapper .icon:before, #notification-message .wrapper .close:after {
   font-family: 'Material Icons';
@@ -837,6 +837,60 @@ textarea,
     border: none; }
   .input-container:hover {
     cursor: text; }
+
+input[type=checkbox] {
+  display: none; }
+  input[type=checkbox]:disabled + label:before {
+    opacity: 0.5; }
+
+input[type=checkbox] + label, .checkbox {
+  font-weight: 400;
+  text-transform: none;
+  font-size: 13px; }
+  input[type=checkbox] + label:before, .checkbox:before {
+    position: relative;
+    margin-right: 2px;
+    font-size: 18px;
+    color: #ABABAB;
+    content: "check_box_outline_blank";
+    vertical-align: bottom; }
+  input[type=checkbox] + label:hover:before, .checkbox:hover:before {
+    color: #059811; }
+
+input[type=checkbox]:checked + label:before, .checkbox.checked:before {
+  font-size: 18px;
+  content: "check_box";
+  color: #059811; }
+
+.checkbox-wrapper {
+  padding-right: 10px !important; }
+  .checkbox-wrapper:hover .checkbox:before {
+    color: #059811; }
+
+input[type=radio] {
+  display: none; }
+  input[type=radio] + label {
+    padding-right: 15px;
+    font-size: 13px;
+    text-transform: none; }
+    input[type=radio] + label:before {
+      position: relative;
+      margin-right: 2px;
+      font-size: 18px;
+      color: #ABABAB;
+      content: "radio_button_unchecked";
+      vertical-align: bottom; }
+    input[type=radio] + label:hover:before {
+      color: #059811; }
+  input[type=radio]:checked + label:before {
+    font-size: 18px;
+    content: "radio_button_checked";
+    color: #059811; }
+  input[type=radio]:disabled + label:before {
+    opacity: 0.5; }
+
+span[checkbox]:disabled {
+  opacity: 0.5; }
 
 textarea {
   height: 100px;

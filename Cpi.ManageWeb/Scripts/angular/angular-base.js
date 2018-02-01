@@ -594,134 +594,134 @@ baseModule.directive('listPanelsContainer', function () {
     }
 });
 
-baseModule.directive('modelCheckbox', function () {
+baseModule.directive('modelCheckbox', ['$rootScope', function ($rootScope) {
     return {
         restrict: 'A',
+        transclude: true,
         scope: {
             ngModel: '=',
-            ngLabel: '=',
             ngDisabled: '=',
             ngClick: '&',
         },
 
-        template: '' +
-          '<input type="checkbox" ng-model="ngModel" ng-disabled="ngDisabled" ng-click="ngClick">' +
-          '<label>{{ngLabel}}</label>',
+        template:
+        '<input type="checkbox" ng-model="ngModel" ng-disabled="ngDisabled" ng-click="ngClick"> \
+          <label> \
+            <ng-transclude></ng-transclude> \
+          </label>',
 
         link: {
-            pre: function (scope, element, attrs) {
+            pre: function ($scope, $element, $attrs) {
                 // prevent click behavior on disabled
-                element.bind('click', function (e) {
-                    if (scope.ngDisabled == true) {
+                $element.bind('click', function (e) {
+                    if ($scope.ngDisabled == true) {
                         e.stopImmediatePropagation();
                         e.preventDefault();
                     } else {
-                        scope.ngModel = !scope.ngModel;
-                        if (scope.$parent.form) {
-                            scope.$parent.form.$setDirty();
-                        }
-                        scope.$apply();
+                        $scope.ngModel = !$scope.ngModel;
+                        //$rootScope.setFormDirty($scope);
+                        $scope.$apply();
                     }
                 });
             }
         }
     };
-});
+}]);
 
-baseModule.directive('modelCheckboxReversed', function () {
+baseModule.directive('modelCheckboxReversed', ['$rootScope', function ($rootScope) {
     return {
         restrict: 'A',
+        transclude: true,
         scope: {
             ngModel: '=',
-            ngLabel: '=',
             ngDisabled: '=',
             ngClick: '&',
         },
 
-        template: '' +
-          '<input type="checkbox" ng-model="ngModel" ng-disabled="ngDisabled" ng-click="ngClick" ng-true-value="false" ng-false-value="true">' +
-          '<label>{{ngLabel}}</label>',
+        template:
+        '<input type="checkbox" ng-model="ngModel" ng-disabled="ngDisabled" ng-click="ngClick" ng-true-value="false" ng-false-value="true"> \
+          <label> \
+            <ng-transclude></ng-transclude> \
+          </label>',
 
         link: {
-            pre: function (scope, element, attrs) {
+            pre: function ($scope, $element, $attrs) {
                 // prevent click behavior on disabled
-                element.bind('click', function (e) {
-                    if (scope.ngDisabled == true) {
+                $element.bind('click', function (e) {
+                    if ($scope.ngDisabled == true) {
                         e.stopImmediatePropagation();
                         e.preventDefault();
                     } else {
-                        scope.ngModel = !scope.ngModel;
-                        if (scope.$parent.form) {
-                            scope.$parent.form.$setDirty();
-                        }
-                        scope.$apply();
+                        $scope.ngModel = !$scope.ngModel;
+                        //$rootScope.setFormDirty($scope);
+                        $scope.$apply();
                     }
                 });
             }
         }
     };
-});
+}]);
 
-baseModule.directive('checkbox', function () {
+baseModule.directive('checkbox', ['$rootScope', function ($rootScope) {
     return {
+        transclude: true,
         scope: {
             ngChecked: '=',
-            ngLabel: '=',
             ngDisabled: '='
         },
 
         template: '' +
-          '<input type="checkbox" ng-checked="ngChecked" ng-disabled="ngDisabled">' +
-          '<label>{{ngLabel}}</label>',
+        '<input type="checkbox" ng-checked="ngChecked" ng-disabled="ngDisabled"> \
+          <label> \
+            <ng-transclude></ng-transclude> \
+          </label>',
 
         link: {
-            pre: function (scope, element, attrs) {
+            pre: function ($scope, $element, $attrs) {
                 // prevent click behavior on disabled
-                element.bind('click', function (e) {
-                    if (scope.ngDisabled == true) {
+                $element.bind('click', function (e) {
+                    if ($scope.ngDisabled == true) {
                         e.stopImmediatePropagation();
                         e.preventDefault();
                     } else {
-                        if (scope.$parent.form) {
-                            scope.$parent.form.$setDirty();
-                        }
+                        //$rootScope.setFormDirty($scope);
                     }
                 });
             }
         }
     };
-});
+}]);
 
-baseModule.directive('modelRadio', function () {
+baseModule.directive('modelRadio', ['$rootScope', function ($rootScope) {
     return {
         restrict: 'A',
+        transclude: true,
         scope: {
             ngModel: '=',
             ngValue: '=',
-            ngLabel: '=',
             ngDisabled: '=',
         },
 
         template: '' +
-          '<input type="radio" ng-model="ngModel" ng-value="ngValue" ng-disabled="ngDisabled">' +
-          '<label>{{ngLabel}}</label>',
+        '<input type="radio" ng-model="ngModel" ng-value="ngValue" ng-disabled="ngDisabled"> \
+          <label> \
+            <ng-transclude></ng-transclude> \
+          </label>',
 
         link: {
-            pre: function (scope, element, attrs) {
+            pre: function ($scope, $element, $attrs) {
                 // prevent click behavior on disabled
-                element.bind('click', function (e) {
-                    if (scope.ngDisabled != true) {
-                        scope.ngModel = scope.ngValue;
-                        if (scope.$parent.form) {
-                            scope.$parent.form.$setDirty();
-                        }
-                        scope.$apply();
+                $element.bind('click', function (e) {
+                    if ($scope.ngDisabled != true) {
+                        $scope.ngModel = $scope.ngValue;
+                        //$rootScope.setFormDirty($scope)
+                        $scope.$apply();
                     }
                 });
             }
         }
     };
-});
+}]);
 
 baseModule.directive('searchDropDown', ['baseBo', '$rootScope', function (baseBo, $rootScope) {
     return {

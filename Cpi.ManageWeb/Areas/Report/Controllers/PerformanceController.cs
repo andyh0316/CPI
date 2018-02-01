@@ -27,21 +27,24 @@ namespace Cpi.ManageWeb.Areas.Report.Controllers
             return View();
         }
 
-        [HttpGet]
-        public ContentResult GetPerformance(ReportDateFilter filter)
+        [HttpPost]
+        public ContentResult GetPerformance(ClassFilter.Performance filter)
         {
             if (filter == null)
             {
-                filter = new ReportDateFilter
+                filter = new ClassFilter.Performance
                 {
-                    ReportDateId = (int)ReportDateFilter.ReportDateIdEnums.Today
+                    ReportDateFilter =
+                    {
+                        ReportDateId = (int)ReportDateFilter.ReportDateIdEnums.Today
+                    }
                 };
             }
 
             var model = new
             {
                 PerformanceForOperators = PerformanceBo.GetPerformanceForOperators(filter),
-                PerformanceForDeliveryStaff = PerformanceBo.GetPerformanceForDeliverStaff(filter)
+                PerformanceForDeliveryStaff = PerformanceBo.GetPerformanceForDeliverStaff(filter),
             };
 
             return JsonModel(model);
