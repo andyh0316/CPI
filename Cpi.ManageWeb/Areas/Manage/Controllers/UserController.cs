@@ -64,7 +64,7 @@ namespace Cpi.ManageWeb.Areas.Manage.Controllers
                 {
                     Salary = 0,
                     VacationDaysTaken = 0,
-                    StartDate = new DateTime(DateTime.Now.Ticks).Date,
+                    StartDate = new DateTime(DateTime.Now.Date.Ticks),
                     UserRoleId = (int)LookUpUserRoleDm.LookUpIds.Staff
                 };
             }
