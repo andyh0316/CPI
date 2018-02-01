@@ -16,7 +16,8 @@ namespace Cpi.Application.Filters
 
         public class Performance
         {
-            public bool AveragePerDay { get; set; }
+            public bool AveragePerMonth { get; set; }
+            public int ReportPerformanceByXAxisId { get; set; }
             public ReportDateFilter ReportDateFilter { get; set; }
         }
     }
