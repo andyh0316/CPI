@@ -54,6 +54,11 @@ namespace Cpi.ManageWeb.Areas.Manage.Controllers
             {
                 CommodityDm trackedCommodity = (commodity.Id > 0) ? trackedCommodities.Find(a => a.Id == commodity.Id) : new CommodityDm();
                 Mapper.Map(commodity, trackedCommodity);
+
+                if (commodity.Id == 0)
+                {
+                    CommodityBo.Add(trackedCommodity);
+                }
             }
 
             CommodityBo.Commit();
