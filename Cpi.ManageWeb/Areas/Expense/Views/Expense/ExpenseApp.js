@@ -92,18 +92,23 @@ app.controller('ListController', ['$scope', '$controller', '$state', 'baseBo', '
                 nextRecordDate = new Date(nextRecordDate.getFullYear(), nextRecordDate.getMonth(), nextRecordDate.getDate());
                 return !(recordDate.getTime() === nextRecordDate.getTime());
             }
+
+            if (index === $scope.listItems.length - 1)
+            {
+                return true;
+            }
         }
-            return false;
+
+        return false;
     };
 
     $scope.getDailyTotalExpense = function (index) {
         var record = $scope.listItems[index];
         var recordDate = record.Date;
-        console.log(index);
         recordDate = new Date(recordDate);
         recordDate = new Date(recordDate.getFullYear(), recordDate.getMonth(), recordDate.getDate());
 
-        var totalExpense = record.Expense * record.Quantity;
+        var totalExpense = record.Expense;
 
         while (true) {
             index--;
@@ -123,7 +128,7 @@ app.controller('ListController', ['$scope', '$controller', '$state', 'baseBo', '
                 break;
             }
 
-            totalExpense = totalExpense + currentRecord.Expense * currentRecord.Quantity;
+            totalExpense = totalExpense + currentRecord.Expense;
         }
 
         return totalExpense;

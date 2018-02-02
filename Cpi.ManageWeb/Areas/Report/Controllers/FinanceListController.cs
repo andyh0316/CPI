@@ -51,7 +51,7 @@ namespace Cpi.ManageWeb.Areas.Report.Controllers
             {
                 Date = date.Value,
                 InvoiceSummaries = invoiceSummaries,
-                Expenses = expenses.OrderBy(a => a.Location.DisplayOrder).ThenByDescending(a => a.Expense * a.Quantity),
+                Expenses = expenses.OrderBy(a => a.Location.DisplayOrder).ThenByDescending(a => a.Expense),
             };
 
             return JsonModel(model);

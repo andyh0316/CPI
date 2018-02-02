@@ -60,8 +60,6 @@
                     <th>Handled By</th>
                     <th>Note</th>
                     <th class="right-content thd-S"><a ng-sort="Expense * Quantity">Expense</a></th>
-                    <th class="right-content thd-S"><a ng-sort="Quantity">Quantity</a></th>
-                    <th class="right-content thd-S">Total</th>
                     <th class="action"></th>
                 </tr>
             </thead>
@@ -124,24 +122,6 @@
                             </dd>
                         </dl>
                     </td>
-                    <td class="right-content thd-S">
-                        <dl>
-                            <dd ng-show="!showListItemInput(listItem)">{{listItem.Quantity}}</dd>
-                            <dd ng-show="showListItemInput(listItem)">
-                                <span field-validation-error ng-show="modelState['[' + getTouchedListItemIndex(listItem) + '].Quantity']" class="field-validation-error"></span>
-                                <input ng-model="listItem.Quantity" />
-                            </dd>
-                        </dl>
-                    </td>
-                    <td class="right-content thd-S">
-                        <dl>
-                            <dd>
-                                <span ng-show="listItem.Expense * listItem.Quantity">
-                                    ${{listItem.Expense * listItem.Quantity | number: 2}}
-                                </span>
-                            </dd>
-                        </dl>
-                    </td>
                     <td class="action">
                         <button ng-show="!listItem.touched" class="edit icon" ng-click="editListItem(listItem); $event.stopPropagation();"></button>
                         <button ng-show="!listItem.touched && listItem.Id > 0" class="delete icon" ng-click="deleteListItem(listItem); $event.stopPropagation();"></button>
@@ -159,18 +139,6 @@
                     <td class="right-content thd-S">${{getDailyTotalExpense($index) | number: 2}}</td>
                     <td class="action"></td>
                 </tr>
-                <!--<tr>
-                    <td class="date-time"></td>
-                    <td></td>
-                    <td class="right-content">
-                        <dl ng-show="!isAnyListItemTouched()">
-                            <dd>
-                                <b>Total:</b> ${{getTotalExpense() | number: 2}}
-                            </dd>
-                        </dl>
-                    </td>
-                    <td class="action"></td>
-                </tr>-->
             </tbody>
         </table>
     </div>

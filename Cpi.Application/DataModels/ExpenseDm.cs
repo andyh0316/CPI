@@ -19,10 +19,6 @@ namespace Cpi.Application.DataModels
         [CpiGreaterThanZero]
         public decimal? Expense { get; set; }
 
-        [CpiRequired]
-        [CpiGreaterThanZero]
-        public int? Quantity { get; set; }
-
         public int? LocationId { get; set; }
         public virtual LookUpLocationDm Location { get; set; }
 
