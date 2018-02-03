@@ -337,6 +337,7 @@
     <Content Include="Scripts\angular\angular-ui-router.js" />
     <Content Include="Scripts\angular\angular.js" />
     <Content Include="Scripts\angular\angular-base.js" />
+    <Content Include="Scripts\javascript\jquery.redirect.js" />
     <Content Include="Scripts\javascript\moment-timezone-with-data.js" />
     <Content Include="Scripts\javascript\moment.js" />
     <Content Include="Scripts\javascript\require.js" />

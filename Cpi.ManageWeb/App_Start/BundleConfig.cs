@@ -26,6 +26,7 @@ namespace Cpi.ManageWeb
 
             bundles.Add(new ScriptBundle("~/bundles/javascript").Include(
                         "~/Scripts/javascript/javascript-base.js",
+                        "~/Scripts/javascript/jquery.redirect.js",
                         "~/Scripts/javascript/moment.js",
                         "~/Scripts/javascript/moment-timezone-with-data.js"));
 
