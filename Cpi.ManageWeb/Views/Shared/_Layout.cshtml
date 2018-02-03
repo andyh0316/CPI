@@ -1,4 +1,5 @@
 ﻿@using Cpi.Application.Helpers;
+@using Cpi.Application.Filters;
 
 <!DOCTYPE html>
 <html lang="en">
@@ -32,6 +33,7 @@
     <script type="text/javascript">
         var gShowSessionWarningTime = parseInt('@System.Web.Configuration.WebConfigurationManager.AppSettings["ShowSessionWarningTime"]') * 60000;
         var gIsRoleLaozi = ('@UserHelper.IsRoleLaozi()' == 'True') ? true : false;
+        var gReportDateId = @((int)ReportDateFilter.ReportDateIdEnums.Today);
         var gSmartPrefixes =  @Html.Raw(Json.Encode(((List<string>)CommonHelper.SmartPrefixes)));
         var gMetFonePrefixes =  @Html.Raw(Json.Encode(((List<string>)CommonHelper.MetFonePrefixes)));
         var gCellCardPrefixes =  @Html.Raw(Json.Encode(((List<string>)CommonHelper.CellCardPrefixes)));

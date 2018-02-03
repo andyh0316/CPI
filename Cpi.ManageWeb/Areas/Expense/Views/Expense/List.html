@@ -7,7 +7,7 @@
 
         <div class="filters-container">
             <div simple-search></div>
-            <div advanced-search>
+            <div ng-show="isRoleLaozi" advanced-search>
                 <section>
                     <dl class="dl-S">
                         <dt>Location</dt>
@@ -17,11 +17,10 @@
                             </select>
                         </dd>
                     </dl>
-                    <dl>
+                    <dl class="dl-S">
                         <dt>Date</dt>
                         <dd>
                             <select ng-model="scopeData.filter.AdvancedSearch.ReportDateFilter.ReportDateId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.ReportDates">
-                                <option value="">All ទាំងអស់</option>
                             </select>
                         </dd>
                     </dl>
@@ -37,6 +36,22 @@
                         <dt>Date: To</dt>
                         <dd>
                             <input ng-model="scopeData.filter.AdvancedSearch.ReportDateFilter.DateTo" date-input />
+                        </dd>
+                    </dl>
+                </section>
+            </div>
+            <div advanced-search auto-trigger="true">
+                <section>
+                    <dl class="dl-S">
+                        <dd>
+                            <select ng-model="scopeData.filter.AdvancedSearch.LocationId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.Locations">
+                                <option value="">All ទាំងអស់</option>
+                            </select>
+                        </dd>
+                    </dl>
+                    <dl class="dl-S">
+                        <dd>
+                            <select ng-model="scopeData.filter.AdvancedSearch.ReportDateFilter.ReportDateId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.ReportDates"></select>
                         </dd>
                     </dl>
                 </section>

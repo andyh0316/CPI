@@ -4,7 +4,15 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
     $urlRouterProvider.when("", "/List");
 
     var listScopeData = {
-        filter: { Loads: 0, SortObjects: [{ ColumnName: 'Date', IsDescending: true }]},
+        filter: {
+            Loads: 0,
+            SortObjects: [{ ColumnName: 'Date', IsDescending: true }],
+            AdvancedSearch: {
+                ReportDateFilter: {
+                    ReportDateId: gReportDateId
+                }
+            }
+        },
         httpRequest: { method: 'POST', url: '/Call/Call/GetList' }
     };
 
