@@ -7,7 +7,8 @@ namespace Cpi.Application.DataModels.LookUp
         public enum LookUpIds
         {
             Sold = 1,
-            Cancelled = 2
+            Cancelled = 2,
+            Delivering = 3,
         }
     }
 

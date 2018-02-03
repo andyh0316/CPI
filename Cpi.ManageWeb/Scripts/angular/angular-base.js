@@ -335,7 +335,7 @@ baseModule.controller('ListBaseController', ['$scope', '$controller', 'baseBo', 
 baseModule.factory('baseBo', ['$http', '$window', '$q', function ($http, $window, $q) {
     var instance = {};
 
-    var currentRequests = 0;
+    gCurrentRequests = 0;
 
     // Caution: all posts that attempt to save should preferrably pass in a whole model object instead of objects of different models
     // (ex. httpPost(url, $scope.model) instead of httpPost(url, { model: $scope.model })
@@ -346,7 +346,7 @@ baseModule.factory('baseBo', ['$http', '$window', '$q', function ($http, $window
         }
         else {
             $('#wait-mask').show();
-            currentRequests++;
+            gCurrentRequests++;
         }
 
         if (httpMethod == 'GET') {
@@ -382,16 +382,16 @@ baseModule.factory('baseBo', ['$http', '$window', '$q', function ($http, $window
                 //successFunc(result);
                 deferred.resolve(result);
 
-                currentRequests--;
-                if (currentRequests <= 0) {
-                    currentRequests = 0;
+                gCurrentRequests--;
+                if (gCurrentRequests <= 0) {
+                    gCurrentRequests = 0;
                     $('#wait-mask').hide();
                 }
             })
             .error(function (data, status, headers, config) {
-                currentRequests--;
-                if (currentRequests <= 0) {
-                    currentRequests = 0;
+                gCurrentRequests--;
+                if (gCurrentRequests <= 0) {
+                    gCurrentRequests = 0;
                     $('#wait-mask').hide();
                 }
 

@@ -1394,6 +1394,12 @@ textarea {
         content: "cancel";
     }
 
+    &.invoice-delivering:before {
+        content: "motorcycle";
+        color: #75beff;
+        font-weight: bolder;
+    }
+
     &.invoice-sold:before {
         content: "check";
         color: #4ab515;

@@ -27,7 +27,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
         })
 }]);
 
-app.controller('ListController', ['$scope', '$controller', '$state', 'baseBo', 'model', 'scopeData', 'modelData', function ($scope, $controller, $state, baseBo, model, scopeData, modelData) {
+app.controller('ListController', ['$scope', '$controller', '$state', '$timeout', 'baseBo', 'model', 'scopeData', 'modelData', function ($scope, $controller, $state, $timeout, baseBo, model, scopeData, modelData) {
     angular.extend(this, $controller('ListBaseController', { $scope: $scope }));
 
     $scope.scopeData = scopeData;
@@ -38,6 +38,8 @@ app.controller('ListController', ['$scope', '$controller', '$state', 'baseBo', '
     $scope.listLoadCalculator = $scope.model.ListLoadCalculator;
 
     $scope.save = function () {
+        $scope.newListItemCount = 0;
+
         var savingListItems = $scope.listItems.filter(function (item) { return item.touched === true });
         baseBo.httpRequest('POST', '/Invoice/Invoice/SaveList', savingListItems)
             .then(function (result) {
@@ -51,6 +53,24 @@ app.controller('ListController', ['$scope', '$controller', '$state', 'baseBo', '
                 }
             });
     };
+
+    $scope.newListItemCount = 0;
+    $scope.checkNewListItems = function () {
+        if (gCurrentRequests === 0 && !$scope.isAnyListItemTouched())
+        {
+            baseBo.httpRequest(scopeData.httpRequest.method, scopeData.httpRequest.url, scopeData.filter, {noLoadIcon: true})
+                .then(function (result) {
+                    if ($scope.listLoadCalculator.Total < result.Object.ListLoadCalculator.Total)
+                    {
+                        $scope.newListItemCount = result.Object.ListLoadCalculator.Total - $scope.listLoadCalculator.Total;
+                    }
+                });
+        }
+
+        $timeout($scope.checkNewListItems, 30000);
+    }
+
+    $timeout($scope.checkNewListItems, 3000);
 
     $scope.invoiceCommodityChange = function (record) {
         var total = 0;

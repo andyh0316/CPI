@@ -939,6 +939,11 @@ textarea {
 .icon.cancel:before {
   content: "cancel"; }
 
+.icon.invoice-delivering:before {
+  content: "motorcycle";
+  color: #75beff;
+  font-weight: bolder; }
+
 .icon.invoice-sold:before {
   content: "check";
   color: #4ab515;

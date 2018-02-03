@@ -147,7 +147,7 @@ namespace Cpi.Application.BusinessObjects.Other
 
             invoiceQuery = InvoiceBo.GetDateFilteredQuery(invoiceQuery, filter.ReportDateFilter);
 
-            invoiceQuery = invoiceQuery.Where(a => !a.StatusId.HasValue);
+            invoiceQuery = invoiceQuery.Where(a => !a.StatusId.HasValue || a.StatusId == (int)LookUpInvoiceStatusDm.LookUpIds.Delivering);
 
             return invoiceQuery.SelectMany(a => a.InvoiceCommodities.Select(b => b.Quantity.Value)).DefaultIfEmpty(0).Sum();
         }
@@ -209,7 +209,7 @@ namespace Cpi.Application.BusinessObjects.Other
 
             invoiceQuery = InvoiceBo.GetDateFilteredQuery(invoiceQuery, filter.ReportDateFilter);
 
-            invoiceQuery = invoiceQuery.Where(a => !a.StatusId.HasValue);
+            invoiceQuery = invoiceQuery.Where(a => !a.StatusId.HasValue || a.StatusId == (int)LookUpInvoiceStatusDm.LookUpIds.Delivering);
 
             return invoiceQuery.Count();
         }

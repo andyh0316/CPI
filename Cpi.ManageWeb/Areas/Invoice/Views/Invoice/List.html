@@ -52,6 +52,10 @@
         </div>
 
         <div class="buttons">
+            <button ng-show="!isAnyListItemTouched()" class="button main" ng-click="getList()" ng-disabled="!newListItemCount">
+                Refresh 
+                <span ng-show="newListItemCount">({{newListItemCount}})</span>
+            </button>
             <button ng-show="isAnyListItemTouched()" class="button" ng-click="cancelListItems()">Cancel</button>
             <button ng-show="isAnyListItemTouched()" class="button main" ng-click="save()">Save</button>
             <button class="button main" ng-click="createListItem({ LocationId: modelData.LocationEnums.PhnomPenh, Date: modelData.TodayDate })">+ Create</button>
@@ -179,8 +183,9 @@
                     <td class="thd-S center-content">
                         <dl>
                             <dd ng-show="!showListItemInput(listItem)">
-                                <span ng-show="listItem.StatusId === modelData.InvoiceStatusIdEnums.Sold" class="invoice-sold icon" title="Sold: Product(s) delivered to and paid by customer. 以卖出"></span>
-                                <span ng-show="listItem.StatusId === modelData.InvoiceStatusIdEnums.Cancelled" class="invoice-cancelled icon" title="Cancelled: Product(s) not delivered to the customer. 取消"></span>
+                                <span ng-show="listItem.StatusId === modelData.InvoiceStatusIdEnums.Delivering" class="invoice-delivering icon" title="Delivering: Product(s) are being delivered."></span>
+                                <span ng-show="listItem.StatusId === modelData.InvoiceStatusIdEnums.Sold" class="invoice-sold icon" title="Sold: Product(s) delivered to and paid by customer."></span>
+                                <span ng-show="listItem.StatusId === modelData.InvoiceStatusIdEnums.Cancelled" class="invoice-cancelled icon" title="Cancelled: Product(s) not delivered to the customer."></span>
                             </dd>
                             <dd ng-show="showListItemInput(listItem)">
                                 <select ng-model="listItem.StatusId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.InvoiceStatuses">
