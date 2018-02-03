@@ -22,7 +22,7 @@
 
     <div id="print-section" class="results-container">
         <div ng-show="parsedPhoneNumbersModel.OtherPhoneNumbers.length  > 0" class="company-container">
-            <div class="title">Wrong Number ({{parsedPhoneNumbersModel.OtherPhoneNumbers.length}})</div>
+            <div class="title">Other ({{parsedPhoneNumbersModel.OtherPhoneNumbers.length}})</div>
             <div ng-repeat="phoneNumber in parsedPhoneNumbersModel.OtherPhoneNumbers track by $index" class="phone-number-container">
                 <div class="phone-number">{{phoneNumber}}</div>
                 <div phone-company-tag ng-model="phoneNumber"></div>

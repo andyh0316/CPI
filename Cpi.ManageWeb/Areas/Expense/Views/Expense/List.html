@@ -13,7 +13,7 @@
                         <dt>Location</dt>
                         <dd>
                             <select ng-model="scopeData.filter.AdvancedSearch.LocationId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.Locations">
-                                <option></option>
+                                <option value="">All ទាំងអស់</option>
                             </select>
                         </dd>
                     </dl>
@@ -21,7 +21,7 @@
                         <dt>Date</dt>
                         <dd>
                             <select ng-model="scopeData.filter.AdvancedSearch.ReportDateFilter.ReportDateId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.ReportDates">
-                                <option></option>
+                                <option value="">All ទាំងអស់</option>
                             </select>
                         </dd>
                     </dl>

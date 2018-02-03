@@ -8,7 +8,7 @@
                 <dl>
                     <dd>
                         <select ng-model="scopeData.filter.LocationId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.Locations">
-                            <option></option>
+                            <option value="">All ទាំងអស់</option>
                         </select>
                     </dd>
                 </dl>
@@ -42,54 +42,67 @@
         <div class="panel profit">
             <div class="content">${{model.Profit | number: 2}}</div>
             <div class="text">Profit</div>
+            <div class="text">ប្រាក់ចំណេញ</div>
         </div>
         <div class="panel expense">
             <div class="content">${{model.Expense | number: 2}}</div>
             <div class="text">Expense</div>
+            <div class="text">ចំណាយ</div>
         </div>
         <div class="panel">
             <div class="content">${{model.Revenue | number: 2}}</div>
             <div class="text">Revenue</div>
+            <div class="text">ចំណូល</div>
         </div>
         <div class="panel">
             <div class="content">{{model.ReceivedCallCount | number: 0}}</div>
             <div class="text">Calls Received</div>
+            <div class="text">​ការហៅចូលដែលបានទទួល</div>
         </div>
+        <!--Money Left ប្រាក់ដែលនៅសល់-->
     </div>
     <div class="panels">
         <div class="panel">
             <div class="content">{{model.ProductSoldCount | number: 0}}</div>
             <div class="text">Products Sold</div>
+            <div class="text">ផលិតផលដែលលក់ចេញ</div>
         </div>
         <div class="panel">
             <div class="content">{{model.ProductCancelledCount | number: 0}}</div>
             <div class="text">Products Cancelled</div>
+            <div class="text">ផលិតផលដែលលុបចចេញ</div>
         </div>
         <div class="panel">
             <div class="content">{{model.ProductPendingCount | number: 0}}</div>
             <div class="text">Products Pending</div>
+            <div class="text">ផលិតផលដែលកំពុងរងចាំ</div>
         </div>
         <div class="panel">
             <div class="content">{{model.ProductTotalCount | number: 0}}</div>
             <div class="text">Products Total</div>
+            <div class="text">ផលិតផលសរុប</div>
         </div>
     </div>
     <div class="panels">
         <div class="panel">
             <div class="content">{{model.InvoiceSoldCount | number: 0}}</div>
             <div class="text">Invoices Sold</div>
+            <div class="text">វិក័យប័ត្រលក់ចេញ</div>
         </div>
         <div class="panel">
             <div class="content">{{model.InvoiceCancelledCount | number: 0}}</div>
             <div class="text">Invoices Cancelled</div>
+            <div class="text">វិក័យប័ត្រលុបចេញ</div>
         </div>
         <div class="panel">
             <div class="content">{{model.InvoicePendingCount | number: 0}}</div>
             <div class="text">Invoices Pending</div>
+            <div class="text">វិក័យប័ត្ររងចាំ</div>
         </div>
         <div class="panel">
             <div class="content">{{model.InvoiceTotalCount | number: 0}}</div>
             <div class="text">Invoices Total</div>
+            <div class="text">វិក័យប័ត្រសរុប</div>
         </div>
     </div>
 

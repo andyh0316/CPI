@@ -1481,7 +1481,7 @@ baseModule.directive('phoneCompanyTag', ['$rootScope', function ($rootScope) {
             ngModel: '='
         },
         link: function ($scope, $element, $attrs) {
-            $scope.phoneCompany = 'Wrong Number!';
+            $scope.phoneCompany = 'Other!';
             $scope.$watch('ngModel', function (newVal, oldVal) {
                 if (newVal && newVal.length >= 2) {
                     var phonePrefix = newVal.substring(0, 2);
@@ -1508,7 +1508,7 @@ baseModule.directive('phoneCompanyTag', ['$rootScope', function ($rootScope) {
                         }
                     }
 
-                    $scope.phoneCompany = 'Wrong Number!';
+                    $scope.phoneCompany = 'Other!';
                 }
             });
         },

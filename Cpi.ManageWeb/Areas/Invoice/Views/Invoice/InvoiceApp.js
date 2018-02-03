@@ -67,10 +67,10 @@ app.controller('ListController', ['$scope', '$controller', '$state', '$timeout',
                 });
         }
 
-        $timeout($scope.checkNewListItems, 30000);
+        $timeout($scope.checkNewListItems, 5000);
     }
 
-    $timeout($scope.checkNewListItems, 3000);
+    $timeout($scope.checkNewListItems, 5000);
 
     $scope.invoiceCommodityChange = function (record) {
         var total = 0;

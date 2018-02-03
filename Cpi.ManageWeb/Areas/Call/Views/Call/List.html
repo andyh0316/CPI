@@ -13,7 +13,7 @@
                         <dt>Status</dt>
                         <dd>
                             <select ng-model="scopeData.filter.AdvancedSearch.StatusId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.CallStatuses">
-                                <option></option>
+                                <option value="">All ទាំងអស់</option>
                             </select>
                         </dd>
                     </dl>
@@ -21,7 +21,7 @@
                         <dt>Created Date</dt>
                         <dd>
                             <select ng-model="scopeData.filter.AdvancedSearch.ReportDateFilter.ReportDateId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.ReportDates">
-                                <option></option>
+                                <option value="">All ទាំងអស់</option>
                             </select>
                         </dd>
                     </dl>
@@ -105,7 +105,7 @@
                             </dd>
                             <dd ng-show="showListItemInput(listItem)">
                                 <select ng-model="listItem.StatusId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.CallStatuses">
-                                    <option></option>
+                                    <option value="">All ទាំងអស់</option>
                                 </select>
                             </dd>
                         </dl>

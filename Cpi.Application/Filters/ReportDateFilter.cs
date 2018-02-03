@@ -20,11 +20,11 @@ namespace Cpi.Application.Filters
         {
             List<CpiSelectListItem> reportDates = new List<CpiSelectListItem>
             {
-                new CpiSelectListItem { Id = (int)ReportDateIdEnums.Today, Name = "Today" },
-                new CpiSelectListItem { Id = (int)ReportDateIdEnums.Yesterday, Name = "Yesterday" },
-                new CpiSelectListItem { Id = (int)ReportDateIdEnums.Past7Days, Name = "Past 7 Days" },
-                new CpiSelectListItem { Id = (int)ReportDateIdEnums.Past30Days, Name = "Past 30 Days" },
-                new CpiSelectListItem { Id = (int)ReportDateIdEnums.PastYear, Name = "Past Year" },
+                new CpiSelectListItem { Id = (int)ReportDateIdEnums.Today, Name = "Today ថ្ងៃនេះ" },
+                new CpiSelectListItem { Id = (int)ReportDateIdEnums.Yesterday, Name = "Yesterday ម្សិលមិញ" },
+                new CpiSelectListItem { Id = (int)ReportDateIdEnums.Past7Days, Name = "Past 7 Days ៧ថ្ងៃមុន" },
+                new CpiSelectListItem { Id = (int)ReportDateIdEnums.Past30Days, Name = "Past 30 Days ៣០ថ្ងៃមុន" },
+                new CpiSelectListItem { Id = (int)ReportDateIdEnums.PastYear, Name = "Past Year ៣៦៥ថ្ងៃមុន" },
                 new CpiSelectListItem { Id = (int)ReportDateIdEnums.AllTimeOrSelectDateRange, Name = "All Time/Select Date Range" },
             };
 
