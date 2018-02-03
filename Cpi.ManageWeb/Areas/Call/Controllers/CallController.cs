@@ -57,11 +57,7 @@ namespace Cpi.ManageWeb.Areas.Call.Controllers
             {
                 Commodities = CommodityBo.GetList(),
                 CallStatuses = LookUpBo.GetList<LookUpCallStatusDm>().ToList(),
-                Users = UserBo.GetListQuery().OrderBy(a => a.Nickname).ThenBy(a => a.Fullname).Select(a => new CpiSelectListItem
-                {
-                    Id = a.Id,
-                    Name = a.Nickname + " (" + a.Fullname + ")"
-                }).ToList(),
+                Users = UserBo.GetSearchDropDownList(),
                 ReportDates = ReportDateFilter.GetSelectList(),
                 CallStatusIdEnums = EnumHelper.GetEnumIntList(typeof(LookUpCallStatusDm.LookUpIds)),
                 ReportDateIdEnums = EnumHelper.GetEnumIntList(typeof(ReportDateFilter.ReportDateIdEnums)),

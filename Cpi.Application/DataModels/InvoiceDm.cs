@@ -13,8 +13,14 @@ namespace Cpi.Application.DataModels
         public DateTime? Date { get; set; }
 
         [CpiRequired]
-        [CpiMaxLength(100)]
+        [CpiMaxLength(20)]
         public string CustomerPhone { get; set; }
+
+        [CpiMaxLength(20)]
+        public string CustomerName { get; set; }
+
+        [CpiMaxLength(100)]
+        public string Address { get; set; }
 
         public virtual List<InvoiceCommodityDm> InvoiceCommodities { get; set; }
 

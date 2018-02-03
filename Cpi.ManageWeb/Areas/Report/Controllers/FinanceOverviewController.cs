@@ -66,7 +66,7 @@ namespace Cpi.ManageWeb.Areas.Report.Controllers
                 Locations = LookUpBo.GetList<LookUpLocationDm>(),
                 ReportDates = ReportDateFilter.GetSelectList(),
                 ReportDateIdEnums = EnumHelper.GetEnumIntList(typeof(ReportDateFilter.ReportDateIdEnums)),
-                //CanSeeMoney = (UserHelper.GetRoleId() == (int)LookUpUserRoleDm.LookUpIds.老子) ? true : false
+                //CanSeeMoney = (UserHelper.GetRoleId() == (int)LookUpUserRoleDm.LookUpIds.Laozi) ? true : false
             };
 
             return JsonModel(model);

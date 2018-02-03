@@ -733,6 +733,7 @@ $ui-view-top-padding: $main-menu-height + $secondary-menu-height;
                         dd {
                             font-size: inherit;
                             min-height: 0px;
+                            line-height: unset;
                             padding: 0px;
 
                             input[date-input] {
@@ -807,6 +808,22 @@ $ui-view-top-padding: $main-menu-height + $secondary-menu-height;
 
             &.commodities {
                 width: 200px;
+            }
+
+            &.date {
+                width: 110px;
+            }
+
+            &.phone {
+                width: 150px;
+            }
+
+            &.full-name {
+
+            }
+
+            &.user-nickname {
+                width: 120px;
             }
 
             &.date-time {

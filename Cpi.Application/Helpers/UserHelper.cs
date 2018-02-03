@@ -60,7 +60,7 @@ namespace Cpi.Application.Helpers
         {
             int roleId = GetRoleId();
 
-            if (roleId == (int)LookUpUserRoleDm.LookUpIds.老子 || roleId == (int)LookUpUserRoleDm.LookUpIds.Admin)
+            if (roleId == (int)LookUpUserRoleDm.LookUpIds.Laozi || roleId == (int)LookUpUserRoleDm.LookUpIds.Admin)
             {
                 return true;
             }

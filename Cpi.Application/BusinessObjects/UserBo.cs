@@ -17,9 +17,9 @@ namespace Cpi.Application.BusinessObjects
         {
             IQueryable<UserDm> query = GetListQuery();
              
-            if (UserHelper.GetRoleId() != (int)LookUpUserRoleDm.LookUpIds.老子)
+            if (UserHelper.GetRoleId() != (int)LookUpUserRoleDm.LookUpIds.Laozi)
             {
-                query = query.Where(a => a.UserRoleId != (int)LookUpUserRoleDm.LookUpIds.老子);
+                query = query.Where(a => a.UserRoleId != (int)LookUpUserRoleDm.LookUpIds.Laozi);
             }
 
             if (!string.IsNullOrEmpty(filter.SearchString))
@@ -65,10 +65,10 @@ namespace Cpi.Application.BusinessObjects
 
         public List<CpiSelectListItem> GetSearchDropDownList()
         {
-            return GetListQuery().OrderBy(a => a.Nickname).ThenBy(a => a.Fullname).Select(a => new CpiSelectListItem
+            return GetListQuery().OrderBy(a => a.Nickname).Select(a => new CpiSelectListItem
             {
                 Id = a.Id,
-                Name = a.Nickname + " (" + a.Fullname + ")"
+                Name = a.Nickname
             }).ToList();
         }
     }

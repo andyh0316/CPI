@@ -14,7 +14,7 @@ namespace Cpi.Application.BusinessObjects
         {
             IQueryable<CallDm> query = base.GetListQuery();
 
-            if (UserHelper.GetRoleId() != (int)LookUpUserRoleDm.LookUpIds.老子)
+            if (UserHelper.GetRoleId() != (int)LookUpUserRoleDm.LookUpIds.Laozi)
             {
                 DateTime globalFilteredDate = CommonHelper.GetGlobalFilteredDate();
                 query = query.Where(a => a.Date >= globalFilteredDate);

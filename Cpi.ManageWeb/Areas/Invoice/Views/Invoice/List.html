@@ -62,12 +62,14 @@
         <table>
             <thead>
                 <tr>
-                    <th class="date-time"><a ng-sort="Date">Created</th>
-                    <th>Phone</th>
+                    <th class="date"><a ng-sort="Date">Created</a></th>
+                    <th class="phone">Customer Phone</th>
+                    <th class="fullname">Customer Name</th>
+                    <th>Address</th>
                     <th ng-class="{commodities: isAnyListItemTouched()}">Product</th>
-                    <th><a ng-sort="Operator.NickName">Operator</a></th>
-                    <th><a ng-sort="DeliveryStaff.NickName">Deliverer</a></th>
-                    <th><a ng-sort="Location.Name">Location</a></th>
+                    <th class="user-nickname"><a ng-sort="Operator.NickName">Operator</a></th>
+                    <th class="user-nickname"><a ng-sort="DeliveryStaff.NickName">Deliverer</a></th>
+                    <!--<th><a ng-sort="Location.Name">Location</a></th>-->
                     <th class="thd-S right-content"><a ng-sort="TotalPrice">Cost</a></th>
                     <th class="thd-S center-content"><a ng-sort="Status.Name">Status</a></th>
                     <th class="action"></th>
@@ -75,7 +77,7 @@
             </thead>
             <tbody>
                 <tr ng-repeat="listItem in listItems" ng-class="{deletingEntry: listItem.Deleted}">
-                    <td class="date-time">
+                    <td class="date">
                         <dl>
                             <dd ng-show="!showListItemInput(listItem)">{{listItem.Date | shortDate}}</dd>
                             <dd ng-show="showListItemInput(listItem)">
@@ -83,12 +85,8 @@
                                 <input ng-model="listItem.Date" date-input />
                             </dd>
                         </dl>
-
-                        <!--<dl>
-                            <dd>{{listItem.Date | shortDate}}</dd>
-                        </dl>-->
                     </td>
-                    <td>
+                    <td class="phone">
                         <dl>
                             <dd ng-show="!showListItemInput(listItem)">
                                 {{listItem.CustomerPhone}}
@@ -97,6 +95,28 @@
                             <dd ng-show="showListItemInput(listItem)">
                                 <span field-validation-error ng-show="modelState['[' + getTouchedListItemIndex(listItem) + '].CustomerPhone']" class="field-validation-error"></span>
                                 <input ng-model="listItem.CustomerPhone" />
+                            </dd>
+                        </dl>
+                    </td>
+                    <td class="fullname">
+                        <dl>
+                            <dd ng-show="!showListItemInput(listItem)">
+                                {{listItem.CustomerName}}
+                            </dd>
+                            <dd ng-show="showListItemInput(listItem)">
+                                <span field-validation-error ng-show="modelState['[' + getTouchedListItemIndex(listItem) + '].CustomerName']" class="field-validation-error"></span>
+                                <input ng-model="listItem.CustomerName" />
+                            </dd>
+                        </dl>
+                    </td>
+                    <td>
+                        <dl>
+                            <dd ng-show="!showListItemInput(listItem)">
+                                {{listItem.Address}}
+                            </dd>
+                            <dd ng-show="showListItemInput(listItem)">
+                                <span field-validation-error ng-show="modelState['[' + getTouchedListItemIndex(listItem) + '].Address']" class="field-validation-error"></span>
+                                <input ng-model="listItem.Address" />
                             </dd>
                         </dl>
                     </td>
@@ -111,9 +131,9 @@
                             </dd>
                         </dl>
                     </td>
-                    <td>
+                    <td class="user-nickname">
                         <dl>
-                            <dd ng-show="!showListItemInput(listItem)">{{listItem.Operator.Fullname}} <span ng-show="listItem.Operator.Nickname">({{listItem.Operator.Nickname}})</span></dd>
+                            <dd ng-show="!showListItemInput(listItem)">{{listItem.Operator.Nickname}}</dd>
                             <dd ng-if="showListItemInput(listItem)" class="overflow-visible">
                                 <span field-validation-error ng-show="modelState['[' + getTouchedListItemIndex(listItem) + '].OperatorId']" class="field-validation-error"></span>
                                 <div search-drop-down class="search-drop-down"
@@ -124,9 +144,9 @@
                             </dd>
                         </dl>
                     </td>
-                    <td>
+                    <td class="user-nickname">
                         <dl>
-                            <dd ng-show="!showListItemInput(listItem)">{{listItem.DeliveryStaff.Fullname}} <span ng-show="listItem.DeliveryStaff.Nickname">({{listItem.DeliveryStaff.Nickname}})</span></dd>
+                            <dd ng-show="!showListItemInput(listItem)">{{listItem.DeliveryStaff.Nickname}}</dd>
                             <dd ng-if="showListItemInput(listItem)" class="overflow-visible">
                                 <span field-validation-error ng-show="modelState['[' + getTouchedListItemIndex(listItem) + '].DeliveryStaffId']" class="field-validation-error"></span>
                                 <div search-drop-down class="search-drop-down"
@@ -137,7 +157,7 @@
                             </dd>
                         </dl>
                     </td>
-                    <td>
+                    <!--<td>
                         <dl>
                             <dd ng-show="!showListItemInput(listItem)">{{listItem.Location.Name}}</dd>
                             <dd ng-if="showListItemInput(listItem)" class="overflow-visible">
@@ -145,7 +165,7 @@
                                 <select ng-model="listItem.LocationId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.Locations"></select>
                             </dd>
                         </dl>
-                    </td>
+                    </td>-->
                     <td class="thd-S right-content">
                         <dl>
                             <dd ng-show="!showListItemInput(listItem)">

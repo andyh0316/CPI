@@ -502,6 +502,7 @@ body {
             .list-container table tbody tr td dl dd {
               font-size: inherit;
               min-height: 0px;
+              line-height: unset;
               padding: 0px; }
               .list-container table tbody tr td dl dd input[date-input] {
                 width: 100px !important; }
@@ -545,6 +546,12 @@ body {
       width: 200px; }
     .list-container table td.commodities, .list-container table th.commodities {
       width: 200px; }
+    .list-container table td.date, .list-container table th.date {
+      width: 110px; }
+    .list-container table td.phone, .list-container table th.phone {
+      width: 150px; }
+    .list-container table td.user-nickname, .list-container table th.user-nickname {
+      width: 120px; }
     .list-container table td.date-time, .list-container table th.date-time {
       width: 140px; }
     .list-container table td.thd-XS, .list-container table th.thd-XS {

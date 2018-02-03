@@ -77,7 +77,7 @@ namespace Cpi.ManageWeb.Areas.Manage.Controllers
             {
                 User = user,
                 Occupations = LookUpBo.GetList<LookUpUserOccupationDm>().ToList(),
-                UserRoles = LookUpBo.GetList<LookUpUserRoleDm>().Where(a => a.Id != (int)LookUpUserRoleDm.LookUpIds.老子).ToList()
+                UserRoles = LookUpBo.GetList<LookUpUserRoleDm>().Where(a => a.Id != (int)LookUpUserRoleDm.LookUpIds.Laozi).ToList()
             };
 
             return JsonModel(model);

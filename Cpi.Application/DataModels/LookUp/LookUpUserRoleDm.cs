@@ -10,7 +10,7 @@ namespace Cpi.Application.DataModels.LookUp
             Admin = 1,
             DataSpecialist = 2,
             Staff = 3,
-            老子 = 4
+            Laozi = 4
         }
 
         public virtual List<UserRolePermissionDm> UserRolePermissions { get; set; }
