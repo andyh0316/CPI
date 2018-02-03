@@ -961,6 +961,10 @@ textarea {
 .icon.finance-daily-form:before {
   content: "receipt"; }
 
+.icon.login-as-user:before {
+  content: "exit_to_app";
+  color: #b94f02; }
+
 button.icon {
   background-color: white;
   border: 1px solid #C5C5C5;

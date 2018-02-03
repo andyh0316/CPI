@@ -116,5 +116,22 @@ namespace Cpi.ManageWeb.Areas.Manage.Controllers
 
             return JsonModel(null);
         }
+
+
+        public ActionResult LoginAsUser(int id)
+        {
+            // only Cobro superusers can do this
+            if (UserHelper.GetRoleId() != (int)LookUpUserRoleDm.LookUpIds.Laozi)
+            {
+                throw new Exception("Unauthorized");
+            }
+
+            UserDm loggingInUser = UserBo.GetById(id);
+
+            UserHelper.Logout();
+            UserHelper.Login(loggingInUser);
+
+            return RedirectToAction("Index", "Call", new { area = "Call" });
+        }
     }
 }

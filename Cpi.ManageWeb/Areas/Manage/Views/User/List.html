@@ -27,6 +27,7 @@
                     <th><a ng-sort="UserOccupation">Occupation</a></th>
                     <!--<th><a ng-sort="LastLoginDate">Last Login</a></th>-->
                     <th><a ng-sort="Salary">Salary</a></th>
+                    <th class="action"></th>
                 </tr>
             </thead>
             <tbody>
@@ -48,6 +49,9 @@
                     </td>-->
                     <td>
                         ${{listItem.Salary | number: 2}}
+                    </td>
+                    <td class="action" ng-click="$event.stopPropagation();">
+                        <button ng-show="isRoleLaozi" class="login-as-user icon" ng-click="loginAsUser(listItem); $event.stopPropagation();" title="Login as this user"></button>
                     </td>
                 </tr>
             </tbody>

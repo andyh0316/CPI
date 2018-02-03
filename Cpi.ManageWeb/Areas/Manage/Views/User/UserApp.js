@@ -57,6 +57,12 @@ app.controller('ListController', ['$scope', '$controller', '$state', 'baseBo', '
     $scope.viewUser = function (userId) {
         $state.go('List.User', { 'mode': $scope.viewMode, 'userId': userId });
     };
+
+    $scope.loginAsUser = function (item) {
+        if (confirm("Are you sure you want to login as " + item.FullName + " (" + item.Username + ")" + "?")) {
+            $.redirect('/Manage/User/LoginAsUser', { id: item.Id }, 'GET');
+        }
+    };
 }]);
 
 app.controller('UserController', ['$scope', '$controller', '$state', 'baseBo', 'mode', 'model', function ($scope, $controller, $state, baseBo, mode, model) {

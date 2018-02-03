@@ -1424,6 +1424,11 @@ textarea {
     &.finance-daily-form:before {
         content: "receipt";
     }
+
+    &.login-as-user:before {
+        content: "exit_to_app";
+        color: #b94f02;
+    }
 }
 
 button.icon {
