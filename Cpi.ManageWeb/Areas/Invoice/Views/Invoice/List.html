@@ -9,42 +9,60 @@
             <div simple-search></div>
             <div advanced-search>
                 <section>
-                    <dl class="dl-S">
+                    <dl class="dl-XS">
                         <dt>Location</dt>
                         <dd>
                             <select ng-model="scopeData.filter.AdvancedSearch.LocationId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.Locations">
-                                <option></option>
+                                <option value="">All</option>
+                            </select>
+                        </dd>
+                    </dl>
+                    <dl class="dl-XS">
+                        <dt>Status</dt>
+                        <dd>
+                            <select ng-model="scopeData.filter.AdvancedSearch.StatusId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.InvoiceStatuses">
+                                <option value="">All</option>
                             </select>
                         </dd>
                     </dl>
                     <dl class="dl-S">
-                        <dt>Status</dt>
-                        <dd>
-                            <select ng-model="scopeData.filter.AdvancedSearch.StatusId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.InvoiceStatuses">
-                                <option></option>
-                            </select>
-                        </dd>
-                    </dl>
-                    <dl>
-                        <dt>Created Date</dt>
+                        <dt>Date</dt>
                         <dd>
                             <select ng-model="scopeData.filter.AdvancedSearch.ReportDateFilter.ReportDateId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.ReportDates">
-                                <option></option>
+                                <option value="">All</option>
                             </select>
                         </dd>
                     </dl>
 
                     <dl ng-show="scopeData.filter.AdvancedSearch.ReportDateFilter.ReportDateId === modelData.ReportDateIdEnums.AllTimeOrSelectDateRange" class="dl-S">
-                        <dt>Created Date: From</dt>
+                        <dt>Date: From</dt>
                         <dd>
                             <input ng-model="scopeData.filter.AdvancedSearch.ReportDateFilter.DateFrom" date-input />
                         </dd>
                     </dl>
 
                     <dl ng-show="scopeData.filter.AdvancedSearch.ReportDateFilter.ReportDateId === modelData.ReportDateIdEnums.AllTimeOrSelectDateRange" class="dl-S">
-                        <dt>Created Date: To</dt>
+                        <dt>Date: To</dt>
                         <dd>
                             <input ng-model="scopeData.filter.AdvancedSearch.ReportDateFilter.DateTo" date-input />
+                        </dd>
+                    </dl>
+                </section>
+            </div>
+            <div advanced-search auto-trigger="true">
+                <section>
+                    <dl class="dl-XS">
+                        <dd>
+                            <select ng-model="scopeData.filter.AdvancedSearch.StatusId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.InvoiceStatuses">
+                                <option value="">Status: All</option>
+                            </select>
+                        </dd>
+                    </dl>
+                    <dl class="dl-S">
+                        <dd>
+                            <select ng-model="scopeData.filter.AdvancedSearch.ReportDateFilter.ReportDateId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.ReportDates">
+                                <option value="">Date: All</option>
+                            </select>
                         </dd>
                     </dl>
                 </section>
@@ -66,16 +84,16 @@
         <table>
             <thead>
                 <tr>
-                    <th class="date"><a ng-sort="Date">Created</a></th>
+                    <th class="date"><a ng-sort="Date">Date</a></th>
                     <th class="phone">Customer Phone</th>
                     <th class="fullname">Customer Name</th>
                     <th>Address</th>
-                    <th ng-class="{commodities: isAnyListItemTouched()}">Product</th>
+                    <th>Product</th>
                     <th class="user-nickname"><a ng-sort="Operator.NickName">Operator</a></th>
                     <th class="user-nickname"><a ng-sort="DeliveryStaff.NickName">Deliverer</a></th>
                     <!--<th><a ng-sort="Location.Name">Location</a></th>-->
                     <th class="thd-S right-content"><a ng-sort="TotalPrice">Cost</a></th>
-                    <th class="thd-S center-content"><a ng-sort="Status.Name">Status</a></th>
+                    <th class="thd-S center-content"><a ng-sort="Status.DisplayOrder">Status</a></th>
                     <th class="action"></th>
                 </tr>
             </thead>
@@ -124,7 +142,7 @@
                             </dd>
                         </dl>
                     </td>
-                    <td ng-class="{commodities: isAnyListItemTouched()}">
+                    <td>
                         <dl>
                             <dd ng-show="!showListItemInput(listItem)">
                                 {{listItem.InvoiceCommodities | objectCommodities}}
@@ -173,7 +191,7 @@
                     <td class="thd-S right-content">
                         <dl>
                             <dd ng-show="!showListItemInput(listItem)">
-                                <span ng-show="listItem.TotalPrice">${{listItem.TotalPrice | number: 2}}</span>
+                                ${{listItem.TotalPrice | number: 2}}
                             </dd>
                             <dd ng-show="showListItemInput(listItem)" class="overflow-visible">
                                 <input ng-model="listItem.TotalPrice" />

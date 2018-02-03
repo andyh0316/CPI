@@ -145,7 +145,27 @@ namespace Cpi.Application.Helpers
 
         public static int GetRoleId()
         {
-            return (int)HttpContext.Current.Session[ROLE_ID];
+            if (HttpContext.Current.Items[ROLE_ID] != null)
+            {
+                return (int)HttpContext.Current.Items[ROLE_ID];
+            }
+            else
+            {
+                if (HttpContext.Current.Session[ROLE_ID] != null)
+                {
+                    HttpContext.Current.Items[ROLE_ID] = (int)HttpContext.Current.Session[ROLE_ID];
+                    return (int)HttpContext.Current.Items[ROLE_ID];
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+        }
+
+        public static bool IsRoleLaozi()
+        {
+            return GetRoleId() == (int)LookUpUserRoleDm.LookUpIds.Laozi;
         }
 
         public static string GetUserFullName()

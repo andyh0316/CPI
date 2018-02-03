@@ -36,6 +36,8 @@ namespace Cpi.Application.DataModels
         public int? LocationId { get; set; }
         public virtual LookUpLocationDm Location { get; set; }
 
+        [CpiRequired]
+        [CpiGreaterThanZero]
         public decimal? TotalPrice { get; set; }
     }
 

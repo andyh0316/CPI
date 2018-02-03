@@ -349,30 +349,35 @@ $secondary-menu-height: 42px;
             vertical-align: top;
 
             .criteria-container {
-                position: fixed;
-                padding: 25px 30px;
-                max-width: 1100px;
-                left: 20px;
-                margin-top: 30px;
-                @include box-shadow(0px 0px 5px #e0dfdf);
-                background-color: white;
-                border: 1px solid #d0d0d0;
-                z-index: $advanced-search-z-index;
-
-                .buttons-container {
-                    min-width: 300px;
-                    margin-top: 30px;
-                    text-align: right;
-                }
-
-                &:before {
-                    display: block;
+                &.manualTrigger {
                     position: fixed;
-                    left: 0;
-                    right: 0;
-                    top: 0;
-                    bottom: 0;
-                    content: "";
+                    padding: 25px 30px;
+                    max-width: 1100px;
+                    left: 20px;
+                    margin-top: 30px;
+                    @include box-shadow(0px 0px 5px #e0dfdf);
+                    background-color: white;
+                    border: 1px solid #d0d0d0;
+                    z-index: $advanced-search-z-index;
+
+                    .buttons-container {
+                        min-width: 300px;
+                        margin-top: 30px;
+
+                        .button {
+                            //margin-left: 3px;
+                        }
+                    }
+
+                    &:before {
+                        display: block;
+                        position: fixed;
+                        left: 0;
+                        right: 0;
+                        top: 0;
+                        bottom: 0;
+                        content: "";
+                    }
                 }
             }
         }
@@ -818,8 +823,8 @@ $ui-view-top-padding: $main-menu-height + $secondary-menu-height;
                 width: 150px;
             }
 
-            &.full-name {
-
+            &.fullname {
+                width: 120px;
             }
 
             &.user-nickname {

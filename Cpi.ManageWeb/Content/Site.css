@@ -244,7 +244,7 @@ body {
       position: relative;
       display: inline-block;
       vertical-align: top; }
-      .secondary-menu .filters-container [advanced-search] .criteria-container {
+      .secondary-menu .filters-container [advanced-search] .criteria-container.manualTrigger {
         position: fixed;
         padding: 25px 30px;
         max-width: 1100px;
@@ -256,11 +256,10 @@ body {
         background-color: white;
         border: 1px solid #d0d0d0;
         z-index: 300; }
-        .secondary-menu .filters-container [advanced-search] .criteria-container .buttons-container {
+        .secondary-menu .filters-container [advanced-search] .criteria-container.manualTrigger .buttons-container {
           min-width: 300px;
-          margin-top: 30px;
-          text-align: right; }
-        .secondary-menu .filters-container [advanced-search] .criteria-container:before {
+          margin-top: 30px; }
+        .secondary-menu .filters-container [advanced-search] .criteria-container.manualTrigger:before {
           display: block;
           position: fixed;
           left: 0;
@@ -550,6 +549,8 @@ body {
       width: 110px; }
     .list-container table td.phone, .list-container table th.phone {
       width: 150px; }
+    .list-container table td.fullname, .list-container table th.fullname {
+      width: 120px; }
     .list-container table td.user-nickname, .list-container table th.user-nickname {
       width: 120px; }
     .list-container table td.date-time, .list-container table th.date-time {

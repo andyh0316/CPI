@@ -18,7 +18,7 @@
                         </dd>
                     </dl>
                     <dl>
-                        <dt>Created Date</dt>
+                        <dt>Date</dt>
                         <dd>
                             <select ng-model="scopeData.filter.AdvancedSearch.ReportDateFilter.ReportDateId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.ReportDates">
                                 <option></option>
@@ -27,14 +27,14 @@
                     </dl>
 
                     <dl ng-show="scopeData.filter.AdvancedSearch.ReportDateFilter.ReportDateId === modelData.ReportDateIdEnums.AllTimeOrSelectDateRange" class="dl-S">
-                        <dt>Created Date: From</dt>
+                        <dt>Date: From</dt>
                         <dd>
                             <input ng-model="scopeData.filter.AdvancedSearch.ReportDateFilter.DateFrom" date-input />
                         </dd>
                     </dl>
 
                     <dl ng-show="scopeData.filter.AdvancedSearch.ReportDateFilter.ReportDateId === modelData.ReportDateIdEnums.AllTimeOrSelectDateRange" class="dl-S">
-                        <dt>Created Date: To</dt>
+                        <dt>Date: To</dt>
                         <dd>
                             <input ng-model="scopeData.filter.AdvancedSearch.ReportDateFilter.DateTo" date-input />
                         </dd>
@@ -54,7 +54,7 @@
         <table>
             <thead>
                 <tr>
-                    <th class="date-time"><a ng-sort="Date">Created</a></th>
+                    <th class="date-time"><a ng-sort="Date">Date</a></th>
                     <th><a ng-sort="Name">Name</a></th>
                     <th><a ng-sort="Location.Name">Location</a></th>
                     <th>Handled By</th>

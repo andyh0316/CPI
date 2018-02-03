@@ -41,6 +41,7 @@ baseModule.controller('BaseController', ['$scope', '$state', function ($scope, $
 
 baseModule.run(['$rootScope', '$state', function ($rootScope, $state) {
     $rootScope.state = $state;
+    $rootScope.isRoleLaozi = gIsRoleLaozi;
 
     $rootScope.back = function () {
         $state.go('^');
@@ -1238,12 +1239,12 @@ baseModule.directive('fieldValidationError', function () {
     };
 });
 
-baseModule.directive('advancedSearch', ['$timeout', function ($timeout) {
+baseModule.directive('advancedSearch', ['$timeout', '$compile', '$rootScope', function ($timeout, $compile, $rootScope) {
     return {
         restrict: 'A',
         scope: true,
         transclude: true,
-        link: function ($scope, $element, $attrs) {
+        link: function ($scope, $element, $attrs, $ctrl, $transclude) {
             $scope.autoTrigger = ($attrs.autoTrigger === 'true') ? true : false;
 
             /**** ADVANCED SEARCH ****/
@@ -1321,22 +1322,27 @@ baseModule.directive('advancedSearch', ['$timeout', function ($timeout) {
             //    }
             //});
         },
+        //compile: function ($element, $attr, $transclude) {
+        //    $transclude().find('[ng-model]').attr('ignore-dirty', '');
+        //    $element.find('.controls-container').append($transclude());
+        //    var fn = $compile($element.html());
+        //    return function ($scope) {
+        //        fn($scope);
+        //    };
+        //},
         template:
         '<ng-form name="form"> \
             <button ng-show="!showAdvancedSearch && !autoTrigger" ng-click="showAdvancedSearch = true" class="button"> \
                 Advanced \
                 <span ng-show="getAdvancedSearchCount() > 0"> ({{getAdvancedSearchCount()}})</span> \
             </button> \
-            <div ng-show="showAdvancedSearch && !autoTrigger" class="criteria-container"> \
+            <div ng-show="(showAdvancedSearch && !autoTrigger) || autoTrigger" class="criteria-container" ng-class="{autoTrigger: autoTrigger, manualTrigger: !autoTrigger}"> \
                 <ng-transclude></ng-transclude> \
-                <div class="buttons-container"> \
-                    <button class="button" ng-click="showAdvancedSearch = false; advancedSearchUndo();">Close</button> \
-                    <button class="button main" ng-click="advancedSearchReset()">Reset</button> \
+                <div ng-show="!autoTrigger" class="buttons-container"> \
                     <button class="button main" type="submit" ng-click="advancedSearchGo()">Search</button> \
+                    <button class="button main" ng-click="advancedSearchReset()">Reset</button> \
+                    <button class="button" ng-click="showAdvancedSearch = false; advancedSearchUndo();">Close</button> \
                 </div> \
-            </div> \
-            <div ng-show="autoTrigger"> \
-                <ng-transclude></ng-transclude> \
             </div> \
         </ng-form>'
     };
