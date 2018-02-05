@@ -915,7 +915,7 @@ baseModule.directive('searchDropDown', ['baseBo', '$rootScope', function (baseBo
                 var matched = false;
 
                 // check if there's an exact match and use it
-                if ($scope.results.length > 0) {
+                if ($scope.searchString && $scope.results.length > 0) {
                     for (var i in $scope.results) {
                         if ($scope.results[i].Name.toLowerCase() === $scope.searchString.toLowerCase()) {
                             $scope.assign($scope.results[i]);
