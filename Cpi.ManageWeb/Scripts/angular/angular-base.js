@@ -1014,7 +1014,7 @@ baseModule.directive('searchDropDown', ['baseBo', '$rootScope', function (baseBo
             '</div>' +
 
             '<div class="results-container" ng-show="showContainer">' +
-                '<div ng-show="results.length > 0" class="result-row" ng-repeat="result in results" ng-click="assign(result)" ng-mouseover="hover($index)" ng-class="{hovered: isHovered($index)}">' +
+                '<div ng-show="results.length > 0" class="result-row" ng-repeat="result in results" ng-mousedown="assign(result)" ng-mouseover="hover($index)" ng-class="{hovered: isHovered($index)}">' +
                     '<div>' +
                         '<span checkbox ng-show="multiSelect" ng-checked="getIndexOfKeyInInputKeys(result.Id)" style="position: relative; top: -1px;"></span>' +
                         '<span>{{result.Name}}</span>' +
