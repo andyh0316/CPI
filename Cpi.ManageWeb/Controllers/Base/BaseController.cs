@@ -61,7 +61,7 @@ namespace Cpi.ManageWeb.Controllers.Base
                 }
             }
 
-            sortString = sortString + "Id";
+            sortString = sortString + "Id descending";
 
             query = query.OrderBy(sortString);
             query = query.Skip(skip).Take(take);
