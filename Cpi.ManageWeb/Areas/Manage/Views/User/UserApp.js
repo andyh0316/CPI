@@ -38,6 +38,19 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
                 }],
             }
         })
+        .state('List.SalarySheet', {
+            url: '/User/',
+            templateUrl: '/Areas/Manage/Views/User/SalarySheet.html',
+            controller: 'SalarySheetController',
+            resolve: {
+                model: ['$stateParams', 'baseBo', function ($stateParams, baseBo) {
+                    return baseBo.httpRequest('GET', '/Manage/User/GetSalarySheet');
+                }],
+                mode: ['$stateParams', function ($stateParams) {
+                    return $stateParams.mode;
+                }],
+            }
+        })
 }]);
 
 app.controller('ListController', ['$scope', '$controller', '$state', 'baseBo', 'model', 'scopeData', 'modelData', function ($scope, $controller, $state, baseBo, model, scopeData, modelData) {
@@ -95,6 +108,12 @@ app.controller('UserController', ['$scope', '$controller', '$state', 'baseBo', '
             }
         });
     };
+}]);
+
+app.controller('SalarySheetController', ['$scope', '$controller', '$state', 'baseBo', 'mode', 'model', function ($scope, $controller, $state, baseBo, mode, model) {
+    angular.extend(this, $controller('BaseController', { $scope: $scope }));
+
+    $scope.model = model.Object;
 }]);
 
 

@@ -117,7 +117,6 @@ namespace Cpi.ManageWeb.Areas.Manage.Controllers
             return JsonModel(null);
         }
 
-
         public ActionResult LoginAsUser(int id)
         {
             // only Cobro superusers can do this
@@ -132,6 +131,19 @@ namespace Cpi.ManageWeb.Areas.Manage.Controllers
             UserHelper.Login(loggingInUser);
 
             return RedirectToAction("Index", "Call", new { area = "Call" });
+        }
+
+        [HttpPost]
+        public ContentResult GetSalarySheet()
+        {
+            List<UserSalaryDto> userSalaries = UserBo.GetUserSalaries();
+
+            var model = new
+            {
+                UserSalaries = userSalaries
+            };
+
+            return JsonModel(model);
         }
     }
 }

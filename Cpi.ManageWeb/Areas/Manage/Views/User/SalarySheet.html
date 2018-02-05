@@ -1,0 +1,106 @@
+﻿<div id="user" class="container">
+    <div ng-show="state.current.name == 'List.SalarySheet'" class="secondary-menu">
+        <div class="title-container">
+            <div class="title">Salary Sheet</div>
+        </div>
+        <div class="filters-container">
+        </div>
+        <div class="buttons">
+            <button class="button" ng-click="back()">Back</button>
+        </div>
+    </div>
+
+    <div>
+        <section>
+            <dl>
+                <dt>Fullname</dt>
+                <dd ng-show="isCreateMode() || isEditMode()">
+                    <span field-validation-error ng-show="modelState['Fullname']" class="field-validation-error"></span>
+                    <input ng-model="model.User.Fullname" />
+                </dd>
+                <dd ng-show="isViewMode()">
+                    {{model.User.Fullname}}
+                </dd>
+            </dl>
+
+            <dl>
+                <dt>Nickname</dt>
+                <dd ng-show="isCreateMode() || isEditMode()">
+                    <span field-validation-error ng-show="modelState['Nickname']" class="field-validation-error"></span>
+                    <input ng-model="model.User.Nickname" />
+                </dd>
+                <dd ng-show="isViewMode()">
+                    {{model.User.Nickname}}
+                </dd>
+            </dl>
+
+            <dl>
+                <dt>Username</dt>
+                <dd>
+                    {{model.User.Username}}
+                </dd>
+            </dl>
+
+            <dl>
+                <dt>Role</dt>
+                <dd ng-show="isCreateMode() || isEditMode()">
+                    <span field-validation-error ng-show="modelState['UserRoleId']" class="field-validation-error"></span>
+                    <select ng-model="model.User.UserRoleId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in model.UserRoles">
+                        <option value="">All ទាំងអស់</option>
+                    </select>
+                </dd>
+                <dd ng-show="isViewMode()">
+                    {{model.User.UserRole.Name}}
+                </dd>
+            </dl>
+            <dl>
+                <dt>Occupation</dt>
+                <dd ng-show="isCreateMode() || isEditMode()">
+                    <span field-validation-error ng-show="modelState['UserOccupationId']" class="field-validation-error"></span>
+                    <select ng-model="model.User.UserOccupationId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in model.Occupations">
+                        <option value="">All ទាំងអស់</option>
+                    </select>
+                </dd>
+                <dd ng-show="isViewMode()">
+                    {{model.User.UserOccupation.Name}}
+                </dd>
+            </dl>
+            <dl>
+                <dt>Start Date</dt>
+                <dd ng-show="isCreateMode() || isEditMode()">
+                    <span field-validation-error ng-show="modelState['StartDate']" class="field-validation-error"></span>
+                    <input ng-model="model.User.StartDate" date-input />
+                </dd>
+                <dd ng-show="isViewMode()">
+                    {{model.User.StartDate | shortDate}}
+                </dd>
+            </dl>
+            <dl>
+                <dt>Salary</dt>
+                <dd ng-show="isCreateMode() || isEditMode()">
+                    <span field-validation-error ng-show="modelState['Salary']" class="field-validation-error"></span>
+                    <input ng-model="model.User.Salary" />
+                </dd>
+                <dd ng-show="isViewMode()">
+                    ${{model.User.Salary | number: 2}}
+                </dd>
+            </dl>
+            <dl>
+                <dt>Vacation Days Taken</dt>
+                <dd ng-show="isCreateMode() || isEditMode()">
+                    <span field-validation-error ng-show="modelState['VacationDaysTaken']" class="field-validation-error"></span>
+                    <input ng-model="model.User.VacationDaysTaken" />
+                </dd>
+                <dd ng-show="isViewMode()">
+                    {{model.User.VacationDaysTaken}}
+                </dd>
+            </dl>
+            <!--<dl ng-show="isViewMode()">
+                <dt>Last Login Date</dt>
+                <dd>
+                    {{model.User.LastLoginDate | shortDate}}
+                </dd>
+            </dl>-->
+        </section>
+    </div>
+</div>

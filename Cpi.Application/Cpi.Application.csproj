@@ -95,6 +95,7 @@
     <Compile Include="DataTransferObjects\InvoiceSummaryDto.cs" />
     <Compile Include="DataTransferObjects\PermissionDto.cs" />
     <Compile Include="DataTransferObjects\UserDto.cs" />
+    <Compile Include="DataTransferObjects\UserSalaryDto.cs" />
     <Compile Include="Filters\ClassFilter.cs" />
     <Compile Include="Filters\ReportDateFilter.cs" />
     <Compile Include="Filters\ListFilter.cs" />

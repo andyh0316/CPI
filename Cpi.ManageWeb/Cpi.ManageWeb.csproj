@@ -245,6 +245,7 @@
     <Content Include="Areas\Expense\Views\Expense\List.html" />
     <Content Include="Areas\Manage\Views\Commodity\CommodityApp.js" />
     <Content Include="Areas\Manage\Views\Commodity\List.html" />
+    <Content Include="Areas\Manage\Views\User\SalarySheet.html" />
     <Content Include="Areas\Report\Views\FinanceList\FinanceListApp.js" />
     <Content Include="Areas\Report\Views\FinanceOverview\FinanceOverview.html" />
     <Content Include="Areas\Report\Views\FinanceOverview\FinanceOverviewApp.js" />

@@ -13,6 +13,12 @@ namespace Cpi.Application.BusinessObjects
 {
     public class UserBo : BaseBo<UserDm>
     {
+        private InvoiceBo InvoiceBo;
+        public UserBo(InvoiceBo InvoiceBo)
+        {
+            this.InvoiceBo = InvoiceBo;
+        }
+
         public IQueryable<UserDto> GetListBaseQuery(ListFilter.User filter)
         {
             IQueryable<UserDm> query = GetListQuery();
@@ -76,6 +82,39 @@ namespace Cpi.Application.BusinessObjects
                 Id = a.Id,
                 Name = a.Nickname
             }).ToList();
+        }
+
+        public List<UserSalaryDto> GetUserSalaries()
+        {
+            DateTime dateFrom = new DateTime(11, 1, 2017);
+            DateTime dateTo = new DateTime(12, 1, 2017);
+
+            DateTime oneMonthAfterDateFrom = dateFrom.AddDays(31);
+
+            IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetListQuery().Where(a => a.StatusId == (int)LookUpInvoiceStatusDm.LookUpIds.Sold).Where(a => a.Date >= dateFrom && a.Date <= dateTo);
+            IQueryable<UserDm> userQuery = GetListQuery().Where(a => a.UserRoleId != (int)LookUpUserRoleDm.LookUpIds.Laozi);
+
+            List<UserSalaryDto> salaries = (from a in userQuery
+                                            join b in invoiceQuery
+                                            on a.Id equals b.OperatorId into bGroup
+                                            join c in invoiceQuery
+                                            on a.Id equals c.DeliveryStaffId into cGroup
+                                            //from bSub in bGroup.DefaultIfEmpty()
+                                            //from cSub in cGroup.DefaultIfEmpty()
+                                            select new UserSalaryDto
+                                            {
+                                                DateFrom = (a.StartDate > oneMonthAfterDateFrom) ? a.StartDate : dateFrom,
+                                                DateTo = dateTo,
+                                                UserFullname = a.Fullname,
+                                                UserNickname = a.Nickname,
+                                                Salary = a.Salary,
+                                                ProductSold = (a.UserOccupationId == (int)LookUpUserOccupationDm.LookUpIds.Operator) 
+                                                    ? bGroup.SelectMany(b => b.InvoiceCommodities.Select(c => c.Quantity)).DefaultIfEmpty(0).Sum()
+                                                    : cGroup.SelectMany(b => b.InvoiceCommodities.Select(c => c.Quantity)).DefaultIfEmpty(0).Sum()
+                                            }).ToList();
+
+
+            return salaries;
         }
     }
 }
