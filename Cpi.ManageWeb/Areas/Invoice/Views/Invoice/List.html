@@ -127,7 +127,7 @@
                             <dd ng-if="showListItemInput(listItem)" class="overflow-visible">
                                 <span field-validation-error ng-show="modelState['[' + getTouchedListItemIndex(listItem) + '].OperatorId']" class="field-validation-error"></span>
                                 <div search-drop-down class="search-drop-down"
-                                        search-object="modelData.Users"
+                                        search-object="modelData.OperatorStaff"
                                         input-string="{{listItem.Operator.Nickname}}"
                                         input-key="listItem.OperatorId">
                                 </div>
@@ -140,7 +140,7 @@
                             <dd ng-if="showListItemInput(listItem)" class="overflow-visible">
                                 <span field-validation-error ng-show="modelState['[' + getTouchedListItemIndex(listItem) + '].DeliveryStaffId']" class="field-validation-error"></span>
                                 <div search-drop-down class="search-drop-down"
-                                        search-object="modelData.Users"
+                                        search-object="modelData.DeliveryStaff"
                                         input-string="{{listItem.DeliveryStaff.Nickname}}"
                                         input-key="listItem.DeliveryStaffId">
                                 </div>
@@ -162,6 +162,7 @@
                                 ${{listItem.TotalPrice | number: 2}}
                             </dd>
                             <dd ng-show="showListItemInput(listItem)" class="overflow-visible">
+                                <span field-validation-error ng-show="modelState['[' + getTouchedListItemIndex(listItem) + '].TotalPrice']" class="field-validation-error"></span>
                                 <input ng-model="listItem.TotalPrice" />
                             </dd>
                         </dl>

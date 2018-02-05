@@ -57,7 +57,8 @@ namespace Cpi.ManageWeb.Areas.Invoice.Controllers
                 Commodities = CommodityBo.GetList(),
                 InvoiceStatuses = LookUpBo.GetList<LookUpInvoiceStatusDm>().ToList(),
                 Locations = LookUpBo.GetList<LookUpLocationDm>().ToList(),
-                Users = UserBo.GetSearchDropDownList(),
+                DeliveryStaff = UserBo.GetSearchDropDownList((int)LookUpUserOccupationDm.LookUpIds.Delivery),
+                OperatorStaff = UserBo.GetSearchDropDownList((int)LookUpUserOccupationDm.LookUpIds.Operator),
                 ReportDates = ReportDateFilter.GetSelectList(),
                 InvoiceStatusIdEnums = EnumHelper.GetEnumIntList(typeof(LookUpInvoiceStatusDm.LookUpIds)),
                 ReportDateIdEnums = EnumHelper.GetEnumIntList(typeof(ReportDateFilter.ReportDateIdEnums)),
@@ -93,22 +94,25 @@ namespace Cpi.ManageWeb.Areas.Invoice.Controllers
                 //InvoiceCommodityBo.RemoveRange(trackedInvoice.InvoiceCommodities.Where(a => !Invoice.InvoiceCommodities.Select(b => b.Id).Contains(a.Id)).ToList()); // first delete all the Invoice commodities that are not in the view model
 
                 // save each InvoiceCommodity
-                foreach (InvoiceCommodityDm InvoiceCommodity in invoice.InvoiceCommodities)
+                if (!invoice.Deleted)
                 {
-                    InvoiceCommodityDm trackedInvoiceCommodity = (InvoiceCommodity.Id > 0) ? trackedInvoice.InvoiceCommodities.Find(a => a.Id == InvoiceCommodity.Id) : new InvoiceCommodityDm();
-
-                    Mapper.Map(InvoiceCommodity, trackedInvoiceCommodity);
-
-                    if (trackedInvoiceCommodity.Id > 0)
+                    foreach (InvoiceCommodityDm InvoiceCommodity in invoice.InvoiceCommodities)
                     {
-                        if (trackedInvoiceCommodity.Quantity == 0) // deleting
+                        InvoiceCommodityDm trackedInvoiceCommodity = (InvoiceCommodity.Id > 0) ? trackedInvoice.InvoiceCommodities.Find(a => a.Id == InvoiceCommodity.Id) : new InvoiceCommodityDm();
+
+                        Mapper.Map(InvoiceCommodity, trackedInvoiceCommodity);
+
+                        if (trackedInvoiceCommodity.Id > 0)
                         {
-                            InvoiceCommodityBo.Remove(trackedInvoiceCommodity);
+                            if (trackedInvoiceCommodity.Quantity == 0) // deleting
+                            {
+                                InvoiceCommodityBo.Remove(trackedInvoiceCommodity);
+                            }
                         }
-                    }
-                    else
-                    {
-                        trackedInvoice.InvoiceCommodities.Add(trackedInvoiceCommodity);
+                        else
+                        {
+                            trackedInvoice.InvoiceCommodities.Add(trackedInvoiceCommodity);
+                        }
                     }
                 }
 

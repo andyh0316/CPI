@@ -840,7 +840,7 @@ baseModule.directive('searchDropDown', ['baseBo', '$rootScope', function (baseBo
                         Description: $scope.searchObject[i].Description,
                     };
 
-                    if (!$scope.searchString || newResult.Name.toLowerCase().includes($scope.searchString.toLowerCase())) {
+                    if (!$scope.searchString || newResult.Name.toLowerCase().startsWith($scope.searchString.toLowerCase())) {
                         results.push(newResult);
                     }
                 }
@@ -917,7 +917,7 @@ baseModule.directive('searchDropDown', ['baseBo', '$rootScope', function (baseBo
                 // check if there's an exact match and use it
                 if ($scope.results.length > 0) {
                     for (var i in $scope.results) {
-                        if ($scope.results[i].Name === $scope.searchString) {
+                        if ($scope.results[i].Name.toLowerCase() === $scope.searchString.toLowerCase()) {
                             $scope.assign($scope.results[i]);
                             matched = true;
                             break;

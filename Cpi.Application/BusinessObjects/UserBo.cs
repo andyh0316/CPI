@@ -63,9 +63,15 @@ namespace Cpi.Application.BusinessObjects
             return GetListQuery().Where(a => a.Username == username).SingleOrDefault();
         }
 
-        public List<CpiSelectListItem> GetSearchDropDownList()
+        public List<CpiSelectListItem> GetSearchDropDownList(int? occupationId = null)
         {
-            return GetListQuery().OrderBy(a => a.Nickname).Select(a => new CpiSelectListItem
+            var query = GetListQuery();
+            if (occupationId.HasValue)
+            {
+                query = query.Where(a => a.UserOccupationId == occupationId);
+            }
+
+            return query.OrderBy(a => a.Nickname).Select(a => new CpiSelectListItem
             {
                 Id = a.Id,
                 Name = a.Nickname
