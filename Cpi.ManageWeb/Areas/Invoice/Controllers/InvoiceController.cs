@@ -123,7 +123,7 @@ namespace Cpi.ManageWeb.Areas.Invoice.Controllers
                 //    }
                 //}
 
-                if (trackedInvoice.Id > 0)
+                if (trackedInvoice.Id == 0)
                 {
                     InvoiceBo.Add(trackedInvoice);
                 }
