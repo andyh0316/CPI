@@ -63,22 +63,23 @@ app.controller('ListController', ['$scope', '$controller', '$state', '$timeout',
     };
 
     $scope.newListItemCount = 0;
+    $scope.refreshInterval = 5000; //5000 ms
     $scope.checkNewListItems = function () {
         if (gCurrentRequests === 0 && !$scope.isAnyListItemTouched())
         {
-            baseBo.httpRequest(scopeData.httpRequest.method, scopeData.httpRequest.url, scopeData.filter, {noLoadIcon: true})
+            baseBo.httpRequest('POST', '/Invoice/Invoice/GetListTotal', scopeData.filter, {noLoadIcon: true})
                 .then(function (result) {
-                    if ($scope.listLoadCalculator.Total < result.Object.ListLoadCalculator.Total)
+                    if ($scope.listLoadCalculator.Total < result.Object.Total)
                     {
-                        $scope.newListItemCount = result.Object.ListLoadCalculator.Total - $scope.listLoadCalculator.Total;
+                        $scope.newListItemCount = result.Object.Total - $scope.listLoadCalculator.Total;
                     }
                 });
         }
 
-        $timeout($scope.checkNewListItems, 5000);
+        $timeout($scope.checkNewListItems, $scope.refreshInterval);
     }
 
-    $timeout($scope.checkNewListItems, 5000);
+    $timeout($scope.checkNewListItems, $scope.refreshInterval);
 
     $scope.invoiceCommodityChange = function (record) {
         var total = 0;
@@ -99,7 +100,7 @@ app.controller('ListController', ['$scope', '$controller', '$state', '$timeout',
     });
 
     $scope.refresh = function () {
-        $scope.getList();
+        $scope.getList('savedList');
         $scope.newListItemCount = 0;
     };
 }]);

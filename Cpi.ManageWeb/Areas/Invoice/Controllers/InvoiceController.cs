@@ -49,6 +49,13 @@ namespace Cpi.ManageWeb.Areas.Invoice.Controllers
             return JsonModel(new { ListItems = listItems, ListLoadCalculator = listLoadCalculator });
         }
 
+        [HttpPost]
+        public ContentResult GetListTotal(ListFilter.Invoice filter)
+        {
+            int total = InvoiceBo.GetListBaseQuery(filter).Count();
+            return JsonModel(new { Total = total});
+        }
+
         [HttpGet]
         public ContentResult GetListData()
         {
