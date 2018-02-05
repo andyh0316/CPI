@@ -7,39 +7,6 @@
 
         <div class="filters-container">
             <div simple-search></div>
-            <div ng-show="isRoleLaozi" advanced-search>
-                <section>
-                    <dl class="dl-S">
-                        <dt>Status</dt>
-                        <dd>
-                            <select ng-model="scopeData.filter.AdvancedSearch.StatusId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.CallStatuses">
-                                <option value="">Status: All ទាំងអស់</option>
-                            </select>
-                        </dd>
-                    </dl>
-                    <dl class="dl-S">
-                        <dt>Date</dt>
-                        <dd>
-                            <select ng-model="scopeData.filter.AdvancedSearch.ReportDateFilter.ReportDateId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.ReportDates">
-                            </select>
-                        </dd>
-                    </dl>
-
-                    <dl ng-show="scopeData.filter.AdvancedSearch.ReportDateFilter.ReportDateId === modelData.ReportDateIdEnums.AllTimeOrSelectDateRange" class="dl-S">
-                        <dt>Date: From</dt>
-                        <dd>
-                            <input ng-model="scopeData.filter.AdvancedSearch.ReportDateFilter.DateFrom" date-input />
-                        </dd>
-                    </dl>
-
-                    <dl ng-show="scopeData.filter.AdvancedSearch.ReportDateFilter.ReportDateId === modelData.ReportDateIdEnums.AllTimeOrSelectDateRange" class="dl-S">
-                        <dt>Date: To</dt>
-                        <dd>
-                            <input ng-model="scopeData.filter.AdvancedSearch.ReportDateFilter.DateTo" date-input />
-                        </dd>
-                    </dl>
-                </section>
-            </div>
             <div advanced-search auto-trigger="true">
                 <section>
                     <dl class="dl-S">
@@ -54,7 +21,17 @@
                             <select ng-model="scopeData.filter.AdvancedSearch.ReportDateFilter.ReportDateId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.ReportDates"></select>
                         </dd>
                     </dl>
+                    <dl ng-show="scopeData.filter.AdvancedSearch.ReportDateFilter.ReportDateId === modelData.ReportDateIdEnums.AllTimeOrSelectDateRange" class="dl-XS">
+                        <dd>
+                            <input ng-model="scopeData.filter.AdvancedSearch.ReportDateFilter.DateFrom" date-input ng-change="$parent.delaySearch = true" placeholder="Date: From" />
+                        </dd>
+                    </dl>
 
+                    <dl ng-show="scopeData.filter.AdvancedSearch.ReportDateFilter.ReportDateId === modelData.ReportDateIdEnums.AllTimeOrSelectDateRange" class="dl-XS">
+                        <dd>
+                            <input ng-model="scopeData.filter.AdvancedSearch.ReportDateFilter.DateTo" date-input ng-change="$parent.delaySearch = true" placeholder="Date: To" />
+                        </dd>
+                    </dl>
                 </section>
             </div>
         </div>

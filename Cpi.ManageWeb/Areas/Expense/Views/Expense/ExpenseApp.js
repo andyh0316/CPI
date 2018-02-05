@@ -7,11 +7,6 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
         filter: {
             Loads: 0,
             SortObjects: [{ ColumnName: 'Date', IsDescending: true }],
-            AdvancedSearch: {
-                ReportDateFilter: {
-                    ReportDateId: gReportDateId
-                }
-            }
         },
         httpRequest: { method: 'POST', url: '/Expense/Expense/GetList' }
     };

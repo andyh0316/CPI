@@ -7,48 +7,6 @@
 
         <div class="filters-container">
             <div simple-search></div>
-            <div ng-show="isRoleLaozi" advanced-search>
-                <section>
-                    <dl class="dl-XS">
-                        <dt>Location</dt>
-                        <dd>
-                            <select ng-model="scopeData.filter.AdvancedSearch.LocationId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.Locations">
-                                <option value="">All ទាំងអស់</option>
-                            </select>
-                        </dd>
-                    </dl>
-                    <dl class="dl-XS">
-                        <dt>Status</dt>
-                        <dd>
-                            <select ng-model="scopeData.filter.AdvancedSearch.StatusId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.InvoiceStatuses">
-                                <option value="">All ទាំងអស់</option>
-                            </select>
-                        </dd>
-                    </dl>
-                    <dl class="dl-S">
-                        <dt>Date</dt>
-                        <dd>
-                            <select ng-model="scopeData.filter.AdvancedSearch.ReportDateFilter.ReportDateId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.ReportDates">
-                                <option value="">All ទាំងអស់</option>
-                            </select>
-                        </dd>
-                    </dl>
-
-                    <dl ng-show="scopeData.filter.AdvancedSearch.ReportDateFilter.ReportDateId === modelData.ReportDateIdEnums.AllTimeOrSelectDateRange" class="dl-S">
-                        <dt>Date: From</dt>
-                        <dd>
-                            <input ng-model="scopeData.filter.AdvancedSearch.ReportDateFilter.DateFrom" date-input />
-                        </dd>
-                    </dl>
-
-                    <dl ng-show="scopeData.filter.AdvancedSearch.ReportDateFilter.ReportDateId === modelData.ReportDateIdEnums.AllTimeOrSelectDateRange" class="dl-S">
-                        <dt>Date: To</dt>
-                        <dd>
-                            <input ng-model="scopeData.filter.AdvancedSearch.ReportDateFilter.DateTo" date-input />
-                        </dd>
-                    </dl>
-                </section>
-            </div>
             <div advanced-search auto-trigger="true">
                 <section>
                     <dl class="dl-XS">
@@ -62,6 +20,17 @@
                         <dd>
                             <select ng-model="scopeData.filter.AdvancedSearch.ReportDateFilter.ReportDateId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.ReportDates">
                             </select>
+                        </dd>
+                    </dl>
+                    <dl ng-show="scopeData.filter.AdvancedSearch.ReportDateFilter.ReportDateId === modelData.ReportDateIdEnums.AllTimeOrSelectDateRange" class="dl-XS">
+                        <dd>
+                            <input ng-model="scopeData.filter.AdvancedSearch.ReportDateFilter.DateFrom" date-input ng-change="$parent.delaySearch = true" placeholder="Date: From" />
+                        </dd>
+                    </dl>
+
+                    <dl ng-show="scopeData.filter.AdvancedSearch.ReportDateFilter.ReportDateId === modelData.ReportDateIdEnums.AllTimeOrSelectDateRange" class="dl-XS">
+                        <dd>
+                            <input ng-model="scopeData.filter.AdvancedSearch.ReportDateFilter.DateTo" date-input ng-change="$parent.delaySearch = true" placeholder="Date: To" />
                         </dd>
                     </dl>
                 </section>
@@ -92,7 +61,7 @@
                     <th class="user-nickname"><a ng-sort="DeliveryStaff.NickName">Deliverer<br />អ្នកដឹកជញ្ចូន</a></th>
                     <!--<th><a ng-sort="Location.Name">Location</a></th>-->
                     <th class="thd-S right-content"><a ng-sort="TotalPrice">Cost<br />តម្លៃ</a></th>
-                    <th class="thd-S center-content"><a ng-sort="Status.DisplayOrder">Status</th>
+                    <th class="thd-S center-content"><a ng-sort="Status.DisplayOrder">Status</a></th>
                     <th class="action"></th>
                 </tr>
             </thead>
@@ -206,14 +175,14 @@
                             </dd>
                             <dd ng-show="showListItemInput(listItem)">
                                 <select ng-model="listItem.StatusId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.InvoiceStatuses">
-                                    <option value="">All ទាំងអស់</option>
+                                    <option value=""></option>
                                 </select>
                             </dd>
                         </dl>
                     </td>
                     <td class="action">
                         <button ng-show="!listItem.touched" class="edit icon" ng-click="editListItem(listItem); $event.stopPropagation();"></button>
-                        <!--<div ng-show="listItem.Id" class="delete icon" ng-click="listItem.Deleted = true; listItem.touched = true; $event.stopPropagation();"></div>-->
+                        <button ng-show="!listItem.touched && listItem.Id > 0" class="delete icon" ng-click="deleteListItem(listItem); $event.stopPropagation();"></button>
                         <button ng-show="listItem.touched" class="cancel icon" ng-click="cancelListItem(listItem); $event.stopPropagation();"></button>
                     </td>
                 </tr>
