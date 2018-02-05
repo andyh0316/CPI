@@ -17,6 +17,8 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
 }]);
 
 app.controller('LoginController', ['$scope', '$controller', '$state', '$timeout', 'baseBo', function ($scope, $controller, $state, $timeout, baseBo) {
+    $scope.model = {};
+
     $scope.login = function () {
         baseBo.httpRequest('POST', '/Public/Login', $scope.model)
             .then(function (result) {
