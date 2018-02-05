@@ -16,9 +16,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
         //})
 }]);
 
-app.controller('LoginController', ['$scope', '$controller', '$state', 'baseBo', function ($scope, $controller, $state, baseBo) {
-    $scope.model = {};
-
+app.controller('LoginController', ['$scope', '$controller', '$state', '$timeout', 'baseBo', function ($scope, $controller, $state, $timeout, baseBo) {
     $scope.login = function () {
         baseBo.httpRequest('POST', '/Public/Login', $scope.model)
             .then(function (result) {
@@ -39,4 +37,11 @@ app.controller('LoginController', ['$scope', '$controller', '$state', 'baseBo', 
                 }
             });
     };
+
+    //$scope.clearModel = function () {
+    //    $scope.model.Username = null;
+    //    $scope.model.Password = null;
+    //};
+
+    //$timeout($scope.clearModel, 1000);
 }]);

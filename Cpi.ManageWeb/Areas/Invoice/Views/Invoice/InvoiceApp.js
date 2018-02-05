@@ -97,4 +97,9 @@ app.controller('ListController', ['$scope', '$controller', '$state', '$timeout',
             $scope.scopeData.filter.AdvancedSearch.DateTo = null;
         }
     });
+
+    $scope.refresh = function () {
+        $scope.getList();
+        $scope.newListItemCount = 0;
+    };
 }]);
