@@ -1,5 +1,5 @@
-﻿<div id="import" class="container">
-    <div ng-show="state.current.name == 'List.Import'" class="secondary-menu">
+﻿<div id="import" class="page-container">
+    <div class="page-header">
         <div class="title-container">
             <div class="title">Calls</div>
         </div>
@@ -12,44 +12,46 @@
         </div>
     </div>
 
-    <form class="form">
-        <dl class="dl-full">
-            <dd>
-                <textarea ng-model="phoneNumbers" placeholder="Copy and Paste phone numbers here from EXCEL."></textarea>
-            </dd>
-        </dl>
-    </form>
-
-    <div id="print-section" class="results-container">
-        <div ng-show="parsedPhoneNumbersModel.OtherPhoneNumbers.length  > 0" class="company-container">
-            <div class="title">Other ({{parsedPhoneNumbersModel.OtherPhoneNumbers.length}})</div>
-            <div ng-repeat="phoneNumber in parsedPhoneNumbersModel.OtherPhoneNumbers track by $index" class="phone-number-container">
-                <div class="phone-number">{{phoneNumber}}</div>
-                <div phone-company-tag ng-model="phoneNumber"></div>
-            </div>
+    <div class="page-body">
+        <div class="paste-numbers-container">
+            <dl class="dl-full">
+                <dd>
+                    <textarea ng-model="phoneNumbers" placeholder="Copy and Paste phone numbers here from EXCEL."></textarea>
+                </dd>
+            </dl>
         </div>
 
-        <div ng-show="parsedPhoneNumbersModel.SmartPhoneNumbers.length > 0" class="company-container">
-            <div class="title">Smart ({{parsedPhoneNumbersModel.SmartPhoneNumbers.length}})</div>
-            <div ng-repeat="phoneNumber in parsedPhoneNumbersModel.SmartPhoneNumbers track by $index" class="phone-number-container">
-                <div class="phone-number">{{phoneNumber}}</div>
-                <div phone-company-tag ng-model="phoneNumber"></div>
+        <div id="print-section" class="results-container">
+            <div ng-show="parsedPhoneNumbersModel.OtherPhoneNumbers.length  > 0" class="company-container">
+                <div class="title">Other ({{parsedPhoneNumbersModel.OtherPhoneNumbers.length}})</div>
+                <div ng-repeat="phoneNumber in parsedPhoneNumbersModel.OtherPhoneNumbers track by $index" class="phone-number-container">
+                    <div class="phone-number">{{phoneNumber}}</div>
+                    <div phone-company-tag ng-model="phoneNumber"></div>
+                </div>
             </div>
-        </div>
 
-        <div ng-show="parsedPhoneNumbersModel.MetFonePhoneNumbers.length  > 0" class="company-container">
-            <div class="title">MetPhone ({{parsedPhoneNumbersModel.MetFonePhoneNumbers.length}})</div>
-            <div ng-repeat="phoneNumber in parsedPhoneNumbersModel.MetFonePhoneNumbers track by $index" class="phone-number-container">
-                <div class="phone-number">{{phoneNumber}}</div>
-                <div phone-company-tag ng-model="phoneNumber"></div>
+            <div ng-show="parsedPhoneNumbersModel.SmartPhoneNumbers.length > 0" class="company-container">
+                <div class="title">Smart ({{parsedPhoneNumbersModel.SmartPhoneNumbers.length}})</div>
+                <div ng-repeat="phoneNumber in parsedPhoneNumbersModel.SmartPhoneNumbers track by $index" class="phone-number-container">
+                    <div class="phone-number">{{phoneNumber}}</div>
+                    <div phone-company-tag ng-model="phoneNumber"></div>
+                </div>
             </div>
-        </div>
 
-        <div ng-show="parsedPhoneNumbersModel.CellCardPhoneNumbers.length  > 0" class="company-container">
-            <div class="title">CellCard ({{parsedPhoneNumbersModel.CellCardPhoneNumbers.length}})</div>
-            <div ng-repeat="phoneNumber in parsedPhoneNumbersModel.CellCardPhoneNumbers track by $index" class="phone-number-container">
-                <div class="phone-number">{{phoneNumber}}</div>
-                <div phone-company-tag ng-model="phoneNumber"></div>
+            <div ng-show="parsedPhoneNumbersModel.MetFonePhoneNumbers.length  > 0" class="company-container">
+                <div class="title">MetPhone ({{parsedPhoneNumbersModel.MetFonePhoneNumbers.length}})</div>
+                <div ng-repeat="phoneNumber in parsedPhoneNumbersModel.MetFonePhoneNumbers track by $index" class="phone-number-container">
+                    <div class="phone-number">{{phoneNumber}}</div>
+                    <div phone-company-tag ng-model="phoneNumber"></div>
+                </div>
+            </div>
+
+            <div ng-show="parsedPhoneNumbersModel.CellCardPhoneNumbers.length  > 0" class="company-container">
+                <div class="title">CellCard ({{parsedPhoneNumbersModel.CellCardPhoneNumbers.length}})</div>
+                <div ng-repeat="phoneNumber in parsedPhoneNumbersModel.CellCardPhoneNumbers track by $index" class="phone-number-container">
+                    <div class="phone-number">{{phoneNumber}}</div>
+                    <div phone-company-tag ng-model="phoneNumber"></div>
+                </div>
             </div>
         </div>
     </div>

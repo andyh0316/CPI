@@ -5,13 +5,15 @@ $main-font-color: black;
 $light-font-color: #b9b9b9;
 $main-color: #2d4756;
 
+$border-color: #e4e4e4;
+
 $advanced-search-z-index: 300;
 $dialog-z-index: 300;
 $search-drop-down-z-index: 350;
 $notification-message-z-index: 450;
 $main-menu-z-index: 1000;
 $dropdown-menu-z-index: 1001;
-$secondary-menu-z-index: 1000;
+$page-header-z-index: 1000;
 $tooltip-box-z-index: 1800;
 $session-warning-z-index: 2000;
 $wait-mask-z-index: 9999;
@@ -25,7 +27,7 @@ $error-border-color: #B30F0F;
 $error-hover-color: #8C0505;
 
 $active-color: #059811;
-$app-min-width: 1280px;
+$application-min-width: 1260px; 
 
 @mixin transition($param) {
     -webkit-transition: $param;
@@ -87,6 +89,14 @@ html, body {
     margin: 0px !important;
     height: 100%;
     overflow: hidden;
+
+    .body-container {
+        position: relative;
+        height: 100%;
+        overflow: auto;
+        @extend %border-box;
+        min-width: $application-min-width; // this only applies to application (not public pages like login, survey, etc, because they need to be mobile friendly)
+    }
 }
 
 body {
@@ -96,7 +106,231 @@ body {
     font-size: 13px;
 }
 
+.buttons {
+    float: right;
+}
+
+@keyframes ui-view-in {
+    from {
+        transform: translateX(300px);
+        //opacity: 0.8;
+    }
+
+    to {
+        transform: translateX(0px);
+        //opacity: 1;
+    }
+
+    0% {
+        opacity: 0;
+    }
+
+    20% {
+        opacity: 1;
+    }
+}
+
+@keyframes ui-view-out {
+    from {
+        transform: translateX(0px);
+    }
+
+    to {
+        transform: translateX(300px);
+    }
+
+    30% {
+        opacity: 1;
+    }
+
+    80% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
 $main-menu-height: 50px;
+$page-header-height: 42px;
+$ui-view-top-padding: $main-menu-height + $page-header-height;
+[ui-view] {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    padding-top: $main-menu-height;
+    overflow: hidden;
+    @extend %border-box;
+    height: 100%;
+
+    [ui-view] { // only children ui-view will get animated
+        padding-top: 0px;
+    }
+
+    &:empty {
+        display: none;
+    }
+
+    &.normal {
+        position: relative;
+    }
+}
+
+[ui-view].ng-animate-enabled { // only children ui-view will get animated
+    //@include transition(all 400ms linear);
+    &.ng-enter {
+        animation: 400ms ui-view-in ease-in-out;
+    }
+
+    &.ng-leave {
+        animation: 300ms ui-view-out ease-out;
+    }
+}
+
+.page-container {
+    position: relative;
+    height: 100%;
+    background-color: white;
+    display: block;
+    @extend %border-box;
+
+    .page-header {
+        position: relative;
+        background-color: whitesmoke;
+        width: 100%;
+        height: $page-header-height;
+        left: 0px;
+        right: 0px;
+        @extend %border-box;
+        border-bottom: 1px solid $border-color;
+        $padding: 8px 10px 0px 10px;
+        $title-container-width: 150px;
+
+        .title-container {
+            background-color: #efefef;
+            float: left;
+            //width: $title-container-width;
+            height: 100%;
+            @extend %border-box;
+            padding: $padding;
+
+            .title {
+                display: inline-block;
+                font-size: 20px;
+                text-transform: uppercase;
+            }
+
+            .list-total {
+                display: inline-block;
+                font-size: 11px;
+                color: $light-font-color;
+            }
+        }
+
+        .filters-container {
+            float: left;
+            //margin-left: $title-container-width;
+            padding: $padding;
+
+            .search {
+                display: inline-block;
+            }
+
+            [advanced-search] {
+                position: relative;
+                display: inline-block;
+                vertical-align: top;
+
+                .criteria-container {
+                    &.manualTrigger {
+                        position: fixed;
+                        padding: 25px 30px;
+                        max-width: 1100px;
+                        left: 20px;
+                        margin-top: 30px;
+                        @include box-shadow(0px 0px 5px #e0dfdf);
+                        background-color: white;
+                        border: 1px solid #d0d0d0;
+                        z-index: $advanced-search-z-index;
+
+                        .buttons-container {
+                            min-width: 300px;
+                            margin-top: 30px;
+
+                            .button {
+                                //margin-left: 3px;
+                            }
+                        }
+
+                        &:before {
+                            display: block;
+                            position: fixed;
+                            left: 0;
+                            right: 0;
+                            top: 0;
+                            bottom: 0;
+                            content: "";
+                        }
+                    }
+                }
+            }
+
+            [simple-search] {
+                position: relative;
+                display: inline-block;
+                vertical-align: top;
+                margin-right: 3px;
+
+                input {
+                    width: 200px;
+                    padding-left: 30px !important;
+                    padding-right: 0;
+                    margin-right: -4px !important;
+                    background-image: url('/Images/Icons/search-box-icon.png');
+                    background-size: 16px 16px;
+                    background-repeat: no-repeat;
+                    background-position: 8px center;
+                    transition: width 300ms ease-in-out;
+                }
+
+                button {
+                    min-width: 0px !important;
+                    border-left: none;
+                }
+            }
+
+            input,
+            select {
+                height: 28px !important;
+            }
+        }
+
+        .buttons {
+            padding: $padding;
+        }
+    }
+
+    .page-body {
+        position: relative;
+        width: 100%;
+        padding: 20px 30px;
+        overflow: auto;
+        height: calc((100%) - (#{$page-header-height}));
+        @extend %border-box;
+
+        &.no-padding {
+            padding: 0px 0px;
+        }
+
+        .button.delete {
+            position: absolute;
+            right: 10px;
+            bottom: 20px;
+        }
+    }
+}
 
 #main-menu {
     position: fixed;
@@ -290,223 +524,6 @@ $main-menu-height: 50px;
                 }
             }
         }
-    }
-}
-
-$secondary-menu-height: 42px;
-
-.secondary-menu {
-    position: fixed;
-    width: 100%;
-    //width: calc((100%) - (#{$main-menu-width}));
-    //min-width: calc((#{$app-min-width}) - (#{$main-menu-width}));
-    height: $secondary-menu-height;
-    background-color: whitesmoke;
-    //margin-left: $main-menu-width;
-    top: $main-menu-height;
-    //left: $main-menu-width;
-    right: 0px;
-    @extend %border-box;
-    z-index: $secondary-menu-z-index;
-    border-bottom: 1px solid #ececec;
-    //padding-top: 5px;
-    $padding: 8px 10px 0px 10px;
-    $title-container-width: 150px;
-
-    .title-container {
-        background-color: #efefef;
-        float: left;
-        //width: $title-container-width;
-        height: 100%;
-        @extend %border-box;
-        padding: $padding;
-
-        .title {
-            display: inline-block;
-            font-size: 20px;
-            text-transform: uppercase;
-        }
-
-        .list-total {
-            display: inline-block;
-            font-size: 11px;
-            color: $light-font-color;
-        }
-    }
-
-    .filters-container {
-        float: left;
-        //margin-left: $title-container-width;
-        padding: $padding;
-
-        .search {
-            display: inline-block;
-        }
-
-        [advanced-search] {
-            position: relative;
-            display: inline-block;
-            vertical-align: top;
-
-            .criteria-container {
-                &.manualTrigger {
-                    position: fixed;
-                    padding: 25px 30px;
-                    max-width: 1100px;
-                    left: 20px;
-                    margin-top: 30px;
-                    @include box-shadow(0px 0px 5px #e0dfdf);
-                    background-color: white;
-                    border: 1px solid #d0d0d0;
-                    z-index: $advanced-search-z-index;
-
-                    .buttons-container {
-                        min-width: 300px;
-                        margin-top: 30px;
-
-                        .button {
-                            //margin-left: 3px;
-                        }
-                    }
-
-                    &:before {
-                        display: block;
-                        position: fixed;
-                        left: 0;
-                        right: 0;
-                        top: 0;
-                        bottom: 0;
-                        content: "";
-                    }
-                }
-            }
-        }
-
-        [simple-search] {
-            position: relative;
-            display: inline-block;
-            vertical-align: top;
-            margin-right: 3px;
-
-            input {
-                width: 200px;
-                padding-left: 30px !important;
-                padding-right: 0;
-                margin-right: -4px !important;
-                background-image: url('/Images/Icons/search-box-icon.png');
-                background-size: 16px 16px;
-                background-repeat: no-repeat;
-                background-position: 8px center;
-                transition: width 300ms ease-in-out;
-            }
-
-            button {
-                min-width: 0px !important;
-                border-left: none;
-            }
-        }
-
-        input,
-        select {
-            height: 28px !important;
-        }
-    }
-
-    .buttons {
-        padding: $padding;
-    }
-}
-
-.buttons {
-    float: right;
-}
-
-@keyframes ui-view-in {
-    from {
-        transform: translateX(300px);
-        //opacity: 0.8;
-    }
-
-    to {
-        transform: translateX(0px);
-        //opacity: 1;
-    }
-
-    0% {
-        opacity: 0;
-    }
-
-    20% {
-        opacity: 1;
-    }
-}
-
-@keyframes ui-view-out {
-    from {
-        transform: translateX(0px);
-    }
-
-    to {
-        transform: translateX(300px);
-    }
-
-    30% {
-        opacity: 1;
-    }
-
-    80% {
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 0;
-    }
-}
-
-$ui-view-top-padding: $main-menu-height + $secondary-menu-height;
-
-[ui-view] {
-    position: fixed;
-    width: 100%;
-    //display: flex;
-    //min-width: calc((#{$app-min-width}) - (#{$main-menu-width}));
-    top: 0;
-    left: 0;
-    //width: calc((100%) - (#{$main-menu-width}));
-    //margin-top: $main-menu-height;
-    //height: calc((100%) - (#{$secondary-menu-height}));
-    height: 100%;
-    padding-top: calc(#{$ui-view-top-padding});
-    //margin-left: $main-menu-width;
-    background-color: white;
-    @extend %border-box;
-
-    [ui-view] { // only children ui-view will get animated
-        &.ng-enter {
-            animation: 400ms ui-view-in ease-in-out;
-        }
-
-        &.ng-leave {
-            animation: 300ms ui-view-out ease-out;
-        }
-
-        &:empty {
-            display: none;
-        }
-    }
-}
-
-.container {
-    position: relative;
-    height: 100%;
-    overflow: auto;
-    @extend %border-box;
-    padding: 20px 30px;
-
-    .button.delete {
-        position: absolute;
-        right: 10px;
-        bottom: 20px;
     }
 }
 
@@ -1990,7 +2007,7 @@ button.icon {
 #import {
     height: 100%;
 
-    .form {
+    .paste-numbers-container {
         float: left;
         width: 30%;
         padding-right: 20px;

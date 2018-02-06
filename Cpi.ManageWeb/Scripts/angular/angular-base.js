@@ -123,8 +123,8 @@ baseModule.run(['$rootScope', '$state', function ($rootScope, $state) {
         //var levels = 0;
         //var deepest;
 
-        //$('.secondary-menu-buttons').hide();
-        //$('body').find('.secondary-menu-buttons').each(function () {
+        //$('.page-header-buttons').hide();
+        //$('body').find('.page-header-buttons').each(function () {
         //    if (!this.firstChild || this.firstChild.nodeType !== 1) {
         //        var levelsFromThis = $(this).parentsUntil('body').length;
         //        if (levelsFromThis > levels) {

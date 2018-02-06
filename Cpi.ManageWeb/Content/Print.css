@@ -1,37 +1,35 @@
 ﻿@media print {
   html, body {
     background-color: white; }
+    html .body-container, body .body-container {
+      min-width: 0px !important; }
   body {
     overflow: visible !important; }
     body * {
-      visibility: hidden;
-      height: 1px !important; }
-    body .container {
+      visibility: hidden; }
+    body .page-container {
       position: absolute;
       width: 100% !important;
       margin: 0 !important;
       height: auto !important;
       overflow: visible !important; }
-  [ui-view] {
-    position: absolute !important;
-    top: 0px !important;
-    left: 0px !important;
-    margin-top: 0px !important;
-    margin-left: 0px !important;
-    padding-top: 0px !important;
-    overflow: visible !important; }
   #print-section {
     position: absolute;
     left: 0;
     top: 0;
-    width: 100% !important;
-    height: auto !important;
-    visibility: visible;
-    overflow: visible !important;
-    border: 0px !important; }
+    visibility: visible; }
     #print-section * {
-      visibility: visible;
-      height: auto !important; }
+      visibility: visible; }
     #print-section .button {
-      display: none; } }
+      display: none; }
+    #print-section .hide-when-printing {
+      display: none; }
+    #print-section .show-when-printing {
+      display: block !important; }
+    #print-section dl dd {
+      text-overflow: unset !important;
+      white-space: unset !important;
+      overflow: unset !important; }
+  .print-avoid-page-break {
+    page-break-inside: avoid; } }
 

@@ -1,5 +1,5 @@
-﻿<div class="container">
-    <div ng-show="state.current.name == 'List'" class="secondary-menu">
+﻿<div class="page-container">
+    <div class="page-header">
         <div class="title-container">
             <div class="title">Calls</div>
             <div class="list-total">{{listLoadCalculator.Total}}</div>
@@ -44,73 +44,75 @@
         </div>
     </div>
 
-    <div class="list-container">
-        <table>
-            <thead>
-                <tr>
-                    <th class="date-time"><a ng-sort="Date">Created</a></th>
-                    <th>Phone</th>
-                    <th>Name</th>
-                    <th ng-class="{commodities: isAnyListItemTouched()}">Product</th>
-                    <th class="center-content"><a ng-sort="Status.Name">Status </a></th>
-                    <th class="action"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="listItem in listItems" ng-class="{deletingEntry: listItem.Deleted}">
-                    <td class="date-time">
-                        <dl>
-                            <dd>{{listItem.Date | shortDateWithTime}}</dd>
-                        </dl>
-                    </td>
-                    <td>
-                        <dl>
-                            <dd ng-show="!showListItemInput(listItem)">
-                                {{listItem.CustomerPhone}} 
-                                <span phone-company-tag ng-model="listItem.CustomerPhone"></span>
-                            </dd>
-                            <dd ng-show="showListItemInput(listItem)">
-                                <span field-validation-error ng-show="modelState['[' + getTouchedListItemIndex(listItem) + '].CustomerPhone']" class="field-validation-error"></span>
-                                <input ng-model="listItem.CustomerPhone" />
-                            </dd>
-                        </dl>
-                    </td>
-                    <td>
-                        <dl>
-                            <dd ng-show="!showListItemInput(listItem)">{{listItem.CustomerName}}</dd>
-                            <dd ng-show="showListItemInput(listItem)">
-                                <span field-validation-error ng-show="modelState['[' + getTouchedListItemIndex(listItem) + '].CustomerName']" class="field-validation-error"></span>
-                                <input ng-model="listItem.CustomerName" />
-                            </dd>
-                        </dl>
-                    </td>
-                    <td ng-class="{commodities: isAnyListItemTouched()}">
-                        <dl>
-                            <dd ng-show="!showListItemInput(listItem)">
-                                {{listItem.CallCommodities | objectCommodities}}
-                            </dd>
-                        </dl>
-                    </td>
-                    <td class="center-content">
-                        <dl>
-                            <dd ng-show="!showListItemInput(listItem)">
-                                <span ng-show="listItem.StatusId === modelData.CallStatusIdEnums.SentToCallCenter" class="call-sent-to-call-center icon" title="Sent: Customer phone numbers are sent to the call center. 此电话单以送达电话服务中心"></span>
-                            </dd>
-                            <dd ng-show="showListItemInput(listItem)">
-                                <select ng-model="listItem.StatusId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.CallStatuses">
-                                    <option value="">All ទាំងអស់</option>
-                                </select>
-                            </dd>
-                        </dl>
-                    </td>
-                    <td class="action">
-                        <button ng-show="!listItem.touched" class="edit icon" ng-click="editListItem(listItem); $event.stopPropagation();"></button>
-                        <!--<div ng-show="listItem.Id" class="delete icon" ng-click="listItem.Deleted = true; listItem.touched = true; $event.stopPropagation();"></div>-->
-                        <button ng-show="listItem.touched" class="cancel icon" ng-click="cancelListItem(listItem)" ; $event.stopPropagation();"></button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="page-body">
+        <div class="list-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="date-time"><a ng-sort="Date">Created</a></th>
+                        <th>Phone</th>
+                        <th>Name</th>
+                        <th ng-class="{commodities: isAnyListItemTouched()}">Product</th>
+                        <th class="center-content"><a ng-sort="Status.Name">Status </a></th>
+                        <th class="action"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="listItem in listItems" ng-class="{deletingEntry: listItem.Deleted}">
+                        <td class="date-time">
+                            <dl>
+                                <dd>{{listItem.Date | shortDateWithTime}}</dd>
+                            </dl>
+                        </td>
+                        <td>
+                            <dl>
+                                <dd ng-show="!showListItemInput(listItem)">
+                                    {{listItem.CustomerPhone}}
+                                    <span phone-company-tag ng-model="listItem.CustomerPhone"></span>
+                                </dd>
+                                <dd ng-show="showListItemInput(listItem)">
+                                    <span field-validation-error ng-show="modelState['[' + getTouchedListItemIndex(listItem) + '].CustomerPhone']" class="field-validation-error"></span>
+                                    <input ng-model="listItem.CustomerPhone" />
+                                </dd>
+                            </dl>
+                        </td>
+                        <td>
+                            <dl>
+                                <dd ng-show="!showListItemInput(listItem)">{{listItem.CustomerName}}</dd>
+                                <dd ng-show="showListItemInput(listItem)">
+                                    <span field-validation-error ng-show="modelState['[' + getTouchedListItemIndex(listItem) + '].CustomerName']" class="field-validation-error"></span>
+                                    <input ng-model="listItem.CustomerName" />
+                                </dd>
+                            </dl>
+                        </td>
+                        <td ng-class="{commodities: isAnyListItemTouched()}">
+                            <dl>
+                                <dd ng-show="!showListItemInput(listItem)">
+                                    {{listItem.CallCommodities | objectCommodities}}
+                                </dd>
+                            </dl>
+                        </td>
+                        <td class="center-content">
+                            <dl>
+                                <dd ng-show="!showListItemInput(listItem)">
+                                    <span ng-show="listItem.StatusId === modelData.CallStatusIdEnums.SentToCallCenter" class="call-sent-to-call-center icon" title="Sent: Customer phone numbers are sent to the call center. 此电话单以送达电话服务中心"></span>
+                                </dd>
+                                <dd ng-show="showListItemInput(listItem)">
+                                    <select ng-model="listItem.StatusId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.CallStatuses">
+                                        <option value=""></option>
+                                    </select>
+                                </dd>
+                            </dl>
+                        </td>
+                        <td class="action">
+                            <button ng-show="!listItem.touched" class="edit icon" ng-click="editListItem(listItem); $event.stopPropagation();"></button>
+                            <!--<div ng-show="listItem.Id" class="delete icon" ng-click="listItem.Deleted = true; listItem.touched = true; $event.stopPropagation();"></div>-->
+                            <button ng-show="listItem.touched" class="cancel icon" ng-click="cancelListItem(listItem)" ; $event.stopPropagation();"></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <div ui-view class="ng-animate-enabled"></div>

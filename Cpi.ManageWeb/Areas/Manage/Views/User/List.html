@@ -1,5 +1,5 @@
-﻿<div class="container">
-    <div ng-show="state.current.name == 'List'" class="secondary-menu">
+﻿<div class="page-container">
+    <div class="page-header">
         <div class="title-container">
             <div class="title">Staff</div>
             <div class="list-total">{{listLoadCalculator.Total}}</div>
@@ -15,48 +15,50 @@
         </div>
     </div>
 
-    <div class="list-container">
-        <table>
-            <thead>
-                <tr>
-                    <th>
-                        <a ng-sort="Fullname">Fullname</a>
-                        <a ng-sort="Nickname">Nickname</a>
-                    </th>
-                    <th><a ng-sort="Username">Username</a></th>
-                    <th><a ng-sort="UserRole">Role</a></th>
-                    <th><a ng-sort="UserOccupation">Occupation</a></th>
-                    <!--<th><a ng-sort="LastLoginDate">Last Login</a></th>-->
-                    <th><a ng-sort="Salary">Salary</a></th>
-                    <th class="action"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="listItem in listItems" ng-class="{deletingEntry: listItem.Deleted}" ng-click="viewUser(listItem.Id)">
-                    <td>
-                        {{listItem.Fullname}} ({{listItem.Nickname}})
-                    </td>
-                    <td>
-                        {{listItem.Username}}
-                    </td>
-                    <td>
-                        {{listItem.UserRole}}
-                    </td>
-                    <td>
-                        {{listItem.UserOccupation}}
-                    </td>
-                    <!--<td>
+    <div class="page-body">
+        <div class="list-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>
+                            <a ng-sort="Fullname">Fullname</a>
+                            <a ng-sort="Nickname">Nickname</a>
+                        </th>
+                        <th><a ng-sort="Username">Username</a></th>
+                        <th><a ng-sort="UserRole">Role</a></th>
+                        <th><a ng-sort="UserOccupation">Occupation</a></th>
+                        <!--<th><a ng-sort="LastLoginDate">Last Login</a></th>-->
+                        <th><a ng-sort="Salary">Salary</a></th>
+                        <th class="action"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="listItem in listItems" ng-class="{deletingEntry: listItem.Deleted}" ng-click="viewUser(listItem.Id)">
+                        <td>
+                            {{listItem.Fullname}} ({{listItem.Nickname}})
+                        </td>
+                        <td>
+                            {{listItem.Username}}
+                        </td>
+                        <td>
+                            {{listItem.UserRole}}
+                        </td>
+                        <td>
+                            {{listItem.UserOccupation}}
+                        </td>
+                        <!--<td>
                         {{listItem.LastLoginDate | shortDate}}
                     </td>-->
-                    <td>
-                        ${{listItem.Salary | number: 2}}
-                    </td>
-                    <td class="action" ng-click="$event.stopPropagation();">
-                        <button ng-show="isRoleLaozi" class="login-as-user icon" ng-click="loginAsUser(listItem); $event.stopPropagation();" title="Login as this user"></button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                        <td>
+                            ${{listItem.Salary | number: 2}}
+                        </td>
+                        <td class="action" ng-click="$event.stopPropagation();">
+                            <button ng-show="isRoleLaozi" class="login-as-user icon" ng-click="loginAsUser(listItem); $event.stopPropagation();" title="Login as this user"></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <div ui-view class="ng-animate-enabled"></div>

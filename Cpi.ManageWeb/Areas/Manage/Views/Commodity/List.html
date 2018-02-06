@@ -1,5 +1,5 @@
-﻿<div id="expense-list" class="container">
-    <div ng-show="state.current.name == 'List'" class="secondary-menu">
+﻿<div id="expense-list" class="page-container">
+    <div class="page-header">
         <div class="title-container">
             <div class="title">Products</div>
             <div class="list-total">{{listLoadCalculator.Total}}</div>
@@ -12,58 +12,60 @@
         </div>
     </div>
 
-    <div class="list-container">
-        <table>
-            <thead>
-                <tr>
-                    <th><a ng-sort="CreatedDate">Created</a></th>
-                    <th><a ng-sort="Name">Name</a></th>
-                    <th class="center-content"><a ng-sort="Inactive">Deactivated</a></th>
-                    <th class="right-content">Price</th>
-                    <th class="action"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="listItem in listItems" ng-class="{deletingEntry: listItem.Deleted}">
-                    <td>
-                        <dl>
-                            <dd>{{listItem.CreatedDate | shortDate}}</dd>
-                        </dl>
-                    </td>
-                    <td>
-                        <dl>
-                            <dd ng-show="!showListItemInput(listItem)">{{listItem.Name}}</dd>
-                            <dd ng-show="showListItemInput(listItem)">
-                                <span field-validation-error ng-show="modelState['[' + getTouchedListItemIndex(listItem) + '].Name']" class="field-validation-error"></span>
-                                <input ng-model="listItem.Name" />
-                            </dd>
-                        </dl>
-                    </td>
-                    <td class="center-content">
-                        <dl>
-                            <dd ng-show="!showListItemInput(listItem)">{{listItem.Inactive | bool}}</dd>
-                            <dd ng-show="showListItemInput(listItem)">
-                                <span field-validation-error ng-show="modelState['[' + getTouchedListItemIndex(listItem) + '].Inactive']" class="field-validation-error"></span>
-                                <span model-checkbox ng-model="listItem.Inactive"></span>
-                            </dd>
-                        </dl>
-                    </td>
-                    <td class="right-content">
-                        <dl>
-                            <dd ng-show="!showListItemInput(listItem)">${{listItem.Price | number: 2}}</dd>
-                            <dd ng-show="showListItemInput(listItem)">
-                                <span field-validation-error ng-show="modelState['[' + getTouchedListItemIndex(listItem) + '].Price']" class="field-validation-error"></span>
-                                <input ng-model="listItem.Price" />
-                            </dd>
-                        </dl>
-                    </td>
-                    <td class="action">
-                        <button ng-show="!listItem.touched" class="edit icon" ng-click="editListItem(listItem); $event.stopPropagation();"></button>
-                        <button ng-show="listItem.touched" class="cancel icon" ng-click="cancelListItem(listItem); $event.stopPropagation();"></button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="page-body">
+        <div class="list-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th><a ng-sort="CreatedDate">Created</a></th>
+                        <th><a ng-sort="Name">Name</a></th>
+                        <th class="center-content"><a ng-sort="Inactive">Deactivated</a></th>
+                        <th class="right-content">Price</th>
+                        <th class="action"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="listItem in listItems" ng-class="{deletingEntry: listItem.Deleted}">
+                        <td>
+                            <dl>
+                                <dd>{{listItem.CreatedDate | shortDate}}</dd>
+                            </dl>
+                        </td>
+                        <td>
+                            <dl>
+                                <dd ng-show="!showListItemInput(listItem)">{{listItem.Name}}</dd>
+                                <dd ng-show="showListItemInput(listItem)">
+                                    <span field-validation-error ng-show="modelState['[' + getTouchedListItemIndex(listItem) + '].Name']" class="field-validation-error"></span>
+                                    <input ng-model="listItem.Name" />
+                                </dd>
+                            </dl>
+                        </td>
+                        <td class="center-content">
+                            <dl>
+                                <dd ng-show="!showListItemInput(listItem)">{{listItem.Inactive | bool}}</dd>
+                                <dd ng-show="showListItemInput(listItem)">
+                                    <span field-validation-error ng-show="modelState['[' + getTouchedListItemIndex(listItem) + '].Inactive']" class="field-validation-error"></span>
+                                    <span model-checkbox ng-model="listItem.Inactive"></span>
+                                </dd>
+                            </dl>
+                        </td>
+                        <td class="right-content">
+                            <dl>
+                                <dd ng-show="!showListItemInput(listItem)">${{listItem.Price | number: 2}}</dd>
+                                <dd ng-show="showListItemInput(listItem)">
+                                    <span field-validation-error ng-show="modelState['[' + getTouchedListItemIndex(listItem) + '].Price']" class="field-validation-error"></span>
+                                    <input ng-model="listItem.Price" />
+                                </dd>
+                            </dl>
+                        </td>
+                        <td class="action">
+                            <button ng-show="!listItem.touched" class="edit icon" ng-click="editListItem(listItem); $event.stopPropagation();"></button>
+                            <button ng-show="listItem.touched" class="cancel icon" ng-click="cancelListItem(listItem); $event.stopPropagation();"></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <div ui-view class="ng-animate-enabled"></div>
