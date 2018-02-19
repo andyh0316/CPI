@@ -196,6 +196,7 @@
     <Content Include="Content\MaterialIcons\MaterialIcons-Regular.woff2" />
     <Content Include="Content\MaterialIcons\README.md" />
     <None Include="Content\Site.scss" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\javascript\javascript-base.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />

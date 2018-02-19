@@ -5,20 +5,22 @@
         </div>
         <div class="filters-container">
             <section>
-                <dl>
+                <dl class="dl-S">
                     <dd>
                         <select ng-model="scopeData.filter.ReportDateFilter.ReportDateId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.ReportDates" 
-                                ng-change="scopeData.filter.ReportDateFilter.DateFrom = null; scopeData.filter.ReportDateFilter.DateTo = null;"></select>
+                                ng-change="scopeData.filter.ReportDateFilter.DateFrom = null; scopeData.filter.ReportDateFilter.DateTo = null;">
+                            <option value="">Date កាលបរិច្ឆេទ: All ងអស់</option>
+                        </select>
                     </dd>
                 </dl>
 
-                <dl ng-show="scopeData.filter.ReportDateFilter.ReportDateId === modelData.ReportDateIdEnums.AllTimeOrSelectDateRange" class="dl-XS">
+                <dl ng-show="!scopeData.filter.ReportDateFilter.ReportDateId" class="dl-XS">
                     <dd>
                         <input ng-model="scopeData.filter.ReportDateFilter.DateFrom" placeholder="Date (From)" ng-change="delayFilterSearch = true" date-input />
                     </dd>
                 </dl>
 
-                <dl ng-show="scopeData.filter.ReportDateFilter.ReportDateId === modelData.ReportDateIdEnums.AllTimeOrSelectDateRange" class="dl-XS">
+                <dl ng-show="!scopeData.filter.ReportDateFilter.ReportDateId" class="dl-XS">
                     <dd>
                         <input ng-model="scopeData.filter.ReportDateFilter.DateTo" placeholder="Date (To)" ng-change="delayFilterSearch = true" date-input />
                     </dd>

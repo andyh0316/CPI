@@ -27,17 +27,17 @@
                     <dl class="dl-S">
                         <dd>
                             <select ng-model="scopeData.filter.AdvancedSearch.ReportDateFilter.ReportDateId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.ReportDates">
-                                <option value="">Date: All ទាំងអស់</option>
+                                <option value="">Date កាលបរិច្ឆេទ: All ងអស់</option>
                             </select>
                         </dd>
                     </dl>
-                    <dl ng-show="scopeData.filter.AdvancedSearch.ReportDateFilter.ReportDateId === modelData.ReportDateIdEnums.AllTimeOrSelectDateRange" class="dl-XS">
+                    <dl ng-show="!scopeData.filter.AdvancedSearch.ReportDateFilter.ReportDateId" class="dl-XS">
                         <dd>
                             <input ng-model="scopeData.filter.AdvancedSearch.ReportDateFilter.DateFrom" date-input ng-change="$parent.delaySearch = true" placeholder="Date: From" />
                         </dd>
                     </dl>
 
-                    <dl ng-show="scopeData.filter.AdvancedSearch.ReportDateFilter.ReportDateId === modelData.ReportDateIdEnums.AllTimeOrSelectDateRange" class="dl-XS">
+                    <dl ng-show="!scopeData.filter.AdvancedSearch.ReportDateFilter.ReportDateId" class="dl-XS">
                         <dd>
                             <input ng-model="scopeData.filter.AdvancedSearch.ReportDateFilter.DateTo" date-input ng-change="$parent.delaySearch = true" placeholder="Date: To" />
                         </dd>

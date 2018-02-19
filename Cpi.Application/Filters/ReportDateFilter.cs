@@ -14,8 +14,7 @@ namespace Cpi.Application.Filters
             Yesterday = 2,
             Past7Days = 3,
             Past30Days = 4,
-            PastYear = 5,
-            AllTimeOrSelectDateRange = 6
+            PastYear = 5
         }
 
         public static List<CpiSelectListItem> GetSelectList()
@@ -23,16 +22,17 @@ namespace Cpi.Application.Filters
             List<CpiSelectListItem> reportDates = new List<CpiSelectListItem>();
             reportDates.Add(new CpiSelectListItem { Id = (int)ReportDateIdEnums.Today, Name = "Today ថ្ងៃនេះ" });
             reportDates.Add(new CpiSelectListItem { Id = (int)ReportDateIdEnums.Yesterday, Name = "Yesterday ម្សិលមិញ" });
+            reportDates.Add(new CpiSelectListItem { Id = (int)ReportDateIdEnums.Past7Days, Name = "Past 7 Days ៧ថ្ងៃមុន" });
+            reportDates.Add(new CpiSelectListItem { Id = (int)ReportDateIdEnums.Past30Days, Name = "Past 30 Days ៣០ថ្ងៃមុន" });
+            reportDates.Add(new CpiSelectListItem { Id = (int)ReportDateIdEnums.PastYear, Name = "Past Year ៣៦៥ថ្ងៃមុន" });
 
-            int roleId = UserHelper.GetRoleId();
+            //int roleId = UserHelper.GetRoleId();
 
-            if (roleId == (int)LookUpUserRoleDm.LookUpIds.Laozi || roleId == (int)LookUpUserRoleDm.LookUpIds.Admin)
-            {
-                reportDates.Add(new CpiSelectListItem { Id = (int)ReportDateIdEnums.Past7Days, Name = "Past 7 Days ៧ថ្ងៃមុន" });
-                reportDates.Add(new CpiSelectListItem { Id = (int)ReportDateIdEnums.Past30Days, Name = "Past 30 Days ៣០ថ្ងៃមុន" });
-                reportDates.Add(new CpiSelectListItem { Id = (int)ReportDateIdEnums.PastYear, Name = "Past Year ៣៦៥ថ្ងៃមុន" });
-                reportDates.Add(new CpiSelectListItem { Id = (int)ReportDateIdEnums.AllTimeOrSelectDateRange, Name = "All Time/Select Date Range" });
-            }
+            //if (roleId == (int)LookUpUserRoleDm.LookUpIds.Laozi || roleId == (int)LookUpUserRoleDm.LookUpIds.Admin)
+            //{
+
+
+            //}
 
             return reportDates;
         }

@@ -80,8 +80,21 @@ namespace Cpi.Application.BusinessObjects
 
         public IQueryable<InvoiceDm> GetDateFilteredQuery(IQueryable<InvoiceDm> query, ReportDateFilter filter)
         {
-            if (filter != null && filter.ReportDateId.HasValue)
+            if (filter != null)
             {
+                if (!filter.ReportDateId.HasValue)
+                {
+                    if (filter.DateFrom.HasValue)
+                    {
+                        query = query.Where(a => a.Date >= filter.DateFrom.Value);
+                    }
+
+                    if (filter.DateTo.HasValue)
+                    {
+                        DateTime dateTo = filter.DateTo.Value.AddDays(1);
+                        query = query.Where(a => a.Date < dateTo);
+                    }
+                }
                 if (filter.ReportDateId == (int)ReportDateFilter.ReportDateIdEnums.Today)
                 {
                     DateTime dateFrom = DateTime.Now.Date;
@@ -108,19 +121,6 @@ namespace Cpi.Application.BusinessObjects
                     DateTime dateFrom = DateTime.Now.Date.AddYears(-1);
                     query = query.Where(a => a.Date >= dateFrom);
                 }
-                else if (filter.ReportDateId == (int)ReportDateFilter.ReportDateIdEnums.AllTimeOrSelectDateRange)
-                {
-                    if (filter.DateFrom.HasValue)
-                    {
-                        query = query.Where(a => a.Date >= filter.DateFrom.Value);
-                    }
-
-                    if (filter.DateTo.HasValue)
-                    {
-                        DateTime dateTo = filter.DateTo.Value.AddDays(1);
-                        query = query.Where(a => a.Date < dateTo);
-                    }
-                }
             }
 
             return query;
@@ -133,21 +133,7 @@ namespace Cpi.Application.BusinessObjects
             bool splitByMonth = false;
 
             // we don't have today or yesterday here because if its one day we return null to indicate that the graphs don't need to show
-            if (filter.ReportDateId == (int)ReportDateFilter.ReportDateIdEnums.Past7Days)
-            {
-                dateFrom = dateFrom.Date.AddDays(-6);
-            }
-            else if (filter.ReportDateId == (int)ReportDateFilter.ReportDateIdEnums.Past30Days)
-            {
-                dateFrom = dateFrom.Date.AddDays(-29);
-            }
-            else if (filter.ReportDateId == (int)ReportDateFilter.ReportDateIdEnums.PastYear)
-            {
-                DateTime dateLastYear = DateTime.Now.Date.AddYears(-1).AddMonths(1);
-                dateFrom = new DateTime(dateLastYear.Year, dateLastYear.Month, 1);
-                splitByMonth = true;
-            }
-            else if (filter.ReportDateId == (int)ReportDateFilter.ReportDateIdEnums.AllTimeOrSelectDateRange)
+            if (!filter.ReportDateId.HasValue)
             {
                 InvoiceDm earliestEntity = query.Where(a => a.Date.HasValue).OrderBy(a => a.Date.Value).FirstOrDefault();
 
@@ -182,6 +168,20 @@ namespace Cpi.Application.BusinessObjects
                     dateFrom = new DateTime(dateFrom.Year, dateFrom.Month, 1);
                     dateTo = new DateTime(dateTo.Year, dateTo.Month, DateTime.DaysInMonth(dateTo.Year, dateTo.Month));
                 }
+            }
+            else if (filter.ReportDateId == (int)ReportDateFilter.ReportDateIdEnums.Past7Days)
+            {
+                dateFrom = dateFrom.Date.AddDays(-6);
+            }
+            else if (filter.ReportDateId == (int)ReportDateFilter.ReportDateIdEnums.Past30Days)
+            {
+                dateFrom = dateFrom.Date.AddDays(-29);
+            }
+            else if (filter.ReportDateId == (int)ReportDateFilter.ReportDateIdEnums.PastYear)
+            {
+                DateTime dateLastYear = DateTime.Now.Date.AddYears(-1).AddMonths(1);
+                dateFrom = new DateTime(dateLastYear.Year, dateLastYear.Month, 1);
+                splitByMonth = true;
             }
             else
             {
