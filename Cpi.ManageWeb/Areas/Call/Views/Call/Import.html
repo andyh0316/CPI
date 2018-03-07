@@ -21,7 +21,9 @@
             </dl>
         </div>
 
-        <div id="print-section" class="results-container">
+        <div class="results-container print-section">
+            <div ng-show="parsedPhoneNumbersModel.DateTimeNow" class="dateTimeNow">{{parsedPhoneNumbersModel.DateTimeNow | shortDateWithTime }}</div>
+
             <div ng-show="parsedPhoneNumbersModel.OtherPhoneNumbers.length  > 0" class="company-container">
                 <div class="title">Other ({{parsedPhoneNumbersModel.OtherPhoneNumbers.length}})</div>
                 <div ng-repeat="phoneNumber in parsedPhoneNumbersModel.OtherPhoneNumbers track by $index" class="phone-number-container">

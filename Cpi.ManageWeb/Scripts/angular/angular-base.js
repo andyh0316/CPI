@@ -424,7 +424,7 @@ baseModule.filter('shortDate', ['$filter', function ($filter) {
 baseModule.filter('shortDateWithTime', ['$filter', function ($filter) {
     var angularDateFilter = $filter('date');
     return function (date) {
-        return angularDateFilter(date, 'dd.MM.yyyy hh:mm a');
+        return angularDateFilter(date, 'dd/MM/yyyy hh:mm a');
     }
 }]);
 

@@ -2036,6 +2036,11 @@ button.icon {
         height: 100%;
         overflow: auto;
 
+        .dateTimeNow {
+            font-size: 40px;
+            text-align: center;
+        } 
+        
         .company-container {
             @extend %clearfix;
             margin-bottom: 20px;
@@ -2052,7 +2057,7 @@ button.icon {
                 margin: 10px 0px;
 
                 .phone-number {
-                    font-size: 28px;
+                    font-size: 24px;
                 }
 
                 .phone-company {

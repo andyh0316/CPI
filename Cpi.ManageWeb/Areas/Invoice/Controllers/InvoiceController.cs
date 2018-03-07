@@ -91,18 +91,16 @@ namespace Cpi.ManageWeb.Areas.Invoice.Controllers
             {
                 InvoiceDm trackedInvoice = (invoice.Id > 0) ? trackedInvoices.Find(a => a.Id == invoice.Id) : new InvoiceDm();
 
-                bool isUpdatingStatusWithValue = (invoice.StatusId.HasValue && invoice.StatusId != trackedInvoice.StatusId);
+                //bool isUpdatingStatusWithValue = (invoice.StatusId.HasValue && invoice.StatusId != trackedInvoice.StatusId);
 
                 Mapper.Map(invoice, trackedInvoice);
-
-                invoice.InvoiceCommodities = (invoice.InvoiceCommodities) ?? new List<InvoiceCommodityDm>();
-                trackedInvoice.InvoiceCommodities = (trackedInvoice.InvoiceCommodities) ?? new List<InvoiceCommodityDm>();
-
-                //InvoiceCommodityBo.RemoveRange(trackedInvoice.InvoiceCommodities.Where(a => !Invoice.InvoiceCommodities.Select(b => b.Id).Contains(a.Id)).ToList()); // first delete all the Invoice commodities that are not in the view model
 
                 // save each InvoiceCommodity
                 if (!invoice.Deleted)
                 {
+                    invoice.InvoiceCommodities = (invoice.InvoiceCommodities) ?? new List<InvoiceCommodityDm>();
+                    trackedInvoice.InvoiceCommodities = (trackedInvoice.InvoiceCommodities) ?? new List<InvoiceCommodityDm>();
+
                     foreach (InvoiceCommodityDm InvoiceCommodity in invoice.InvoiceCommodities)
                     {
                         InvoiceCommodityDm trackedInvoiceCommodity = (InvoiceCommodity.Id > 0) ? trackedInvoice.InvoiceCommodities.Find(a => a.Id == InvoiceCommodity.Id) : new InvoiceCommodityDm();
@@ -122,17 +120,6 @@ namespace Cpi.ManageWeb.Areas.Invoice.Controllers
                         }
                     }
                 }
-
-                // calculate the total price
-                //if (trackedInvoice.InvoiceCommodities != null && trackedInvoice.InvoiceCommodities.Count > 0)
-                //{
-                //    trackedInvoice.TotalPrice = 0;
-                //    foreach (InvoiceCommodityDm invoiceCommodity in trackedInvoice.InvoiceCommodities)
-                //    {
-                //        decimal? commodityPrice = allCommodities.Find(a => a.Id == invoiceCommodity.CommodityId).Price;
-                //        trackedInvoice.TotalPrice = trackedInvoice.TotalPrice + (commodityPrice * invoiceCommodity.Quantity);
-                //    }
-                //}
 
                 if (trackedInvoice.Id == 0)
                 {

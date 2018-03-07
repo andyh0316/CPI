@@ -286,7 +286,7 @@ if (typeof module !== "undefined" && typeof exports !== "undefined" && module.ex
      * 
      * <pre>
      * <!doctype html>
-     * <html ng-app="myApp">
+     * <html ng-app="myApp" class="page-container">
      * <head>
      *   <script src="js/angular.js"></script>
      *   <!-- Include the ui-router script -->

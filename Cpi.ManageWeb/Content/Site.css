@@ -1378,6 +1378,9 @@ button.icon {
     border: 1px solid #BDBDBD;
     height: 100%;
     overflow: auto; }
+    #import .results-container .dateTimeNow {
+      font-size: 40px;
+      text-align: center; }
     #import .results-container .company-container {
       margin-bottom: 20px; }
       #import .results-container .company-container .title {
@@ -1389,7 +1392,7 @@ button.icon {
         float: left;
         margin: 10px 0px; }
         #import .results-container .company-container .phone-number-container .phone-number {
-          font-size: 28px; }
+          font-size: 24px; }
         #import .results-container .company-container .phone-number-container .phone-company {
           font-size: 16px; }
 

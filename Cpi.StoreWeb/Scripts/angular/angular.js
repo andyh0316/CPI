@@ -5902,7 +5902,7 @@
      * - `{void}` `destroy()` — Removes references to this cache from $cacheFactory.
      *
      * @example
-       <example module="cacheExampleApp">
+       <example module="cacheExampleApp" class="page-container">
          <file name="index.html">
            <div ng-controller="CacheController">
              <input ng-model="newCacheKey" placeholder="Key">
@@ -10848,7 +10848,7 @@
      * Used for configuring the interpolation markup. Defaults to `{{` and `}}`.
      *
      * @example
-    <example module="customInterpolationApp">
+    <example module="customInterpolationApp" class="page-container">
     <file name="index.html">
     <script>
       var customInterpolationApp = angular.module('customInterpolationApp', []);
@@ -10863,7 +10863,7 @@
           this.label = "This binding is brought you by // interpolation symbols.";
       });
     </script>
-    <div ng-app="App" ng-controller="DemoController as demo">
+    <div ng-app="App" class="page-container" ng-controller="DemoController as demo">
         //demo.label//
     </div>
     </file>
@@ -17111,7 +17111,7 @@
      *
      * ## Show me an example using SCE.
      *
-     * <example module="mySceApp" deps="angular-sanitize.js">
+     * <example module="mySceApp" class="page-container" deps="angular-sanitize.js">
      * <file name="index.html">
      *   <div ng-controller="AppController as myCtrl">
      *     <i ng-bind-html="myCtrl.explicitlyTrustedHtml" id="explicitlyTrustedHtml"></i><br><br>

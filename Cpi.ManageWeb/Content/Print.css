@@ -1,32 +1,44 @@
 ﻿@media print {
   html, body {
     background-color: white; }
-    html .body-container, body .body-container {
-      min-width: 0px !important; }
   body {
+    height: auto !important;
     overflow: visible !important; }
     body * {
       visibility: hidden; }
-    body .page-container {
-      position: absolute;
-      width: 100% !important;
-      margin: 0 !important;
+    body .body-container {
+      height: auto !important;
+      overflow: visible !important;
+      min-width: 0px !important; }
+      body .body-container .page-container {
+        height: auto !important;
+        overflow: visible !important; }
+        body .body-container .page-container .page-body {
+          height: auto !important;
+          overflow: visible !important; }
+    body [ui-view] {
       height: auto !important;
       overflow: visible !important; }
-  #print-section {
-    position: absolute;
+  .print-section {
+    position: absolute !important;
     left: 0;
     top: 0;
-    visibility: visible; }
-    #print-section * {
+    right: 0;
+    z-index: 99999;
+    visibility: visible;
+    height: auto !important;
+    overflow: visible !important;
+    float: none !important;
+    width: 100% !important; }
+    .print-section * {
       visibility: visible; }
-    #print-section .button {
+    .print-section .button {
       display: none; }
-    #print-section .hide-when-printing {
+    .print-section .hide-when-printing {
       display: none; }
-    #print-section .show-when-printing {
+    .print-section .show-when-printing {
       display: block !important; }
-    #print-section dl dd {
+    .print-section dl dd {
       text-overflow: unset !important;
       white-space: unset !important;
       overflow: unset !important; }

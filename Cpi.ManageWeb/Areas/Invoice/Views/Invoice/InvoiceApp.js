@@ -79,7 +79,7 @@ app.controller('ListController', ['$scope', '$controller', '$state', '$timeout',
         $timeout($scope.checkNewListItems, $scope.refreshInterval);
     }
 
-    $timeout($scope.checkNewListItems, $scope.refreshInterval);
+    //$timeout($scope.checkNewListItems, $scope.refreshInterval);
 
     $scope.invoiceCommodityChange = function (record) {
         var total = 0;
