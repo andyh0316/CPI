@@ -60,7 +60,7 @@
                 <dd ng-show="isCreateMode() || isEditMode()">
                     <span field-validation-error ng-show="modelState['UserOccupationId']" class="field-validation-error"></span>
                     <select ng-model="model.User.UserOccupationId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in model.Occupations">
-                        <option value="">All ទាំងអស់</option>
+                        <option value=""></option>
                     </select>
                 </dd>
                 <dd ng-show="isViewMode()">
