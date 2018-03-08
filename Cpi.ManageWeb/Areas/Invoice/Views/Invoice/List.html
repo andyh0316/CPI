@@ -1,4 +1,4 @@
-﻿<div class="page-container">
+﻿<div id="invoice" class="page-container">
     <div class="page-header">
         <div class="title-container">
             <div class="title">Invoices</div>
@@ -40,7 +40,7 @@
 
         <div class="buttons">
             <button ng-show="!isAnyListItemTouched()" class="button main" ng-click="refresh()">
-                Refresh 
+                Refresh
                 <span ng-show="newListItemCount">({{newListItemCount}})</span>
             </button>
             <button ng-show="isAnyListItemTouched()" class="button" ng-click="cancelListItems()">Cancel</button>
@@ -50,7 +50,7 @@
     </div>
 
     <div class="page-body">
-        <div class="list-container">
+        <!--<div class="list-container">
             <table>
                 <thead>
                     <tr>
@@ -61,7 +61,180 @@
                         <th>Product<br />ផលិតផល</th>
                         <th class="user-nickname"><a ng-sort="Operator.NickName">Operator<br />អ្នកទទួលទូរស័ព្ទ</a></th>
                         <th class="user-nickname"><a ng-sort="DeliveryStaff.NickName">Deliverer<br />អ្នកដឹកជញ្ចូន</a></th>
-                        <!--<th><a ng-sort="Location.Name">Location</a></th>-->
+                        <th><a ng-sort="Location.Name">Location</a></th>
+                        <th class="thd-S right-content"><a ng-sort="TotalPrice">Cost<br />តម្លៃ</a></th>
+                        <th class="thd-S center-content"><a ng-sort="Status.DisplayOrder">Status</a></th>
+                        <th class="action"></th>
+                    </tr>
+                </thead>
+            </table>
+        </div>-->
+        <div class="list-container">
+            <div sort-container>
+                <div><a ng-sort="Date">Date កាលបរិច្ឆេទ</a></div>
+                <div><a ng-sort="Operator.NickName">Operator អ្កទទួលទូរស័ព្ទ</a></div>
+                <div><a ng-sort="DeliveryStaff.NickName">Deliverer អ្នកដឹកជញ្ចូន</a></div>
+                <div><a ng-sort="TotalPrice">Cost តម្លៃ</a></div>
+                <div><a ng-sort="Status.DisplayOrder">Status</a></div>
+            </div>
+            <div list-panels-container>
+                <div class="list-panel flat-dl" ng-class="{deletingEntry: listItem.Deleted}" ng-repeat="listItem in listItems">
+                    <div class="list-panel-block block-1">
+                        <dl class="dl-full vertical-align">
+                            <dd ng-show="!showListItemInput(listItem)" class="center-content">{{listItem.Date | shortDate}}</dd>
+                            <dd ng-show="showListItemInput(listItem)">
+                                <span field-validation-error ng-show="modelState['[' + getTouchedListItemIndex(listItem) + '].Date']" class="field-validation-error"></span>
+                                <input ng-model="listItem.Date" date-input />
+                            </dd>
+                        </dl>
+                    </div>
+
+                    <div class="list-panel-block block-2">
+                        <section>
+                            <dl class="dl-S">
+                                <dd ng-show="!showListItemInput(listItem)">
+                                    {{listItem.CustomerPhone}}
+                                    <span phone-company-tag ng-model="listItem.CustomerPhone"></span>
+                                </dd>
+                                <dd ng-show="showListItemInput(listItem)">
+                                    <span field-validation-error ng-show="modelState['[' + getTouchedListItemIndex(listItem) + '].CustomerPhone']" class="field-validation-error"></span>
+                                    <input ng-model="listItem.CustomerPhone" placeholder="Phone លេខទូរស័ព្ទអតិថិជន" />
+                                </dd>
+                            </dl>
+
+                            <!--<dl class="dl-S">
+                                <dd ng-show="!showListItemInput(listItem)">
+                                    {{listItem.CustomerName}}
+                                </dd>
+                                <dd ng-show="showListItemInput(listItem)">
+                                    <span field-validation-error ng-show="modelState['[' + getTouchedListItemIndex(listItem) + '].CustomerName']" class="field-validation-error"></span>
+                                    <input ng-model="listItem.CustomerName" placeholder="Name ឈ្មោះអតិថិជន" />
+                                </dd>
+                            </dl>-->
+
+                            <dl class="address">
+                                <dd ng-show="!showListItemInput(listItem)">
+                                    {{listItem.Address}}
+                                </dd>
+                                <dd ng-show="showListItemInput(listItem)">
+                                    <span field-validation-error ng-show="modelState['[' + getTouchedListItemIndex(listItem) + '].Address']" class="field-validation-error"></span>
+                                    <input ng-model="listItem.Address" placeholder="Address អាស័យដ្ឋាន" />
+                                </dd>
+                            </dl>
+
+                            <dl class="dl-S">
+                                <dd ng-show="!showListItemInput(listItem)">{{listItem.Location.Name}}</dd>
+                                <dd ng-show="showListItemInput(listItem)">
+                                    <span field-validation-error ng-show="modelState['[' + getTouchedListItemIndex(listItem) + '].LocationId']" class="field-validation-error"></span>
+                                    <select ng-model="listItem.LocationId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.Locations"></select>
+                                </dd>
+                            </dl>
+                        </section>
+
+                        <section>
+                            <dl class="dl-S">
+                                <dd ng-show="!showListItemInput(listItem)">
+                                    <i class="material-icons">call</i>
+                                    {{listItem.Operator.Nickname}}
+                                </dd>
+                                <dd ng-if="showListItemInput(listItem)" class="overflow-visible">
+                                    <span field-validation-error ng-show="modelState['[' + getTouchedListItemIndex(listItem) + '].OperatorId']" class="field-validation-error"></span>
+                                    <div search-drop-down class="search-drop-down"
+                                         search-object="modelData.OperatorStaff"
+                                         input-string="{{listItem.Operator.Nickname}}"
+                                         input-key="listItem.OperatorId"
+                                         placeholder="Operator អ្នកទទួលទូរស័ព្ទ" >
+                                    </div>
+                                </dd>
+                            </dl>
+
+                            <dl class="dl-S">
+                                <dd ng-show="!showListItemInput(listItem)">
+                                    <i class="material-icons">motorcycle</i>
+                                    {{listItem.DeliveryStaff.Nickname}}
+                                </dd>
+                                <dd ng-if="showListItemInput(listItem)" class="overflow-visible">
+                                    <span field-validation-error ng-show="modelState['[' + getTouchedListItemIndex(listItem) + '].DeliveryStaffId']" class="field-validation-error"></span>
+                                    <div search-drop-down class="search-drop-down"
+                                         search-object="modelData.DeliveryStaff"
+                                         input-string="{{listItem.DeliveryStaff.Nickname}}"
+                                         input-key="listItem.DeliveryStaffId"
+                                         placeholder="Deliverer អ្នកដឹកជញ្ចូន" >
+                                    </div>
+                                </dd>
+                            </dl>
+
+                            <dl class="commodities">
+                                <dd ng-show="!showListItemInput(listItem)">
+                                    {{listItem.InvoiceCommodities | objectCommodities}}
+                                </dd>
+                                <dd ng-show="showListItemInput(listItem)" class="overflow-visible">
+                                    <span field-validation-error ng-show="modelState['[' + getTouchedListItemIndex(listItem) + '].InvoiceCommodities']" class="field-validation-error"></span>
+                                    <div commodities-edit ng-model="listItem.InvoiceCommodities" ng-change="invoiceCommodityChange(listItem)" commodities="modelData.Commodities"></div>
+                                </dd>
+                            </dl>
+                        </section>
+
+                        <section ng-show="showListItemInput(listItem) || listItem.Note">
+                            <dl class="dl-full">
+                                <dd ng-show="!showListItemInput(listItem)">
+                                    <i class="material-icons">description</i>
+                                    {{listItem.Note}}
+                                </dd>
+                                <dd ng-show="showListItemInput(listItem)">
+                                    <span field-validation-error ng-show="modelState['[' + getTouchedListItemIndex(listItem) + '].Note']" class="field-validation-error"></span>
+                                    <input ng-model="listItem.Note" placeholder="Note" />
+                                </dd>
+                            </dl>
+                        </section>
+                    </div>
+
+                    <div class="list-panel-block block-3">
+                        <dl class="dl-full vertical-align">
+                            <dd ng-show="!showListItemInput(listItem)" class="center-content">
+                                ${{listItem.TotalPrice | number: 2}}
+                            </dd>
+                            <dd ng-show="showListItemInput(listItem)" class="overflow-visible">
+                                <span field-validation-error ng-show="modelState['[' + getTouchedListItemIndex(listItem) + '].TotalPrice']" class="field-validation-error"></span>
+                                <input ng-model="listItem.TotalPrice" placeholder="Cost តម្លៃ" />
+                            </dd>
+                        </dl>
+                    </div>
+
+                    <div class="list-panel-block block-4">
+                        <dl class="dl-full vertical-align">
+                            <dd ng-show="!showListItemInput(listItem)" class="center-content">
+                                <span ng-show="listItem.StatusId === modelData.InvoiceStatusIdEnums.Delivering" class="invoice-delivering icon" title="Delivering: Product(s) are being delivered."></span>
+                                <span ng-show="listItem.StatusId === modelData.InvoiceStatusIdEnums.Sold" class="invoice-sold icon" title="Sold: Product(s) delivered to and paid by customer."></span>
+                                <span ng-show="listItem.StatusId === modelData.InvoiceStatusIdEnums.Cancelled" class="invoice-cancelled icon" title="Cancelled: Product(s) not delivered to the customer."></span>
+                            </dd>
+                            <dd ng-show="showListItemInput(listItem)">
+                                <select ng-model="listItem.StatusId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.InvoiceStatuses">
+                                    <option value=""></option>
+                                </select>
+                            </dd>
+                        </dl>
+                    </div>
+
+                    <span class="action-buttons">
+                        <button ng-show="!listItem.touched" class="edit icon" ng-click="editListItem(listItem); $event.stopPropagation();"></button>
+                        <button ng-show="!listItem.touched && listItem.Id > 0" class="delete icon" ng-click="deleteListItem(listItem); $event.stopPropagation();"></button>
+                        <button ng-show="listItem.touched" class="cancel icon" ng-click="cancelListItem(listItem); $event.stopPropagation();"></button>
+                    </span>
+                </div>
+            </div>
+
+            <!--<table>
+                <thead>
+                    <tr>
+                        <th class="date"><a ng-sort="Date">Date<br />កាលបរិច្ឆេទ</a></th>
+                        <th class="phone">Customer Phone<br />លេខទូរស័ព្ទអតិថិជន</th>
+                        <th class="fullname">Customer Name<br />ឈ្មោះអតិថិជន</th>
+                        <th>Address<br />អាស័យដ្ឋាន</th>
+                        <th>Product<br />ផលិតផល</th>
+                        <th class="user-nickname"><a ng-sort="Operator.NickName">Operator<br />អ្នកទទួលទូរស័ព្ទ</a></th>
+                        <th class="user-nickname"><a ng-sort="DeliveryStaff.NickName">Deliverer<br />អ្នកដឹកជញ្ចូន</a></th>
+                        <th><a ng-sort="Location.Name">Location</a></th>
                         <th class="thd-S right-content"><a ng-sort="TotalPrice">Cost<br />តម្លៃ</a></th>
                         <th class="thd-S center-content"><a ng-sort="Status.DisplayOrder">Status</a></th>
                         <th class="action"></th>
@@ -149,15 +322,15 @@
                                 </dd>
                             </dl>
                         </td>
-                        <!--<td>
-                        <dl>
-                            <dd ng-show="!showListItemInput(listItem)">{{listItem.Location.Name}}</dd>
-                            <dd ng-if="showListItemInput(listItem)" class="overflow-visible">
-                                <span field-validation-error ng-show="modelState['[' + getTouchedListItemIndex(listItem) + '].LocationId']" class="field-validation-error"></span>
-                                <select ng-model="listItem.LocationId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.Locations"></select>
-                            </dd>
-                        </dl>
-                    </td>-->
+                        <td>
+                            <dl>
+                                <dd ng-show="!showListItemInput(listItem)">{{listItem.Location.Name}}</dd>
+                                <dd ng-if="showListItemInput(listItem)" class="overflow-visible">
+                                    <span field-validation-error ng-show="modelState['[' + getTouchedListItemIndex(listItem) + '].LocationId']" class="field-validation-error"></span>
+                                    <select ng-model="listItem.LocationId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.Locations"></select>
+                                </dd>
+                            </dl>
+                        </td>
                         <td class="thd-S right-content">
                             <dl>
                                 <dd ng-show="!showListItemInput(listItem)">
@@ -190,7 +363,7 @@
                         </td>
                     </tr>
                 </tbody>
-            </table>
+            </table>-->
 
             <div ui-view class="ng-animate-enabled"></div>
         </div>

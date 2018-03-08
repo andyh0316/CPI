@@ -6,8 +6,8 @@
   /* For IE6-8 */
   src: local("Material Icons"), local("MaterialIcons-Regular"), url(/Content/MaterialIcons/MaterialIcons-Regular.woff2) format("woff2"), url(/Content/MaterialIcons/MaterialIcons-Regular.woff) format("woff"), url(/Content/MaterialIcons/MaterialIcons-Regular.ttf) format("truetype"); }
 
-.material-icons, .list-container table thead tr th a .sort-asc-icon:after,
-.list-container table thead tr th a .sort-desc-icon:after, input[type=checkbox] + label:before, .checkbox:before, input[type=checkbox]:checked + label:before, .checkbox.checked:before, input[type=radio] + label:before, input[type=radio]:checked + label:before, .icon:before, .search-drop-down .input-container:after, #login-screen dl dt:before, .commodities-edit .edit-container .edit-row .minus:after,
+.material-icons, .list-container a[ng-sort] .sort-asc-icon:after,
+.list-container a[ng-sort] .sort-desc-icon:after, input[type=checkbox] + label:before, .checkbox:before, input[type=checkbox]:checked + label:before, .checkbox.checked:before, input[type=radio] + label:before, input[type=radio]:checked + label:before, .icon:before, .search-drop-down .input-container:after, #login-screen dl dt:before, .commodities-edit .edit-container .edit-row .minus:after,
 .commodities-edit .edit-container .edit-row .plus:after,
 .commodities-edit .edit-container .edit-row .plus.minus:after, #notification-message .wrapper .icon:before, #notification-message .wrapper .close:after {
   font-family: 'Material Icons';
@@ -31,12 +31,12 @@
   /* Support for IE. */
   font-feature-settings: 'liga'; }
 
-.search-drop-down .results-container, .commodities-edit .edit-container, #finance .panels .panel {
+.list-container [list-panels-container] .list-panel, .search-drop-down .results-container, .commodities-edit .edit-container, #finance .panels .panel {
   -webkit-box-shadow: 0px 0px 2px #E2E2E2;
   -moz-box-shadow: 0px 0px 2px #E2E2E2;
   box-shadow: 0px 0px 2px #E2E2E2; }
 
-.list-container table thead tr th a, .dropdown button, .commodities-edit .edit-container {
+.list-container a[ng-sort], .dropdown button, .commodities-edit .edit-container {
   -webkit-user-select: none;
   /* Chrome all / Safari all */
   -moz-user-select: none;
@@ -46,8 +46,8 @@
   user-select: none;
   /* Likely future */ }
 
-html .body-container, body .body-container, [ui-view], .page-container, .page-container .page-header, .page-container .page-header .title-container, .page-container .page-body, #main-menu .menu-body .menu-item, .list-container, .list-container table td, .list-container table th, .button,
-.dropdown button, .dropdown .dropdown-menu li a, dl dd, .search-drop-down .input-container, .search-drop-down .results-container, .search-drop-down .results-container .result-row, .commodities-edit .edit-container, #import .paste-numbers-container, #import .results-container {
+html .body-container, body .body-container, [ui-view], .page-container, .page-container .page-header, .page-container .page-header .title-container, .page-container .page-body, #main-menu .menu-body .menu-item, .list-container, .list-container table td, .list-container table th, .list-container [list-panels-container], .list-container [list-panels-container] .list-panel, .button,
+.dropdown button, .dropdown .dropdown-menu li a, dl dd, .search-drop-down .input-container, .search-drop-down .results-container, .search-drop-down .results-container .result-row, .commodities-edit .edit-container, #import .paste-numbers-container, #import .results-container, #invoice .list-panel .list-panel-block {
   -webkit-box-sizing: border-box;
   /* Chrome all / Safari all */
   -moz-box-sizing: border-box;
@@ -57,7 +57,14 @@ html .body-container, body .body-container, [ui-view], .page-container, .page-co
   box-sizing: border-box;
   /* Likely future */ }
 
-#main-menu:after, #main-menu .menu-body:after, section:after, #import .results-container .company-container:after {
+.vertical-align {
+  position: relative;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%); }
+
+#main-menu:after, #main-menu .menu-body:after, .list-container [list-panels-container]:after, section:after, #import .results-container .company-container:after {
   content: "";
   display: table;
   clear: both; }
@@ -109,6 +116,23 @@ body {
     opacity: 0; }
   100% {
     opacity: 0; } }
+
+/* don't put these together because it doesnt work */
+::-webkit-input-placeholder {
+  /* WebKit browsers */
+  color: #c1c1c1; }
+
+:-moz-placeholder {
+  /* Mozilla Firefox 4 to 18 */
+  color: #c1c1c1; }
+
+::-moz-placeholder {
+  /* Mozilla Firefox 19+ */
+  color: #c1c1c1; }
+
+:-ms-input-placeholder {
+  /* Internet Explorer 10+ */
+  color: #c1c1c1; }
 
 [ui-view] {
   position: absolute;
@@ -454,43 +478,6 @@ body {
         .list-container table thead tr th {
           text-align: left;
           padding: 10px 5px; }
-          .list-container table thead tr th a {
-            position: relative;
-            display: inline-block;
-            margin-right: 15px; }
-            .list-container table thead tr th a .sort-asc-icon:after,
-            .list-container table thead tr th a .sort-desc-icon:after {
-              position: absolute;
-              display: flex;
-              font-size: 26px;
-              opacity: 0.15;
-              line-height: 80%;
-              margin-right: -5px;
-              right: -18px;
-              top: 0px;
-              bottom: 0px;
-              align-items: center; }
-            .list-container table thead tr th a .sort-asc-icon:after {
-              content: "arrow_drop_up";
-              margin-bottom: 6px; }
-            .list-container table thead tr th a .sort-desc-icon:after {
-              content: "arrow_drop_down";
-              margin-top: 6px; }
-            .list-container table thead tr th a .sort-asc-icon.sorted-asc:after {
-              opacity: 0.8; }
-            .list-container table thead tr th a .sort-desc-icon.sorted-desc:after {
-              opacity: 0.8; }
-            .list-container table thead tr th a .sort-column-order {
-              position: absolute;
-              display: flex;
-              align-items: center;
-              right: -25px;
-              top: 0px;
-              bottom: 0px;
-              font-size: 11px;
-              opacity: 0.25; }
-            .list-container table thead tr th a:hover {
-              cursor: pointer; }
     .list-container table tbody {
       display: block;
       position: relative;
@@ -524,9 +511,6 @@ body {
                 width: 100px !important; }
               .list-container table tbody tr td dl dd.empty:after {
                 content: ""; }
-          .list-container table tbody tr td [phone-company-tag] {
-            top: -1px;
-            margin-left: 4px; }
         .list-container table tbody tr.total {
           font-weight: bold; }
       .list-container table tbody .has-more-items {
@@ -583,6 +567,90 @@ body {
     .list-container table .icon {
       position: relative;
       display: inline-block; }
+  .list-container [list-panels-container] {
+    position: relative;
+    display: flex;
+    flex-flow: column;
+    align-items: stretch;
+    height: 100%;
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    /*&.independent {
+            .list-panel {
+                margin-top: 10px;
+                margin-bottom: 10px;
+                border: none;
+                background-color: white;
+                @extend %main-box-shadow;
+            }
+        }*/ }
+    .list-container [list-panels-container] .list-panel {
+      position: relative;
+      padding: 10px 13px 10px 13px;
+      border: 1px solid #e4e4e4;
+      margin-bottom: 10px;
+      margin-right: 10px;
+      background-color: white; }
+      .list-container [list-panels-container] .list-panel[ng-click]:hover {
+        background-color: #f7f6f6 !important;
+        cursor: pointer; }
+      .list-container [list-panels-container] .list-panel .action-buttons {
+        position: absolute;
+        display: inline-block;
+        top: 10px;
+        right: 10px;
+        text-align: center; }
+        .list-container [list-panels-container] .list-panel .action-buttons .icon {
+          position: relative; }
+      .list-container [list-panels-container] .list-panel.flat-dl dl {
+        margin-bottom: 0px; }
+      .list-container [list-panels-container] .list-panel .error-message {
+        display: block;
+        margin-bottom: 5px; }
+  .list-container [sort-container] {
+    margin-bottom: 5px; }
+    .list-container [sort-container] div {
+      display: inline-block;
+      padding: 2px 5px;
+      border: 1px solid #e4e4e4; }
+  .list-container a[ng-sort] {
+    position: relative;
+    display: inline-block;
+    margin-right: 15px; }
+    .list-container a[ng-sort] .sort-asc-icon:after,
+    .list-container a[ng-sort] .sort-desc-icon:after {
+      position: absolute;
+      display: flex;
+      font-size: 26px;
+      opacity: 0.15;
+      line-height: 80%;
+      margin-right: -5px;
+      right: -18px;
+      top: 0px;
+      bottom: 0px;
+      align-items: center; }
+    .list-container a[ng-sort] .sort-asc-icon:after {
+      content: "arrow_drop_up";
+      margin-bottom: 6px; }
+    .list-container a[ng-sort] .sort-desc-icon:after {
+      content: "arrow_drop_down";
+      margin-top: 6px; }
+    .list-container a[ng-sort] .sort-asc-icon.sorted-asc:after {
+      opacity: 0.8; }
+    .list-container a[ng-sort] .sort-desc-icon.sorted-desc:after {
+      opacity: 0.8; }
+    .list-container a[ng-sort] .sort-column-order {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      right: -25px;
+      top: 0px;
+      bottom: 0px;
+      font-size: 11px;
+      opacity: 0.25; }
+    .list-container a[ng-sort]:hover {
+      cursor: pointer; }
   .list-container .total {
     font-weight: bold;
     text-align: right;
@@ -744,7 +812,7 @@ dl {
     min-height: 30px;
     padding: 0px 10px 0px 0px;
     margin: 0px;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 400;
     line-height: 20px;
     word-break: break-all;
@@ -764,8 +832,14 @@ dl {
     dl dd input[type=radio] + label {
       font-weight: 100;
       font-size: 15px; }
-    dl dd.empty:after {
-      content: "--"; }
+    dl dd [phone-company-tag] {
+      top: -2px;
+      margin-left: 4px; }
+    dl dd i.material-icons {
+      position: relative;
+      top: 2px;
+      font-size: 16px;
+      opacity: 0.5; }
   dl.flat {
     margin: 0px; }
     dl.flat dd {
@@ -1557,4 +1631,29 @@ button.icon {
 
 .error-message {
   color: #AD0606; }
+
+#invoice .list-panel {
+  display: flex;
+  flex-shrink: 0;
+  padding: 0;
+  padding-right: 100px; }
+  #invoice .list-panel .list-panel-block {
+    padding: 8px 8px 4px 8px; }
+    #invoice .list-panel .list-panel-block:not(:first-child) {
+      border-left: 1px solid #e4e4e4; }
+    #invoice .list-panel .list-panel-block.block-1 {
+      width: 140px; }
+    #invoice .list-panel .list-panel-block.block-2 {
+      flex-grow: 1; }
+      #invoice .list-panel .list-panel-block.block-2 dl.address,
+      #invoice .list-panel .list-panel-block.block-2 dl.commodities {
+        width: auto;
+        flex-grow: 1; }
+    #invoice .list-panel .list-panel-block.block-3 {
+      width: 120px; }
+    #invoice .list-panel .list-panel-block.block-4 {
+      width: 120px; }
+  #invoice .list-panel section {
+    display: flex;
+    flex-wrap: nowrap; }
 

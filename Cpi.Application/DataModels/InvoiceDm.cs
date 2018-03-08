@@ -39,6 +39,8 @@ namespace Cpi.Application.DataModels
         [CpiRequired]
         [CpiGreaterThanZero]
         public decimal? TotalPrice { get; set; }
+
+        public string Note { get; set; }
     }
 
     public class InvoiceMap : BaseMap<InvoiceDm>

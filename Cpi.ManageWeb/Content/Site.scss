@@ -64,6 +64,18 @@ $application-min-width: 1260px;
     box-sizing: border-box; /* Likely future */
 }
 
+%vertical-align {
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.vertical-align {
+    @extend %vertical-align;
+}
+
 %clearfix {
     &:after {
         content: "";
@@ -150,6 +162,24 @@ body {
     100% {
         opacity: 0;
     }
+}
+
+/* don't put these together because it doesnt work */
+$placeholder-color: #c1c1c1;
+::-webkit-input-placeholder { /* WebKit browsers */
+    color: $placeholder-color;
+}
+
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: $placeholder-color;
+}
+
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: $placeholder-color;
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+    color: $placeholder-color;
 }
 
 $main-menu-height: 50px;
@@ -666,61 +696,6 @@ $ui-view-top-padding: $main-menu-height + $page-header-height;
                 th {
                     text-align: left;
                     padding: 10px 5px;
-
-                    a {
-                        position: relative;
-                        display: inline-block;
-                        margin-right: 15px;
-                        @extend %prevent-user-select;
-
-                        .sort-asc-icon:after,
-                        .sort-desc-icon:after {
-                            @extend %material-icons;
-                            position: absolute;
-                            display: flex;
-                            font-size: 26px;
-                            opacity: 0.15;
-                            line-height: 80%;
-                            margin-right: -5px;
-                            right: -18px;
-                            top: 0px;
-                            bottom: 0px;
-                            align-items: center;
-                        }
-
-                        .sort-asc-icon:after {
-                            content: "arrow_drop_up";
-                            margin-bottom: 6px;
-                        }
-
-                        .sort-desc-icon:after {
-                            content: "arrow_drop_down";
-                            margin-top: 6px;
-                        }
-
-                        .sort-asc-icon.sorted-asc:after {
-                            @include opacity(0.8);
-                        }
-
-                        .sort-desc-icon.sorted-desc:after {
-                            @include opacity(0.8);
-                        }
-
-                        .sort-column-order {
-                            position: absolute;
-                            display: flex;
-                            align-items: center;
-                            right: -25px;
-                            top: 0px;
-                            bottom: 0px;
-                            font-size: 11px;
-                            @include opacity(0.25);
-                        }
-
-                        &:hover {
-                            cursor: pointer;
-                        }
-                    }
                 }
             }
         }
@@ -766,11 +741,6 @@ $ui-view-top-padding: $main-menu-height + $page-header-height;
                                 content: "";
                             }
                         }
-                    }
-
-                    [phone-company-tag] {
-                        top: -1px;
-                        margin-left: 4px;
                     }
                 }
 
@@ -873,6 +843,141 @@ $ui-view-top-padding: $main-menu-height + $page-header-height;
             position: relative;
             display: inline-block;
             //top: 4px;
+        }
+    }
+
+    [list-panels-container] {
+        position: relative;
+        display: flex;
+        flex-flow: column;
+        align-items: stretch;
+        height: 100%;
+        width: 100%;
+        overflow-y: auto;
+        overflow-x: hidden;
+        @extend %clearfix;
+        @extend %border-box;
+
+        .list-panel {
+            position: relative;
+            padding: 10px 13px 10px 13px;
+            border: 1px solid $border-color;
+            margin-bottom: 10px;
+            margin-right: 10px;
+            background-color: white;
+
+            @extend %main-box-shadow;
+            @extend %border-box;
+
+            &[ng-click]:hover {
+                background-color: #f7f6f6 !important;
+                cursor: pointer;
+            }
+
+            &:not(:last-child) {
+                //border-bottom: none;
+            }
+
+            .action-buttons {
+                position: absolute;
+                display: inline-block;
+                top: 10px;
+                right: 10px;
+                text-align: center;
+
+                .icon {
+                    position: relative;
+                }
+            }
+
+            &.flat-dl {
+                dl {
+                    margin-bottom: 0px;
+                }
+            }
+
+            &.editMode {
+                //padding-right: 75px;
+            }
+
+            .error-message {
+                display: block;
+                margin-bottom: 5px;
+            }
+        }
+        /*&.independent {
+            .list-panel {
+                margin-top: 10px;
+                margin-bottom: 10px;
+                border: none;
+                background-color: white;
+                @extend %main-box-shadow;
+            }
+        }*/
+    }
+
+    [sort-container] {
+        margin-bottom: 5px;
+
+        div {
+            display: inline-block;
+            padding: 2px 5px;
+            border: 1px solid $border-color;
+        }
+    } 
+    
+    a[ng-sort] {
+        position: relative;
+        display: inline-block;
+        margin-right: 15px;
+        @extend %prevent-user-select;
+
+        .sort-asc-icon:after,
+        .sort-desc-icon:after {
+            @extend %material-icons;
+            position: absolute;
+            display: flex;
+            font-size: 26px;
+            opacity: 0.15;
+            line-height: 80%;
+            margin-right: -5px;
+            right: -18px;
+            top: 0px;
+            bottom: 0px;
+            align-items: center;
+        }
+
+        .sort-asc-icon:after {
+            content: "arrow_drop_up";
+            margin-bottom: 6px;
+        }
+
+        .sort-desc-icon:after {
+            content: "arrow_drop_down";
+            margin-top: 6px;
+        }
+
+        .sort-asc-icon.sorted-asc:after {
+            @include opacity(0.8);
+        }
+
+        .sort-desc-icon.sorted-desc:after {
+            @include opacity(0.8);
+        }
+
+        .sort-column-order {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            right: -25px;
+            top: 0px;
+            bottom: 0px;
+            font-size: 11px;
+            @include opacity(0.25);
+        }
+
+        &:hover {
+            cursor: pointer;
         }
     }
 
@@ -1089,7 +1194,7 @@ dl {
         min-height: 30px;
         padding: 0px 10px 0px 0px;
         margin: 0px;
-        font-size: 16px;
+        font-size: 14px;
         font-weight: 400;
         line-height: 20px;
         word-break: break-all;
@@ -1124,7 +1229,19 @@ dl {
         }
 
         &.empty:after {
-            content: "--";
+            //content: "--";
+        }
+
+        [phone-company-tag] {
+            top: -2px;
+            margin-left: 4px;
+        }
+
+        i.material-icons {
+            position: relative;
+            top: 2px;
+            font-size: 16px;
+            opacity: 0.5;
         }
     }
 
@@ -2336,4 +2453,49 @@ button.icon {
 
 .error-message {
     color: $error-color;
+}
+
+#invoice {
+    .list-panel {
+        display: flex;
+        flex-shrink: 0;
+        padding: 0;
+        padding-right: 100px;
+
+        .list-panel-block {
+            @extend %border-box;
+            padding: 8px 8px 4px 8px;
+
+            &:not(:first-child) {
+                border-left: 1px solid $border-color;
+            }
+
+            &.block-1 {
+                width: 140px;
+            }
+
+            &.block-2 {
+                flex-grow: 1;
+
+                dl.address,
+                dl.commodities {
+                    width: auto;
+                    flex-grow: 1;
+                }
+            }
+
+            &.block-3 {
+                width: 120px;
+            }
+
+            &.block-4 {
+                width: 120px;
+            }
+        }
+
+        section {
+            display: flex;
+            flex-wrap: nowrap;
+        }
+    }
 }
