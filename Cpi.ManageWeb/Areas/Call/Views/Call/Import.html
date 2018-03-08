@@ -28,7 +28,8 @@
                 <div class="title">Other ({{parsedPhoneNumbersModel.OtherPhoneNumbers.length}})</div>
                 <div ng-repeat="phoneNumber in parsedPhoneNumbersModel.OtherPhoneNumbers track by $index" class="phone-number-container">
                     <div class="phone-number">{{phoneNumber}}</div>
-                    <div phone-company-tag ng-model="phoneNumber"></div>
+                    <span phone-company-tag ng-model="phoneNumber"></span>
+                    <span>{{parsedPhoneNumbersModel.DateTimeNow | shortDateWithTime}}</span>
                 </div>
             </div>
 
@@ -36,7 +37,8 @@
                 <div class="title">Smart ({{parsedPhoneNumbersModel.SmartPhoneNumbers.length}})</div>
                 <div ng-repeat="phoneNumber in parsedPhoneNumbersModel.SmartPhoneNumbers track by $index" class="phone-number-container">
                     <div class="phone-number">{{phoneNumber}}</div>
-                    <div phone-company-tag ng-model="phoneNumber"></div>
+                    <span phone-company-tag ng-model="phoneNumber"></span>
+                    <span>{{parsedPhoneNumbersModel.DateTimeNow | shortDateWithTime}}</span>
                 </div>
             </div>
 
@@ -44,7 +46,8 @@
                 <div class="title">MetPhone ({{parsedPhoneNumbersModel.MetFonePhoneNumbers.length}})</div>
                 <div ng-repeat="phoneNumber in parsedPhoneNumbersModel.MetFonePhoneNumbers track by $index" class="phone-number-container">
                     <div class="phone-number">{{phoneNumber}}</div>
-                    <div phone-company-tag ng-model="phoneNumber"></div>
+                    <span phone-company-tag ng-model="phoneNumber"></span>
+                    <span>{{parsedPhoneNumbersModel.DateTimeNow | shortDateWithTime}}</span>
                 </div>
             </div>
 
@@ -52,7 +55,8 @@
                 <div class="title">CellCard ({{parsedPhoneNumbersModel.CellCardPhoneNumbers.length}})</div>
                 <div ng-repeat="phoneNumber in parsedPhoneNumbersModel.CellCardPhoneNumbers track by $index" class="phone-number-container">
                     <div class="phone-number">{{phoneNumber}}</div>
-                    <div phone-company-tag ng-model="phoneNumber"></div>
+                    <span phone-company-tag ng-model="phoneNumber"></span>
+                    <span>{{parsedPhoneNumbersModel.DateTimeNow | shortDateWithTime}}</span>
                 </div>
             </div>
         </div>

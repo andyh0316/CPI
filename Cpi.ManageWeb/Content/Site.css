@@ -1620,13 +1620,13 @@ button.icon {
     font-weight: bold;
     border-radius: 4px; }
     [phone-company-tag] .inner.smart {
-      background-color: #009432;
+      background-color: #02bf42;
       color: white; }
     [phone-company-tag] .inner.metFone {
       background-color: #088e75;
       color: white; }
     [phone-company-tag] .inner.cellCard {
-      background-color: #ff6501;
+      background-color: #0c6f5d;
       color: white; }
 
 .error-message {
