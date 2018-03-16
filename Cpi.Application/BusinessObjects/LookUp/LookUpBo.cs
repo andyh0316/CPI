@@ -40,11 +40,11 @@ namespace Cpi.Application.BusinessObjects.LookUp
         public List<LookUpBaseDm> GetListWithNullOption<T>() where T : LookUpBaseDm
         {
             List<LookUpBaseDm> lookUps = GetListQuery<T>().ToList().Cast<LookUpBaseDm>().ToList();
-            lookUps.Insert(0, new LookUpBaseDm
-            {
-                Id = ConstHelper.DROP_DOWN_NULL_ID,
-                Name = "haha"
-            });
+            //lookUps.Insert(0, new LookUpBaseDm
+            //{
+            //    Id = ConstHelper.DROP_DOWN_NULL_ID,
+            //    Name = "haha"
+            //});
 
             return lookUps;
         }
