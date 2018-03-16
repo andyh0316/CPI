@@ -9,5 +9,6 @@ namespace Cpi.Application.Helpers
     public static class ConstHelper
     {
         public const int SEARCH_DROP_DOWN_ITEMS = 20;
+        public const int DROP_DOWN_NULL_ID = -1;
     }
 }

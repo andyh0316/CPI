@@ -62,8 +62,8 @@ namespace Cpi.ManageWeb.Areas.Invoice.Controllers
             var model = new
             {
                 Commodities = CommodityBo.GetList(),
-                InvoiceStatuses = LookUpBo.GetList<LookUpInvoiceStatusDm>().ToList(),
-                Locations = LookUpBo.GetList<LookUpLocationDm>().ToList(),
+                InvoiceStatuses = LookUpBo.GetListWithNullOption<LookUpInvoiceStatusDm>(),
+                Locations = LookUpBo.GetList<LookUpLocationDm>(),
                 DeliveryStaff = UserBo.GetSearchDropDownList((int)LookUpUserOccupationDm.LookUpIds.Delivery),
                 OperatorStaff = UserBo.GetSearchDropDownList((int)LookUpUserOccupationDm.LookUpIds.Operator),
                 ReportDates = ReportDateFilter.GetSelectList(),

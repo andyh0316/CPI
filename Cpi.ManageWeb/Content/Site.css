@@ -1626,7 +1626,7 @@ button.icon {
       background-color: #088e75;
       color: white; }
     [phone-company-tag] .inner.cellCard {
-      background-color: #0c6f5d;
+      background-color: darkorange;
       color: white; }
 
 .error-message {
