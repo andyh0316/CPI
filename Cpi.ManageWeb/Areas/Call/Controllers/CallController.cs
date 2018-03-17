@@ -160,7 +160,7 @@ namespace Cpi.ManageWeb.Areas.Call.Controllers
 
             var model = new
             {
-                DateTimeNow = DateTime.Now,
+                DateTimeNow = new DateTime(DateTime.Now.Ticks),
                 SmartPhoneNumbers = smartPhoneNumbers,
                 MetFonePhoneNumbers = metFonePhoneNumbers,
                 CellCardPhoneNumbers = cellCardPhoneNumbers,
