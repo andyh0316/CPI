@@ -47,7 +47,8 @@
   /* Likely future */ }
 
 html .body-container, body .body-container, [ui-view], .page-container, .page-container .page-header, .page-container .page-header .title-container, .page-container .page-body, #main-menu .menu-body .menu-item, .list-container, .list-container table td, .list-container table th, .list-container [list-panels-container], .list-container [list-panels-container] .list-panel, .button,
-.dropdown button, .dropdown .dropdown-menu li a, dl dd, .search-drop-down .input-container, .search-drop-down .results-container, .search-drop-down .results-container .result-row, .commodities-edit .edit-container, #import .paste-numbers-container, #import .results-container, #invoice .list-panel .list-panel-block {
+.dropdown button, .dropdown .dropdown-menu li a, dl dd, .search-drop-down .input-container, .search-drop-down .results-container, .search-drop-down .results-container .result-row, .commodities-edit .edit-container, #import .paste-numbers-container, #import .results-container, #import .results-container .company-container .phone-number-container .assignment-container .block, #import .results-container .company-container .phone-number-container .assignment-container .block .name,
+#import .results-container .company-container .phone-number-container .assignment-container .block .time, #invoice .list-panel .list-panel-block {
   -webkit-box-sizing: border-box;
   /* Chrome all / Safari all */
   -moz-box-sizing: border-box;
@@ -64,7 +65,7 @@ html .body-container, body .body-container, [ui-view], .page-container, .page-co
   -ms-transform: translateY(-50%);
   transform: translateY(-50%); }
 
-#main-menu:after, #main-menu .menu-body:after, .list-container [list-panels-container]:after, section:after, #import .results-container .company-container:after {
+#main-menu:after, #main-menu .menu-body:after, .list-container [list-panels-container]:after, section:after, #import .results-container .company-container:after, #import .results-container .company-container .phone-number-container .assignment-container .block:after {
   content: "";
   display: table;
   clear: both; }
@@ -1462,13 +1463,32 @@ button.icon {
         font-weight: bold;
         margin-bottom: 10px; }
       #import .results-container .company-container .phone-number-container {
-        width: 33%;
+        width: 50%;
         float: left;
-        margin: 10px 0px; }
+        margin: 4px 0px; }
         #import .results-container .company-container .phone-number-container .phone-number {
           font-size: 24px; }
         #import .results-container .company-container .phone-number-container .phone-company {
           font-size: 16px; }
+        #import .results-container .company-container .phone-number-container [phone-company-tag] {
+          top: -4px; }
+        #import .results-container .company-container .phone-number-container .assignment-container {
+          padding-right: 30px; }
+          #import .results-container .company-container .phone-number-container .assignment-container .block {
+            float: left;
+            width: 25%;
+            padding-right: 5px; }
+            #import .results-container .company-container .phone-number-container .assignment-container .block .name,
+            #import .results-container .company-container .phone-number-container .assignment-container .block .time {
+              float: left;
+              border: 1px solid #e4e4e4;
+              height: 20px; }
+            #import .results-container .company-container .phone-number-container .assignment-container .block .name {
+              width: 40%;
+              border-right: none; }
+            #import .results-container .company-container .phone-number-container .assignment-container .block .time {
+              width: 60%;
+              text-align: center; }
 
 .disabled,
 :disabled {

@@ -2156,8 +2156,8 @@ button.icon {
         .dateTimeNow {
             font-size: 40px;
             text-align: center;
-        } 
-        
+        }
+
         .company-container {
             @extend %clearfix;
             margin-bottom: 20px;
@@ -2169,9 +2169,9 @@ button.icon {
             }
 
             .phone-number-container {
-                width: 33%;
+                width: 50%;
                 float: left;
-                margin: 10px 0px;
+                margin: 4px 0px;
 
                 .phone-number {
                     font-size: 24px;
@@ -2179,6 +2179,40 @@ button.icon {
 
                 .phone-company {
                     font-size: 16px;
+                }
+
+                [phone-company-tag] {
+                    top: -4px;
+                }
+
+                .assignment-container {
+                    padding-right: 30px;
+
+                    .block {
+                        float: left;
+                        width: 25%;
+                        padding-right: 5px;
+                        @extend %clearfix;
+                        @extend %border-box;
+
+                        .name,
+                        .time {
+                            float: left;
+                            border: 1px solid $border-color;
+                            height: 20px;
+                            @extend %border-box;
+                        }
+
+                        .name {
+                            width: 40%;
+                            border-right: none;
+                        }
+
+                        .time {
+                            width: 60%;
+                            text-align: center;
+                        }
+                    }
                 }
             }
         }
@@ -2425,7 +2459,7 @@ button.icon {
     position: relative;
     margin-left: 2px;
     @include opacity(0.85);
-
+    
     .inner {
         //border: 1px solid $light-border-color;
         padding: 1px 4px;

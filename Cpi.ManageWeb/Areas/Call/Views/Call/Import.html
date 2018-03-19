@@ -24,7 +24,37 @@
         <div class="results-container print-section">
             <div ng-show="parsedPhoneNumbersModel.DateTimeNow" class="dateTimeNow">{{parsedPhoneNumbersModel.DateTimeNow | shortDateWithTime }}</div>
 
-            <div ng-show="parsedPhoneNumbersModel.OtherPhoneNumbers.length  > 0" class="company-container">
+            <div class="company-container">
+                <div ng-repeat="phoneNumber in parsedPhoneNumbersModel.PhoneNumbers track by $index" class="phone-number-container">
+                    <span class="phone-number">{{phoneNumber}}</span>
+                    <span phone-company-tag ng-model="phoneNumber"></span>
+                    <!--<span>{{parsedPhoneNumbersModel.DateTimeNow | shortDateWithTime}}</span>-->
+
+                    <div class="assignment-container">
+                        <div class="block">
+                            <div class="name"></div>
+                            <div class="time">:</div>
+                        </div>
+
+                        <div class="block">
+                            <div class="name"></div>
+                            <div class="time">:</div>
+                        </div>
+
+                        <div class="block">
+                            <div class="name"></div>
+                            <div class="time">:</div>
+                        </div>
+
+                        <div class="block">
+                            <div class="name"></div>
+                            <div class="time">:</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--<div ng-show="parsedPhoneNumbersModel.OtherPhoneNumbers.length  > 0" class="company-container">
                 <div class="title">Other ({{parsedPhoneNumbersModel.OtherPhoneNumbers.length}})</div>
                 <div ng-repeat="phoneNumber in parsedPhoneNumbersModel.OtherPhoneNumbers track by $index" class="phone-number-container">
                     <div class="phone-number">{{phoneNumber}}</div>
@@ -58,7 +88,7 @@
                     <span phone-company-tag ng-model="phoneNumber"></span>
                     <span>{{parsedPhoneNumbersModel.DateTimeNow | shortDateWithTime}}</span>
                 </div>
-            </div>
+            </div>-->
         </div>
     </div>
 </div>

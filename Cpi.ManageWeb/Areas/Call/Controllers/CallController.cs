@@ -129,45 +129,53 @@ namespace Cpi.ManageWeb.Areas.Call.Controllers
         {
             List<string> phoneNumbersList = ParsePhoneNumbersMethod(phoneNumbers);
 
-            List<string> smartPrefixes = CommonHelper.SmartPrefixes;
-            List<string> metFonePrefixes = CommonHelper.MetFonePrefixes;
-            List<string> cellCardPrefixes = CommonHelper.CellCardPrefixes;
-
-            List<string> smartPhoneNumbers = new List<string>();
-            List<string> metFonePhoneNumbers = new List<string>();
-            List<string> cellCardPhoneNumbers = new List<string>();
-            List<string> otherPhoneNumbers = new List<string>();
-
-            foreach (string phoneNumber in phoneNumbersList)
-            {
-                if (smartPrefixes.Any(a => phoneNumber.StartsWith(a)))
-                {
-                    smartPhoneNumbers.Add(phoneNumber);
-                }
-                else if (metFonePrefixes.Any(a => phoneNumber.StartsWith(a)))
-                {
-                    metFonePhoneNumbers.Add(phoneNumber);
-                }
-                else if (cellCardPrefixes.Any(a => phoneNumber.StartsWith(a)))
-                {
-                    cellCardPhoneNumbers.Add(phoneNumber);
-                }
-                else
-                {
-                    otherPhoneNumbers.Add(phoneNumber);
-                }
-            }
-
             var model = new
             {
                 DateTimeNow = new DateTime(DateTime.Now.Ticks),
-                SmartPhoneNumbers = smartPhoneNumbers,
-                MetFonePhoneNumbers = metFonePhoneNumbers,
-                CellCardPhoneNumbers = cellCardPhoneNumbers,
-                OtherPhoneNumbers = otherPhoneNumbers
+                PhoneNumbers = phoneNumbersList
             };
 
             return JsonModel(model);
+
+            //List<string> smartPrefixes = CommonHelper.SmartPrefixes;
+            //List<string> metFonePrefixes = CommonHelper.MetFonePrefixes;
+            //List<string> cellCardPrefixes = CommonHelper.CellCardPrefixes;
+
+            //List<string> smartPhoneNumbers = new List<string>();
+            //List<string> metFonePhoneNumbers = new List<string>();
+            //List<string> cellCardPhoneNumbers = new List<string>();
+            //List<string> otherPhoneNumbers = new List<string>();
+
+            //foreach (string phoneNumber in phoneNumbersList)
+            //{
+            //    if (smartPrefixes.Any(a => phoneNumber.StartsWith(a)))
+            //    {
+            //        smartPhoneNumbers.Add(phoneNumber);
+            //    }
+            //    else if (metFonePrefixes.Any(a => phoneNumber.StartsWith(a)))
+            //    {
+            //        metFonePhoneNumbers.Add(phoneNumber);
+            //    }
+            //    else if (cellCardPrefixes.Any(a => phoneNumber.StartsWith(a)))
+            //    {
+            //        cellCardPhoneNumbers.Add(phoneNumber);
+            //    }
+            //    else
+            //    {
+            //        otherPhoneNumbers.Add(phoneNumber);
+            //    }
+            //}
+
+            //var model = new
+            //{
+            //    DateTimeNow = new DateTime(DateTime.Now.Ticks),
+            //    SmartPhoneNumbers = smartPhoneNumbers,
+            //    MetFonePhoneNumbers = metFonePhoneNumbers,
+            //    CellCardPhoneNumbers = cellCardPhoneNumbers,
+            //    OtherPhoneNumbers = otherPhoneNumbers
+            //};
+
+            //return JsonModel(model);
         }
 
         [HttpPost]
@@ -192,6 +200,9 @@ namespace Cpi.ManageWeb.Areas.Call.Controllers
             }
 
             phoneNumbersList = phoneNumbersList.Distinct().ToList();
+
+            // don't include phone numbers from me
+            phoneNumbersList = phoneNumbersList.Where(a => a != "15681425").ToList();
 
             return phoneNumbersList;
         }

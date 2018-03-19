@@ -51,6 +51,7 @@ namespace Cpi.Application.DatabaseContext
             modelBuilder.Configurations.Add(new LookUpInvoiceStatusMap());
             modelBuilder.Configurations.Add(new LookUpLocationMap());
             modelBuilder.Configurations.Add(new LookUpPermissionMap());
+            modelBuilder.Configurations.Add(new LookUpSourceMap());
         }
 
         public override int SaveChanges()

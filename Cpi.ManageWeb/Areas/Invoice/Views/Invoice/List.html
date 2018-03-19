@@ -143,7 +143,7 @@
                                          search-object="modelData.OperatorStaff"
                                          input-string="{{listItem.Operator.Nickname}}"
                                          input-key="listItem.OperatorId"
-                                         placeholder="Operator អ្នកទទួលទូរស័ព្ទ" >
+                                         placeholder="Operator អ្នកទទួលទូរស័ព្ទ">
                                     </div>
                                 </dd>
                             </dl>
@@ -159,7 +159,7 @@
                                          search-object="modelData.DeliveryStaff"
                                          input-string="{{listItem.DeliveryStaff.Nickname}}"
                                          input-key="listItem.DeliveryStaffId"
-                                         placeholder="Deliverer អ្នកដឹកជញ្ចូន" >
+                                         placeholder="Deliverer អ្នកដឹកជញ្ចូន">
                                     </div>
                                 </dd>
                             </dl>
@@ -171,6 +171,14 @@
                                 <dd ng-show="showListItemInput(listItem)" class="overflow-visible">
                                     <span field-validation-error ng-show="modelState['[' + getTouchedListItemIndex(listItem) + '].InvoiceCommodities']" class="field-validation-error"></span>
                                     <div commodities-edit ng-model="listItem.InvoiceCommodities" ng-change="invoiceCommodityChange(listItem)" commodities="modelData.Commodities"></div>
+                                </dd>
+                            </dl>
+
+                            <dl class="dl-S">
+                                <dd ng-show="!showListItemInput(listItem)">{{listItem.Source.Name}}</dd>
+                                <dd ng-show="showListItemInput(listItem)">
+                                    <span field-validation-error ng-show="modelState['[' + getTouchedListItemIndex(listItem) + '].SourceId']" class="field-validation-error"></span>
+                                    <select ng-model="listItem.SourceId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.Sources"></select>
                                 </dd>
                             </dl>
                         </section>
@@ -218,7 +226,7 @@
 
                     <span class="action-buttons">
                         <button ng-show="!listItem.touched" class="edit icon" ng-click="editListItem(listItem); $event.stopPropagation();"></button>
-                        <button ng-show="!listItem.touched && listItem.Id > 0" class="delete icon" ng-click="deleteListItem(listItem); $event.stopPropagation();"></button>
+                        <button ng-show="!listItem.touched && listItem.Id > 0 && isRoleLaozi" class="delete icon" ng-click="deleteListItem(listItem); $event.stopPropagation();"></button>
                         <button ng-show="listItem.touched" class="cancel icon" ng-click="cancelListItem(listItem); $event.stopPropagation();"></button>
                     </span>
                 </div>
