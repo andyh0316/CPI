@@ -1484,11 +1484,11 @@ button.icon {
               border: 1px solid #e4e4e4;
               height: 20px; }
             #import .results-container .company-container .phone-number-container .assignment-container .block .name {
-              width: 40%;
-              border-right: none; }
+              width: 40%; }
             #import .results-container .company-container .phone-number-container .assignment-container .block .time {
               width: 60%;
-              text-align: center; }
+              text-align: center;
+              border-right: none; }
 
 .disabled,
 :disabled {
