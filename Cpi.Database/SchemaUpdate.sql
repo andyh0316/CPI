@@ -38,3 +38,8 @@ INSERT INTO [LookUp].[Location] (Id, Name, DisplayOrder, Deleted) VALUES (5, 'Pr
 SET IDENTITY_INSERT [LookUp].[Location] OFF
 
 GO
+
+
+SET IDENTITY_INSERT [LookUp].[Location] ON
+INSERT INTO [LookUp].[Location] (Id, Name, DisplayOrder, Deleted) VALUES (6, 'Takéo', 5, 0)
+SET IDENTITY_INSERT [LookUp].[Location] OFF

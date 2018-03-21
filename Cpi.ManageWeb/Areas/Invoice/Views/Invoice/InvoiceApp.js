@@ -63,11 +63,11 @@ app.controller('ListController', ['$scope', '$controller', '$state', '$timeout',
     };
 
     $scope.newListItemCount = 0;
-    $scope.refreshInterval = 5000; //5000 ms
+    $scope.refreshInterval = 30000;
     $scope.checkNewListItems = function () {
         if (gCurrentRequests === 0 && !$scope.isAnyListItemTouched())
         {
-            baseBo.httpRequest('POST', '/Invoice/Invoice/GetListTotal', scopeData.filter, {noLoadIcon: true})
+            baseBo.httpRequest('POST', '/Invoice/Invoice/GetListTotal', scopeData.filter)
                 .then(function (result) {
                     if ($scope.listLoadCalculator.Total < result.Object.Total)
                     {
@@ -79,7 +79,7 @@ app.controller('ListController', ['$scope', '$controller', '$state', '$timeout',
         $timeout($scope.checkNewListItems, $scope.refreshInterval);
     }
 
-    //$timeout($scope.checkNewListItems, $scope.refreshInterval);
+    $timeout($scope.checkNewListItems, $scope.refreshInterval);
 
     $scope.invoiceCommodityChange = function (record) {
         var total = 0;

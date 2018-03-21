@@ -39,9 +39,9 @@
         </div>
 
         <div class="buttons">
-            <button ng-show="!isAnyListItemTouched()" class="button main" ng-click="refresh()">
+            <button ng-show="!isAnyListItemTouched() && newListItemCount" class="button highlight" ng-click="refresh()">
                 Refresh
-                <span ng-show="newListItemCount">({{newListItemCount}})</span>
+                <span ng-show="newListItemCount">({{newListItemCount}} NEW INVOICE)</span>
             </button>
             <button ng-show="isAnyListItemTouched()" class="button" ng-click="cancelListItems()">Cancel</button>
             <button ng-show="isAnyListItemTouched()" class="button main" ng-click="save()">Save</button>
@@ -116,7 +116,7 @@
                                 <dd ng-show="!showListItemInput(listItem)">
                                     {{listItem.Address}}
                                 </dd>
-                                <dd ng-show="showListItemInput(listItem)">
+                                <dd ng-show="showListItemInput(listItem)" class="ellipsis">
                                     <span field-validation-error ng-show="modelState['[' + getTouchedListItemIndex(listItem) + '].Address']" class="field-validation-error"></span>
                                     <input ng-model="listItem.Address" placeholder="Address អាស័យដ្ឋាន" />
                                 </dd>

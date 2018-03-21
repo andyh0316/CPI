@@ -1065,6 +1065,16 @@ $ui-view-top-padding: $main-menu-height + $page-header-height;
         }
     }
 
+    &.highlight {
+        background-color: #35BD2C;
+        border: 1px solid #289C20;
+        color: white;
+
+        &:hover {
+            background-color: #2E8C28;
+        }
+    }
+
     &.disabled,
     &:disabled {
         @include opacity(0.5);
@@ -2513,7 +2523,7 @@ button.icon {
 
                 dl.address,
                 dl.commodities {
-                    width: auto;
+                    //width: auto;
                     flex-grow: 1;
                 }
             }

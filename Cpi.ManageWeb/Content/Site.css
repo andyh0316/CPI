@@ -714,6 +714,14 @@ body {
     .button.delete:hover,
     .dropdown button.delete:hover {
       background-color: #8C0505; }
+  .button.highlight,
+  .dropdown button.highlight {
+    background-color: #35BD2C;
+    border: 1px solid #289C20;
+    color: white; }
+    .button.highlight:hover,
+    .dropdown button.highlight:hover {
+      background-color: #2E8C28; }
   .button.disabled, .button:disabled,
   .dropdown button.disabled,
   .dropdown button:disabled {
@@ -1667,7 +1675,6 @@ button.icon {
       flex-grow: 1; }
       #invoice .list-panel .list-panel-block.block-2 dl.address,
       #invoice .list-panel .list-panel-block.block-2 dl.commodities {
-        width: auto;
         flex-grow: 1; }
     #invoice .list-panel .list-panel-block.block-3 {
       width: 120px; }
