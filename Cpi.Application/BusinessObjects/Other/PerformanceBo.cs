@@ -12,10 +12,12 @@ namespace Cpi.Application.BusinessObjects.Other
     {
         private InvoiceBo InvoiceBo;
         private UserBo UserBo;
-        public PerformanceBo(InvoiceBo InvoiceBo, UserBo UserBo)
+        private CallBo CallBo;
+        public PerformanceBo(InvoiceBo InvoiceBo, UserBo UserBo, CallBo CallBo)
         {
             this.InvoiceBo = InvoiceBo;
             this.UserBo = UserBo;
+            this.CallBo = CallBo;
         }
 
         public List<Tuple<string, int>> GetPerformanceForOperators(ClassFilter.Performance filter)
@@ -84,6 +86,37 @@ namespace Cpi.Application.BusinessObjects.Other
                                                       InvoiceSold = bGroup.Count(),
                                                   }).OrderByDescending(a => a.ProductSold).ToList()
                                                  .Select(a => new Tuple<string, int, int>(a.Nickname, a.ProductSold, a.InvoiceSold)).ToList();
+
+            return dtos;
+        }
+
+        public List<Tuple<string, int>> GetCallForWeekDays(ClassFilter.Performance filter)
+        {
+            IQueryable<CallDm> callQuery = CallBo.GetListQuery();
+
+            callQuery = CallBo.GetDateFilteredQuery(callQuery, filter.ReportDateFilter);
+            List<CallDm> calls = callQuery.ToList();
+
+            List<Tuple<string, int>> dtos = new List<Tuple<string, int>>();
+            dtos.Add(new Tuple<string, int>("Mon", calls.Where(a => a.Date.Value.DayOfWeek == DayOfWeek.Monday).Count()));
+            dtos.Add(new Tuple<string, int>("Tue", calls.Where(a => a.Date.Value.DayOfWeek == DayOfWeek.Tuesday).Count()));
+            dtos.Add(new Tuple<string, int>("Wed", calls.Where(a => a.Date.Value.DayOfWeek == DayOfWeek.Wednesday).Count()));
+            dtos.Add(new Tuple<string, int>("Thu", calls.Where(a => a.Date.Value.DayOfWeek == DayOfWeek.Thursday).Count()));
+            dtos.Add(new Tuple<string, int>("Fri", calls.Where(a => a.Date.Value.DayOfWeek == DayOfWeek.Friday).Count()));
+            dtos.Add(new Tuple<string, int>("Sat", calls.Where(a => a.Date.Value.DayOfWeek == DayOfWeek.Saturday).Count()));
+            dtos.Add(new Tuple<string, int>("Sun", calls.Where(a => a.Date.Value.DayOfWeek == DayOfWeek.Sunday).Count()));
+
+
+            //List<Tuple<string, int, int>> dtos = (from a in operatorQuery
+            //                                      join b in invoiceQuery
+            //                                      on a.Id equals b.DeliveryStaffId into bGroup
+            //                                      select new
+            //                                      {
+            //                                          Nickname = a.Nickname,
+            //                                          ProductSold = bGroup.SelectMany(c => c.InvoiceCommodities.Select(d => d.Quantity)).DefaultIfEmpty(0).Sum().Value,
+            //                                          InvoiceSold = bGroup.Count(),
+            //                                      }).OrderByDescending(a => a.ProductSold).ToList()
+            //                                     .Select(a => new Tuple<string, int, int>(a.Nickname, a.ProductSold, a.InvoiceSold)).ToList();
 
             return dtos;
         }
