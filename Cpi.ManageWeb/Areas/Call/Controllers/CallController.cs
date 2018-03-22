@@ -201,8 +201,11 @@ namespace Cpi.ManageWeb.Areas.Call.Controllers
 
             phoneNumbersList = phoneNumbersList.Distinct().ToList();
 
-            // don't include phone numbers from me
-            phoneNumbersList = phoneNumbersList.Where(a => a != "15681425").ToList();
+            // don't include some phone numbers
+            List<string> blockingNumbers = new List<string>();
+            blockingNumbers.Add("15681425"); // Andy
+            blockingNumbers.Add("76999650"); // MyTv
+            phoneNumbersList = phoneNumbersList.Where(a => !blockingNumbers.Contains(a)).ToList();
 
             return phoneNumbersList;
         }

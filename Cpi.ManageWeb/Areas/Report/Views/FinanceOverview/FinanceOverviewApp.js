@@ -4,7 +4,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
     $urlRouterProvider.when("", "/FinanceOverview");
 
     var financeScopeData = {
-        filter: { LocationId: 1, ReportDateFilter: { ReportDateId: 1 }},
+        filter: { ReportDateFilter: { ReportDateId: 1 }},
         httpRequest: { method: 'POST', url: '/Report/FinanceOverview/GetFinanceOverview' }
     };
 
