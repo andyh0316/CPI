@@ -69,7 +69,7 @@ namespace Cpi.ManageWeb.Areas.Invoice.Controllers
                 ReportDates = ReportDateFilter.GetSelectList(),
                 InvoiceStatusIdEnums = EnumHelper.GetEnumIntList(typeof(LookUpInvoiceStatusDm.LookUpIds)),
                 ReportDateIdEnums = EnumHelper.GetEnumIntList(typeof(ReportDateFilter.ReportDateIdEnums)),
-                LocationEnums = EnumHelper.GetEnumIntList(typeof(LookUpLocationDm.LookUpIds)),
+                LocationEnums = EnumHelper.GetEnumIntList(typeof(LookUpLocationDm.LookUpIds)).OrderBy(a => a.Value),
                 Sources = LookUpBo.GetList<LookUpSourceDm>(),
                 TodayDate = new DateTime(DateTime.Now.Date.Ticks),
             };
