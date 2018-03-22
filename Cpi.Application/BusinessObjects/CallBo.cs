@@ -75,7 +75,8 @@ namespace Cpi.Application.BusinessObjects
                 else if (filter.ReportDateId == (int)ReportDateFilter.ReportDateIdEnums.Today)
                 {
                     DateTime dateFrom = DateTime.Now.Date;
-                    query = query.Where(a => a.Date >= dateFrom);
+                    DateTime dateTo = DateTime.Now.Date.AddDays(1);
+                    query = query.Where(a => a.Date >= dateFrom && a.Date < dateTo);
                 }
                 else if (filter.ReportDateId == (int)ReportDateFilter.ReportDateIdEnums.Yesterday)
                 {
