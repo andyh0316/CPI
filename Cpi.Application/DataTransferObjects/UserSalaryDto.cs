@@ -8,16 +8,17 @@ namespace Cpi.Application.DataTransferObjects
 {
     public class UserSalaryDto
     {
-        public DateTime? DateFrom { get; set; }
-        public DateTime? DateTo { get; set; }
         public string UserFullname { get; set; }
         public string UserNickname { get; set; }
         public string Occupation { get; set; }
         public decimal? Salary { get; set; }
 
-        public int? ProductSold { get; set; }
+        public int? AmountSold { get; set; }
+        public int? AmountDelivered { get; set; }
 
-        public decimal? SalaryPaid { get; set; }
-        public decimal? BonusPaid { get; set; }
+        public decimal? SoldBonus { get; set; }
+        public decimal? DeliveredBonus { get; set; }
+
+        public decimal? TotalPay { get; set; }
     }
 }

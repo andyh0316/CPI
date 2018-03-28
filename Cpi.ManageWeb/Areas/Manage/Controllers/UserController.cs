@@ -133,14 +133,40 @@ namespace Cpi.ManageWeb.Areas.Manage.Controllers
             return RedirectToAction("Index", "Call", new { area = "Call" });
         }
 
-        [HttpPost]
+        [HttpGet]
         public ContentResult GetSalarySheet()
         {
-            List<UserSalaryDto> userSalaries = UserBo.GetUserSalaries();
+            DateTime today = DateTime.Today;
+            DateTime dateFrom;
+            DateTime dateTo;
+
+            dateFrom = new DateTime(today.Year, today.Month, 1);
+            dateTo = new DateTime(today.Year, today.Month, DateTime.DaysInMonth(today.Year, today.Month));
 
             var model = new
             {
-                UserSalaries = userSalaries
+                DateFrom = dateFrom,
+                DateTo = dateTo
+            };
+
+            return JsonModel(model);
+        }
+
+        [HttpPost]
+        public ContentResult GetSalarySheet(DateTime dateFrom, DateTime dateTo)
+        {
+            List<UserSalaryDto> userSalaries = UserBo.GetUserSalaries(dateFrom, dateTo);
+
+            var model = new
+            {
+                UserSalaries = userSalaries,
+                DateFrom = dateFrom,
+                DateTo = dateTo,
+                TotalDeliveredBonus = userSalaries.Select(a => a.DeliveredBonus).Sum(),
+                TotalSoldBonus = userSalaries.Select(a => a.SoldBonus).Sum(),
+                TotalSalary = userSalaries.Select(a => a.Salary / 2).Sum(),
+                TotalAmountDelivered = userSalaries.Select(a => a.AmountDelivered).Sum(),
+                TotalAmountSold = userSalaries.Select(a => a.AmountSold).Sum()
             };
 
             return JsonModel(model);

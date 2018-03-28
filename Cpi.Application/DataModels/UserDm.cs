@@ -44,6 +44,9 @@ namespace Cpi.Application.DataModels
 
         [CpiRequired]
         public int? VacationDaysTaken { get; set; }
+
+        [CpiMaxLength(20)]
+        public string PhoneNumber { get; set; }
     }
 
     public class UserMap : BaseMap<UserDm>

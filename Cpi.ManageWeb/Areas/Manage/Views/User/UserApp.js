@@ -71,6 +71,10 @@ app.controller('ListController', ['$scope', '$controller', '$state', 'baseBo', '
         $state.go('List.User', { 'mode': $scope.viewMode, 'userId': userId });
     };
 
+    $scope.getSalarySheet = function () {
+        $state.go('List.SalarySheet');
+    };
+
     $scope.loginAsUser = function (item) {
         if (confirm("Are you sure you want to login as " + item.FullName + " (" + item.Username + ")" + "?")) {
             $.redirect('/Manage/User/LoginAsUser', { id: item.Id }, 'GET');
@@ -114,6 +118,15 @@ app.controller('SalarySheetController', ['$scope', '$controller', '$state', 'bas
     angular.extend(this, $controller('BaseController', { $scope: $scope }));
 
     $scope.model = model.Object;
+    $scope.dateFrom = $scope.model.DateFrom;
+    $scope.dateTo = $scope.model.DateTo;
+
+    $scope.getSalarySheet = function () {
+        baseBo.httpRequest('POST', '/Manage/User/GetSalarySheet', { dateFrom: $scope.dateFrom, dateTo: $scope.dateTo })
+            .then(function (result) {
+                $scope.model = result.Object;
+            });
+    };
 }]);
 
 

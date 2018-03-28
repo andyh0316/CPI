@@ -2543,3 +2543,42 @@ button.icon {
         }
     }
 }
+
+#user-salaries {
+    .salary-sheet-header {
+        text-align: center;
+        font-size: 25px;
+        margin-bottom: 30px;
+    }
+
+    .salary-container {
+        padding: 10px 0px;
+        margin-bottom: 10px;
+        border-bottom: 1px solid $border-color;
+        font-size: 18px;
+        @extend %clearfix;
+
+        .header {
+            @extend %clearfix;
+
+            .name {
+                font-size: 24px;
+                float: left;
+            }
+
+            .date {
+                font-size: 20px;
+                float: right;
+            }
+        }
+
+        .information {
+            float: left;
+        }
+
+        .pay {
+            float: right;
+            text-align: right;
+        }
+    }
+}

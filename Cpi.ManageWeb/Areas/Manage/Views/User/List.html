@@ -47,10 +47,10 @@
                             {{listItem.UserOccupation}}
                         </td>
                         <!--<td>
-                        {{listItem.LastLoginDate | shortDate}}
-                    </td>-->
+                            {{listItem.LastLoginDate | shortDate}}
+                        </td>-->
                         <td>
-                            ${{listItem.Salary | number: 2}}
+                            ${{listItem.Salary | number: 2}} / ${{listItem.Salary / 2 | number: 2}}
                         </td>
                         <td class="action" ng-click="$event.stopPropagation();">
                             <button ng-show="isRoleLaozi" class="login-as-user icon" ng-click="loginAsUser(listItem); $event.stopPropagation();" title="Login as this user"></button>

@@ -1,106 +1,58 @@
-﻿<div id="user" class="page-container">
+﻿<div id="user-salaries" class="page-container">
     <div class="page-header">
         <div class="title-container">
             <div class="title">Salary Sheet</div>
         </div>
         <div class="filters-container">
+            <section>
+                <dl class="dl-S">
+                    <dd>
+                        <input ng-model="dateFrom" placeholder="Bonus Date (From)" date-input />
+                    </dd>
+                </dl>
+
+                <dl class="dl-S">
+                    <dd>
+                        <input ng-model="dateTo" placeholder="Bonus Date (To)" date-input />
+                    </dd>
+                </dl>
+
+                <button class="button main" ng-click="getSalarySheet()">Get Salary Sheet</button>
+            </section>
         </div>
         <div class="buttons">
             <button class="button" ng-click="back()">Back</button>
         </div>
     </div>
 
-    <div class="page-body">
-        <section>
-            <dl>
-                <dt>Fullname</dt>
-                <dd ng-show="isCreateMode() || isEditMode()">
-                    <span field-validation-error ng-show="modelState['Fullname']" class="field-validation-error"></span>
-                    <input ng-model="model.User.Fullname" />
-                </dd>
-                <dd ng-show="isViewMode()">
-                    {{model.User.Fullname}}
-                </dd>
-            </dl>
-
-            <dl>
-                <dt>Nickname</dt>
-                <dd ng-show="isCreateMode() || isEditMode()">
-                    <span field-validation-error ng-show="modelState['Nickname']" class="field-validation-error"></span>
-                    <input ng-model="model.User.Nickname" />
-                </dd>
-                <dd ng-show="isViewMode()">
-                    {{model.User.Nickname}}
-                </dd>
-            </dl>
-
-            <dl>
-                <dt>Username</dt>
-                <dd>
-                    {{model.User.Username}}
-                </dd>
-            </dl>
-
-            <dl>
-                <dt>Role</dt>
-                <dd ng-show="isCreateMode() || isEditMode()">
-                    <span field-validation-error ng-show="modelState['UserRoleId']" class="field-validation-error"></span>
-                    <select ng-model="model.User.UserRoleId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in model.UserRoles">
-                        <option value="">All ទាំងអស់</option>
-                    </select>
-                </dd>
-                <dd ng-show="isViewMode()">
-                    {{model.User.UserRole.Name}}
-                </dd>
-            </dl>
-            <dl>
-                <dt>Occupation</dt>
-                <dd ng-show="isCreateMode() || isEditMode()">
-                    <span field-validation-error ng-show="modelState['UserOccupationId']" class="field-validation-error"></span>
-                    <select ng-model="model.User.UserOccupationId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in model.Occupations">
-                        <option value="">All ទាំងអស់</option>
-                    </select>
-                </dd>
-                <dd ng-show="isViewMode()">
-                    {{model.User.UserOccupation.Name}}
-                </dd>
-            </dl>
-            <dl>
-                <dt>Start Date</dt>
-                <dd ng-show="isCreateMode() || isEditMode()">
-                    <span field-validation-error ng-show="modelState['StartDate']" class="field-validation-error"></span>
-                    <input ng-model="model.User.StartDate" date-input />
-                </dd>
-                <dd ng-show="isViewMode()">
-                    {{model.User.StartDate | shortDate}}
-                </dd>
-            </dl>
-            <dl>
-                <dt>Salary</dt>
-                <dd ng-show="isCreateMode() || isEditMode()">
-                    <span field-validation-error ng-show="modelState['Salary']" class="field-validation-error"></span>
-                    <input ng-model="model.User.Salary" />
-                </dd>
-                <dd ng-show="isViewMode()">
-                    ${{model.User.Salary | number: 2}}
-                </dd>
-            </dl>
-            <dl>
-                <dt>Vacation Days Taken</dt>
-                <dd ng-show="isCreateMode() || isEditMode()">
-                    <span field-validation-error ng-show="modelState['VacationDaysTaken']" class="field-validation-error"></span>
-                    <input ng-model="model.User.VacationDaysTaken" />
-                </dd>
-                <dd ng-show="isViewMode()">
-                    {{model.User.VacationDaysTaken}}
-                </dd>
-            </dl>
-            <!--<dl ng-show="isViewMode()">
-                <dt>Last Login Date</dt>
-                <dd>
-                    {{model.User.LastLoginDate | shortDate}}
-                </dd>
-            </dl>-->
-        </section>
+    <div class="page-body print-section">
+        <div ng-show="model.UserSalaries">
+            <div class="salary-sheet-header">
+                <div>{{model.DateFrom | shortDate }} - {{model.DateTo | shortDate }}</div>
+                <div>Operator Bonus: <b>${{model.TotalSoldBonus | number: 2}}</b></div>
+                <div>Delivery Bonus: <b>${{model.TotalDeliveredBonus | number: 2}}</b></div>
+                <div>Salary: <b>${{model.TotalSalary | number: 2}}</b></div>
+                <div>Total Pay Out: <b>${{model.TotalSoldBonus + model.TotalDeliveredBonus + model.TotalSalary | number: 2}}</b></div>
+            </div>
+            <div ng-repeat="userSalary in model.UserSalaries" class="salary-container print-avoid-page-break">
+                <div class="header">
+                    <div class="name">
+                        {{userSalary.UserFullname}}
+                        <span ng-show="userSalary.UserNickname">({{userSalary.UserNickname}})</span>
+                    </div>
+                    <div class="date">{{model.DateFrom | shortDate }} - {{model.DateTo | shortDate }}</div>
+                </div>
+                <div class="information">
+                    <div>Occupation: {{userSalary.Occupation}}</div>
+                    <div>Monthly Salary: ${{userSalary.Salary | number: 2}}</div>
+                </div>
+                <div class="pay">
+                    <div>Half Month Salary: ${{userSalary.Salary / 2 | number: 2}}</div>
+                    <div>{{userSalary.AmountSold}} products Sold: ${{userSalary.SoldBonus | number: 2}}</div>
+                    <div>{{userSalary.AmountDelivered}} invoices delivered: ${{userSalary.DeliveredBonus | number: 2}}</div>
+                    <div>Total Pay: <b>${{userSalary.TotalPay | number: 2}}</b></div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
