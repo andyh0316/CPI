@@ -120,5 +120,32 @@ namespace Cpi.Application.BusinessObjects.Other
 
             return dtos;
         }
+
+        public List<Tuple<string, int>> GetCallForTimes(ClassFilter.Performance filter)
+        {
+            TimeSpan startTime = new TimeSpan(6, 0, 0);
+            TimeSpan endTime = new TimeSpan(20, 0, 0);
+
+            IQueryable<CallDm> callQuery = CallBo.GetListQuery();
+
+            callQuery = CallBo.GetDateFilteredQuery(callQuery, filter.ReportDateFilter);
+            List<CallDm> calls = callQuery.ToList();
+
+            List<Tuple<string, int>> dtos = new List<Tuple<string, int>>();
+
+            TimeSpan currentTime = startTime;
+            TimeSpan timeRange = new TimeSpan(0, 30, 0);
+
+            while (currentTime <= endTime)
+            {
+                int callCount = calls.Where(a => a.CreatedDate.Value.TimeOfDay >= currentTime && a.CreatedDate.Value.TimeOfDay < currentTime.Add(timeRange)).Count();
+                string displayTimes = string.Format("{0} - {1}", new DateTime(currentTime.Ticks).ToString("HH:mm"), new DateTime(currentTime.Add(timeRange).Ticks).ToString("HH:mm"));
+                dtos.Add(new Tuple<string, int>(displayTimes, callCount));
+
+                currentTime = currentTime.Add(timeRange);
+            }
+
+            return dtos;
+        }
     }
 }

@@ -69,6 +69,9 @@ app.controller('PerformanceController', ['$scope', '$controller', '$state', 'bas
         $scope.callForWeekDaysNames = $scope.model.CallForWeekDays.map(function (a) { return a.Item1; });
         $scope.callForWeekDaysCounts = $scope.model.CallForWeekDays.map(function (a) { return a.Item2; });
 
+        $scope.callForTimesNames = $scope.model.CallForTimes.map(function (a) { return a.Item1; });
+        $scope.callForTimesCounts = $scope.model.CallForTimes.map(function (a) { return a.Item2; });
+
         //$scope.callCounts =
         //    [
         //        $scope.model.Calls.map(function (a) { return a.Item2; }),
