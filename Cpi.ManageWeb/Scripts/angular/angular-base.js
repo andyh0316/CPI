@@ -109,6 +109,24 @@ baseModule.run(['$rootScope', '$state', function ($rootScope, $state) {
         notificationSelector.stop().hide().fadeIn(75);
     }
 
+    $rootScope.formatString = function (string) {
+        return string.replace(/\w\S*/g, function (txt) { return txt.charAt(0).toUpperCase() + txt.substr(1); })
+    };
+
+    $rootScope.getCommaDelimitedString = function (list, objectFieldName) {
+        if (list && list.length > 0) {
+            var returnString = '';
+            for (var i in list) {
+                var addingString = (objectFieldName) ? list[i][objectFieldName] : list[i];
+                returnString = returnString + addingString;
+                if (i < list.length - 1) {
+                    returnString = returnString + ", ";
+                }
+            }
+            return returnString;
+        }
+    };
+
     $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
 
     });
@@ -733,14 +751,16 @@ baseModule.directive('modelRadio', ['$rootScope', function ($rootScope) {
     };
 }]);
 
-baseModule.directive('searchDropDown', ['baseBo', '$rootScope', function (baseBo, $rootScope) {
+baseModule.directive('searchDropDown', ['baseBo', '$rootScope', '$timeout', function (baseBo, $rootScope, $timeout) {
     return {
         restrict: 'A',
         scope: {
             inputString: '@',
-            inputKey: '=',
+            ngModel: '=',
             searchUrl: '@',
             searchObject: '=',
+            resultString: '@',
+            resultDescription: '@',
             noResultText: '@',
             noResultFunction: '&',
             assignMethod: '@',
@@ -749,36 +769,22 @@ baseModule.directive('searchDropDown', ['baseBo', '$rootScope', function (baseBo
             ngDisabled: '=',
             clearInputString: '@',
             multiSelect: '@',
-            inputKeys: '=',
             onChange: '&',
+            afterChange: '&',
             searchStringBindTo: '=',
             debugMode: '@'
-        },
+        }, 
         link: function ($scope, $element, $attrs) {
             $scope.results = [];
             $scope.selectedIndex = 0;
             $scope.showContainer = false;
             $scope.multiSelect = ($scope.multiSelect === 'true') ? true : false;
-            
-            if ($scope.searchObject) {
-                for (var i in $scope.searchObject)
-                {
-                    if ($scope.inputKey === $scope.searchObject[i].Id)
-                    {
-                        $scope.searchString = $scope.searchObject[i].Name;
-                        break;
-                    }
-                }
-                
-            } else {
-                $scope.searchString = $scope.inputString;
-            }
-
+            $scope.searchString = $scope.inputString;
             $scope.formatString = $rootScope.formatString;
             $scope.debugMode = ($scope.debugMode === 'true') ? true : false;
 
             if ($scope.debugMode) {
-
+                
             }
 
             $scope.$watch('searchString', function (newVal, oldVal) {
@@ -790,16 +796,15 @@ baseModule.directive('searchDropDown', ['baseBo', '$rootScope', function (baseBo
                     return;
                 }
 
-                $scope.searchStringBindTo = $scope.searchString;
                 $scope.search();
+               // $scope.searchStringBindTo = $scope.searchString;
             });
 
             $scope.$watch('searchObject', function () {
                 $scope.results = $scope.getResultsFromSearchObject();
             });
 
-            $scope.$watch('inputKey', function (newVal, oldVal) {
-                //
+            $scope.$watch('ngModel', function (newVal, oldVal) {
                 if (oldVal == newVal)
                     return;
 
@@ -807,7 +812,10 @@ baseModule.directive('searchDropDown', ['baseBo', '$rootScope', function (baseBo
                     $scope.doNotSearch = true;
                     $scope.searchString = null;
                 }
-            });
+
+                //$rootScope.setFormDirty($scope);
+                //$element.closest('ng-form').removeClass('ng-pristine').AddClass('ng-dirty'); // we use this remove because setFormDirty gives conflicts
+            }, true);
 
             $element.find('input').focus(function () {
                 $scope.search();
@@ -820,10 +828,24 @@ baseModule.directive('searchDropDown', ['baseBo', '$rootScope', function (baseBo
                     clearTimeout($scope.timeOut);
                     $scope.timeOut = setTimeout(function () {
                         baseBo.httpRequest('GET', $scope.searchUrl, { searchString: $scope.searchString }).then(function (result) {
-                            $scope.results = result.Object;
+                            $scope.results = [];
+                            for (var i in result.Object) {
+                                var newResult = {
+                                    Id: result.Object[i].Id,
+                                    String: result.Object[i][$scope.resultString],
+                                    Object: result.Object[i],
+                                };
+
+                                if ($scope.resultDescription) {
+                                    newResult.Description = result.Object[i][$scope.resultDescription];
+                                }
+
+                                $scope.results.push(newResult);
+                            }
+
                             $scope.showContainer = true;
                         });
-                    }, gSearchInputDelay);
+                    }, 500);       
                 } else {
                     $scope.results = $scope.getResultsFromSearchObject();
                     $scope.showContainer = true;
@@ -836,11 +858,22 @@ baseModule.directive('searchDropDown', ['baseBo', '$rootScope', function (baseBo
                 for (var i in $scope.searchObject) {
                     var newResult = {
                         Id: $scope.searchObject[i].Id,
-                        Name: $scope.searchObject[i].Name,
-                        Description: $scope.searchObject[i].Description,
+                        String: $scope.searchObject[i][$scope.resultString],
+                        Object: $scope.searchObject[i]
                     };
 
-                    if (!$scope.searchString || newResult.Name.toLowerCase().startsWith($scope.searchString.toLowerCase())) {
+                    if ($scope.resultDescription) {
+                        newResult.Description = $scope.searchObject[i][$scope.resultDescription];
+                    };
+
+                    if (!$scope.searchString)
+                    { 
+                        results.push(newResult);
+                    }
+                    else if (newResult.String.toLowerCase() === $scope.searchString.toLowerCase()) {
+                        results.unshift(newResult);
+                    }
+                    else if (newResult.String.toLowerCase().startsWith($scope.searchString.toLowerCase())) {
                         results.push(newResult);
                     }
                 }
@@ -851,11 +884,11 @@ baseModule.directive('searchDropDown', ['baseBo', '$rootScope', function (baseBo
             $scope.assign = function (result) {
                 if (!$scope.multiSelect) {
                     if ($scope.assignMethod === "string") {
-                        $scope.inputKey = result.Name;
+                        $scope.ngModel = result.String;
                     } else if ($scope.assignMethod === "object") {
-                        $scope.inputKey = angular.copy(result.Object);
+                        $scope.ngModel = angular.copy(result.Object);
                     } else {
-                        $scope.inputKey = result.Id; // normal Id
+                        $scope.ngModel = result.Id; // normal Id
                     }
 
                     $scope.doNotSearch = true;
@@ -864,41 +897,64 @@ baseModule.directive('searchDropDown', ['baseBo', '$rootScope', function (baseBo
                         $scope.doNotSearch = true;
                         $scope.searchString = null;
                     } else {
-                        $scope.searchString = result.Name;
+                        $scope.searchString = result.String;
                     }
                 } else {
-                    $scope.inputKeys = (!$scope.inputKeys) ? [] : $scope.inputKeys;
-                    var index = $scope.getIndexOfKeyInInputKeys(result.Id);
+                    $scope.ngModel = (!$scope.ngModel) ? [] : $scope.ngModel;
+                    var index = $scope.getIndexOfNgModelObjects(result.Id);
                     if (index) {
-                        $scope.inputKeys.splice(index, 1);
+                        $scope.ngModel.splice(index, 1);
                     } else {
-                        $scope.inputKeys.push(result.Id);
+                        if ($scope.assignMethod === "object")
+                        {
+                            $scope.ngModel.push(result.Object);
+                        }
+                        else
+                        {
+                            $scope.ngModel.push(result.Id);
+                        }
                     }
                 }
 
                 $scope.showContainer = false;
+                //$scope.$apply();
 
-                if ($scope.$parent.form) {
-                    $scope.$parent.form.$setDirty();
-                }
+                //$rootScope.setFormDirty($scope);
 
-                $scope.onChange();
+                $scope.handleChangeFunctions();
             };
 
-            $scope.getIndexOfKeyInInputKeys = function (key) {
-                for (var i in $scope.inputKeys) {
-                    if ($scope.inputKeys[i] === key) {
-                        return i;
+            $scope.getIndexOfNgModelObjects = function (id) {
+                if ($scope.assignMethod === "object") {
+                    for (var i in $scope.ngModel) {
+                        if ($scope.ngModel[i].Id === id) {
+                            return i;
+                        }
+                    }
+                } else {
+                    for (var i in $scope.ngModel) {
+                        if ($scope.ngModel[i] === id) {
+                            return i;
+                        }
                     }
                 }
 
                 return null;
             };
-             
-            $scope.getStringById = function (id) {
-                for (var i in $scope.results) {
-                    if ($scope.results[i].Id == id) {
-                        return $scope.results[i].Name;
+
+            $scope.getObjectString = function (ngModelArrayObject) {
+                if ($scope.assignMethod === "object") {
+                    for (var i in $scope.results) {
+                        if ($scope.results[i].Id === ngModelArrayObject.Id) {
+                            return $scope.results[i].String;
+                        }
+                    }
+                }
+                else {
+                    for (var i in $scope.results) {
+                        if ($scope.results[i].Id === ngModelArrayObject) {
+                            return $scope.results[i].String;
+                        }
                     }
                 }
             };
@@ -915,9 +971,9 @@ baseModule.directive('searchDropDown', ['baseBo', '$rootScope', function (baseBo
                 var matched = false;
 
                 // check if there's an exact match and use it
-                if ($scope.searchString && $scope.results.length > 0) {
+                if ($scope.results.length > 0) {
                     for (var i in $scope.results) {
-                        if ($scope.results[i].Name.toLowerCase() === $scope.searchString.toLowerCase()) {
+                        if ($scope.searchString && $scope.results[i].String.toLowerCase() === $scope.searchString.toLowerCase()) {
                             $scope.assign($scope.results[i]);
                             matched = true;
                             break;
@@ -926,10 +982,10 @@ baseModule.directive('searchDropDown', ['baseBo', '$rootScope', function (baseBo
                 }
 
                 if ($scope.noValidate == 'true' && $scope.assignMethod == "string") {
-                    $scope.inputKey = $scope.searchString;
+                    $scope.ngModel = $scope.searchString;
                 } else {
-                    if (!matched) {
-                        $scope.inputKey = null;
+                    if (!$scope.multiSelect && !matched) {
+                        $scope.ngModel = null;
                         $scope.doNotSearch = true;
                         $scope.searchString = null;
                     }
@@ -939,9 +995,16 @@ baseModule.directive('searchDropDown', ['baseBo', '$rootScope', function (baseBo
                 $scope.$apply();
             };
 
+            $scope.clearNgModel = function () {
+                $scope.ngModel = null;
+
+                $scope.handleChangeFunctions();
+            };
+
             // on click away
             $(document).mousedown(function (e) {
-                if ($scope.showContainer && !$element.is(e.target) && $element.has(e.target).length === 0) {
+                if ($scope.showContainer && !$element.is(e.target) && $element.has(e.target).length === 0)
+                {
                     $scope.unfocus();
                 }
             });
@@ -986,38 +1049,40 @@ baseModule.directive('searchDropDown', ['baseBo', '$rootScope', function (baseBo
                 }
             });
 
-            $element.find('input').focusout(function () {
-                setTimeout(function () {
-                    $scope.unfocus();
-                }, 100);
-            });
-
             $(document).on('keydown', function (e) {
                 if (e.keyCode == '27') {
                     $scope.unfocus();
                 }
             });
+
+            $scope.handleChangeFunctions = function () {
+                $scope.onChange();
+
+                $timeout(function () {
+                    $scope.afterChange(); // run only after digested
+                }, 0, false);
+            };
         },
         template:
             '' +
             '<input ng-show="!multiSelect" type="text" ng-model="searchString" placeholder={{placeholder}} ng-disabled="ngDisabled" />' +
 
-            '<div ng-show="multiSelect" class="input-container" ng-class="{counter: inputKeys.length > 0}" ng-click="search()">' +
-                '<div ng-show="inputKeys.length > 0" ng-click="inputKeys = []; $event.stopPropagation();" class="counter">' +
-                    '<span class="number">{{inputKeys.length}}</span>' +
+            '<div ng-show="multiSelect" class="input-container" ng-class="{counter: ngModel.length > 0}" ng-click="search()">' +
+                '<div ng-show="ngModel.length > 0" ng-click="clearNgModel(); $event.stopPropagation();" class="counter">' +
+                    '<span class="number">{{ngModel.length}}</span>' +
                     '<span class="clear">X</span>' +
                 '</div>' +
-                '<div ng-show="!inputKeys || inputKeys.length == 0" class="placeholder">{{placeholder}}</div>' +
+                '<div ng-show="!ngModel || ngModel.length == 0" class="placeholder">{{placeholder}}</div>' +
                 '<div class="inner-container">' +
-                    '<span ng-repeat="key in inputKeys" class="tag">{{getStringById(key)}}</span>' +
+                    '<span ng-repeat="ngModelArrayObject in ngModel track by $index" class="tag">{{getObjectString(ngModelArrayObject)}}</span>' +
                 '</div>' +
             '</div>' +
 
             '<div class="results-container" ng-show="showContainer">' +
-                '<div ng-show="results.length > 0" class="result-row" ng-repeat="result in results" ng-mousedown="assign(result)" ng-mouseover="hover($index)" ng-class="{hovered: isHovered($index)}">' +
+                '<div ng-show="results.length > 0" class="result-row" ng-repeat="result in results" ng-click="assign(result)" ng-mouseover="hover($index)" ng-class="{hovered: isHovered($index)}">' +
                     '<div>' +
-                        '<span checkbox ng-show="multiSelect" ng-checked="getIndexOfKeyInInputKeys(result.Id)" style="position: relative; top: -1px;"></span>' +
-                        '<span>{{result.Name}}</span>' +
+                        '<span checkbox ng-show="multiSelect" ng-checked="getIndexOfNgModelObjects(result.Id)" style="position: relative; top: -1px;"></span>' +
+                        '<span>{{formatString(result.String)}}</span>' +
                     '</div>' +
                     '<div class="description">{{result.Description}}</div>' +
                 '</div>' +
@@ -1027,6 +1092,7 @@ baseModule.directive('searchDropDown', ['baseBo', '$rootScope', function (baseBo
             '</div>'
     };
 }]);
+
 
 baseModule.directive('commoditiesEdit', function () {
     return {

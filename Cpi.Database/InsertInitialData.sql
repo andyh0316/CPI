@@ -82,3 +82,5 @@ GO
 
 INSERT INTO [UserRolePermission] (UserRoleId, PermissionId, [Create], [Edit], [Delete], Deleted) VALUES (2, 4, 0, 0, 0, 0)
 INSERT INTO [UserRolePermission] (UserRoleId, PermissionId, [Create], [Edit], [Delete], Deleted) VALUES (2, 6, 0, 0, 0, 0)
+
+GO

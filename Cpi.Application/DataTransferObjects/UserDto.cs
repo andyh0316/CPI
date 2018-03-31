@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Cpi.Application.DataModels.LookUp;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,5 +19,6 @@ namespace Cpi.Application.DataTransferObjects
         public decimal? Salary { get; set; }
         public int? VacationDaysTaken { get; set; }
         public DateTime? StartDate { get; set; }
+        public List<LookUpWeekDayDm> WorkDays { get; set; }
     }
 }

@@ -47,7 +47,7 @@
   /* Likely future */ }
 
 html .body-container, body .body-container, [ui-view], .page-container, .page-container .page-header, .page-container .page-header .title-container, .page-container .page-body, #main-menu .menu-body .menu-item, .list-container, .list-container table td, .list-container table th, .list-container [list-panels-container], .list-container [list-panels-container] .list-panel, .button,
-.dropdown button, .dropdown .dropdown-menu li a, dl dd, .search-drop-down .input-container, .search-drop-down .results-container, .search-drop-down .results-container .result-row, .commodities-edit .edit-container, #import .paste-numbers-container, #import .results-container, #import .results-container .company-container .phone-number-container .assignment-container .block, #import .results-container .company-container .phone-number-container .assignment-container .block .name,
+.dropdown button, .dropdown .dropdown-menu li a, dl dd, .search-drop-down .input-container, .search-drop-down .results-container, .search-drop-down .results-container .result-row, .tag, .commodities-edit .edit-container, #import .paste-numbers-container, #import .results-container, #import .results-container .company-container .phone-number-container .assignment-container .block, #import .results-container .company-container .phone-number-container .assignment-container .block .name,
 #import .results-container .company-container .phone-number-container .assignment-container .block .time, #invoice .list-panel .list-panel-block {
   -webkit-box-sizing: border-box;
   /* Chrome all / Safari all */
@@ -74,6 +74,9 @@ html .body-container, body .body-container, [ui-view], .page-container, .page-co
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden; }
+
+.no-overflow {
+  overflow: visible !important; }
 
 html, body {
   position: relative;
@@ -1084,7 +1087,7 @@ button.icon {
   position: relative;
   background-color: white; }
   .search-drop-down input {
-    background-image: url("/Images/Icons/search-box-icon.png");
+    background-image: url("/Images/search-input.png");
     background-size: 16px 16px;
     background-repeat: no-repeat;
     background-position: right 5px center;
@@ -1092,7 +1095,7 @@ button.icon {
   .search-drop-down .input-container {
     position: relative;
     display: block;
-    height: 28px;
+    height: 24px;
     padding-right: 32px; }
     .search-drop-down .input-container .inner-container {
       position: relative;
@@ -1158,6 +1161,48 @@ button.icon {
       display: block;
       padding: 20px 35px;
       text-align: center; }
+
+.tag {
+  display: inline-block;
+  border: 1px solid #e4e4e4;
+  margin: 1px 1px 1px 1px;
+  padding: 0px 4px 0px 4px;
+  line-height: normal;
+  background-color: white; }
+  .tag.blue {
+    border: 1px solid #39ABE2;
+    background-color: #39ABE2;
+    color: white; }
+    .tag.blue[ng-click]:hover {
+      background-color: whitesmoke;
+      cursor: pointer; }
+  .tag .icon {
+    position: relative;
+    display: inline-block; }
+    .tag .icon:before {
+      font-size: 16px !important; }
+  .tag.tag-dl dl {
+    display: inline-block;
+    vertical-align: top; }
+    .tag.tag-dl dl dd {
+      display: inline-block;
+      vertical-align: middle;
+      height: 30px;
+      line-height: 30px; }
+      .tag.tag-dl dl dd input {
+        border: none;
+        background-color: inherit !important;
+        height: 30px; }
+        .tag.tag-dl dl dd input:focus {
+          border: none; }
+  .tag.tag-dl .action {
+    width: 60px;
+    float: right;
+    text-align: right; }
+    .tag.tag-dl .action .icon {
+      top: 2px; }
+      .tag.tag-dl .action .icon:before {
+        font-size: 24px !important; }
 
 #wait-mask {
   position: fixed;

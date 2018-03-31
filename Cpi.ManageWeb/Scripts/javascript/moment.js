@@ -1253,7 +1253,7 @@ var defaultLocaleWeek = {
     doy : 6  // The week that contains Jan 1st is the first week of the year.
 };
 
-function localeFirstDayOfWeek () {
+function localeFirstWeekDay () {
     return this._week.dow;
 }
 
@@ -1486,7 +1486,7 @@ function localeWeekdaysParse (weekdayName, format, strict) {
 
 // MOMENTS
 
-function getSetDayOfWeek (input) {
+function getSetWeekDay (input) {
     if (!this.isValid()) {
         return input != null ? this : NaN;
     }
@@ -1499,7 +1499,7 @@ function getSetDayOfWeek (input) {
     }
 }
 
-function getSetLocaleDayOfWeek (input) {
+function getSetLocaleWeekDay (input) {
     if (!this.isValid()) {
         return input != null ? this : NaN;
     }
@@ -1507,7 +1507,7 @@ function getSetLocaleDayOfWeek (input) {
     return input == null ? weekday : this.add(input - weekday, 'd');
 }
 
-function getSetISODayOfWeek (input) {
+function getSetISOWeekDay (input) {
     if (!this.isValid()) {
         return input != null ? this : NaN;
     }
@@ -3846,9 +3846,9 @@ proto.isoWeeksInYear = getISOWeeksInYear;
 
 // Day
 proto.date       = getSetDayOfMonth;
-proto.day        = proto.days             = getSetDayOfWeek;
-proto.weekday    = getSetLocaleDayOfWeek;
-proto.isoWeekday = getSetISODayOfWeek;
+proto.day        = proto.days             = getSetWeekDay;
+proto.weekday    = getSetLocaleWeekDay;
+proto.isoWeekday = getSetISOWeekDay;
 proto.dayOfYear  = getSetDayOfYear;
 
 // Hour
@@ -3920,7 +3920,7 @@ proto$1.monthsShortRegex  = monthsShortRegex;
 // Week
 proto$1.week = localeWeek;
 proto$1.firstDayOfYear = localeFirstDayOfYear;
-proto$1.firstDayOfWeek = localeFirstDayOfWeek;
+proto$1.firstWeekDay = localeFirstWeekDay;
 
 // Day of Week
 proto$1.weekdays       =        localeWeekdays;

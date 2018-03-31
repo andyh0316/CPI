@@ -47,6 +47,10 @@ namespace Cpi.Application.DataModels
 
         [CpiMaxLength(20)]
         public string PhoneNumber { get; set; }
+
+        public string Note { get; set; }
+
+        public virtual List<LookUpWeekDayDm> WorkDays { get; set; }
     }
 
     public class UserMap : BaseMap<UserDm>
@@ -57,6 +61,13 @@ namespace Cpi.Application.DataModels
 
             HasRequired(a => a.UserRole).WithMany().HasForeignKey(a => a.UserRoleId).WillCascadeOnDelete(false);
             HasOptional(a => a.UserOccupation).WithMany().HasForeignKey(a => a.UserOccupationId).WillCascadeOnDelete(false);
+            HasMany(r => r.WorkDays).WithMany(d => d.Users)
+                .Map(rd =>
+                {
+                    rd.MapLeftKey("UserId");
+                    rd.MapRightKey("WeekDayId");
+                    rd.ToTable("UserWorkDay");
+                });
         }
     }
 }

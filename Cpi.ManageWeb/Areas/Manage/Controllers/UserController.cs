@@ -48,7 +48,8 @@ namespace Cpi.ManageWeb.Areas.Manage.Controllers
             var model = new
             {
                 Occupations = LookUpBo.GetList<LookUpUserOccupationDm>().ToList(),
-                Permissions = LookUpBo.GetList<LookUpPermissionDm>().ToList()
+                Permissions = LookUpBo.GetList<LookUpPermissionDm>().ToList(),
+                WeekDays = LookUpBo.GetList<LookUpWeekDayDm>()
             };
 
             return JsonModel(model);
@@ -65,7 +66,7 @@ namespace Cpi.ManageWeb.Areas.Manage.Controllers
                     Salary = 0,
                     VacationDaysTaken = 0,
                     StartDate = new DateTime(DateTime.Now.Date.Ticks),
-                    UserRoleId = (int)LookUpUserRoleDm.LookUpIds.Staff
+                    UserRoleId = (int)LookUpUserRoleDm.LookUpIds.Staff,
                 };
             }
             else
@@ -77,7 +78,8 @@ namespace Cpi.ManageWeb.Areas.Manage.Controllers
             {
                 User = user,
                 Occupations = LookUpBo.GetList<LookUpUserOccupationDm>().ToList(),
-                UserRoles = LookUpBo.GetList<LookUpUserRoleDm>().Where(a => a.Id != (int)LookUpUserRoleDm.LookUpIds.Laozi).ToList()
+                UserRoles = LookUpBo.GetList<LookUpUserRoleDm>().Where(a => a.Id != (int)LookUpUserRoleDm.LookUpIds.Laozi).ToList(),
+                WeekDays = LookUpBo.GetList<LookUpWeekDayDm>()
             };
 
             return JsonModel(model);
@@ -95,6 +97,12 @@ namespace Cpi.ManageWeb.Areas.Manage.Controllers
 
             UserDm trackedUser = (user.Id == 0) ? new UserDm() : UserBo.GetById(user.Id);
             Mapper.Map(user, trackedUser);
+
+            List<LookUpWeekDayDm> allWorkDays = LookUpBo.GetList<LookUpWeekDayDm>();
+            user.WorkDays = (user.WorkDays) ?? new List<LookUpWeekDayDm>();
+            trackedUser.WorkDays = (trackedUser.WorkDays) ?? new List<LookUpWeekDayDm>();
+            trackedUser.WorkDays.Clear();
+            trackedUser.WorkDays = allWorkDays.Where(m => user.WorkDays.Select(d => d.Id).Contains(m.Id)).ToList();
 
             if (user.Id == 0)
             {

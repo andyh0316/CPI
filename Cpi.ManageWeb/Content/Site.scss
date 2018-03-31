@@ -22,6 +22,11 @@ $main-border-color: #BDBDBD;
 $main-border-hover-color: #b5b5b5;
 $light-border-color: #e0e0e0;
 
+$selection-color: #39ABE2;
+$selection-border-color: #39ABE2;
+$selection-light-color: #B1E8FF;
+$selection-deep-color: #27B193;
+
 $error-color: #AD0606;
 $error-border-color: #B30F0F;
 $error-hover-color: #8C0505;
@@ -94,6 +99,9 @@ $application-min-width: 1260px;
     @extend %ellipsis;
 }
 
+.no-overflow {
+    overflow: visible !important;
+}
 
 html, body {
     position: relative;
@@ -1167,6 +1175,8 @@ $ui-view-top-padding: $main-menu-height + $page-header-height;
 }
 
 /**** DL DT DD ****/
+
+$dd-height: 30px;
 dl {
     position: relative;
     width: 240px;
@@ -1201,7 +1211,7 @@ dl {
     dd {
         position: relative;
         width: 100%;
-        min-height: 30px;
+        min-height: $dd-height;
         padding: 0px 10px 0px 0px;
         margin: 0px;
         font-size: 14px;
@@ -1605,7 +1615,7 @@ button.icon {
     background-color: white;
 
     input {
-        background-image: url('/Images/Icons/search-box-icon.png');
+        background-image: url('/Images/search-input.png');
         background-size: 16px 16px;
         background-repeat: no-repeat;
         background-position: right 5px center;
@@ -1615,7 +1625,7 @@ button.icon {
     .input-container {
         position: relative;
         display: block;
-        height: 28px;
+        height: 24px;
         padding-right: 32px;
         @extend %border-box;
 
@@ -1715,6 +1725,75 @@ button.icon {
             display: block;
             padding: 20px 35px;
             text-align: center;
+        }
+    }
+}
+
+.tag {
+    display: inline-block;
+    border: 1px solid $border-color;
+    //font-size: 12px !important;
+    margin: 1px 1px 1px 1px;
+    padding: 0px 4px 0px 4px;
+    line-height: normal;
+    background-color: white;
+    @extend %border-box;
+
+    &.blue {
+        border: 1px solid $selection-border-color;
+        background-color: $selection-color;
+        color: white;
+
+        &[ng-click]:hover {
+            background-color: whitesmoke;
+            cursor: pointer;
+        }
+    }
+
+    .icon {
+        position: relative;
+        display: inline-block;
+
+        &:before {
+            font-size: 16px !important;
+        }
+    }
+
+    &.tag-dl {
+        dl {
+            display: inline-block;
+            vertical-align: top;
+
+            dd {
+                display: inline-block;
+                vertical-align: middle;
+                height: $dd-height;
+                line-height: $dd-height;
+
+                input {
+                    border: none;
+                    background-color: inherit !important;
+                    height: $dd-height;
+
+                    &:focus {
+                        border: none;
+                    }
+                }
+            }
+        }
+
+        .action {
+            width: 60px;
+            float: right;
+            text-align: right;
+
+            .icon {
+                top: 2px;
+
+                &:before {
+                    font-size: 24px !important;
+                }
+            }
         }
     }
 }

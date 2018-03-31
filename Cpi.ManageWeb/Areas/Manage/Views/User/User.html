@@ -77,6 +77,20 @@
                     {{model.User.StartDate | shortDate}}
                 </dd>
             </dl>
+            <dl class="dl-XL">
+                <dt>Work Days</dt>
+                <dd ng-show="isCreateMode() || isEditMode()" class="no-overflow">
+                    <span ng-show="ModelState['EditingTeacherEmployments[' + getTouchedListItemIndex(item) + '].WorkDays']" field-validation-error></span>
+                    <div search-drop-down class="search-drop-down"
+                         ng-model="model.User.WorkDays"
+                         search-object="model.WeekDays"
+                         result-string="Name"
+                         multi-select="true"
+                         assign-method="object">
+                    </div>
+                </dd>
+                <dd ng-show="isViewMode()">{{getCommaDelimitedString(model.User.WorkDays, 'Name')}}</dd>
+            </dl>
             <dl>
                 <dt>Salary</dt>
                 <dd ng-show="isCreateMode() || isEditMode()">
@@ -98,11 +112,11 @@
                 </dd>
             </dl>
             <!--<dl ng-show="isViewMode()">
-                <dt>Last Login Date</dt>
-                <dd>
-                    {{model.User.LastLoginDate | shortDate}}
-                </dd>
-            </dl>-->
+        <dt>Last Login Date</dt>
+        <dd>
+            {{model.User.LastLoginDate | shortDate}}
+        </dd>
+    </dl>-->
         </section>
 
         <button ng-show="isViewMode() || isEditMode()" class="button delete" ng-click="remove()">Delete</button>

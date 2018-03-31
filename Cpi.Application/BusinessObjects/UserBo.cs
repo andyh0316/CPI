@@ -58,7 +58,8 @@ namespace Cpi.Application.BusinessObjects
                 LastLoginDate = a.LastLoginDate,
                 Salary = a.Salary,
                 StartDate = a.StartDate,
-                VacationDaysTaken = a.VacationDaysTaken
+                VacationDaysTaken = a.VacationDaysTaken,
+                WorkDays = a.WorkDays.ToList()
             });
 
             return dtoQuery;
