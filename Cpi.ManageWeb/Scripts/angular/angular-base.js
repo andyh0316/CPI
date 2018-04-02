@@ -861,7 +861,7 @@ baseModule.directive('searchDropDown', ['baseBo', '$rootScope', '$timeout', func
                         String: $scope.searchObject[i][$scope.resultString],
                         Object: $scope.searchObject[i]
                     };
-
+                    debugger;
                     if ($scope.resultDescription) {
                         newResult.Description = $scope.searchObject[i][$scope.resultDescription];
                     };
