@@ -142,7 +142,7 @@
                                     <div search-drop-down class="search-drop-down"
                                          search-object="modelData.OperatorStaff"
                                          input-string="{{listItem.Operator.Nickname}}"
-                                         input-key="listItem.OperatorId"
+                                         ng-model="listItem.OperatorId"
                                          result-string="Name"
                                          placeholder="Operator អ្នកទទួលទូរស័ព្ទ">
                                     </div>
@@ -159,7 +159,7 @@
                                     <div search-drop-down class="search-drop-down"
                                          search-object="modelData.DeliveryStaff"
                                          input-string="{{listItem.DeliveryStaff.Nickname}}"
-                                         input-key="listItem.DeliveryStaffId"
+                                         ng-model="listItem.DeliveryStaffId"
                                          result-string="Name"
                                          placeholder="Deliverer អ្នកដឹកជញ្ចូន">
                                     </div>
