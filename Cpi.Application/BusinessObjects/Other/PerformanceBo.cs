@@ -123,8 +123,8 @@ namespace Cpi.Application.BusinessObjects.Other
 
         public List<Tuple<string, int>> GetCallForTimes(ClassFilter.Performance filter)
         {
-            TimeSpan startTime = new TimeSpan(6, 0, 0);
-            TimeSpan endTime = new TimeSpan(20, 0, 0);
+            TimeSpan startTime = new TimeSpan(7, 0, 0);
+            TimeSpan endTime = new TimeSpan(18, 0, 0);
 
             IQueryable<CallDm> callQuery = CallBo.GetListQuery();
 
@@ -134,7 +134,7 @@ namespace Cpi.Application.BusinessObjects.Other
             List<Tuple<string, int>> dtos = new List<Tuple<string, int>>();
 
             TimeSpan currentTime = startTime;
-            TimeSpan timeRange = new TimeSpan(0, 30, 0);
+            TimeSpan timeRange = new TimeSpan(0, 10, 0);
 
             while (currentTime <= endTime)
             {

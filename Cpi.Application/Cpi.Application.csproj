@@ -80,6 +80,7 @@
     <Compile Include="DataModels\InvoiceCommodityDm.cs" />
     <Compile Include="DataModels\InvoiceDm.cs" />
     <Compile Include="DataModels\LookUp\LookUpDayOfWeekDm.cs" />
+    <Compile Include="DataModels\LookUp\LookUpDeliveryDistanceDm.cs" />
     <Compile Include="DataModels\LookUp\LookUpSourceDm.cs" />
     <Compile Include="DataModels\LookUp\LookUpCallStatusDm.cs" />
     <Compile Include="DataModels\CommodityDm.cs" />

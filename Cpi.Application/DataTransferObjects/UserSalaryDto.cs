@@ -14,11 +14,17 @@ namespace Cpi.Application.DataTransferObjects
         public decimal? Salary { get; set; }
 
         public int? AmountSold { get; set; }
-        public int? AmountDelivered { get; set; }
-
         public decimal? SoldBonus { get; set; }
-        public decimal? DeliveredBonus { get; set; }
+
+        public List<UserSalaryDeliveryBonusDto> DeliveryBonuses { get; set; }
 
         public decimal? TotalPay { get; set; }
+    }
+
+    public class UserSalaryDeliveryBonusDto
+    {
+        public string DeliveryDistance { get; set; }
+        public int AmountDelivered { get; set; }
+        public decimal Bonus { get; set; }
     }
 }

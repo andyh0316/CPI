@@ -170,11 +170,9 @@ namespace Cpi.ManageWeb.Areas.Manage.Controllers
                 UserSalaries = userSalaries,
                 DateFrom = dateFrom,
                 DateTo = dateTo,
-                TotalDeliveredBonus = userSalaries.Select(a => a.DeliveredBonus).Sum(),
+                TotalDeliveredBonus = userSalaries.SelectMany(a => a.DeliveryBonuses.Select(b => b.Bonus)).DefaultIfEmpty(0).Sum(),
                 TotalSoldBonus = userSalaries.Select(a => a.SoldBonus).Sum(),
                 TotalSalary = userSalaries.Select(a => a.Salary / 2).Sum(),
-                TotalAmountDelivered = userSalaries.Select(a => a.AmountDelivered).Sum(),
-                TotalAmountSold = userSalaries.Select(a => a.AmountSold).Sum()
             };
 
             return JsonModel(model);

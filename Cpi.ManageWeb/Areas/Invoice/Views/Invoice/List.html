@@ -45,30 +45,11 @@
             </button>
             <button ng-show="isAnyListItemTouched()" class="button" ng-click="cancelListItems()">Cancel</button>
             <button ng-show="isAnyListItemTouched()" class="button main" ng-click="save()">Save</button>
-            <button class="button main" ng-click="createListItem({ LocationId: modelData.LocationEnums.PhnomPenh, Date: modelData.TodayDate })">+ Create</button>
+            <button class="button main" ng-click="createListItem({ LocationId: modelData.LocationEnums.PhnomPenh, Date: modelData.TodayDate, DeliveryDistanceId: modelData.DeliveryDistanceEnums._0_to_15 })">+ Create</button>
         </div>
     </div>
 
     <div class="page-body">
-        <!--<div class="list-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th class="date"><a ng-sort="Date">Date<br />កាលបរិច្ឆេទ</a></th>
-                        <th class="phone">Customer Phone<br />លេខទូរស័ព្ទអតិថិជន</th>
-                        <th class="fullname">Customer Name<br />ឈ្មោះអតិថិជន</th>
-                        <th>Address<br />អាស័យដ្ឋាន</th>
-                        <th>Product<br />ផលិតផល</th>
-                        <th class="user-nickname"><a ng-sort="Operator.NickName">Operator<br />អ្នកទទួលទូរស័ព្ទ</a></th>
-                        <th class="user-nickname"><a ng-sort="DeliveryStaff.NickName">Deliverer<br />អ្នកដឹកជញ្ចូន</a></th>
-                        <th><a ng-sort="Location.Name">Location</a></th>
-                        <th class="thd-S right-content"><a ng-sort="TotalPrice">Cost<br />តម្លៃ</a></th>
-                        <th class="thd-S center-content"><a ng-sort="Status.DisplayOrder">Status</a></th>
-                        <th class="action"></th>
-                    </tr>
-                </thead>
-            </table>
-        </div>-->
         <div class="list-container">
             <div sort-container>
                 <div><a ng-sort="Date">Date កាលបរិច្ឆេទ</a></div>
@@ -101,17 +82,6 @@
                                     <input ng-model="listItem.CustomerPhone" placeholder="Phone លេខទូរស័ព្ទអតិថិជន" />
                                 </dd>
                             </dl>
-
-                            <!--<dl class="dl-S">
-                                <dd ng-show="!showListItemInput(listItem)">
-                                    {{listItem.CustomerName}}
-                                </dd>
-                                <dd ng-show="showListItemInput(listItem)">
-                                    <span field-validation-error ng-show="modelState['[' + getTouchedListItemIndex(listItem) + '].CustomerName']" class="field-validation-error"></span>
-                                    <input ng-model="listItem.CustomerName" placeholder="Name ឈ្មោះអតិថិជន" />
-                                </dd>
-                            </dl>-->
-
                             <dl class="address">
                                 <dd ng-show="!showListItemInput(listItem)">
                                     {{listItem.Address}}
@@ -127,6 +97,14 @@
                                 <dd ng-show="showListItemInput(listItem)">
                                     <span field-validation-error ng-show="modelState['[' + getTouchedListItemIndex(listItem) + '].LocationId']" class="field-validation-error"></span>
                                     <select ng-model="listItem.LocationId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.Locations"></select>
+                                </dd>
+                            </dl>
+
+                            <dl class="dl-XS">
+                                <dd ng-show="!showListItemInput(listItem)">{{listItem.DeliveryDistance.Name}}</dd>
+                                <dd ng-show="showListItemInput(listItem)">
+                                    <span field-validation-error ng-show="modelState['[' + getTouchedListItemIndex(listItem) + '].DeliveryDistanceId']" class="field-validation-error"></span>
+                                    <select ng-model="listItem.DeliveryDistanceId" ng-options="selectListItem.Id as selectListItem.Name for selectListItem in modelData.DeliveryDistances"></select>
                                 </dd>
                             </dl>
                         </section>

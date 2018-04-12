@@ -49,7 +49,9 @@
                 <div class="pay">
                     <div>Half Month Salary: ${{userSalary.Salary / 2 | number: 2}}</div>
                     <div ng-show="userSalary.AmountSold">{{userSalary.AmountSold}} products Sold: ${{userSalary.SoldBonus | number: 2}}</div>
-                    <div ng-show="userSalary.AmountDelivered">{{userSalary.AmountDelivered}} invoices delivered: ${{userSalary.DeliveredBonus | number: 2}}</div>
+                    <div ng-repeat="deliveryBonus in userSalary.DeliveryBonuses">
+                        {{deliveryBonus.AmountDelivered}} invoices delivered ({{deliveryBonus.DeliveryDistance}}): ${{deliveryBonus.Bonus | number: 2}}
+                    </div>
                     <div>Total Pay: <b>${{userSalary.TotalPay | number: 2}}</b></div>
                 </div>
             </div>

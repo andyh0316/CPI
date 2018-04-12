@@ -53,6 +53,7 @@ namespace Cpi.Application.DatabaseContext
             modelBuilder.Configurations.Add(new LookUpPermissionMap());
             modelBuilder.Configurations.Add(new LookUpSourceMap());
             modelBuilder.Configurations.Add(new LookUpWeekDayMap());
+            modelBuilder.Configurations.Add(new LookUpDeliveryDistanceMap());
         }
 
         public override int SaveChanges()

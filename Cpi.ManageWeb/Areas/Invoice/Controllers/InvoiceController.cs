@@ -66,10 +66,12 @@ namespace Cpi.ManageWeb.Areas.Invoice.Controllers
                 Locations = LookUpBo.GetList<LookUpLocationDm>(),
                 DeliveryStaff = UserBo.GetSearchDropDownList((int)LookUpUserOccupationDm.LookUpIds.Delivery),
                 OperatorStaff = UserBo.GetSearchDropDownList((int)LookUpUserOccupationDm.LookUpIds.Operator),
+                DeliveryDistances = LookUpBo.GetList<LookUpDeliveryDistanceDm>(),
                 ReportDates = ReportDateFilter.GetSelectList(),
                 InvoiceStatusIdEnums = EnumHelper.GetEnumIntList(typeof(LookUpInvoiceStatusDm.LookUpIds)),
                 ReportDateIdEnums = EnumHelper.GetEnumIntList(typeof(ReportDateFilter.ReportDateIdEnums)),
                 LocationEnums = EnumHelper.GetEnumIntList(typeof(LookUpLocationDm.LookUpIds)).OrderBy(a => a.Value),
+                DeliveryDistanceEnums = EnumHelper.GetEnumIntList(typeof(LookUpDeliveryDistanceDm.LookUpIds)),
                 Sources = LookUpBo.GetList<LookUpSourceDm>(),
                 TodayDate = new DateTime(DateTime.Now.Date.Ticks),
             };
