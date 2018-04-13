@@ -1301,6 +1301,7 @@ listBodyDirectiveFunction = ['$timeout', function ($timeout) {
 }];
 
 baseModule.directive('tbody', listBodyDirectiveFunction);
+baseModule.directive('listPanelsContainer', listBodyDirectiveFunction);
 
 baseModule.directive('fieldValidationError', function () {
     return {

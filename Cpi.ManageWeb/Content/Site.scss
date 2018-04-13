@@ -756,32 +756,6 @@ $ui-view-top-padding: $main-menu-height + $page-header-height;
                     font-weight: bold;
                 }
             }
-
-            .has-more-items {
-                display: block;
-                position: relative;
-                width: 100%;
-                padding-top: 50px;
-                height: 150px;
-                text-align: center;
-                color: #BFBFBF;
-                font-size: 24px;
-
-                &:hover {
-                    cursor: pointer;
-                }
-            }
-
-            .empty-info {
-                display: block;
-                position: relative;
-                width: 100%;
-                padding-top: 50px;
-                height: 150px;
-                text-align: center;
-                color: #BFBFBF;
-                font-size: 24px;
-            }
         }
 
         thead, tbody tr {
@@ -923,6 +897,35 @@ $ui-view-top-padding: $main-menu-height + $page-header-height;
             }
         }*/
     }
+    /* For both table and list-panels */
+    tbody,
+    [list-panels-container] {
+        .has-more-items {
+            display: block;
+            position: relative;
+            width: 100%;
+            padding-top: 50px;
+            height: 150px;
+            text-align: center;
+            color: #BFBFBF;
+            font-size: 24px;
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+
+        .empty-info {
+            display: block;
+            position: relative;
+            width: 100%;
+            padding-top: 50px;
+            height: 150px;
+            text-align: center;
+            color: #BFBFBF;
+            font-size: 24px;
+        }
+    }
 
     [sort-container] {
         margin-bottom: 5px;
@@ -932,8 +935,8 @@ $ui-view-top-padding: $main-menu-height + $page-header-height;
             padding: 2px 5px;
             border: 1px solid $border-color;
         }
-    } 
-    
+    }
+
     a[ng-sort] {
         position: relative;
         display: inline-block;

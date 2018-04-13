@@ -462,7 +462,8 @@ body {
 .list-container {
   display: flex;
   flex-flow: column;
-  height: 100%; }
+  height: 100%;
+  /* For both table and list-panels */ }
   .list-container ng-transclude {
     width: 100%; }
   .list-container table {
@@ -517,26 +518,6 @@ body {
                 content: ""; }
         .list-container table tbody tr.total {
           font-weight: bold; }
-      .list-container table tbody .has-more-items {
-        display: block;
-        position: relative;
-        width: 100%;
-        padding-top: 50px;
-        height: 150px;
-        text-align: center;
-        color: #BFBFBF;
-        font-size: 24px; }
-        .list-container table tbody .has-more-items:hover {
-          cursor: pointer; }
-      .list-container table tbody .empty-info {
-        display: block;
-        position: relative;
-        width: 100%;
-        padding-top: 50px;
-        height: 150px;
-        text-align: center;
-        color: #BFBFBF;
-        font-size: 24px; }
     .list-container table thead, .list-container table tbody tr {
       display: table;
       width: 100%;
@@ -612,6 +593,29 @@ body {
       .list-container [list-panels-container] .list-panel .error-message {
         display: block;
         margin-bottom: 5px; }
+  .list-container tbody .has-more-items,
+  .list-container [list-panels-container] .has-more-items {
+    display: block;
+    position: relative;
+    width: 100%;
+    padding-top: 50px;
+    height: 150px;
+    text-align: center;
+    color: #BFBFBF;
+    font-size: 24px; }
+    .list-container tbody .has-more-items:hover,
+    .list-container [list-panels-container] .has-more-items:hover {
+      cursor: pointer; }
+  .list-container tbody .empty-info,
+  .list-container [list-panels-container] .empty-info {
+    display: block;
+    position: relative;
+    width: 100%;
+    padding-top: 50px;
+    height: 150px;
+    text-align: center;
+    color: #BFBFBF;
+    font-size: 24px; }
   .list-container [sort-container] {
     margin-bottom: 5px; }
     .list-container [sort-container] div {
