@@ -2,6 +2,7 @@
 using Cpi.Application.DataModels.LookUp;
 using Cpi.Application.DataTransferObjects;
 using Cpi.Application.Filters;
+using Cpi.Application.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -146,6 +147,36 @@ namespace Cpi.Application.BusinessObjects.Other
             }
 
             return dtos;
+        }
+
+        public List<Tuple<string, int, int>> GetPhoneCompanies(ClassFilter.Performance filter)
+        {
+            IQueryable<CallDm> callQuery = CallBo.GetListQuery();
+            callQuery = CallBo.GetDateFilteredQuery(callQuery, filter.ReportDateFilter);
+
+            IQueryable<InvoiceDm> invoiceQuery = InvoiceBo.GetListQuery();
+            invoiceQuery = InvoiceBo.GetDateFilteredQuery(invoiceQuery, filter.ReportDateFilter);
+
+            List<Tuple<string, int, int>> phoneCompanies = new List<Tuple<string, int, int>>();
+            phoneCompanies.Add(new Tuple<string, int, int>(
+                "Smart", 
+                callQuery.Where(a => CommonHelper.SmartPrefixes.Any(b => a.CustomerPhone.StartsWith(b))).Count(),
+                invoiceQuery.Where(a => CommonHelper.SmartPrefixes.Any(b => a.CustomerPhone.StartsWith(b))).Count()
+                ));
+
+            phoneCompanies.Add(new Tuple<string, int, int>(
+                "CellCard",
+                callQuery.Where(a => CommonHelper.CellCardPrefixes.Any(b => a.CustomerPhone.StartsWith(b))).Count(),
+                invoiceQuery.Where(a => CommonHelper.CellCardPrefixes.Any(b => a.CustomerPhone.StartsWith(b))).Count()
+                ));
+
+            phoneCompanies.Add(new Tuple<string, int, int>(
+                "MetFone",
+                callQuery.Where(a => CommonHelper.MetFonePrefixes.Any(b => a.CustomerPhone.StartsWith(b))).Count(),
+                invoiceQuery.Where(a => CommonHelper.MetFonePrefixes.Any(b => a.CustomerPhone.StartsWith(b))).Count()
+                ));
+
+            return phoneCompanies;
         }
     }
 }

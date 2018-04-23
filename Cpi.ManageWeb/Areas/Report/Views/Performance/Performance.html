@@ -28,7 +28,7 @@
 
                 <dl>
                     <dd>
-                        <span model-checkbox ng-model="scopeData.filter.AveragePerMonth">Average/Month</span>
+                        <span model-checkbox ng-model="scopeData.filter.AveragePerMonth">Average/Month (For selected charts only)</span>
                     </dd>
                 </dl>
             </section>
@@ -37,7 +37,10 @@
 
     <div class="page-body">
         <div id="operator-chart" class="chart">
-            <div class="title">Operators</div>
+            <div class="title">
+                Operators
+                <span ng-show="scopeData.filter.AveragePerMonth" class="tag">Average/Month</span>
+            </div>
 
             <div class="chart-wrapper">
                 <canvas class="chart chart-bar" chart-data="performanceForOperatorCounts" chart-labels="performanceForOperatorNames" height="100" chart-options="generalChartOptions"></canvas>
@@ -46,7 +49,10 @@
         </div>
 
         <div id="deliverer-chart" class="chart">
-            <div class="title">Delivery Staff: Products vs Invoices Delivered</div>
+            <div class="title">
+                Delivery Staff: Products vs Invoices Delivered
+                <span ng-show="scopeData.filter.AveragePerMonth" class="tag">Average/Month</span>
+            </div>
 
             <div class="chart-wrapper">
                 <canvas class="chart chart-bar" chart-data="performanceForDeliveryStaffCounts" chart-labels="performanceForDeliveryStaffNames" height="100" chart-options="generalChartOptions"></canvas>
@@ -66,6 +72,14 @@
 
             <div class="chart-wrapper">
                 <canvas class="chart chart-bar" chart-data="callForTimesCounts" chart-labels="callForTimesNames" height="100" chart-options="generalChartOptions"></canvas>
+            </div>
+        </div>
+
+        <div id="phone-companies-chart" class="chart">
+            <div class="title">Phone Companies (Calls vs Invoices)</div>
+
+            <div class="chart-wrapper">
+                <canvas class="chart chart-bar" chart-data="phoneCompaniesCounts" chart-labels="phoneCompaniesNames" height="100" chart-options="generalChartOptions"></canvas>
             </div>
         </div>
     </div>

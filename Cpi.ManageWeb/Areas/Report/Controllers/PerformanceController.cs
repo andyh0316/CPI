@@ -46,7 +46,8 @@ namespace Cpi.ManageWeb.Areas.Report.Controllers
                 PerformanceForOperators = PerformanceBo.GetPerformanceForOperators(filter),
                 PerformanceForDeliveryStaff = PerformanceBo.GetPerformanceForDeliverStaff(filter),
                 CallForWeekDays = PerformanceBo.GetCallForWeekDays(filter),
-                CallForTimes = PerformanceBo.GetCallForTimes(filter)
+                CallForTimes = PerformanceBo.GetCallForTimes(filter),
+                PhoneCompanies = PerformanceBo.GetPhoneCompanies(filter)
             };
 
             return JsonModel(model);

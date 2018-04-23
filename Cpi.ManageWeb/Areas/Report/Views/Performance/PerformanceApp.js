@@ -72,6 +72,9 @@ app.controller('PerformanceController', ['$scope', '$controller', '$state', 'bas
         $scope.callForTimesNames = $scope.model.CallForTimes.map(function (a) { return a.Item1; });
         $scope.callForTimesCounts = $scope.model.CallForTimes.map(function (a) { return a.Item2; });
 
+        $scope.phoneCompaniesNames = $scope.model.PhoneCompanies.map(function (a) { return a.Item1; });
+        $scope.phoneCompaniesCounts = $scope.model.PhoneCompanies.map(function (a) { return a.Item2; });
+
         //$scope.callCounts =
         //    [
         //        $scope.model.Calls.map(function (a) { return a.Item2; }),

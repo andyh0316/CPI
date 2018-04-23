@@ -95,9 +95,9 @@ app.controller('ImportController', ['$scope', '$controller', '$state', 'baseBo',
                 {
                     var newItem = {
                         touched: true,
-                        CustomerPhone: result.Object.PhoneNumbers[i],
+                        CustomerPhone: result.Object.PhoneNumbers[i].Item1,
+                        Date: (result.Object.PhoneNumbers[i].Item2) ? result.Object.PhoneNumbers[i].Item2 : $scope.modelData.TodayDate,
                         StatusId: $scope.modelData.CallStatusIdEnums.SentToCallCenter,
-                        Date: $scope.modelData.TodayDate
                     };
 
                     $scope.$parent.createListItem(newItem);

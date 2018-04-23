@@ -51,11 +51,11 @@
             <table>
                 <thead>
                     <tr>
-                        <th class="date-time"><a ng-sort="Date">Created</a></th>
+                        <th class="date-time"><a ng-sort="Date">Call Time</a></th>
                         <th>Phone</th>
                         <th>Name</th>
-                        <th ng-class="{commodities: isAnyListItemTouched()}">Product</th>
-                        <th class="center-content"><a ng-sort="Status.Name">Status </a></th>
+                        <th>Product</th>
+                        <th class="center-content"><a ng-sort="Status.Name">Status</a></th>
                         <th class="action"></th>
                     </tr>
                 </thead>
@@ -87,7 +87,7 @@
                                 </dd>
                             </dl>
                         </td>
-                        <td ng-class="{commodities: isAnyListItemTouched()}">
+                        <td>
                             <dl>
                                 <dd ng-show="!showListItemInput(listItem)">
                                     {{listItem.CallCommodities | objectCommodities}}

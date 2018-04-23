@@ -127,7 +127,7 @@ namespace Cpi.ManageWeb.Areas.Call.Controllers
         [HttpPost]
         public ContentResult OrganizePhoneNumbers(string phoneNumbers)
         {
-            List<string> phoneNumbersList = ParsePhoneNumbersMethod(phoneNumbers);
+            List<Tuple<string, DateTime?>> phoneNumbersList = ParsePhoneNumbersMethod(phoneNumbers);
 
             var model = new
             {
@@ -136,46 +136,6 @@ namespace Cpi.ManageWeb.Areas.Call.Controllers
             };
 
             return JsonModel(model);
-
-            //List<string> smartPrefixes = CommonHelper.SmartPrefixes;
-            //List<string> metFonePrefixes = CommonHelper.MetFonePrefixes;
-            //List<string> cellCardPrefixes = CommonHelper.CellCardPrefixes;
-
-            //List<string> smartPhoneNumbers = new List<string>();
-            //List<string> metFonePhoneNumbers = new List<string>();
-            //List<string> cellCardPhoneNumbers = new List<string>();
-            //List<string> otherPhoneNumbers = new List<string>();
-
-            //foreach (string phoneNumber in phoneNumbersList)
-            //{
-            //    if (smartPrefixes.Any(a => phoneNumber.StartsWith(a)))
-            //    {
-            //        smartPhoneNumbers.Add(phoneNumber);
-            //    }
-            //    else if (metFonePrefixes.Any(a => phoneNumber.StartsWith(a)))
-            //    {
-            //        metFonePhoneNumbers.Add(phoneNumber);
-            //    }
-            //    else if (cellCardPrefixes.Any(a => phoneNumber.StartsWith(a)))
-            //    {
-            //        cellCardPhoneNumbers.Add(phoneNumber);
-            //    }
-            //    else
-            //    {
-            //        otherPhoneNumbers.Add(phoneNumber);
-            //    }
-            //}
-
-            //var model = new
-            //{
-            //    DateTimeNow = new DateTime(DateTime.Now.Ticks),
-            //    SmartPhoneNumbers = smartPhoneNumbers,
-            //    MetFonePhoneNumbers = metFonePhoneNumbers,
-            //    CellCardPhoneNumbers = cellCardPhoneNumbers,
-            //    OtherPhoneNumbers = otherPhoneNumbers
-            //};
-
-            //return JsonModel(model);
         }
 
         [HttpPost]
@@ -189,23 +149,33 @@ namespace Cpi.ManageWeb.Areas.Call.Controllers
             return JsonModel(model);
         }
 
-        private List<string> ParsePhoneNumbersMethod(string phoneNumbers)
+        private List<Tuple<string, DateTime?>> ParsePhoneNumbersMethod(string phoneNumbers)
         {
-            List<string> phoneNumbersList = new List<string>();
+            List<Tuple<string, DateTime?>> phoneNumbersList = new List<Tuple<string, DateTime?>>();
             var reader = new StringReader(phoneNumbers);
             string line;
             while (null != (line = reader.ReadLine()))
             {
-                phoneNumbersList.Add(line.Trim());
+                string[] parsedLine = line.Trim().Split(new char[] { '\t' });
+
+                string phoneNumber = parsedLine[0];
+                DateTime? callDate = null;
+
+                if (parsedLine.Length == 2)
+                {
+                    callDate = DateTime.Parse(parsedLine[1]);
+                }
+
+                phoneNumbersList.Add(new Tuple<string, DateTime?>(phoneNumber, callDate));
             }
 
-            phoneNumbersList = phoneNumbersList.Distinct().ToList();
+            phoneNumbersList = phoneNumbersList.GroupBy(a => a.Item1).Select(a => a.FirstOrDefault()).ToList();
 
             // don't include some phone numbers
             List<string> blockingNumbers = new List<string>();
             blockingNumbers.Add("15681425"); // Andy
             blockingNumbers.Add("76999650"); // MyTv
-            phoneNumbersList = phoneNumbersList.Where(a => !blockingNumbers.Contains(a)).ToList();
+            phoneNumbersList = phoneNumbersList.Where(a => !blockingNumbers.Contains(a.Item1)).ToList();
 
             return phoneNumbersList;
         }

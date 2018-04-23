@@ -22,13 +22,12 @@
         </div>
 
         <div class="results-container print-section">
-            <div ng-show="parsedPhoneNumbersModel.DateTimeNow" class="dateTimeNow">{{parsedPhoneNumbersModel.DateTimeNow | shortDateWithTime }}</div>
+            <div ng-show="parsedPhoneNumbersModel.DateTimeNow" class="dateTimeNow">{{parsedPhoneNumbersModel.DateTimeNow | shortDateWithTime}}</div>
 
             <div class="company-container">
                 <div ng-repeat="phoneNumber in parsedPhoneNumbersModel.PhoneNumbers track by $index" class="phone-number-container">
-                    <span class="phone-number">{{phoneNumber}}</span>
-                    <span phone-company-tag ng-model="phoneNumber"></span>
-                    <!--<span>{{parsedPhoneNumbersModel.DateTimeNow | shortDateWithTime}}</span>-->
+                    <span class="phone-number">{{phoneNumber.Item1}}</span>
+                    <span phone-company-tag ng-model="phoneNumber.Item1"></span>
 
                     <div class="assignment-container">
                         <div class="block">
@@ -53,42 +52,6 @@
                     </div>
                 </div>
             </div>
-
-            <!--<div ng-show="parsedPhoneNumbersModel.OtherPhoneNumbers.length  > 0" class="company-container">
-                <div class="title">Other ({{parsedPhoneNumbersModel.OtherPhoneNumbers.length}})</div>
-                <div ng-repeat="phoneNumber in parsedPhoneNumbersModel.OtherPhoneNumbers track by $index" class="phone-number-container">
-                    <div class="phone-number">{{phoneNumber}}</div>
-                    <span phone-company-tag ng-model="phoneNumber"></span>
-                    <span>{{parsedPhoneNumbersModel.DateTimeNow | shortDateWithTime}}</span>
-                </div>
-            </div>
-
-            <div ng-show="parsedPhoneNumbersModel.SmartPhoneNumbers.length > 0" class="company-container">
-                <div class="title">Smart ({{parsedPhoneNumbersModel.SmartPhoneNumbers.length}})</div>
-                <div ng-repeat="phoneNumber in parsedPhoneNumbersModel.SmartPhoneNumbers track by $index" class="phone-number-container">
-                    <div class="phone-number">{{phoneNumber}}</div>
-                    <span phone-company-tag ng-model="phoneNumber"></span>
-                    <span>{{parsedPhoneNumbersModel.DateTimeNow | shortDateWithTime}}</span>
-                </div>
-            </div>
-
-            <div ng-show="parsedPhoneNumbersModel.MetFonePhoneNumbers.length  > 0" class="company-container">
-                <div class="title">MetPhone ({{parsedPhoneNumbersModel.MetFonePhoneNumbers.length}})</div>
-                <div ng-repeat="phoneNumber in parsedPhoneNumbersModel.MetFonePhoneNumbers track by $index" class="phone-number-container">
-                    <div class="phone-number">{{phoneNumber}}</div>
-                    <span phone-company-tag ng-model="phoneNumber"></span>
-                    <span>{{parsedPhoneNumbersModel.DateTimeNow | shortDateWithTime}}</span>
-                </div>
-            </div>
-
-            <div ng-show="parsedPhoneNumbersModel.CellCardPhoneNumbers.length  > 0" class="company-container">
-                <div class="title">CellCard ({{parsedPhoneNumbersModel.CellCardPhoneNumbers.length}})</div>
-                <div ng-repeat="phoneNumber in parsedPhoneNumbersModel.CellCardPhoneNumbers track by $index" class="phone-number-container">
-                    <div class="phone-number">{{phoneNumber}}</div>
-                    <span phone-company-tag ng-model="phoneNumber"></span>
-                    <span>{{parsedPhoneNumbersModel.DateTimeNow | shortDateWithTime}}</span>
-                </div>
-            </div>-->
         </div>
     </div>
 </div>

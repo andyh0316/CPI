@@ -1740,6 +1740,7 @@ button.icon {
     padding: 0px 4px 0px 4px;
     line-height: normal;
     background-color: white;
+    font-size: 12px;
     @extend %border-box;
 
     &.blue {
